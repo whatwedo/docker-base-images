@@ -1,7 +1,7 @@
 #!/bin/bash 
 #########################################################################
 #                                                                       #
-# docker-builder.sh is a script for managaing complex docker images     #
+# docker-builder.sh is a script for managing complex docker images     #
 # It provivides an easy mechanism for creating and building docker      #
 # images                                                                #
 #                                                                       #
@@ -62,11 +62,7 @@ build-file() {
 
   m4 -I "modules/*.m4" "images/$1.m4" >> "dist/$1/Dockerfile"
 
-  echo "
-This is one of our base images which we are using at [whatwedo](https://whatwedo.ch/).
-
-You will find more information in our [GitHub repository](https://github.com/whatwedo/docker-base-images). 
-  " > "dist/$1/README.md"
+  cp "images/$1.md" "dist/$1/README.md"
 }
 
 
@@ -102,7 +98,7 @@ elif [ "$1" = "build-image" ]; then
   build-image $2
 else
 	echo "
-  docker-builder.sh is a script for managaing complex docker images
+  docker-builder.sh is a script for managing complex docker images
   It provivides an easy mechanism for creating and building docker
   images  
   
