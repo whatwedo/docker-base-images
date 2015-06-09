@@ -4,15 +4,14 @@ In this image is a basic nginx webserver installation available. There are no SS
 ##Usage
 
 ```
-docker run -p 80:80 -p 443:443 whatwedo/nginx 
+docker run -p 80:80 whatwedo/nginx 
 ```
 
 ##Volumes
-This image is not using any volumes.
+* /var/www
 
 ##Exposed Ports
 * 80
-* 443
 
 ##Built
 Because we are using several base images with recurring tasks in the Dockerfile, we are using a script to include commands. This script is available under [https://github.com/whatwedo/docker-base-images/blob/master/docker-builder.sh](https://github.com/whatwedo/docker-base-images/blob/master/docker-builder.sh)

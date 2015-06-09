@@ -1,10 +1,10 @@
-#whatwedo base image - nginx
-In this image is a basic nginx webserver installation available. There are no SSL enabled per default.
+#whatwedo base image - Apache
+In this image is a basic apache webserver installation available. There are no SSL enabled per default.
 
 ##Usage
 
 ```
-docker run -p 80:80 whatwedo/nginx 
+docker run -p 80:80 whatwedo/apache 
 ```
 
 ##Volumes

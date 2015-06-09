@@ -1,5 +1,4 @@
 #Install nginx
-RUN apt-get update
 RUN apt-get install -y nginx libpcre3-dev libssl-dev zlib1g-dev
 
 #Create required directories and files

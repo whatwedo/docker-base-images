@@ -9,7 +9,7 @@
 #BUILT AT: Tue Jun  9 19:14:36 CEST 2015
 
   
-#whatwedo Tomcat image
+#whatwedo worpress image
 
 FROM ubuntu:14.04
 
@@ -58,31 +58,47 @@ ADD files/motd /etc
 #Install often used tools
 RUN apt-get install -y curl less nano vim
 
-#Install Java
-RUN add-apt-repository ppa:webupd8team/java
-RUN apt-get update
-RUN echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections
-RUN apt-get install -y oracle-java8-installer
-#Install maven
-RUN apt-get install -y maven
-#Install Tomcat
-WORKDIR /usr/src
-RUN wget https://archive.apache.org/dist/tomcat/tomcat-8/v8.0.14/bin/apache-tomcat-8.0.14.tar.gz
-RUN tar -xzf apache-tomcat-8.0.14.tar.gz
-RUN mv apache-tomcat-8.0.14 /opt/tomcat
-RUN groupadd tomcat
-RUN useradd -g tomcat -d /opt/tomcat tomcat
-RUN usermod -G www-data tomcat
-RUN chown tomcat:tomcat /opt/tomcat -R
+#Install apache and openssl
+RUN apt-get install -y apache2
 
-#Delete tomcat default apps
-RUN rm -rf /opt/tomcat/webapps/*
+#Apache settings
+ENV APACHE_RUN_USER www-data
+ENV APACHE_RUN_GROUP www-data
+ENV APACHE_LOG_DIR /var/log/apache2
+ENV APACHE_PID_FILE /var/run/apache2.pid
+ENV APACHE_RUN_DIR /var/run/apache2
+ENV APACHE_LOCK_DIR /var/lock/apache2
+RUN mkdir -p $APACHE_RUN_DIR $APACHE_LOCK_DIR $APACHE_LOG_DIR
+
+#Remove default files
+RUN rm -rf /var/www/html/*
+#Install PHP
+RUN apt-get install php5-cli php5-common php5-cgi php5-curl php5-imagick php5-imap php5-pgsql php5-sqlite php5-mysql php5-fpm php5-mcrypt -y
+RUN echo "cgi.fix_pathinfo = 0;" >> /etc/php5/fpm/php.ini
+
+#Install composer
+RUN curl -sS https://getcomposer.org/installer | php
+RUN mv composer.phar /usr/local/bin/composer
+
+#Install mod_php
+RUN apt-get install -y libapache2-mod-php5
+
+#Download and install Wordpress
+RUN wget https://de.wordpress.org/latest-de_DE.zip
+RUN unzip latest-de_DE.zip
+RUN rm latest-de_DE.zip
+RUN cp -r wordpress/* /var/www/html
+RUN rm -rf wordpress
+RUN chown -R 755 /var/www/html
 #Slimming down Docker containers
 RUN apt-get clean
 RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 #Alter upstart script
-RUN echo -n "/opt/tomcat/bin/catalina.sh run" >> /bin/upstart
+RUN echo -n "apache2 -D FOREGROUND" >> /bin/upstart
 
 #Expose Ports
-EXPOSE 8080
+EXPOSE 80
+
+#Create volumes
+VOLUME  ["/var/www"]

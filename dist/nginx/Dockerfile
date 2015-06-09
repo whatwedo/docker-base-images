@@ -6,7 +6,7 @@
 #                                                #
 ##################################################
   
-#BUILT AT: Thu Mar 26 21:03:27 CET 2015
+#BUILT AT: Tue Jun  9 19:14:36 CEST 2015
 
   
 #whatwedo nginx image
@@ -59,7 +59,6 @@ ADD files/motd /etc
 RUN apt-get install -y curl less nano vim
 
 #Install nginx
-RUN apt-get update
 RUN apt-get install -y nginx libpcre3-dev libssl-dev zlib1g-dev
 
 #Create required directories and files
@@ -88,3 +87,6 @@ RUN echo -n "nginx" >> /bin/upstart
 
 #Expose Ports
 EXPOSE 80
+
+#Create volumes
+VOLUME  ["/var/www"]

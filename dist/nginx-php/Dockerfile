@@ -9,7 +9,7 @@
 #BUILT AT: Tue Jun  9 19:14:36 CEST 2015
 
   
-#whatwedo Tomcat image
+#whatwedo nginx php image
 
 FROM ubuntu:14.04
 
@@ -58,31 +58,46 @@ ADD files/motd /etc
 #Install often used tools
 RUN apt-get install -y curl less nano vim
 
-#Install Java
-RUN add-apt-repository ppa:webupd8team/java
-RUN apt-get update
-RUN echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections
-RUN apt-get install -y oracle-java8-installer
-#Install maven
-RUN apt-get install -y maven
-#Install Tomcat
-WORKDIR /usr/src
-RUN wget https://archive.apache.org/dist/tomcat/tomcat-8/v8.0.14/bin/apache-tomcat-8.0.14.tar.gz
-RUN tar -xzf apache-tomcat-8.0.14.tar.gz
-RUN mv apache-tomcat-8.0.14 /opt/tomcat
-RUN groupadd tomcat
-RUN useradd -g tomcat -d /opt/tomcat tomcat
-RUN usermod -G www-data tomcat
-RUN chown tomcat:tomcat /opt/tomcat -R
+#Install nginx
+RUN apt-get install -y nginx libpcre3-dev libssl-dev zlib1g-dev
 
-#Delete tomcat default apps
-RUN rm -rf /opt/tomcat/webapps/*
+#Create required directories and files
+RUN touch /var/log/nginx/access.log
+RUN touch /var/log/nginx/error.log
+RUN mkdir /etc/nginx/ssl
+RUN chown -R www-data:www-data /var/lib/nginx
+
+#Edit config
+RUN mkdir /var/www
+RUN chown -R www-data:www-data /var/www/
+RUN chmod -R 2755 /var/www/
+RUN rm -rf /etc/nginx/sites-available/
+RUN rm -rf /etc/nginx/sites-enabled/
+RUN rm -rf /etc/nginx/conf.d/
+RUN rm /etc/nginx/nginx.conf
+ADD files/nginx-default /etc/nginx
+
+
+#Install PHP
+RUN apt-get install php5-cli php5-common php5-cgi php5-curl php5-imagick php5-imap php5-pgsql php5-sqlite php5-mysql php5-fpm php5-mcrypt -y
+RUN echo "cgi.fix_pathinfo = 0;" >> /etc/php5/fpm/php.ini
+
+#Install composer
+RUN curl -sS https://getcomposer.org/installer | php
+RUN mv composer.phar /usr/local/bin/composer
 #Slimming down Docker containers
 RUN apt-get clean
 RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+#Set config
+RUN rm /etc/nginx/nginx.conf
+ADD files/nginx-php /etc/nginx
+
 #Alter upstart script
-RUN echo -n "/opt/tomcat/bin/catalina.sh run" >> /bin/upstart
+RUN echo -n "service php5-fpm start && nginx" >> /bin/upstart
 
 #Expose Ports
-EXPOSE 8080
+EXPOSE 80
+
+#Create volumes
+VOLUME  ["/var/www"]
