@@ -4,14 +4,14 @@ In this image is a basic MariaDB server installation available.
 ##Usage
 
 ```
-docker run -p 3306:3306 whatwedo/mariadb 
+docker run -p 3306:3306 -e MYSQL_ROOT_PASSWORD=mysecretpassword whatwedo/mariadb
 ```
 
-##Database Credentials
-```
-User: 		root
-Password:	(none)
-```
+##Environment Variables
+
+###MYSQL_ROOT_PASSWORD
+
+This is the one environment variable that is required. This environment variable should be what you want to set the password for the root user to be. In the above example, it is being set to "mysecretpassword".
 
 ##Volumes
 * /var/lib/mysql

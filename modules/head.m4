@@ -31,10 +31,19 @@ RUN locale-gen en_US
 RUN update-locale LANG=en_US.UTF-8 LC_CTYPE=en_US.UTF-8
 RUN echo -n en_US.UTF-8 > /etc/container_environment/LANG
 RUN echo -n en_US.UTF-8 > /etc/container_environment/LC_CTYPE
+RUN apt-get install localepurge
+
+#Fix: TERM environment variable not set.
+ENV TERM dumb
 
 #Create upstart script
 RUN echo "#\0041/bin/bash" > /bin/upstart
 RUN chmod 755 /bin/upstart
+
+#Add firstbootscript
+ADD files/firstboot /bin
+RUN echo "/bin/firstboot" >> /bin/upstart
+RUN chmod 755 /bin/firstboot
 
 #Set upstart script
 CMD /bin/upstart
@@ -43,4 +52,4 @@ CMD /bin/upstart
 ADD files/motd /etc
 
 #Install often used tools
-RUN apt-get install -y curl less nano vim
+RUN apt-get install -y curl less nano wget unzip

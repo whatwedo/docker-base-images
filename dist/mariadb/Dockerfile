@@ -6,7 +6,7 @@
 #                                                #
 ##################################################
   
-#BUILT AT: Tue Jun  9 19:14:36 CEST 2015
+#BUILT AT: Die Jul  7 10:43:31 CEST 2015
 
   
 #whatwedo MariaDB image
@@ -44,10 +44,19 @@ RUN locale-gen en_US
 RUN update-locale LANG=en_US.UTF-8 LC_CTYPE=en_US.UTF-8
 RUN echo -n en_US.UTF-8 > /etc/container_environment/LANG
 RUN echo -n en_US.UTF-8 > /etc/container_environment/LC_CTYPE
+RUN apt-get install localepurge
+
+#Fix: TERM environment variable not set.
+ENV TERM dumb
 
 #Create upstart script
 RUN echo "#\0041/bin/bash" > /bin/upstart
 RUN chmod 755 /bin/upstart
+
+#Add firstbootscript
+ADD files/firstboot /bin
+RUN echo "/bin/firstboot" >> /bin/upstart
+RUN chmod 755 /bin/firstboot
 
 #Set upstart script
 CMD /bin/upstart
@@ -56,11 +65,11 @@ CMD /bin/upstart
 ADD files/motd /etc
 
 #Install often used tools
-RUN apt-get install -y curl less nano vim
+RUN apt-get install -y curl less nano wget unzip
 
 #Edit sources
-sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xcbcb082a1bb943db
-sudo add-apt-repository 'deb http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.0/ubuntu trusty main'
+RUN apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xcbcb082a1bb943db
+RUN add-apt-repository 'deb http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.0/ubuntu trusty main'
 RUN apt-get update
 
 #Install MariaDB
@@ -71,8 +80,17 @@ RUN sed -i 's/^\(bind-address\s.*\)/# \1/' /etc/mysql/my.cnf && \
 echo "mysqld_safe &" > /tmp/config && \
 echo "mysqladmin --silent --wait=30 ping || exit 1" >> /tmp/config && \
 echo "mysql -e 'GRANT ALL PRIVILEGES ON *.* TO \"root\"@\"%\" WITH GRANT OPTION;'" >> /tmp/config && \
+echo "mysql -e 'DROP DATABASE IF EXISTS test'" >> /tmp/config && \
 bash /tmp/config && \
-rm -f /tmp/config
+rm -f /tmp/config && \
+/etc/init.d/mysql stop
+
+#Edit firstboot script
+RUN echo "/etc/init.d/mysql start && sleep 10" >> /bin/firstboot
+RUN echo 'echo "SET PASSWORD FOR \"root\"@\"%\" = PASSWORD(\"${MYSQL_ROOT_PASSWORD}\");" > /root/mysql-first-time.sql' >> /bin/firstboot
+RUN echo 'mysql -u root < /root/mysql-first-time.sql' >> /bin/firstboot
+RUN echo 'rm /root/mysql-first-time.sql' >> /bin/firstboot
+RUN echo "/etc/init.d/mysql stop && sleep 10" >> /bin/firstboot
 #Slimming down Docker containers
 RUN apt-get clean
 RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*

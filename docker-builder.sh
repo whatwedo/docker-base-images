@@ -35,6 +35,7 @@ cd "$(dirname "$0")"
 
 #build all dockerfiles
 build-files() {
+  rm -rf "dist" 
 	for file in images/*.m4; do
 	  name="${file##*/}"
 	  name="${name%.*}"
