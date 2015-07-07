@@ -4,8 +4,14 @@ In this image is a basic PostgreSQL database server installation available.
 ##Usage
 
 ```
-docker run -p 5432:5432 whatwedo/postgres 
+docker run -p 5432:5432 -e PG_ROOT_PASSWORD=mysecretpassword whatwedo/postgres 
 ```
+
+##Environment Variables
+
+###PG_ROOT_PASSWORD
+
+This is the one environment variable that is required. This environment variable should be what you want to set the password for the root user to be. In the above example, it is being set to "mysecretpassword".
 
 ##Volumes
 * /var/lib/postgresql
