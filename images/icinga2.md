@@ -10,7 +10,7 @@ docker run -p 80:80 -e DB_USER=root -e DB_PW=mysecretpassword -e DB_SERVER=db -e
 ```
 
 ##Environment Variables
-Every of the following environment varaibles are rquired
+Every of the following environment variables is required
 
 ###DB_USER
 User of thy Icinga2 mysql-ido database. In the above example, it is being set to "root".
