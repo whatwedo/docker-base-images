@@ -5,12 +5,17 @@ We at [whatwedo](https://whatwedo.ch/) are slowly going away from traditional ap
 | Name | Description |
 |---|---|
 | [base](https://registry.hub.docker.com/u/whatwedo/base/) | several base packages for daily working with docker installed |
+| [apache](https://registry.hub.docker.com/u/whatwedo/apache/) | Apache 2 webserver |
+| [apache-php](https://registry.hub.docker.com/u/whatwedo/apache-php/) | Apache 2 webserver including PHP |
 | [bind](https://registry.hub.docker.com/u/whatwedo/bind/) | Bind9 nameserver |
+| [icinga2](https://registry.hub.docker.com/u/whatwedo/icinga2/) | Icinga2 and Icinga2-Web |
 | [golang](https://registry.hub.docker.com/u/whatwedo/golang/) | Golang compiler |
 | [mariadb](https://registry.hub.docker.com/u/whatwedo/mariadb/) | MariaDB server |
 | [nginx](https://registry.hub.docker.com/u/whatwedo/nginx/) | nginx webserver |
+| [nginx-php](https://registry.hub.docker.com/u/whatwedo/nginx-php/) | nginx webserver including PHP |
 | [postgres](https://registry.hub.docker.com/u/whatwedo/postgres/) | Postgres database server |
 | [tomcat](https://registry.hub.docker.com/u/whatwedo/tomcat/) | Tomcat application server |
+| [wordpress](https://registry.hub.docker.com/u/whatwedo/wordpress/) | Wordpress installed on Apache 2 |
 
 ##Directory/File Layout
 The following table show the directory Layout of this repository:
