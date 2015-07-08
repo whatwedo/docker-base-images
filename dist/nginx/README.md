@@ -7,6 +7,9 @@ In this image is a basic nginx webserver installation available. There are no SS
 docker run -p 80:80 whatwedo/nginx 
 ```
 
+##Environment Variables
+This image is not using any environment variables.
+
 ##Volumes
 * /var/www
 

@@ -7,6 +7,9 @@ In this image are just several base packages for daily working with docker insta
 docker run whatwedo/base
 ```
 
+##Environment Variables
+This image is not using any environment variables.
+
 ##Volumes
 This image is not using any volumes.
 

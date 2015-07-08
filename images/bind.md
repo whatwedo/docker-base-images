@@ -7,6 +7,9 @@ In this image is a basic Bind9 nameserver installation available.
 docker run -p 53:53 -p 953:953 whatwedo/bind 
 ```
 
+##Environment Variables
+This image is not using any environment variables.
+
 ##Volumes
 This image is not using any volumes.
 

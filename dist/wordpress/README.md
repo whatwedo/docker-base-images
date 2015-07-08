@@ -7,6 +7,9 @@ In this image is a basic Wordpress installation available. There are no SSL enab
 docker run -p 80:80 whatwedo/wordpress
 ```
 
+##Environment Variables
+This image is not using any environment variables.
+
 ##Volumes
 * /var/www
 

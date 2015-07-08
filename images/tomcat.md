@@ -7,6 +7,9 @@ In this image is a basic Tomcat Java application server and Maven installation a
 docker run -p 8080:8080 whatwedo/tomcat 
 ```
 
+##Environment Variables
+This image is not using any environment variables.
+
 ##Volumes
 This image is not using any volumes.
 

@@ -7,6 +7,9 @@ In this image is a basic apache webserver installation available. There are no S
 docker run -p 80:80 whatwedo/apache 
 ```
 
+##Environment Variables
+This image is not using any environment variables.
+
 ##Volumes
 * /var/www
 

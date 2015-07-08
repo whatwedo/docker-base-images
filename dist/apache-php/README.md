@@ -7,6 +7,9 @@ In this image is a basic apache webserver with PHP installation available. There
 docker run -p 80:80 whatwedo/apache-php
 ```
 
+##Environment Variables
+This image is not using any environment variables.
+
 ##Volumes
 * /var/www
 

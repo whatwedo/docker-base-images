@@ -7,6 +7,9 @@ In this image is the golang compiler installed.
 docker run whatwedo/golang 
 ```
 
+##Environment Variables
+This image is not using any environment variables.
+
 ##Volumes
 This image is not using any volumes.
 
