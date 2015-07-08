@@ -6,7 +6,7 @@
 #                                                #
 ##################################################
   
-#BUILT AT: Die Jul  7 11:48:54 CEST 2015
+#BUILT AT: Mit Jul  8 11:22:03 CEST 2015
 
   
 #whatwedo apache image
@@ -82,12 +82,14 @@ RUN mkdir -p $APACHE_RUN_DIR $APACHE_LOCK_DIR $APACHE_LOG_DIR
 #Remove default files
 RUN rm -rf /var/www/html/*
 #Install PHP
-RUN apt-get install php5-cli php5-common php5-cgi php5-curl php5-imagick php5-imap php5-pgsql php5-sqlite php5-mysql php5-fpm php5-mcrypt -y
+RUN apt-get install php5-cli php5-common php5-cgi php5-curl php5-imagick php5-imap php5-pgsql php5-sqlite php5-mysql php5-fpm php5-mcrypt php5-ldap php5-json php5-intl php5-gd -y
+
+#Set php.ini defaults
 RUN echo "cgi.fix_pathinfo = 0;" >> /etc/php5/fpm/php.ini
 
-#Install composer
-RUN curl -sS https://getcomposer.org/installer | php
-RUN mv composer.phar /usr/local/bin/composer
+#Fix session permission error
+RUN chmod -R 777 /var/lib/php5
+
 
 #Install mod_php
 RUN apt-get install -y libapache2-mod-php5

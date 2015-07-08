@@ -22,3 +22,5 @@ RUN echo 'echo "SET PASSWORD FOR \"root\"@\"%\" = PASSWORD(\"${MYSQL_ROOT_PASSWO
 RUN echo 'mysql -u root < /root/mysql-first-time.sql' >> /bin/firstboot
 RUN echo 'rm /root/mysql-first-time.sql' >> /bin/firstboot
 RUN echo "/etc/init.d/mysql stop && sleep 10" >> /bin/firstboot
+
+
