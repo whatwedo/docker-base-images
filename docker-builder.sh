@@ -56,8 +56,6 @@ build-file() {
 # AUTOMATICALLY CREATED WITH docker-builder.sh   #
 #                                                #
 ##################################################
-  
-#BUILT AT: $(date)
 
   " > "dist/$1/Dockerfile"
 

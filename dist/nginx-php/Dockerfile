@@ -5,8 +5,6 @@
 # AUTOMATICALLY CREATED WITH docker-builder.sh   #
 #                                                #
 ##################################################
-  
-#BUILT AT: Don Jul  9 13:40:43 CEST 2015
 
   
 #whatwedo nginx php image
