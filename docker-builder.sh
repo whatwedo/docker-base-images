@@ -82,6 +82,11 @@ build-image() {
   cd ../..
 }
 
+#download latest base images
+update-base-images() {
+  docker pull ubuntu:14.04
+}
+
 
 if [ "$1" = "build-files" ]; then
   build-files
@@ -89,10 +94,12 @@ elif [ "$1" = "build-file" ]; then
   [ -z "$2" ] && { echo "Image name not specified"; exit 1; }
   build-file $2
 elif [ "$1" = "build-images" ]; then
+  update-base-images
   build-files
   build-images
 elif [ "$1" = "build-image" ]; then
   [ -z "$2" ] && { echo "Image name not specified"; exit 1; }
+  update-base-images
   build-file $2
   build-image $2
 else
