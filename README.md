@@ -12,7 +12,7 @@ We at [whatwedo](https://whatwedo.ch/) are slowly going away from traditional ap
 | [icinga2](https://registry.hub.docker.com/u/whatwedo/icinga2/) | Icinga2 and Icinga2-Web |
 | [kibana](https://registry.hub.docker.com/u/whatwedo/kibana/) | Kibana data exploration UI |
 | [logstash](https://registry.hub.docker.com/u/whatwedo/logstash/) | Logstash |
-| [logstash-forwarder](https://registry.hub.docker.com/u/whatwedo/logstash/) | Logstash-Forwarder |
+| [logstash-forwarder](https://registry.hub.docker.com/u/whatwedo/logstash-forwarder/) | Logstash-Forwarder |
 | [golang](https://registry.hub.docker.com/u/whatwedo/golang/) | Golang compiler |
 | [mariadb](https://registry.hub.docker.com/u/whatwedo/mariadb/) | MariaDB server |
 | [nginx](https://registry.hub.docker.com/u/whatwedo/nginx/) | nginx webserver |
