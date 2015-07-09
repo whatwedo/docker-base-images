@@ -10,6 +10,7 @@ We at [whatwedo](https://whatwedo.ch/) are slowly going away from traditional ap
 | [bind](https://registry.hub.docker.com/u/whatwedo/bind/) | Bind9 nameserver |
 | [elasticsearch](https://registry.hub.docker.com/u/whatwedo/elasticsearch/) | Elasticsearch server |
 | [icinga2](https://registry.hub.docker.com/u/whatwedo/icinga2/) | Icinga2 and Icinga2-Web |
+| [logstash](https://registry.hub.docker.com/u/whatwedo/logstash/) | Logstash |
 | [golang](https://registry.hub.docker.com/u/whatwedo/golang/) | Golang compiler |
 | [mariadb](https://registry.hub.docker.com/u/whatwedo/mariadb/) | MariaDB server |
 | [nginx](https://registry.hub.docker.com/u/whatwedo/nginx/) | nginx webserver |

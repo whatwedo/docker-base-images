@@ -67,29 +67,25 @@ ADD files/motd /etc
 #Install often used tools
 RUN apt-get install -y curl less nano wget unzip
 
-#Install apache and openssl
-RUN apt-get install -y apache2
+#Install Java
+RUN add-apt-repository ppa:webupd8team/java
+RUN apt-get update
+RUN echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections
+RUN apt-get install -y oracle-java8-installer
+#Add logstash repo
+RUN wget -O - http://packages.elasticsearch.org/GPG-KEY-elasticsearch | apt-key add -
+RUN add-apt-repository 'deb http://packages.elasticsearch.org/logstash/1.4/debian stable main'
+RUN apt-get update -y
 
-#Apache settings
-ENV APACHE_RUN_USER www-data
-ENV APACHE_RUN_GROUP www-data
-ENV APACHE_LOG_DIR /var/log/apache2
-ENV APACHE_PID_FILE /var/run/apache2.pid
-ENV APACHE_RUN_DIR /var/run/apache2
-ENV APACHE_LOCK_DIR /var/lock/apache2
-RUN mkdir -p $APACHE_RUN_DIR $APACHE_LOCK_DIR $APACHE_LOG_DIR
-
-#Remove default files
-RUN rm -rf /var/www/html/*
+#Install Logstash
+RUN apt-get install -y logstash
 #Slimming down Docker containers
 RUN apt-get clean
 RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 #Alter upstart script
-RUN echo -n "apache2 -D FOREGROUND" >> /bin/upstart
+RUN echo -n "/opt/logstash/bin/logstash -f /etc/logstash/conf.d" >> /bin/upstart
 
-#Expose Ports
-EXPOSE 80
+VOLUME  ["/etc/logstash/conf.d"]
 
-#Create volumes
-VOLUME  ["/var/www"]
+EXPOSE 5000
