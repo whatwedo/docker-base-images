@@ -6,10 +6,10 @@
 #                                                #
 ##################################################
   
-#BUILT AT: Don Jul  9 13:40:43 CEST 2015
+#BUILT AT: Don Jul  9 13:40:42 CEST 2015
 
   
-#whatwedo Tomcat image
+#whatwedo kibana image
 
 FROM ubuntu:14.04
 
@@ -67,31 +67,25 @@ ADD files/motd /etc
 #Install often used tools
 RUN apt-get install -y curl less nano wget unzip
 
-#Install Java
-RUN add-apt-repository ppa:webupd8team/java
-RUN apt-get update
-RUN echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections
-RUN apt-get install -y oracle-java8-installer
-#Install maven
-RUN apt-get install -y maven
-#Install Tomcat
-WORKDIR /usr/src
-RUN wget https://archive.apache.org/dist/tomcat/tomcat-8/v8.0.14/bin/apache-tomcat-8.0.14.tar.gz
-RUN tar -xzf apache-tomcat-8.0.14.tar.gz
-RUN mv apache-tomcat-8.0.14 /opt/tomcat
-RUN groupadd tomcat
-RUN useradd -g tomcat -d /opt/tomcat tomcat
-RUN usermod -G www-data tomcat
-RUN chown tomcat:tomcat /opt/tomcat -R
+ENV KIBANA_VERSION 4.1.1
+ENV KIBANA_SHA1 d43e039adcea43e1808229b9d55f3eaee6a5edb9
 
-#Delete tomcat default apps
-RUN rm -rf /opt/tomcat/webapps/*
+#Install kibana
+RUN set -x \
+	&& curl -fSL "https://download.elastic.co/kibana/kibana/kibana-${KIBANA_VERSION}-linux-x64.tar.gz" -o kibana.tar.gz \
+	&& echo "${KIBANA_SHA1}  kibana.tar.gz" | sha1sum -c - \
+	&& mkdir -p /opt/kibana \
+	&& tar -xz --strip-components=1 -C /opt/kibana -f kibana.tar.gz \
+	&& rm kibana.tar.gz
+
+#Add kibana to path
+ENV PATH /opt/kibana/bin:$PATH
 #Slimming down Docker containers
 RUN apt-get clean
 RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 #Alter upstart script
-RUN echo -n "/opt/tomcat/bin/catalina.sh run" >> /bin/upstart
+RUN echo -n 'kibana -e ${ELASTICSEARCH_URL}' >> /bin/upstart
 
 #Expose Ports
-EXPOSE 8080
+EXPOSE 3306
