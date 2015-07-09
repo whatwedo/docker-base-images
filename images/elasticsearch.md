@@ -1,38 +1,21 @@
-#whatwedo base image - Icinga2
-In this image is a basic Icinga-Core and Icinga-Web installation including Nagios plugins available. 
-
-You need a seperate [MySQL or MariaDB](https://registry.hub.docker.com/u/whatwedo/mariadb/) database to run this container.
+#whatwedo base image - Elasticsearch
+In this image is a Elasticsearch installation available. 
 
 ##Usage
 
 ```
-docker run -p 80:80 -e DB_USER=root -e DB_PW=mysecretpassword -e DB_SERVER=db -e DB_PORT=3306 -e DB_NAME= -e MYSQL_ROOT_PASSWORD=icinga-ido  whatwedo/icinga2
+docker run -p 9200:9200 -p 9300:9300 whatwedo/elasticsearch
 ```
 
 ##Environment Variables
-Every of the following environment variables is required
-
-###DB_USER
-User of thy Icinga2 mysql-ido database. In the above example, it is being set to "root".
-
-###DB_PW
-Passowrd of thy Icinga2 mysql-ido database. In the above example, it is being set to "mysecretpassword".
-
-###DB_SERVER
-Server of thy Icinga2 mysql-ido database. In the above example, it is being set to "db".
-
-###DB_PORT
-Post of thy Icinga2 mysql-ido database. In the above example, it is being set to "3306".
-
-###DB_NAME
-Name of thy Icinga2 mysql-ido database. In the above example, it is being set to "icinga-ido".
+This image is not using any environment variables.
 
 ##Volumes
-* /etc/icinga2
-* /etc/icingaweb2
+* /data
 
 ##Exposed Ports
-* 80
+* 9200
+* 9300
 
 ##Built
 Because we are using several base images with recurring tasks in the Dockerfile, we are using a script to include commands. This script is available under [https://github.com/whatwedo/docker-base-images/blob/master/docker-builder.sh](https://github.com/whatwedo/docker-base-images/blob/master/docker-builder.sh)

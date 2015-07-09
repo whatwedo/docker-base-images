@@ -8,6 +8,7 @@ We at [whatwedo](https://whatwedo.ch/) are slowly going away from traditional ap
 | [apache](https://registry.hub.docker.com/u/whatwedo/apache/) | Apache 2 webserver |
 | [apache-php](https://registry.hub.docker.com/u/whatwedo/apache-php/) | Apache 2 webserver including PHP |
 | [bind](https://registry.hub.docker.com/u/whatwedo/bind/) | Bind9 nameserver |
+| [elasticsearch](https://registry.hub.docker.com/u/whatwedo/elasticsearch/) | Elasticsearch server |
 | [icinga2](https://registry.hub.docker.com/u/whatwedo/icinga2/) | Icinga2 and Icinga2-Web |
 | [golang](https://registry.hub.docker.com/u/whatwedo/golang/) | Golang compiler |
 | [mariadb](https://registry.hub.docker.com/u/whatwedo/mariadb/) | MariaDB server |

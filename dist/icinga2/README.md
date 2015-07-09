@@ -1,7 +1,7 @@
 #whatwedo base image - Icinga2
 In this image is a basic Icinga-Core and Icinga-Web installation including Nagios plugins available. 
 
-You need a seperate MySQL database to run this container.
+You need a seperate [MySQL or MariaDB](https://registry.hub.docker.com/u/whatwedo/mariadb/) database to run this container.
 
 ##Usage
 
@@ -10,7 +10,7 @@ docker run -p 80:80 -e DB_USER=root -e DB_PW=mysecretpassword -e DB_SERVER=db -e
 ```
 
 ##Environment Variables
-Every of the following environment varaibles are rquired
+Every of the following environment variables is required
 
 ###DB_USER
 User of thy Icinga2 mysql-ido database. In the above example, it is being set to "root".

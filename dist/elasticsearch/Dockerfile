@@ -9,7 +9,7 @@
 #BUILT AT: Don Jul  9 09:56:59 CEST 2015
 
   
-#whatwedo MariaDB image
+#whatwedo apache image
 
 FROM ubuntu:14.04
 
@@ -67,42 +67,35 @@ ADD files/motd /etc
 #Install often used tools
 RUN apt-get install -y curl less nano wget unzip
 
-#Edit sources
-RUN apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xcbcb082a1bb943db
-RUN add-apt-repository 'deb http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.0/ubuntu trusty main'
+#Install Java
+RUN add-apt-repository ppa:webupd8team/java
 RUN apt-get update
+RUN echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections
+RUN apt-get install -y oracle-java8-installer
+#Add elasticsearch repo
+RUN wget -O - http://packages.elasticsearch.org/GPG-KEY-elasticsearch | sudo apt-key add -
+RUN add-apt-repository 'deb http://packages.elasticsearch.org/elasticsearch/1.6/debian stable main'
+RUN apt-get update -y
 
-#Install MariaDB
-RUN apt-get install -y mariadb-server
+#Install Elasticsearch
+RUN apt-get -y install elasticsearch
 
-#Default Config
-RUN sed -i 's/^\(bind-address\s.*\)/# \1/' /etc/mysql/my.cnf && \
-echo "mysqld_safe &" > /tmp/config && \
-echo "mysqladmin --silent --wait=30 ping || exit 1" >> /tmp/config && \
-echo "mysql -e 'GRANT ALL PRIVILEGES ON *.* TO \"root\"@\"%\" WITH GRANT OPTION;'" >> /tmp/config && \
-echo "mysql -e 'DROP DATABASE IF EXISTS test'" >> /tmp/config && \
-bash /tmp/config && \
-rm -f /tmp/config && \
-/etc/init.d/mysql stop
+#Add config
+RUN rm -rf /etc/elasticsearch/elasticsearch.yml
+ADD files/elasticsearch /etc/elasticsearch
 
-#Edit firstboot script
-RUN echo "/etc/init.d/mysql start && sleep 10" >> /bin/firstboot
-RUN echo 'echo "SET PASSWORD FOR \"root\"@\"%\" = PASSWORD(\"${MYSQL_ROOT_PASSWORD}\");" > /root/mysql-first-time.sql' >> /bin/firstboot
-RUN echo 'mysql -u root < /root/mysql-first-time.sql' >> /bin/firstboot
-RUN echo 'rm /root/mysql-first-time.sql' >> /bin/firstboot
-RUN echo "/etc/init.d/mysql stop && sleep 10" >> /bin/firstboot
-
-
-
+#Link config dir
+RUN ln -s /etc/elasticsearch /usr/share/elasticsearch/config
 #Slimming down Docker containers
 RUN apt-get clean
 RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 #Alter upstart script
-RUN echo -n "/usr/sbin/mysqld" >> /bin/upstart
-
-#Set volumes
-VOLUME ["/var/lib/mysql"]
+RUN echo -n "/usr/share/elasticsearch/bin/elasticsearch" >> /bin/upstart
 
 #Expose Ports
-EXPOSE 3306
+EXPOSE 9200
+EXPOSE 9300
+
+#Create volumes
+VOLUME  ["/data]

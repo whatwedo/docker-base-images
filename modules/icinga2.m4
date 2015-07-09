@@ -3,7 +3,7 @@ RUN wget --quiet -O - http://packages.icinga.org/icinga.key | apt-key add -
 RUN echo "deb http://packages.icinga.org/ubuntu icinga-trusty main" >> /etc/apt/sources.list
 RUN apt-get update -y
 
-#Install icinga and nagion plugins
+#Install icinga and nagios plugins
 RUN apt-get -y install icinga2 icinga2-ido-mysql nagios-plugins icingaweb2
 
 #Enable features
