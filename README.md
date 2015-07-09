@@ -15,6 +15,7 @@ We at [whatwedo](https://whatwedo.ch/) are slowly going away from traditional ap
 | [logstash-forwarder](https://registry.hub.docker.com/u/whatwedo/logstash-forwarder/) | Logstash-Forwarder |
 | [golang](https://registry.hub.docker.com/u/whatwedo/golang/) | Golang compiler |
 | [mariadb](https://registry.hub.docker.com/u/whatwedo/mariadb/) | MariaDB server |
+| [mongodb](https://registry.hub.docker.com/u/whatwedo/mongodb/) | MongoDB server |
 | [nginx](https://registry.hub.docker.com/u/whatwedo/nginx/) | nginx webserver |
 | [nginx-php](https://registry.hub.docker.com/u/whatwedo/nginx-php/) | nginx webserver including PHP |
 | [postgres](https://registry.hub.docker.com/u/whatwedo/postgres/) | Postgres database server |
