@@ -5,76 +5,40 @@
 # AUTOMATICALLY CREATED WITH docker-builder.sh   #
 #                                                #
 ##################################################
-
   
-#whatwedo MariaDB image
 
 FROM ubuntu:14.04
-
-#Maintainer
 MAINTAINER whatwedo GmbH <welove@whatwedo.ch>
-
-#Base settings
 ENV DEBIAN_FRONTEND noninteractive
 ENV HOME /root
-
-#Prevent initramfs updates from trying to run grub and lilo.
-#https://journal.paul.querna.org/articles/2013/10/15/docker-ubuntu-on-rackspace/
-#http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=594189
-RUN export INITRD=no
-RUN mkdir -p /etc/container_environment
-RUN echo -n no > /etc/container_environment/INITRD
-
-## Enable Ubuntu Universe and Multiverse.
-RUN sed -i 's/^#\s*\(deb.*universe\)$/\1/g' /etc/apt/sources.list
-RUN sed -i 's/^#\s*\(deb.*multiverse\)$/\1/g' /etc/apt/sources.list
-
-#Update system
-RUN apt-get update -y
-RUN apt-get upgrade -y
-
-#Install HTTPS support for APT
-RUN apt-get install -y apt-transport-https ca-certificates software-properties-common
-
-#Fix locales
-RUN apt-get install -y language-pack-en
-RUN locale-gen en_US
-RUN update-locale LANG=en_US.UTF-8 LC_CTYPE=en_US.UTF-8
-RUN echo -n en_US.UTF-8 > /etc/container_environment/LANG
-RUN echo -n en_US.UTF-8 > /etc/container_environment/LC_CTYPE
-RUN apt-get install localepurge
-
-#Fix: TERM environment variable not set.
+RUN export INITRD=no && \
+mkdir -p /etc/container_environment && \
+echo -n no > /etc/container_environment/INITRD && \
+sed -i 's/^#\s*\(deb.*universe\)$/\1/g' /etc/apt/sources.list && \
+sed -i 's/^#\s*\(deb.*multiverse\)$/\1/g' /etc/apt/sources.list && \
+apt-get update -y && \
+apt-get upgrade -y && \
+apt-get install -y apt-transport-https ca-certificates software-properties-common && \
+apt-get install -y language-pack-en && \
+locale-gen en_US && \
+update-locale LANG=en_US.UTF-8 LC_CTYPE=en_US.UTF-8 && \
+echo -n en_US.UTF-8 > /etc/container_environment/LANG && \
+echo -n en_US.UTF-8 > /etc/container_environment/LC_CTYPE && \
+apt-get install localepurge
 ENV TERM dumb
-
-#Create upstart script
-RUN echo "#\0041/bin/bash" > /bin/upstart
-RUN chmod 755 /bin/upstart
-
-#Add firstbootscript
+RUN echo "#\0041/bin/bash" > /bin/upstart && \
+chmod 755 /bin/upstart
 ADD files/firstboot /bin
-RUN echo "/bin/firstboot" >> /bin/upstart
-RUN chmod 755 /bin/firstboot
-
-#Set upstart script
+RUN echo "/bin/firstboot" >> /bin/upstart && \
+chmod 755 /bin/firstboot
 CMD /bin/upstart
-
-#Set motd
 ADD files/motd /etc
-
-#Install often used tools
-RUN apt-get install -y curl less nano wget unzip
-
-#Edit sources
-RUN apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xcbcb082a1bb943db
-RUN add-apt-repository 'deb http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.0/ubuntu trusty main'
-RUN apt-get update
-
-#Install MariaDB
-RUN apt-get install -y mariadb-server
-
-#Default Config
-RUN sed -i 's/^\(bind-address\s.*\)/# \1/' /etc/mysql/my.cnf && \
+RUN apt-get install -y curl less nano wget unzip && \
+apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xcbcb082a1bb943db && \
+add-apt-repository 'deb http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.0/ubuntu trusty main' && \
+apt-get update && \
+apt-get install -y mariadb-server && \
+sed -i 's/^\(bind-address\s.*\)/# \1/' /etc/mysql/my.cnf && \
 echo "mysqld_safe &" > /tmp/config && \
 echo "mysqladmin --silent --wait=30 ping || exit 1" >> /tmp/config && \
 echo "mysql -e 'GRANT ALL PRIVILEGES ON *.* TO \"root\"@\"%\" WITH GRANT OPTION;'" >> /tmp/config && \
@@ -82,25 +46,13 @@ echo "mysql -e 'DROP DATABASE IF EXISTS test'" >> /tmp/config && \
 bash /tmp/config && \
 rm -f /tmp/config && \
 /etc/init.d/mysql stop
-
-#Edit firstboot script
-RUN echo "/etc/init.d/mysql start && sleep 10" >> /bin/firstboot
-RUN echo 'echo "SET PASSWORD FOR \"root\"@\"%\" = PASSWORD(\"${MYSQL_ROOT_PASSWORD}\");" > /root/mysql-first-time.sql' >> /bin/firstboot
-RUN echo 'mysql -u root < /root/mysql-first-time.sql' >> /bin/firstboot
-RUN echo 'rm /root/mysql-first-time.sql' >> /bin/firstboot
-RUN echo "/etc/init.d/mysql stop && sleep 10" >> /bin/firstboot
-
-
-
-#Slimming down Docker containers
-RUN apt-get clean
-RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
-#Alter upstart script
-RUN echo -n "/usr/sbin/mysqld" >> /bin/upstart
-
-#Set volumes
+RUN echo "/etc/init.d/mysql start && sleep 10" >> /bin/firstboot && \
+echo 'echo "SET PASSWORD FOR \"root\"@\"%\" = PASSWORD(\"${MYSQL_ROOT_PASSWORD}\");" > /root/mysql-first-time.sql' >> /bin/firstboot && \
+echo 'mysql -u root < /root/mysql-first-time.sql' >> /bin/firstboot && \
+echo 'rm /root/mysql-first-time.sql' >> /bin/firstboot && \
+echo "/etc/init.d/mysql stop && sleep 10" >> /bin/firstboot && \
+apt-get clean && \
+rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
+echo -n "/usr/sbin/mysqld" >> /bin/upstart
 VOLUME ["/var/lib/mysql"]
-
-#Expose Ports
 EXPOSE 3306

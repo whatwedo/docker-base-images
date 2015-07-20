@@ -5,85 +5,42 @@
 # AUTOMATICALLY CREATED WITH docker-builder.sh   #
 #                                                #
 ##################################################
-
   
-#whatwedo MongoDB image
 
 FROM ubuntu:14.04
-
-#Maintainer
 MAINTAINER whatwedo GmbH <welove@whatwedo.ch>
-
-#Base settings
 ENV DEBIAN_FRONTEND noninteractive
 ENV HOME /root
-
-#Prevent initramfs updates from trying to run grub and lilo.
-#https://journal.paul.querna.org/articles/2013/10/15/docker-ubuntu-on-rackspace/
-#http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=594189
-RUN export INITRD=no
-RUN mkdir -p /etc/container_environment
-RUN echo -n no > /etc/container_environment/INITRD
-
-## Enable Ubuntu Universe and Multiverse.
-RUN sed -i 's/^#\s*\(deb.*universe\)$/\1/g' /etc/apt/sources.list
-RUN sed -i 's/^#\s*\(deb.*multiverse\)$/\1/g' /etc/apt/sources.list
-
-#Update system
-RUN apt-get update -y
-RUN apt-get upgrade -y
-
-#Install HTTPS support for APT
-RUN apt-get install -y apt-transport-https ca-certificates software-properties-common
-
-#Fix locales
-RUN apt-get install -y language-pack-en
-RUN locale-gen en_US
-RUN update-locale LANG=en_US.UTF-8 LC_CTYPE=en_US.UTF-8
-RUN echo -n en_US.UTF-8 > /etc/container_environment/LANG
-RUN echo -n en_US.UTF-8 > /etc/container_environment/LC_CTYPE
-RUN apt-get install localepurge
-
-#Fix: TERM environment variable not set.
+RUN export INITRD=no && \
+mkdir -p /etc/container_environment && \
+echo -n no > /etc/container_environment/INITRD && \
+sed -i 's/^#\s*\(deb.*universe\)$/\1/g' /etc/apt/sources.list && \
+sed -i 's/^#\s*\(deb.*multiverse\)$/\1/g' /etc/apt/sources.list && \
+apt-get update -y && \
+apt-get upgrade -y && \
+apt-get install -y apt-transport-https ca-certificates software-properties-common && \
+apt-get install -y language-pack-en && \
+locale-gen en_US && \
+update-locale LANG=en_US.UTF-8 LC_CTYPE=en_US.UTF-8 && \
+echo -n en_US.UTF-8 > /etc/container_environment/LANG && \
+echo -n en_US.UTF-8 > /etc/container_environment/LC_CTYPE && \
+apt-get install localepurge
 ENV TERM dumb
-
-#Create upstart script
-RUN echo "#\0041/bin/bash" > /bin/upstart
-RUN chmod 755 /bin/upstart
-
-#Add firstbootscript
+RUN echo "#\0041/bin/bash" > /bin/upstart && \
+chmod 755 /bin/upstart
 ADD files/firstboot /bin
-RUN echo "/bin/firstboot" >> /bin/upstart
-RUN chmod 755 /bin/firstboot
-
-#Set upstart script
+RUN echo "/bin/firstboot" >> /bin/upstart && \
+chmod 755 /bin/firstboot
 CMD /bin/upstart
-
-#Set motd
 ADD files/motd /etc
-
-#Install often used tools
-RUN apt-get install -y curl less nano wget unzip
-
-#Install MongoDB Repo
-RUN apt-key adv --keyserver keyserver.ubuntu.com --recv 7F0CEB10
-RUN add-apt-repository 'deb http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.0 multiverse'
-
-#Install Mongo DB
-RUN apt-get update 
-RUN apt-get install -y mongodb-org
-
-#Create data directory
-RUN mkdir -p /data/db
-#Slimming down Docker containers
-RUN apt-get clean
-RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
-#Expose Ports
+RUN apt-get install -y curl less nano wget unzip && \
+apt-key adv --keyserver keyserver.ubuntu.com --recv 7F0CEB10 && \
+add-apt-repository 'deb http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.0 multiverse' && \
+apt-get update && \
+apt-get install -y mongodb-org && \
+mkdir -p /data/db && \
+apt-get clean && \
+rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 EXPOSE 27017
-
-#Create volumes
 VOLUME  ["/data"]
-
-#Alter upstart script
 RUN echo -n "/usr/bin/mongod" >> /bin/upstart

@@ -5,76 +5,39 @@
 # AUTOMATICALLY CREATED WITH docker-builder.sh   #
 #                                                #
 ##################################################
-
   
-#whatwedo Bind9 image
 
 FROM ubuntu:14.04
-
-#Maintainer
 MAINTAINER whatwedo GmbH <welove@whatwedo.ch>
-
-#Base settings
 ENV DEBIAN_FRONTEND noninteractive
 ENV HOME /root
-
-#Prevent initramfs updates from trying to run grub and lilo.
-#https://journal.paul.querna.org/articles/2013/10/15/docker-ubuntu-on-rackspace/
-#http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=594189
-RUN export INITRD=no
-RUN mkdir -p /etc/container_environment
-RUN echo -n no > /etc/container_environment/INITRD
-
-## Enable Ubuntu Universe and Multiverse.
-RUN sed -i 's/^#\s*\(deb.*universe\)$/\1/g' /etc/apt/sources.list
-RUN sed -i 's/^#\s*\(deb.*multiverse\)$/\1/g' /etc/apt/sources.list
-
-#Update system
-RUN apt-get update -y
-RUN apt-get upgrade -y
-
-#Install HTTPS support for APT
-RUN apt-get install -y apt-transport-https ca-certificates software-properties-common
-
-#Fix locales
-RUN apt-get install -y language-pack-en
-RUN locale-gen en_US
-RUN update-locale LANG=en_US.UTF-8 LC_CTYPE=en_US.UTF-8
-RUN echo -n en_US.UTF-8 > /etc/container_environment/LANG
-RUN echo -n en_US.UTF-8 > /etc/container_environment/LC_CTYPE
-RUN apt-get install localepurge
-
-#Fix: TERM environment variable not set.
+RUN export INITRD=no && \
+mkdir -p /etc/container_environment && \
+echo -n no > /etc/container_environment/INITRD && \
+sed -i 's/^#\s*\(deb.*universe\)$/\1/g' /etc/apt/sources.list && \
+sed -i 's/^#\s*\(deb.*multiverse\)$/\1/g' /etc/apt/sources.list && \
+apt-get update -y && \
+apt-get upgrade -y && \
+apt-get install -y apt-transport-https ca-certificates software-properties-common && \
+apt-get install -y language-pack-en && \
+locale-gen en_US && \
+update-locale LANG=en_US.UTF-8 LC_CTYPE=en_US.UTF-8 && \
+echo -n en_US.UTF-8 > /etc/container_environment/LANG && \
+echo -n en_US.UTF-8 > /etc/container_environment/LC_CTYPE && \
+apt-get install localepurge
 ENV TERM dumb
-
-#Create upstart script
-RUN echo "#\0041/bin/bash" > /bin/upstart
-RUN chmod 755 /bin/upstart
-
-#Add firstbootscript
+RUN echo "#\0041/bin/bash" > /bin/upstart && \
+chmod 755 /bin/upstart
 ADD files/firstboot /bin
-RUN echo "/bin/firstboot" >> /bin/upstart
-RUN chmod 755 /bin/firstboot
-
-#Set upstart script
+RUN echo "/bin/firstboot" >> /bin/upstart && \
+chmod 755 /bin/firstboot
 CMD /bin/upstart
-
-#Set motd
 ADD files/motd /etc
-
-#Install often used tools
-RUN apt-get install -y curl less nano wget unzip
-
-#Install bind9
-RUN apt-get install -y bind9
-RUN mkdir -p /var/run/named && chown bind:bind /var/run/named
-#Slimming down Docker containers
-RUN apt-get clean
-RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
-#Alter upstart script
-RUN echo -n "/usr/sbin/named -g -c /etc/bind/named.conf -u bind" >> /bin/upstart
-
-#Expose Ports
+RUN apt-get install -y curl less nano wget unzip && \
+apt-get install -y bind9 && \
+mkdir -p /var/run/named && chown bind:bind /var/run/named && \
+apt-get clean && \
+rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
+echo -n "/usr/sbin/named -g -c /etc/bind/named.conf -u bind" >> /bin/upstart
 EXPOSE 53/udp 53/tcp
 EXPOSE 953
