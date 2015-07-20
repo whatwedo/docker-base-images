@@ -10,16 +10,17 @@ We at [whatwedo](https://whatwedo.ch/) are slowly going away from traditional ap
 | [bind](https://registry.hub.docker.com/u/whatwedo/bind/) | Bind9 nameserver |
 | [desktop](https://registry.hub.docker.com/u/whatwedo/desktop/) | Graphical LXDE environment |
 | [elasticsearch](https://registry.hub.docker.com/u/whatwedo/elasticsearch/) | Elasticsearch server |
+| [golang](https://registry.hub.docker.com/u/whatwedo/golang/) | Golang compiler |
 | [icinga2](https://registry.hub.docker.com/u/whatwedo/icinga2/) | Icinga2 and Icinga2-Web |
 | [kibana](https://registry.hub.docker.com/u/whatwedo/kibana/) | Kibana data exploration UI |
 | [logstash](https://registry.hub.docker.com/u/whatwedo/logstash/) | Logstash |
 | [logstash-forwarder](https://registry.hub.docker.com/u/whatwedo/logstash-forwarder/) | Logstash-Forwarder |
-| [golang](https://registry.hub.docker.com/u/whatwedo/golang/) | Golang compiler |
 | [mariadb](https://registry.hub.docker.com/u/whatwedo/mariadb/) | MariaDB server |
 | [mongodb](https://registry.hub.docker.com/u/whatwedo/mongodb/) | MongoDB server |
 | [nginx](https://registry.hub.docker.com/u/whatwedo/nginx/) | nginx webserver |
 | [nginx-php](https://registry.hub.docker.com/u/whatwedo/nginx-php/) | nginx webserver including PHP |
 | [postgres](https://registry.hub.docker.com/u/whatwedo/postgres/) | Postgres database server |
+| [redis](https://registry.hub.docker.com/u/whatwedo/redis/) | Redis data structure server |
 | [tomcat](https://registry.hub.docker.com/u/whatwedo/tomcat/) | Tomcat application server |
 | [wordpress](https://registry.hub.docker.com/u/whatwedo/wordpress/) | Wordpress installed on Apache 2 |
 

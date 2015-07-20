@@ -90,8 +90,9 @@ build-images() {
 
 #build the given image
 build-image() {
+  build-file $1
   cd "dist/$1"
-  docker build --no-cache --rm -t "$1:latest" .
+  DOCKER_OPTS="--dns 8.8.8.8 --dns 8.8.4.4" docker build --no-cache --rm -t "$1:latest" . 
   cd ../..
 }
 
