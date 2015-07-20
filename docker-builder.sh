@@ -56,10 +56,23 @@ build-file() {
 # AUTOMATICALLY CREATED WITH docker-builder.sh   #
 #                                                #
 ##################################################
-
   " > "dist/$1/Dockerfile"
 
-  m4 -I "modules/*.m4" "images/$1.m4" >> "dist/$1/Dockerfile"
+  lastline=""
+  templine=""
+  while read -r line; do
+    if  [[ $line == RUN* ]] && [[ $templine == RUN* ]] ;
+    then
+      echo "$lastline && \\" >> "dist/$1/Dockerfile"
+      templine=$line
+      lastline=$(echo "$line" | sed 's/^RUN //g' )
+    else
+      echo "$lastline" >> "dist/$1/Dockerfile"
+      templine=$line
+      lastline=$line
+    fi
+  done <<< "$(m4 -I "modules/*.m4" "images/$1.m4" | grep -v '^\#' | grep -v '^\s*$')"
+  echo "$lastline" >> "dist/$1/Dockerfile"
 
   cp "images/$1.md" "dist/$1/README.md"
 }
