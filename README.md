@@ -21,6 +21,7 @@ We at [whatwedo](https://whatwedo.ch/) are slowly going away from traditional ap
 | [nginx-php](https://registry.hub.docker.com/u/whatwedo/nginx-php/) | nginx webserver including PHP |
 | [postgres](https://registry.hub.docker.com/u/whatwedo/postgres/) | Postgres database server |
 | [redis](https://registry.hub.docker.com/u/whatwedo/redis/) | Redis data structure server |
+| [ruby](https://registry.hub.docker.com/u/whatwedo/ruby/) | Ruby interpreter |
 | [tomcat](https://registry.hub.docker.com/u/whatwedo/tomcat/) | Tomcat application server |
 | [wordpress](https://registry.hub.docker.com/u/whatwedo/wordpress/) | Wordpress installed on Apache 2 |
 
