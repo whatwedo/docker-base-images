@@ -46,6 +46,7 @@ ENV PATH $PATH:/usr/local/go/bin:/go/bin
 RUN apt-get install -y git && \
 git clone git://github.com/elasticsearch/logstash-forwarder.git /opt/logstash-forwarder && \
 cd /opt/logstash-forwarder && go build && \
-apt-get clean && \
+apt-get autoremove -y && \
+apt-get clean -y && \
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
 echo -n "/opt/logstash-forwarder/logstash-forwarder -config /etc/logstash-forwarder/config.json" >> /bin/upstart

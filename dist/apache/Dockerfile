@@ -43,7 +43,8 @@ ENV APACHE_RUN_DIR /var/run/apache2
 ENV APACHE_LOCK_DIR /var/lock/apache2
 RUN mkdir -p $APACHE_RUN_DIR $APACHE_LOCK_DIR $APACHE_LOG_DIR && \
 rm -rf /var/www/html/* && \
-apt-get clean && \
+apt-get autoremove -y && \
+apt-get clean -y && \
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
 echo -n "apache2 -D FOREGROUND" >> /bin/upstart
 EXPOSE 80

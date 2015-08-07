@@ -47,7 +47,8 @@ rm -rf /etc/nginx/sites-enabled/ && \
 rm -rf /etc/nginx/conf.d/ && \
 rm /etc/nginx/nginx.conf
 ADD files/nginx-default /etc/nginx
-RUN apt-get clean && \
+RUN apt-get autoremove -y && \
+apt-get clean -y && \
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
 echo -n "nginx" >> /bin/upstart
 EXPOSE 80

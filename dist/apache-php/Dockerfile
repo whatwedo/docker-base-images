@@ -47,7 +47,8 @@ apt-get install php5-cli php5-common php5-cgi php5-curl php5-imagick php5-imap p
 echo "cgi.fix_pathinfo = 0;" >> /etc/php5/fpm/php.ini && \
 chmod -R 777 /var/lib/php5 && \
 apt-get install -y libapache2-mod-php5 && \
-apt-get clean && \
+apt-get autoremove -y && \
+apt-get clean -y && \
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
 echo -n "apache2 -D FOREGROUND" >> /bin/upstart
 EXPOSE 80

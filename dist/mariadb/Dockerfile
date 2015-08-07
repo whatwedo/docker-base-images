@@ -51,7 +51,8 @@ echo 'echo "SET PASSWORD FOR \"root\"@\"%\" = PASSWORD(\"${MYSQL_ROOT_PASSWORD}\
 echo 'mysql -u root < /root/mysql-first-time.sql' >> /bin/firstboot && \
 echo 'rm /root/mysql-first-time.sql' >> /bin/firstboot && \
 echo "/etc/init.d/mysql stop && sleep 10" >> /bin/firstboot && \
-apt-get clean && \
+apt-get autoremove -y && \
+apt-get clean -y && \
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
 echo -n "/usr/sbin/mysqld" >> /bin/upstart
 VOLUME ["/var/lib/mysql"]

@@ -48,7 +48,8 @@ useradd -g tomcat -d /opt/tomcat tomcat && \
 usermod -G www-data tomcat && \
 chown tomcat:tomcat /opt/tomcat -R && \
 rm -rf /opt/tomcat/webapps/* && \
-apt-get clean && \
+apt-get autoremove -y && \
+apt-get clean -y && \
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
 echo -n "/opt/tomcat/bin/catalina.sh run" >> /bin/upstart
 EXPOSE 8080

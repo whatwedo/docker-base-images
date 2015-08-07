@@ -45,7 +45,8 @@ apt-get -y install elasticsearch && \
 rm -rf /etc/elasticsearch/elasticsearch.yml
 ADD files/elasticsearch /etc/elasticsearch
 RUN ln -s /etc/elasticsearch /usr/share/elasticsearch/config && \
-apt-get clean && \
+apt-get autoremove -y && \
+apt-get clean -y && \
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
 echo -n "/usr/share/elasticsearch/bin/elasticsearch" >> /bin/upstart
 EXPOSE 9200

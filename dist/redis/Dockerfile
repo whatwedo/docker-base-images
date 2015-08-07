@@ -37,7 +37,8 @@ RUN apt-get install -y curl less nano wget unzip && \
 apt-get install -y redis-server && \
 mkdir /var/data && \
 echo "dir /var/data" >> /etc/redis/redis.conf && \
-apt-get clean && \
+apt-get autoremove -y && \
+apt-get clean -y && \
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
 echo -n "/usr/bin/redis-server" >> /bin/upstart
 EXPOSE 6379

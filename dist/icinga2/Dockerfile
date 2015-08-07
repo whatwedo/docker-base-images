@@ -78,7 +78,8 @@ echo 'echo "}" >> /etc/icinga2/features-available/ido-mysql.conf' >> /bin/firstb
 echo 'sleep 30' >> /bin/firstboot && \
 echo 'mysql -u ${DB_USER} -p${DB_PW} -h ${DB_SERVER} -P ${DB_PORT} -e "CREATE DATABASE ${DB_NAME}"' >> /bin/firstboot && \
 echo 'mysql -u ${DB_USER} -p${DB_PW} -h ${DB_SERVER} -D ${DB_NAME} -P ${DB_PORT} < /usr/share/icinga2-ido-mysql/schema/mysql.sql' >> /bin/firstboot && \
-apt-get clean && \
+apt-get autoremove -y && \
+apt-get clean -y && \
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
 echo -n "/usr/sbin/icinga2 daemon & apache2 -D FOREGROUND" >> /bin/upstart
 VOLUME  ["/etc/icinga2", "/etc/icingaweb2"]

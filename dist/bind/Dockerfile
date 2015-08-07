@@ -36,7 +36,8 @@ ADD files/motd /etc
 RUN apt-get install -y curl less nano wget unzip && \
 apt-get install -y bind9 && \
 mkdir -p /var/run/named && chown bind:bind /var/run/named && \
-apt-get clean && \
+apt-get autoremove -y && \
+apt-get clean -y && \
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
 echo -n "/usr/sbin/named -g -c /etc/bind/named.conf -u bind" >> /bin/upstart
 EXPOSE 53/udp 53/tcp

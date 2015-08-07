@@ -44,7 +44,8 @@ echo 'echo "alter user postgres password \0047${PG_ROOT_PASSWORD}\0047;" > /pg-f
 echo 'su postgres -c "psql -f /pg-first-time.sql"' >> /bin/firstboot && \
 echo 'rm /pg-first-time.sql' >> /bin/firstboot && \
 echo "/etc/init.d/postgresql stop" >> /bin/firstboot && \
-apt-get clean && \
+apt-get autoremove -y && \
+apt-get clean -y && \
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
 echo -n '/bin/su postgres -c "/usr/lib/postgresql/9.3/bin/postgres -D /var/lib/postgresql/9.3/main -c config_file=/etc/postgresql/9.3/main/postgresql.conf"' >> /bin/upstart
 VOLUME  ["/var/lib/postgresql"]

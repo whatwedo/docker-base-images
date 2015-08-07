@@ -50,7 +50,8 @@ ADD files/supervisor-desktop /etc/supervisor/conf.d
 ADD files/desktop-pw-reset /bin
 RUN chmod 755 /bin/pw-reset && \
 echo "/bin/pw-reset" >> /bin/firstboot && \
-apt-get clean && \
+apt-get autoremove -y && \
+apt-get clean -y && \
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 EXPOSE 6080
 RUN echo -n "exec /usr/bin/supervisord -n" >> /bin/upstart

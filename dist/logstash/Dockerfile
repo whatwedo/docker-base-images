@@ -42,7 +42,8 @@ wget -O - http://packages.elasticsearch.org/GPG-KEY-elasticsearch | apt-key add 
 add-apt-repository 'deb http://packages.elasticsearch.org/logstash/1.4/debian stable main' && \
 apt-get update -y && \
 apt-get install -y logstash && \
-apt-get clean && \
+apt-get autoremove -y && \
+apt-get clean -y && \
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
 echo -n "/opt/logstash/bin/logstash -f /etc/logstash/conf.d" >> /bin/upstart
 VOLUME  ["/etc/logstash/conf.d"]

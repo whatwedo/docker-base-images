@@ -35,5 +35,6 @@ CMD /bin/upstart
 ADD files/motd /etc
 RUN apt-get install -y curl less nano wget unzip && \
 apt-get install -y ruby ruby-dev && \
-apt-get clean && \
+apt-get autoremove -y && \
+apt-get clean -y && \
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*

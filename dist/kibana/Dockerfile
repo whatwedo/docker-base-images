@@ -43,7 +43,8 @@ RUN set -x \
 && tar -xz --strip-components=1 -C /opt/kibana -f kibana.tar.gz \
 && rm kibana.tar.gz
 ENV PATH /opt/kibana/bin:$PATH
-RUN apt-get clean && \
+RUN apt-get autoremove -y && \
+apt-get clean -y && \
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
 echo -n 'kibana -e ${ELASTICSEARCH_URL}' >> /bin/upstart
 EXPOSE 3306

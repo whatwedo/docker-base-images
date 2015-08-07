@@ -39,7 +39,8 @@ add-apt-repository 'deb http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.
 apt-get update && \
 apt-get install -y mongodb-org && \
 mkdir -p /data/db && \
-apt-get clean && \
+apt-get autoremove -y && \
+apt-get clean -y && \
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 EXPOSE 27017
 VOLUME  ["/data"]
