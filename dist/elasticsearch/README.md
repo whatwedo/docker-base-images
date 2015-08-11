@@ -12,6 +12,7 @@ This image is not using any environment variables.
 
 ##Volumes
 * /data
+* /etc/firstboot
 
 ##Exposed Ports
 * 9200

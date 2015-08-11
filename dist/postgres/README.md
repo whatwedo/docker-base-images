@@ -15,6 +15,7 @@ This is the one environment variable that is required. This environment variable
 
 ##Volumes
 * /var/lib/postgresql
+* /etc/firstboot
 
 ##Exposed Ports
 * 5432

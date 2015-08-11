@@ -31,6 +31,7 @@ chmod 755 /bin/upstart
 ADD files/firstboot /bin
 RUN echo "/bin/firstboot" >> /bin/upstart && \
 chmod 755 /bin/firstboot
+VOLUME  ["/etc/firstboot"]
 CMD /bin/upstart
 ADD files/motd /etc
 RUN apt-get install -y curl less nano wget unzip

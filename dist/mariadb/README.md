@@ -15,6 +15,7 @@ This is the one environment variable that is required. This environment variable
 
 ##Volumes
 * /var/lib/mysql
+* /etc/firstboot
 
 ##Exposed Ports
 * 3306

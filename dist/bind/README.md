@@ -11,7 +11,7 @@ docker run -p 53:53 -p 953:953 whatwedo/bind
 This image is not using any environment variables.
 
 ##Volumes
-This image is not using any volumes.
+* /etc/firstboot
 
 ##Exposed Ports
 * 53

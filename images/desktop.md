@@ -11,7 +11,7 @@ docker run -p 6080:6080 whatwedo/desktop
 This image is not using any environment variables.
 
 ##Volumes
-This image is not using any volumes.
+* /etc/firstboot
 
 ##Exposed Ports
 * 6080

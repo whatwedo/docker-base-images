@@ -44,6 +44,7 @@ RUN chmod 755 /bin/upstart
 ADD files/firstboot /bin
 RUN echo "/bin/firstboot" >> /bin/upstart
 RUN chmod 755 /bin/firstboot
+VOLUME  ["/etc/firstboot"]
 
 #Set upstart script
 CMD /bin/upstart

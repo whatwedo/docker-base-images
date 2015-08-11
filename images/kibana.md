@@ -13,7 +13,7 @@ docker run -p 5601:5601 -e ELASTICSEARCH_URL=http://elasticsearch:9200 whatwedo/
 URL to your [Elasticsearch](https://registry.hub.docker.com/u/whatwedo/elasticsearch/) installation.
 
 ##Volumes
-This image is not using any volumes.
+* /etc/firstboot
 
 ##Exposed Ports
 * 5601

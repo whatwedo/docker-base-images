@@ -12,6 +12,7 @@ This image is not using any environment variables.
 
 ##Volumes
 * /var/www
+* /etc/firstboot
 
 ##Exposed Ports
 * 80

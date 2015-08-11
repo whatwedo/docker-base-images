@@ -12,6 +12,7 @@ This image is not using any environment variables.
 
 ##Volumes
 * /etc/logstash/conf.d
+* /etc/firstboot
 
 ##Exposed Ports
 * 5000

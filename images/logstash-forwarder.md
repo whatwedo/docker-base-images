@@ -11,7 +11,7 @@ docker run whatwedo/logstash-forwarder
 This image is not using any environment variables.
 
 ##Volumes
-This image is not using any volumes.
+* /etc/firstboot
 
 ##Exposed Ports
 This image is not exposing any ports.

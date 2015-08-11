@@ -11,7 +11,7 @@ docker run -p 8080:8080 whatwedo/tomcat
 This image is not using any environment variables.
 
 ##Volumes
-This image is not using any volumes.
+* /etc/firstboot
 
 ##Exposed Ports
 * 8080
