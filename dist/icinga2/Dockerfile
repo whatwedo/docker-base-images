@@ -51,7 +51,7 @@ apt-get install -y libapache2-mod-php5 && \
 wget --quiet -O - http://packages.icinga.org/icinga.key | apt-key add - && \
 echo "deb http://packages.icinga.org/ubuntu icinga-trusty main" >> /etc/apt/sources.list && \
 apt-get update -y && \
-apt-get -y install icinga2 icinga2-ido-mysql nagios-plugins icingaweb2 && \
+apt-get -y install icinga2 icinga2-ido-mysql nagios-plugins icingaweb2 nagios-nrpe-plugin && \
 icinga2 feature enable ido-mysql && \
 icinga2 feature enable command && \
 rm /etc/dbconfig-common/icinga2-ido-mysql.conf
