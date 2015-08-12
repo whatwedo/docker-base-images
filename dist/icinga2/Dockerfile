@@ -83,4 +83,4 @@ apt-get autoremove -y && \
 apt-get clean -y && \
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
 echo -n "/usr/sbin/icinga2 daemon & apache2 -D FOREGROUND" >> /bin/upstart
-VOLUME  ["/etc/icinga2", "/etc/icingaweb2"]
+VOLUME  ["/etc/icinga2", "/etc/icingaweb2", "/var/lib/icinga2"]
