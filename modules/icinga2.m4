@@ -4,7 +4,8 @@ RUN echo "deb http://packages.icinga.org/ubuntu icinga-trusty main" >> /etc/apt/
 RUN apt-get update -y
 
 #Install icinga and nagios plugins
-RUN apt-get -y install icinga2 icinga2-ido-mysql nagios-plugins icingaweb2 nagios-nrpe-plugin
+RUN apt-get -y install icinga2 icinga2-ido-mysql nagios-plugins icingaweb2
+RUN apt-get -y install nagios-nrpe-plugin --no-install-recommends
 
 #Enable features
 RUN icinga2 feature enable ido-mysql
