@@ -1,9 +1,9 @@
 #/bin/bash
-if [ -f /etc/firstboot ];
+if [ -f /etc/firstboot/flag ];
 then
    exit
 fi
 
-date > /etc/firstboot
+date > /etc/firstboot/flag
 echo "Run content of /bin/firstboot..."
 
