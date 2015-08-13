@@ -51,13 +51,22 @@ apt-get install -y libapache2-mod-php5 && \
 wget --quiet -O - http://packages.icinga.org/icinga.key | apt-key add - && \
 echo "deb http://packages.icinga.org/ubuntu icinga-trusty main" >> /etc/apt/sources.list && \
 apt-get update -y && \
-apt-get -y install icinga2 icinga2-ido-mysql nagios-plugins icingaweb2 && \
+apt-get -y install icinga2 icinga2-ido-mysql nagios-plugins icingaweb2 icinga2-classicui && \
 apt-get -y install nagios-nrpe-plugin --no-install-recommends && \
 icinga2 feature enable ido-mysql && \
 icinga2 feature enable command && \
 rm /etc/dbconfig-common/icinga2-ido-mysql.conf
-ADD files/icinga /etc/dbconfig-common
-RUN /etc/init.d/icinga2 start && sleep 30 && /etc/init.d/icinga2 stop && \
+ADD files/icinga/conf /etc/dbconfig-common
+ADD files/icinga/plugins /usr/lib/nagios/plugins
+RUN chmod 755 /usr/lib/nagios/plugins/check_ssl_cert && \
+apt-get install libwww-perl libcrypt-ssleay-perl && \
+wget https://raw.github.com/tinyspeck/services-examples/master/nagios.pl && \
+mv nagios.pl /usr/local/bin/slack_nagios.pl && \
+chmod 755 /usr/local/bin/slack_nagios.pl && \
+wget https://raw.githubusercontent.com/bfg/nagios-twilio/master/bin/twilio-sms && \
+mv twilio-sms /usr/local/bin && \
+chmod 755 /usr/local/bin/twilio-sms && \
+/etc/init.d/icinga2 start && sleep 30 && /etc/init.d/icinga2 stop && \
 echo '<?php header("location: /icingaweb2"); ?>' > /var/www/html/index.php && \
 echo 'date.timezone = "Europe/Zurich"' >> /etc/php5/apache2/php.ini && \
 echo "icingacli setup config directory --group icingaweb2" >> /bin/firstboot && \

@@ -4,7 +4,7 @@ RUN echo "deb http://packages.icinga.org/ubuntu icinga-trusty main" >> /etc/apt/
 RUN apt-get update -y
 
 #Install icinga and nagios plugins
-RUN apt-get -y install icinga2 icinga2-ido-mysql nagios-plugins icingaweb2
+RUN apt-get -y install icinga2 icinga2-ido-mysql nagios-plugins icingaweb2 icinga2-classicui
 RUN apt-get -y install nagios-nrpe-plugin --no-install-recommends
 
 #Enable features
@@ -13,7 +13,22 @@ RUN icinga2 feature enable command
 
 #Add icinga config
 RUN rm /etc/dbconfig-common/icinga2-ido-mysql.conf
-ADD files/icinga /etc/dbconfig-common
+ADD files/icinga/conf /etc/dbconfig-common
+
+#Add nagios plugins
+ADD files/icinga/plugins /usr/lib/nagios/plugins
+RUN chmod 755 /usr/lib/nagios/plugins/check_ssl_cert
+
+#Add Slack integration
+RUN apt-get install libwww-perl libcrypt-ssleay-perl
+RUN wget https://raw.github.com/tinyspeck/services-examples/master/nagios.pl
+RUN mv nagios.pl /usr/local/bin/slack_nagios.pl
+RUN chmod 755 /usr/local/bin/slack_nagios.pl
+
+#Add twilio integration
+RUN wget https://raw.githubusercontent.com/bfg/nagios-twilio/master/bin/twilio-sms
+RUN mv twilio-sms /usr/local/bin
+RUN chmod 755 /usr/local/bin/twilio-sms
 
 #Start and stop icinga (Init system)
 RUN /etc/init.d/icinga2 start && sleep 30 && /etc/init.d/icinga2 stop
