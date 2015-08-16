@@ -7,6 +7,7 @@ RUN groupadd tomcat
 RUN useradd -g tomcat -d /opt/tomcat tomcat
 RUN usermod -G www-data tomcat
 RUN chown tomcat:tomcat /opt/tomcat -R
+RUN rm apache-tomcat-8.0.14.tar.gz
 
 #Delete tomcat default apps
 RUN rm -rf /opt/tomcat/webapps/*
