@@ -20,7 +20,7 @@ ADD files/icinga/plugins /usr/lib/nagios/plugins
 RUN chmod 755 /usr/lib/nagios/plugins/check_ssl_cert
 
 #Add Slack integration
-RUN apt-get install libwww-perl libcrypt-ssleay-perl
+RUN apt-get -y install libwww-perl libcrypt-ssleay-perl
 RUN wget https://raw.github.com/tinyspeck/services-examples/master/nagios.pl
 RUN mv nagios.pl /usr/local/bin/slack_nagios.pl
 RUN chmod 755 /usr/local/bin/slack_nagios.pl
