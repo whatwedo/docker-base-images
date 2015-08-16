@@ -59,7 +59,7 @@ rm /etc/dbconfig-common/icinga2-ido-mysql.conf
 ADD files/icinga/conf /etc/dbconfig-common
 ADD files/icinga/plugins /usr/lib/nagios/plugins
 RUN chmod 755 /usr/lib/nagios/plugins/check_ssl_cert && \
-apt-get install libwww-perl libcrypt-ssleay-perl && \
+apt-get -y install libwww-perl libcrypt-ssleay-perl && \
 wget https://raw.github.com/tinyspeck/services-examples/master/nagios.pl && \
 mv nagios.pl /usr/local/bin/slack_nagios.pl && \
 chmod 755 /usr/local/bin/slack_nagios.pl && \

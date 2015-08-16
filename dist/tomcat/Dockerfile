@@ -48,6 +48,7 @@ groupadd tomcat && \
 useradd -g tomcat -d /opt/tomcat tomcat && \
 usermod -G www-data tomcat && \
 chown tomcat:tomcat /opt/tomcat -R && \
+rm apache-tomcat-8.0.14.tar.gz && \
 rm -rf /opt/tomcat/webapps/* && \
 apt-get autoremove -y && \
 apt-get clean -y && \
