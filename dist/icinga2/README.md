@@ -30,6 +30,7 @@ Name of thy Icinga2 mysql-ido database. In the above example, it is being set to
 ## Volumes
 * /etc/icinga2
 * /etc/icingaweb2
+* /var/lib/icinga2
 * /etc/firstboot
 
 ## Exposed Ports

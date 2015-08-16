@@ -1,7 +1,7 @@
-#whatwedo - Docker Base Images
+# whatwedo - Docker Base Images
 We at [whatwedo](https://whatwedo.ch/) are slowly going away from traditional application hosting to the approach of using Docker containers. For this reason we built several docker images. They are available on [Dockerhub](https://registry.hub.docker.com/repos/whatwedo/). You can use them easily in your own projects.
 
-##Images
+## Images
 | Name | Description |
 |---|---|
 | [base](https://registry.hub.docker.com/u/whatwedo/base/) | several base packages for daily working with docker installed |
@@ -25,7 +25,7 @@ We at [whatwedo](https://whatwedo.ch/) are slowly going away from traditional ap
 | [tomcat](https://registry.hub.docker.com/u/whatwedo/tomcat/) | Tomcat application server |
 | [wordpress](https://registry.hub.docker.com/u/whatwedo/wordpress/) | Wordpress installed on Apache 2 |
 
-##Directory/File Layout
+## Directory/File Layout
 The following table show the directory Layout of this repository:
 
 | Folder | Description |
@@ -38,10 +38,10 @@ The following table show the directory Layout of this repository:
 | `docker-builder.sh`| docker-builder.sh is a script for managing complex docker images. It provides an easy mechanism for creating and building docker images |
 | `Vagrantfile`| Developer VM configuration |  
 
-##dockerbuilder.sh
+## dockerbuilder.sh
 Because we are using several base images with recurring tasks in the Dockerfile, we are using a script to include commands. This script is available under [https://github.com/whatwedo/docker-base-images/blob/master/docker-builder.sh](https://github.com/whatwedo/docker-base-images/blob/master/docker-builder.sh). Feel free to use it in your own projects.
 
-###Usage
+### Usage
 
 ```
 ./docker-builder.sh build-files         - This will build all dockerfiles
@@ -50,7 +50,7 @@ Because we are using several base images with recurring tasks in the Dockerfile,
 ./docker-builder.sh build-image [name]  - This will build the given image
 ```
 
-##Developer VM
+## Developer VM
 To start and access the developer VM, use the following commands:
 
 ```
@@ -60,11 +60,11 @@ vagrant ssh
 
 The repository root will be mounted under `/vagrant`
 
-##Bugs and Issues
+## Bugs and Issues
 If you have any problems with this image, feel free to open a new issue in our issue tracker [https://github.com/whatwedo/docker-base-images/issues](https://github.com/whatwedo/docker-base-images/issues)
 
-##License
+## License
 This image is licensed under the MIT License. The full license text is available under [https://github.com/whatwedo/docker-base-images/blob/master/LICENSE](https://github.com/whatwedo/docker-base-images/blob/master/LICENSE).
 
-##Further information
+## Further information
 There are a number of images we are using at [https://whatwedo.ch/](whatwedo). Feel free to use them. More information about the other images are available in [our Github repo](https://github.com/whatwedo/docker-base-images).
