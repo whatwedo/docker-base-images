@@ -14,6 +14,7 @@ RUN echo -n "apache2 -D FOREGROUND" >> /bin/upstart
 
 #Expose Ports
 EXPOSE 80
+EXPOSE 443
 
 #Create volumes
 VOLUME  ["/var/www"]

@@ -58,4 +58,5 @@ rm /etc/nginx/nginx.conf
 ADD files/nginx-php /etc/nginx
 RUN echo -n "service php5-fpm start && nginx" >> /bin/upstart
 EXPOSE 80
+EXPOSE 443
 VOLUME  ["/var/www"]
