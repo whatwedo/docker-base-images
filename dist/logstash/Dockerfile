@@ -47,5 +47,4 @@ apt-get autoremove -y && \
 apt-get clean -y && \
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
 echo -n "/opt/logstash/bin/logstash -f /etc/logstash/conf.d" >> /bin/upstart
-VOLUME  ["/etc/logstash/conf.d"]
 EXPOSE 5000

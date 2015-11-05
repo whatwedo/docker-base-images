@@ -15,6 +15,3 @@ RUN echo -n "service php5-fpm start && nginx" >> /bin/upstart
 #Expose Ports
 EXPOSE 80
 EXPOSE 443
-
-#Create volumes
-VOLUME  ["/var/www"]

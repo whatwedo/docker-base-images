@@ -56,4 +56,3 @@ rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
 echo -n "nginx" >> /bin/upstart
 EXPOSE 80
 EXPOSE 443
-VOLUME  ["/var/www"]

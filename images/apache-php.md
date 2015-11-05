@@ -11,7 +11,6 @@ docker run -p 80:80 whatwedo/apache-php
 This image is not using any environment variables.
 
 ## Volumes
-* /var/www
 * /etc/firstboot
 
 ## Exposed Ports

@@ -8,6 +8,4 @@ include(`modules/cleanup.m4')
 #Alter upstart script
 RUN echo -n "/opt/logstash/bin/logstash -f /etc/logstash/conf.d" >> /bin/upstart
 
-VOLUME  ["/etc/logstash/conf.d"]
-
 EXPOSE 5000

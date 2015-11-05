@@ -10,6 +10,3 @@ RUN echo -n "nginx" >> /bin/upstart
 #Expose Ports
 EXPOSE 80
 EXPOSE 443
-
-#Create volumes
-VOLUME  ["/var/www"]
