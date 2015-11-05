@@ -1,4 +1,4 @@
-# whatwedo base image - nginx PHP
+# whatwedo base image - Symfony
 In this image is a basic nginx webserver with PHP installation available. It is configured to run a Symfony application placed /var/www in. There are no SSL enabled per default.
 
 ## Usage

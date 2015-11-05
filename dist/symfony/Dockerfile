@@ -58,6 +58,6 @@ apt-get clean -y && \
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
 rm /etc/nginx/nginx.conf
 ADD files/symfony /etc/nginx
-RUN echo -n "service php5-fpm start && nginx" >> /bin/upstart
+RUN echo -n "service php5-fpm start && nginx & tail -f /var/www/app/logs/prod.log " >> /bin/upstart
 EXPOSE 80
 EXPOSE 443

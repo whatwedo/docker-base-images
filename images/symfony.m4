@@ -10,7 +10,7 @@ RUN rm /etc/nginx/nginx.conf
 ADD files/symfony /etc/nginx
 
 #Alter upstart script
-RUN echo -n "service php5-fpm start && nginx" >> /bin/upstart
+RUN echo -n "service php5-fpm start && nginx & tail -f /var/www/app/logs/prod.log " >> /bin/upstart
 
 #Expose Ports
 EXPOSE 80
