@@ -17,3 +17,6 @@ RUN rm -rf /etc/nginx/conf.d/
 RUN rm /etc/nginx/nginx.conf
 ADD files/nginx-default /etc/nginx
 
+#Set permissions
+RUN chown -R www-data /var/www/
+RUN chmod -R 755 /var/www/
