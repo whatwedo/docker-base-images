@@ -14,4 +14,4 @@ include(`modules/cleanup.m4')
 RUN echo -n "rm -rf /run/httpd/* && /usr/sbin/icinga2 daemon & apache2 -D FOREGROUND" >> /bin/upstart
 
 #Create volumes
-VOLUME  ["/etc/icinga2", "/etc/icingaweb2", "/var/lib/icinga2"]
+VOLUME  ["/etc/icinga2", "/etc/icingaweb2", "/var/lib/icinga2", "/etc/icinga2-classicui"]

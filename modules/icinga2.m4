@@ -4,7 +4,7 @@ RUN echo "deb http://packages.icinga.org/ubuntu icinga-trusty main" >> /etc/apt/
 RUN apt-get update -y
 
 #Install icinga and nagios plugins
-RUN apt-get -y install icinga2 icinga2-ido-mysql nagios-plugins icingaweb2
+RUN apt-get -y install icinga2 icinga2-ido-mysql icinga2-classicui nagios-plugins icingaweb2
 RUN apt-get -y install nagios-nrpe-plugin --no-install-recommends
 
 #Enable features
@@ -63,6 +63,9 @@ RUN echo 'echo "host = \"${DB_SERVER}\"," >> /etc/icinga2/features-available/ido
 RUN echo 'echo "port = \"${DB_PORT}\"" >> /etc/icinga2/features-available/ido-mysql.conf' >> /bin/firstboot
 RUN echo 'echo "database = \"${DB_NAME}\"" >> /etc/icinga2/features-available/ido-mysql.conf' >> /bin/firstboot
 RUN echo 'echo "}" >> /etc/icinga2/features-available/ido-mysql.conf' >> /bin/firstboot
+
+#Icinga classicui settings
+RUN echo 'htpasswd -b -c /etc/icinga2-classicui/htpasswd.users icingaadmin ${ICINGAADMIN_PW}' >> /bin/firstboot
 
 #Wait until database service is started (in multi container environement)
 RUN echo 'sleep 30' >> /bin/firstboot

@@ -53,6 +53,6 @@ apt-get install -y libapache2-mod-php5 && \
 apt-get autoremove -y && \
 apt-get clean -y && \
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
-echo -n "apache2 -D FOREGROUND" >> /bin/upstart
+echo -n "rm -rf /run/httpd/* && apache2 -D FOREGROUND" >> /bin/upstart
 EXPOSE 80
 EXPOSE 443

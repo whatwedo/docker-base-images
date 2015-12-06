@@ -53,7 +53,7 @@ apt-get install -y libapache2-mod-php5 && \
 wget --quiet -O - http://packages.icinga.org/icinga.key | apt-key add - && \
 echo "deb http://packages.icinga.org/ubuntu icinga-trusty main" >> /etc/apt/sources.list && \
 apt-get update -y && \
-apt-get -y install icinga2 icinga2-ido-mysql nagios-plugins icingaweb2 && \
+apt-get -y install icinga2 icinga2-ido-mysql icinga2-classicui nagios-plugins icingaweb2 && \
 apt-get -y install nagios-nrpe-plugin --no-install-recommends && \
 icinga2 feature enable ido-mysql && \
 icinga2 feature enable command && \
@@ -88,11 +88,12 @@ echo 'echo "host = \"${DB_SERVER}\"," >> /etc/icinga2/features-available/ido-mys
 echo 'echo "port = \"${DB_PORT}\"" >> /etc/icinga2/features-available/ido-mysql.conf' >> /bin/firstboot && \
 echo 'echo "database = \"${DB_NAME}\"" >> /etc/icinga2/features-available/ido-mysql.conf' >> /bin/firstboot && \
 echo 'echo "}" >> /etc/icinga2/features-available/ido-mysql.conf' >> /bin/firstboot && \
+echo 'htpasswd -b -c /etc/icinga2-classicui/htpasswd.users icingaadmin ${ICINGAADMIN_PW}' >> /bin/firstboot && \
 echo 'sleep 30' >> /bin/firstboot && \
 echo 'mysql -u ${DB_USER} -p${DB_PW} -h ${DB_SERVER} -P ${DB_PORT} -e "CREATE DATABASE ${DB_NAME}"' >> /bin/firstboot && \
 echo 'mysql -u ${DB_USER} -p${DB_PW} -h ${DB_SERVER} -D ${DB_NAME} -P ${DB_PORT} < /usr/share/icinga2-ido-mysql/schema/mysql.sql' >> /bin/firstboot && \
 apt-get autoremove -y && \
 apt-get clean -y && \
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
-echo -n "/usr/sbin/icinga2 daemon & apache2 -D FOREGROUND" >> /bin/upstart
-VOLUME  ["/etc/icinga2", "/etc/icingaweb2", "/var/lib/icinga2"]
+echo -n "rm -rf /run/httpd/* && /usr/sbin/icinga2 daemon & apache2 -D FOREGROUND" >> /bin/upstart
+VOLUME  ["/etc/icinga2", "/etc/icingaweb2", "/var/lib/icinga2", "/etc/icinga2-classicui"]
