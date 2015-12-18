@@ -21,3 +21,7 @@ RUN echo "/etc/init.d/postgresql stop" >> /bin/firstboot
 
 #Add postgres to supervisord config
 COPY files/supervisord/postgres.conf /etc/supervisor/conf.d/postgres.conf
+
+#Fix permission bug: https://github.com/hw-cookbooks/postgresql/issues/156
+RUN chown postgres /etc/ssl/private/ssl-cert-snakeoil.key
+RUN sudo chown postgres /etc/ssl/certs/ssl-cert-snakeoil.pem
