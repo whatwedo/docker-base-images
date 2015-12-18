@@ -45,6 +45,8 @@ rm -f /etc/cron.daily/upstart && \
 rm -f /etc/cron.daily/dpkg && \
 rm -f /etc/cron.daily/password && \
 rm -f /etc/cron.weekly/fstrim && \
+echo "force-unsafe-io" > /etc/dpkg/dpkg.cfg.d/02apt-speedup && \
+echo "Acquire::http {No-Cache=True;};" > /etc/apt/apt.conf.d/no-cache && \
 apt-get autoremove -y && \
 apt-get clean -y && \
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*

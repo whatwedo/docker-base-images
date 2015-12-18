@@ -45,6 +45,8 @@ rm -f /etc/cron.daily/upstart && \
 rm -f /etc/cron.daily/dpkg && \
 rm -f /etc/cron.daily/password && \
 rm -f /etc/cron.weekly/fstrim && \
+echo "force-unsafe-io" > /etc/dpkg/dpkg.cfg.d/02apt-speedup && \
+echo "Acquire::http {No-Cache=True;};" > /etc/apt/apt.conf.d/no-cache && \
 apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xcbcb082a1bb943db && \
 add-apt-repository 'deb http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.0/ubuntu trusty main' && \
 apt-get update && \

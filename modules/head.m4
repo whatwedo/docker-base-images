@@ -14,7 +14,7 @@ RUN export INITRD=no
 RUN mkdir -p /etc/container_environment
 RUN echo -n no > /etc/container_environment/INITRD
 
-## Enable Ubuntu Universe and Multiverse.
+#Enable Ubuntu Universe and Multiverse.
 RUN sed -i 's/^#\s*\(deb.*universe\)$/\1/g' /etc/apt/sources.list
 RUN sed -i 's/^#\s*\(deb.*multiverse\)$/\1/g' /etc/apt/sources.list
 
@@ -68,5 +68,13 @@ RUN rm -f /etc/cron.daily/upstart
 RUN rm -f /etc/cron.daily/dpkg
 RUN rm -f /etc/cron.daily/password
 RUN rm -f /etc/cron.weekly/fstrim
+
+#Taken from here: https://gist.github.com/kwk/55bb5b6a4b7457bef38d
+#this forces dpkg not to call sync() after package extraction and speeds up
+#install
+RUN echo "force-unsafe-io" > /etc/dpkg/dpkg.cfg.d/02apt-speedup
+#we don't need and apt cache in a container
+RUN echo "Acquire::http {No-Cache=True;};" > /etc/apt/apt.conf.d/no-cache
+
 
 

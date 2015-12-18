@@ -45,6 +45,8 @@ rm -f /etc/cron.daily/upstart && \
 rm -f /etc/cron.daily/dpkg && \
 rm -f /etc/cron.daily/password && \
 rm -f /etc/cron.weekly/fstrim && \
+echo "force-unsafe-io" > /etc/dpkg/dpkg.cfg.d/02apt-speedup && \
+echo "Acquire::http {No-Cache=True;};" > /etc/apt/apt.conf.d/no-cache && \
 add-apt-repository ppa:webupd8team/java && \
 apt-get update && \
 echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections && \

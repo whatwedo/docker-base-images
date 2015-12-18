@@ -45,6 +45,8 @@ rm -f /etc/cron.daily/upstart && \
 rm -f /etc/cron.daily/dpkg && \
 rm -f /etc/cron.daily/password && \
 rm -f /etc/cron.weekly/fstrim && \
+echo "force-unsafe-io" > /etc/dpkg/dpkg.cfg.d/02apt-speedup && \
+echo "Acquire::http {No-Cache=True;};" > /etc/apt/apt.conf.d/no-cache && \
 apt-get install -y apache2
 ENV APACHE_RUN_USER www-data
 ENV APACHE_RUN_GROUP www-data
@@ -60,8 +62,8 @@ echo "#\0041/bin/bash" > /bin/start-apache && \
 echo "rm -rf /run/httpd/*" >> /bin/start-apache && \
 echo "apache2 -D FOREGROUND" >> /bin/start-apache && \
 chmod 755 /bin/start-apache && \
-touch /var/log/apache2/access.log && chown /var/log/apache2/access.log www-data && \
-touch /var/log/apache2/error.log && chown /var/log/apache2/error.log www-data
+touch /var/log/apache2/access.log && chown www-data /var/log/apache2/access.log && \
+touch /var/log/apache2/error.log && chown www-data /var/log/apache2/error.log
 COPY files/supervisord/apache.conf /etc/supervisor/conf.d/apache.conf
 RUN apt-get autoremove -y && \
 apt-get clean -y && \

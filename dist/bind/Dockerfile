@@ -45,6 +45,8 @@ rm -f /etc/cron.daily/upstart && \
 rm -f /etc/cron.daily/dpkg && \
 rm -f /etc/cron.daily/password && \
 rm -f /etc/cron.weekly/fstrim && \
+echo "force-unsafe-io" > /etc/dpkg/dpkg.cfg.d/02apt-speedup && \
+echo "Acquire::http {No-Cache=True;};" > /etc/apt/apt.conf.d/no-cache && \
 apt-get install -y bind9 && \
 mkdir -p /var/run/named && chown bind:bind /var/run/named
 COPY files/supervisord/bind.conf /etc/supervisor/conf.d/bind.conf

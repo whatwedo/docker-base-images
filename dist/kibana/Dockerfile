@@ -44,7 +44,9 @@ rm -f /etc/cron.daily/standard && \
 rm -f /etc/cron.daily/upstart && \
 rm -f /etc/cron.daily/dpkg && \
 rm -f /etc/cron.daily/password && \
-rm -f /etc/cron.weekly/fstrim
+rm -f /etc/cron.weekly/fstrim && \
+echo "force-unsafe-io" > /etc/dpkg/dpkg.cfg.d/02apt-speedup && \
+echo "Acquire::http {No-Cache=True;};" > /etc/apt/apt.conf.d/no-cache
 ENV KIBANA_VERSION 4.1.1
 ENV KIBANA_SHA1 d43e039adcea43e1808229b9d55f3eaee6a5edb9
 RUN set -x \
