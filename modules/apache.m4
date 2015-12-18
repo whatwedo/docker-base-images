@@ -24,8 +24,8 @@ RUN echo "apache2 -D FOREGROUND" >> /bin/start-apache
 RUN chmod 755 /bin/start-apache
 
 #Create log files
-RUN touch /var/log/apache2/access.log && chown /var/log/apache2/access.log www-data
-RUN touch /var/log/apache2/error.log && chown /var/log/apache2/error.log www-data
+RUN touch /var/log/apache2/access.log && chown www-data /var/log/apache2/access.log
+RUN touch /var/log/apache2/error.log && chown www-data /var/log/apache2/error.log
 
 #Add apache to supervisord config
 COPY files/supervisord/apache.conf /etc/supervisor/conf.d/apache.conf

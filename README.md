@@ -25,6 +25,8 @@ We at [whatwedo](https://whatwedo.ch/) are slowly going away from traditional ap
 | [tomcat](https://registry.hub.docker.com/u/whatwedo/tomcat/) | Tomcat application server |
 | [wordpress](https://registry.hub.docker.com/u/whatwedo/wordpress/) | Wordpress installed on Apache 2 |
 
+Show on [imagelayers.io](https://imagelayers.io/?images=whatwedo%2Fbase:latest,whatwedo%2Fapache:latest,whatwedo%2Fapache-php:latest,whatwedo%2Fbind:latest,whatwedo%2Felasticsearch:latest,whatwedo%2Fgolang:latest,whatwedo%2Ficinga2:latest,whatwedo%2Fkibana:latest,whatwedo%2Flogstash:latest,whatwedo%2Flogstash-forwarder:latest,whatwedo%2Fmariadb:latest,whatwedo%2Fmongodb:latest,whatwedo%2Fnginx:latest,whatwedo%2Fnginx-php:latest,whatwedo%2Fpostgres:latest,whatwedo%2Fredis:latest,whatwedo%2Fruby:latest,whatwedo%2Fsymfony:latest,whatwedo%2Ftomcat:latest,whatwedo%2Fwordpress:latest)
+
 ## Directory/File Layout
 The following table show the directory Layout of this repository:
 
