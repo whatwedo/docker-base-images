@@ -26,15 +26,25 @@ echo -n en_US.UTF-8 > /etc/container_environment/LANG && \
 echo -n en_US.UTF-8 > /etc/container_environment/LC_CTYPE && \
 apt-get install localepurge
 ENV TERM dumb
-RUN echo "#\0041/bin/bash" > /bin/upstart && \
-chmod 755 /bin/upstart
-ADD files/firstboot /bin
-RUN echo "/bin/firstboot" >> /bin/upstart && \
-chmod 755 /bin/firstboot
-VOLUME  ["/etc/firstboot"]
+ADD files/upstart /bin
+RUN chmod 755 /bin/upstart
 CMD /bin/upstart
+ADD files/firstboot /bin
+RUN chmod 755 /bin/firstboot
+VOLUME  ["/etc/firstboot"]
 ADD files/motd /etc
-RUN apt-get install -y curl less nano wget unzip && \
+RUN apt-get install -y curl less nano wget zip unzip supervisor rsyslog python-pip && \
+pip install supervisor-stdout
+COPY files/supervisord/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY files/supervisord/cron.conf /etc/supervisor/conf.d/cron.conf
+COPY files/supervisord/syslog.conf /etc/supervisor/conf.d/syslog.conf
+RUN touch /var/log/syslog && chown syslog:adm /var/log/syslog && \
+touch /var/log/cron.log && chown syslog:adm /var/log/cron.log && \
+rm -f /etc/cron.daily/standard && \
+rm -f /etc/cron.daily/upstart && \
+rm -f /etc/cron.daily/dpkg && \
+rm -f /etc/cron.daily/password && \
+rm -f /etc/cron.weekly/fstrim && \
 apt-get install -y nginx libpcre3-dev libssl-dev zlib1g-dev && \
 touch /var/log/nginx/access.log && \
 touch /var/log/nginx/error.log && \
@@ -49,8 +59,9 @@ rm -rf /etc/nginx/conf.d/ && \
 rm /etc/nginx/nginx.conf
 ADD files/nginx-default /etc/nginx
 RUN chown -R www-data /var/www/ && \
-chmod -R 755 /var/www/ && \
-apt-get install php5-cli php5-common php5-cgi php5-curl php5-imagick php5-imap php5-pgsql php5-sqlite php5-mysql php5-fpm php5-mcrypt php5-ldap php5-json php5-intl php5-gd -y && \
+chmod -R 755 /var/www/
+COPY files/supervisord/nginx.conf /etc/supervisor/conf.d/nginx.conf
+RUN apt-get install php5-cli php5-common php5-cgi php5-curl php5-imagick php5-imap php5-pgsql php5-sqlite php5-mysql php5-fpm php5-mcrypt php5-ldap php5-json php5-intl php5-gd -y && \
 echo "cgi.fix_pathinfo = 0;" >> /etc/php5/fpm/php.ini && \
 chmod -R 777 /var/lib/php5 && \
 apt-get autoremove -y && \
@@ -58,6 +69,6 @@ apt-get clean -y && \
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
 rm /etc/nginx/nginx.conf
 ADD files/nginx-php /etc/nginx
-RUN echo -n "service php5-fpm start && nginx" >> /bin/upstart
+COPY files/supervisord/php-fpm.conf /etc/supervisor/conf.d/php-fpm.conf
 EXPOSE 80
 EXPOSE 443

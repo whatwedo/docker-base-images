@@ -11,3 +11,6 @@ RUN rm apache-tomcat-8.0.14.tar.gz
 
 #Delete tomcat default apps
 RUN rm -rf /opt/tomcat/webapps/*
+
+#Add tomcat to supervisord config
+COPY files/supervisord/tomcat.conf /etc/supervisor/conf.d/tomcat.conf

@@ -26,15 +26,25 @@ echo -n en_US.UTF-8 > /etc/container_environment/LANG && \
 echo -n en_US.UTF-8 > /etc/container_environment/LC_CTYPE && \
 apt-get install localepurge
 ENV TERM dumb
-RUN echo "#\0041/bin/bash" > /bin/upstart && \
-chmod 755 /bin/upstart
-ADD files/firstboot /bin
-RUN echo "/bin/firstboot" >> /bin/upstart && \
-chmod 755 /bin/firstboot
-VOLUME  ["/etc/firstboot"]
+ADD files/upstart /bin
+RUN chmod 755 /bin/upstart
 CMD /bin/upstart
+ADD files/firstboot /bin
+RUN chmod 755 /bin/firstboot
+VOLUME  ["/etc/firstboot"]
 ADD files/motd /etc
-RUN apt-get install -y curl less nano wget unzip && \
+RUN apt-get install -y curl less nano wget zip unzip supervisor rsyslog python-pip && \
+pip install supervisor-stdout
+COPY files/supervisord/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY files/supervisord/cron.conf /etc/supervisor/conf.d/cron.conf
+COPY files/supervisord/syslog.conf /etc/supervisor/conf.d/syslog.conf
+RUN touch /var/log/syslog && chown syslog:adm /var/log/syslog && \
+touch /var/log/cron.log && chown syslog:adm /var/log/cron.log && \
+rm -f /etc/cron.daily/standard && \
+rm -f /etc/cron.daily/upstart && \
+rm -f /etc/cron.daily/dpkg && \
+rm -f /etc/cron.daily/password && \
+rm -f /etc/cron.weekly/fstrim && \
 apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xcbcb082a1bb943db && \
 add-apt-repository 'deb http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.0/ubuntu trusty main' && \
 apt-get update && \
@@ -51,10 +61,10 @@ RUN echo "/etc/init.d/mysql start && sleep 10" >> /bin/firstboot && \
 echo 'echo "SET PASSWORD FOR \"root\"@\"%\" = PASSWORD(\"${MYSQL_ROOT_PASSWORD}\");" > /root/mysql-first-time.sql' >> /bin/firstboot && \
 echo 'mysql -u root < /root/mysql-first-time.sql' >> /bin/firstboot && \
 echo 'rm /root/mysql-first-time.sql' >> /bin/firstboot && \
-echo "/etc/init.d/mysql stop && sleep 10" >> /bin/firstboot && \
-apt-get autoremove -y && \
+echo "/etc/init.d/mysql stop && sleep 10" >> /bin/firstboot
+COPY files/supervisord/mariadb.conf /etc/supervisor/conf.d/mariadb.conf
+RUN apt-get autoremove -y && \
 apt-get clean -y && \
-rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
-echo -n "/usr/sbin/mysqld" >> /bin/upstart
+rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 VOLUME ["/var/lib/mysql"]
 EXPOSE 3306

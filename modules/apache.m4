@@ -16,3 +16,16 @@ RUN rm -rf /var/www/html/*
 #Set permissions
 RUN chown -R www-data /var/www/
 RUN chmod -R 755 /var/www/
+
+#Create start script
+RUN echo "#\0041/bin/bash" > /bin/start-apache
+RUN echo "rm -rf /run/httpd/*" >> /bin/start-apache
+RUN echo "apache2 -D FOREGROUND" >> /bin/start-apache
+RUN chmod 755 /bin/start-apache
+
+#Create log files
+RUN touch /var/log/apache2/access.log && chown /var/log/apache2/access.log www-data
+RUN touch /var/log/apache2/error.log && chown /var/log/apache2/error.log www-data
+
+#Add apache to supervisord config
+COPY files/supervisord/apache.conf /etc/supervisor/conf.d/apache.conf

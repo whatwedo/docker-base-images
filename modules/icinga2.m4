@@ -71,3 +71,6 @@ RUN echo 'htpasswd -b -c /etc/icinga2-classicui/htpasswd.users icingaadmin ${ICI
 RUN echo 'sleep 30' >> /bin/firstboot
 RUN echo 'mysql -u ${DB_USER} -p${DB_PW} -h ${DB_SERVER} -P ${DB_PORT} -e "CREATE DATABASE ${DB_NAME}"' >> /bin/firstboot
 RUN echo 'mysql -u ${DB_USER} -p${DB_PW} -h ${DB_SERVER} -D ${DB_NAME} -P ${DB_PORT} < /usr/share/icinga2-ido-mysql/schema/mysql.sql' >> /bin/firstboot
+
+#Add apache to icinga2 config
+COPY files/supervisord/icinga2.conf /etc/supervisor/conf.d/icinga2.conf

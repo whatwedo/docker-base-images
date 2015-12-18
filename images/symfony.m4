@@ -9,9 +9,9 @@ include(`modules/cleanup.m4')
 RUN rm /etc/nginx/nginx.conf
 ADD files/symfony /etc/nginx
 
-#Alter upstart script
-RUN echo -n "service php5-fpm start && nginx & tail -f /var/www/app/logs/prod.log " >> /bin/upstart
-
 #Expose Ports
 EXPOSE 80
 EXPOSE 443
+
+#Add symfony logs to supervisord config
+COPY files/supervisord/symfony.conf /etc/supervisor/conf.d/symfony.conf

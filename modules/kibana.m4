@@ -11,3 +11,6 @@ RUN set -x \
 
 #Add kibana to path
 ENV PATH /opt/kibana/bin:$PATH
+
+#Add kibana to supervisord config
+COPY files/supervisord/kibana.conf /etc/supervisor/conf.d/kibana.conf

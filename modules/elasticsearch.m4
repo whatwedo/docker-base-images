@@ -12,3 +12,6 @@ ADD files/elasticsearch /etc/elasticsearch
 
 #Link config dir
 RUN ln -s /etc/elasticsearch /usr/share/elasticsearch/config
+
+#Add elasticsearch to supervisord config
+COPY files/supervisord/elasticsearch.conf /etc/supervisor/conf.d/elasticsearch.conf

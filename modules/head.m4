@@ -36,21 +36,37 @@ RUN apt-get install localepurge
 #Fix: TERM environment variable not set.
 ENV TERM dumb
 
-#Create upstart script
-RUN echo "#\0041/bin/bash" > /bin/upstart
+#Add upstart script
+ADD files/upstart /bin
 RUN chmod 755 /bin/upstart
+CMD /bin/upstart
 
 #Add firstbootscript
 ADD files/firstboot /bin
-RUN echo "/bin/firstboot" >> /bin/upstart
 RUN chmod 755 /bin/firstboot
 VOLUME  ["/etc/firstboot"]
-
-#Set upstart script
-CMD /bin/upstart
 
 #Set motd
 ADD files/motd /etc
 
 #Install often used tools
-RUN apt-get install -y curl less nano wget unzip
+RUN apt-get install -y curl less nano wget zip unzip supervisor rsyslog python-pip
+RUN pip install supervisor-stdout
+
+#Add default supervisord config
+COPY files/supervisord/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY files/supervisord/cron.conf /etc/supervisor/conf.d/cron.conf
+COPY files/supervisord/syslog.conf /etc/supervisor/conf.d/syslog.conf
+
+#Touch redirected logfiles
+RUN touch /var/log/syslog && chown syslog:adm /var/log/syslog
+RUN touch /var/log/cron.log && chown syslog:adm /var/log/cron.log
+
+#Remove useless crone entries
+RUN rm -f /etc/cron.daily/standard
+RUN rm -f /etc/cron.daily/upstart
+RUN rm -f /etc/cron.daily/dpkg
+RUN rm -f /etc/cron.daily/password
+RUN rm -f /etc/cron.weekly/fstrim
+
+

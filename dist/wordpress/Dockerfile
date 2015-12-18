@@ -26,15 +26,25 @@ echo -n en_US.UTF-8 > /etc/container_environment/LANG && \
 echo -n en_US.UTF-8 > /etc/container_environment/LC_CTYPE && \
 apt-get install localepurge
 ENV TERM dumb
-RUN echo "#\0041/bin/bash" > /bin/upstart && \
-chmod 755 /bin/upstart
-ADD files/firstboot /bin
-RUN echo "/bin/firstboot" >> /bin/upstart && \
-chmod 755 /bin/firstboot
-VOLUME  ["/etc/firstboot"]
+ADD files/upstart /bin
+RUN chmod 755 /bin/upstart
 CMD /bin/upstart
+ADD files/firstboot /bin
+RUN chmod 755 /bin/firstboot
+VOLUME  ["/etc/firstboot"]
 ADD files/motd /etc
-RUN apt-get install -y curl less nano wget unzip && \
+RUN apt-get install -y curl less nano wget zip unzip supervisor rsyslog python-pip && \
+pip install supervisor-stdout
+COPY files/supervisord/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY files/supervisord/cron.conf /etc/supervisor/conf.d/cron.conf
+COPY files/supervisord/syslog.conf /etc/supervisor/conf.d/syslog.conf
+RUN touch /var/log/syslog && chown syslog:adm /var/log/syslog && \
+touch /var/log/cron.log && chown syslog:adm /var/log/cron.log && \
+rm -f /etc/cron.daily/standard && \
+rm -f /etc/cron.daily/upstart && \
+rm -f /etc/cron.daily/dpkg && \
+rm -f /etc/cron.daily/password && \
+rm -f /etc/cron.weekly/fstrim && \
 apt-get install -y apache2
 ENV APACHE_RUN_USER www-data
 ENV APACHE_RUN_GROUP www-data
@@ -46,7 +56,14 @@ RUN mkdir -p $APACHE_RUN_DIR $APACHE_LOCK_DIR $APACHE_LOG_DIR && \
 rm -rf /var/www/html/* && \
 chown -R www-data /var/www/ && \
 chmod -R 755 /var/www/ && \
-apt-get install php5-cli php5-common php5-cgi php5-curl php5-imagick php5-imap php5-pgsql php5-sqlite php5-mysql php5-fpm php5-mcrypt php5-ldap php5-json php5-intl php5-gd -y && \
+echo "#\0041/bin/bash" > /bin/start-apache && \
+echo "rm -rf /run/httpd/*" >> /bin/start-apache && \
+echo "apache2 -D FOREGROUND" >> /bin/start-apache && \
+chmod 755 /bin/start-apache && \
+touch /var/log/apache2/access.log && chown /var/log/apache2/access.log www-data && \
+touch /var/log/apache2/error.log && chown /var/log/apache2/error.log www-data
+COPY files/supervisord/apache.conf /etc/supervisor/conf.d/apache.conf
+RUN apt-get install php5-cli php5-common php5-cgi php5-curl php5-imagick php5-imap php5-pgsql php5-sqlite php5-mysql php5-fpm php5-mcrypt php5-ldap php5-json php5-intl php5-gd -y && \
 echo "cgi.fix_pathinfo = 0;" >> /etc/php5/fpm/php.ini && \
 chmod -R 777 /var/lib/php5 && \
 apt-get install -y libapache2-mod-php5 && \
@@ -58,7 +75,6 @@ rm -rf wordpress && \
 chown -R 755 /var/www/html && \
 apt-get autoremove -y && \
 apt-get clean -y && \
-rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
-echo -n "rm -rf /run/httpd/* && apache2 -D FOREGROUND" >> /bin/upstart
+rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 EXPOSE 80
 VOLUME  ["/var/www"]

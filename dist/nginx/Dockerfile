@@ -26,15 +26,25 @@ echo -n en_US.UTF-8 > /etc/container_environment/LANG && \
 echo -n en_US.UTF-8 > /etc/container_environment/LC_CTYPE && \
 apt-get install localepurge
 ENV TERM dumb
-RUN echo "#\0041/bin/bash" > /bin/upstart && \
-chmod 755 /bin/upstart
-ADD files/firstboot /bin
-RUN echo "/bin/firstboot" >> /bin/upstart && \
-chmod 755 /bin/firstboot
-VOLUME  ["/etc/firstboot"]
+ADD files/upstart /bin
+RUN chmod 755 /bin/upstart
 CMD /bin/upstart
+ADD files/firstboot /bin
+RUN chmod 755 /bin/firstboot
+VOLUME  ["/etc/firstboot"]
 ADD files/motd /etc
-RUN apt-get install -y curl less nano wget unzip && \
+RUN apt-get install -y curl less nano wget zip unzip supervisor rsyslog python-pip && \
+pip install supervisor-stdout
+COPY files/supervisord/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY files/supervisord/cron.conf /etc/supervisor/conf.d/cron.conf
+COPY files/supervisord/syslog.conf /etc/supervisor/conf.d/syslog.conf
+RUN touch /var/log/syslog && chown syslog:adm /var/log/syslog && \
+touch /var/log/cron.log && chown syslog:adm /var/log/cron.log && \
+rm -f /etc/cron.daily/standard && \
+rm -f /etc/cron.daily/upstart && \
+rm -f /etc/cron.daily/dpkg && \
+rm -f /etc/cron.daily/password && \
+rm -f /etc/cron.weekly/fstrim && \
 apt-get install -y nginx libpcre3-dev libssl-dev zlib1g-dev && \
 touch /var/log/nginx/access.log && \
 touch /var/log/nginx/error.log && \
@@ -49,10 +59,10 @@ rm -rf /etc/nginx/conf.d/ && \
 rm /etc/nginx/nginx.conf
 ADD files/nginx-default /etc/nginx
 RUN chown -R www-data /var/www/ && \
-chmod -R 755 /var/www/ && \
-apt-get autoremove -y && \
+chmod -R 755 /var/www/
+COPY files/supervisord/nginx.conf /etc/supervisor/conf.d/nginx.conf
+RUN apt-get autoremove -y && \
 apt-get clean -y && \
-rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
-echo -n "nginx" >> /bin/upstart
+rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 EXPOSE 80
 EXPOSE 443

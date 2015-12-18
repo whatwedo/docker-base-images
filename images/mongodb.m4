@@ -9,6 +9,3 @@ EXPOSE 27017
 
 #Create volumes
 VOLUME  ["/data"]
-
-#Alter upstart script
-RUN echo -n "/usr/bin/mongod" >> /bin/upstart

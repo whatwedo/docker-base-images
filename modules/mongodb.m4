@@ -8,3 +8,6 @@ RUN apt-get install -y mongodb-org
 
 #Create data directory
 RUN mkdir -p /data/db
+
+#Add mongodb to supervisord config
+COPY files/supervisord/mongodb.conf /etc/supervisor/conf.d/mongodb.conf

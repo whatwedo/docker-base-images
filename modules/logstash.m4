@@ -5,3 +5,6 @@ RUN apt-get update -y
 
 #Install Logstash
 RUN apt-get install -y logstash
+
+#Add logstash to supervisord config
+COPY files/supervisord/logstash.conf /etc/supervisor/conf.d/logstash.conf

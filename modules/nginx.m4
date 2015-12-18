@@ -20,3 +20,6 @@ ADD files/nginx-default /etc/nginx
 #Set permissions
 RUN chown -R www-data /var/www/
 RUN chmod -R 755 /var/www/
+
+#Add apache to supervisord config
+COPY files/supervisord/nginx.conf /etc/supervisor/conf.d/nginx.conf

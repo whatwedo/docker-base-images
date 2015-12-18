@@ -23,4 +23,5 @@ RUN echo 'mysql -u root < /root/mysql-first-time.sql' >> /bin/firstboot
 RUN echo 'rm /root/mysql-first-time.sql' >> /bin/firstboot
 RUN echo "/etc/init.d/mysql stop && sleep 10" >> /bin/firstboot
 
-
+#Add mariadb to supervisord config
+COPY files/supervisord/mariadb.conf /etc/supervisor/conf.d/mariadb.conf

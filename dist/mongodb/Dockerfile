@@ -26,23 +26,33 @@ echo -n en_US.UTF-8 > /etc/container_environment/LANG && \
 echo -n en_US.UTF-8 > /etc/container_environment/LC_CTYPE && \
 apt-get install localepurge
 ENV TERM dumb
-RUN echo "#\0041/bin/bash" > /bin/upstart && \
-chmod 755 /bin/upstart
-ADD files/firstboot /bin
-RUN echo "/bin/firstboot" >> /bin/upstart && \
-chmod 755 /bin/firstboot
-VOLUME  ["/etc/firstboot"]
+ADD files/upstart /bin
+RUN chmod 755 /bin/upstart
 CMD /bin/upstart
+ADD files/firstboot /bin
+RUN chmod 755 /bin/firstboot
+VOLUME  ["/etc/firstboot"]
 ADD files/motd /etc
-RUN apt-get install -y curl less nano wget unzip && \
+RUN apt-get install -y curl less nano wget zip unzip supervisor rsyslog python-pip && \
+pip install supervisor-stdout
+COPY files/supervisord/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY files/supervisord/cron.conf /etc/supervisor/conf.d/cron.conf
+COPY files/supervisord/syslog.conf /etc/supervisor/conf.d/syslog.conf
+RUN touch /var/log/syslog && chown syslog:adm /var/log/syslog && \
+touch /var/log/cron.log && chown syslog:adm /var/log/cron.log && \
+rm -f /etc/cron.daily/standard && \
+rm -f /etc/cron.daily/upstart && \
+rm -f /etc/cron.daily/dpkg && \
+rm -f /etc/cron.daily/password && \
+rm -f /etc/cron.weekly/fstrim && \
 apt-key adv --keyserver keyserver.ubuntu.com --recv 7F0CEB10 && \
 add-apt-repository 'deb http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.0 multiverse' && \
 apt-get update && \
 apt-get install -y mongodb-org && \
-mkdir -p /data/db && \
-apt-get autoremove -y && \
+mkdir -p /data/db
+COPY files/supervisord/mongodb.conf /etc/supervisor/conf.d/mongodb.conf
+RUN apt-get autoremove -y && \
 apt-get clean -y && \
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 EXPOSE 27017
 VOLUME  ["/data"]
-RUN echo -n "/usr/bin/mongod" >> /bin/upstart

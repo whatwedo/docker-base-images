@@ -26,15 +26,25 @@ echo -n en_US.UTF-8 > /etc/container_environment/LANG && \
 echo -n en_US.UTF-8 > /etc/container_environment/LC_CTYPE && \
 apt-get install localepurge
 ENV TERM dumb
-RUN echo "#\0041/bin/bash" > /bin/upstart && \
-chmod 755 /bin/upstart
-ADD files/firstboot /bin
-RUN echo "/bin/firstboot" >> /bin/upstart && \
-chmod 755 /bin/firstboot
-VOLUME  ["/etc/firstboot"]
+ADD files/upstart /bin
+RUN chmod 755 /bin/upstart
 CMD /bin/upstart
+ADD files/firstboot /bin
+RUN chmod 755 /bin/firstboot
+VOLUME  ["/etc/firstboot"]
 ADD files/motd /etc
-RUN apt-get install -y curl less nano wget unzip && \
+RUN apt-get install -y curl less nano wget zip unzip supervisor rsyslog python-pip && \
+pip install supervisor-stdout
+COPY files/supervisord/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY files/supervisord/cron.conf /etc/supervisor/conf.d/cron.conf
+COPY files/supervisord/syslog.conf /etc/supervisor/conf.d/syslog.conf
+RUN touch /var/log/syslog && chown syslog:adm /var/log/syslog && \
+touch /var/log/cron.log && chown syslog:adm /var/log/cron.log && \
+rm -f /etc/cron.daily/standard && \
+rm -f /etc/cron.daily/upstart && \
+rm -f /etc/cron.daily/dpkg && \
+rm -f /etc/cron.daily/password && \
+rm -f /etc/cron.weekly/fstrim && \
 add-apt-repository ppa:webupd8team/java && \
 apt-get update && \
 echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections && \
@@ -45,11 +55,11 @@ apt-get update -y && \
 apt-get -y install elasticsearch && \
 rm -rf /etc/elasticsearch/elasticsearch.yml
 ADD files/elasticsearch /etc/elasticsearch
-RUN ln -s /etc/elasticsearch /usr/share/elasticsearch/config && \
-apt-get autoremove -y && \
+RUN ln -s /etc/elasticsearch /usr/share/elasticsearch/config
+COPY files/supervisord/elasticsearch.conf /etc/supervisor/conf.d/elasticsearch.conf
+RUN apt-get autoremove -y && \
 apt-get clean -y && \
-rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
-echo -n "/usr/share/elasticsearch/bin/elasticsearch" >> /bin/upstart
+rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 EXPOSE 9200
 EXPOSE 9300
 VOLUME  ["/data]

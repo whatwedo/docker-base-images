@@ -18,3 +18,6 @@ RUN echo 'echo "alter user postgres password \0047${PG_ROOT_PASSWORD}\0047;" > /
 RUN echo 'su postgres -c "psql -f /pg-first-time.sql"' >> /bin/firstboot
 RUN echo 'rm /pg-first-time.sql' >> /bin/firstboot
 RUN echo "/etc/init.d/postgresql stop" >> /bin/firstboot
+
+#Add postgres to supervisord config
+COPY files/supervisord/postgres.conf /etc/supervisor/conf.d/postgres.conf

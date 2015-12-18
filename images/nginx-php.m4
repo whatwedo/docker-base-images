@@ -9,8 +9,8 @@ include(`modules/cleanup.m4')
 RUN rm /etc/nginx/nginx.conf
 ADD files/nginx-php /etc/nginx
 
-#Alter upstart script
-RUN echo -n "service php5-fpm start && nginx" >> /bin/upstart
+#Add php-fpm to supervisord config
+COPY files/supervisord/php-fpm.conf /etc/supervisor/conf.d/php-fpm.conf
 
 #Expose Ports
 EXPOSE 80
