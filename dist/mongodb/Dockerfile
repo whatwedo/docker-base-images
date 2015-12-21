@@ -20,11 +20,12 @@ apt-get update -y && \
 apt-get upgrade -y && \
 apt-get install -y apt-transport-https ca-certificates software-properties-common && \
 apt-get install -y language-pack-en && \
-locale-gen en_US && \
+locale-gen en_US.UTF-8 && \
 update-locale LANG=en_US.UTF-8 LC_CTYPE=en_US.UTF-8 && \
 echo -n en_US.UTF-8 > /etc/container_environment/LANG && \
-echo -n en_US.UTF-8 > /etc/container_environment/LC_CTYPE && \
-apt-get install localepurge
+echo -n en_US.UTF-8 > /etc/container_environment/LC_CTYPE
+ENV LANG en_US.UTF-8
+RUN apt-get install localepurge
 ENV TERM dumb
 ADD files/upstart /bin
 RUN chmod 755 /bin/upstart

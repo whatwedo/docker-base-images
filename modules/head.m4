@@ -27,10 +27,11 @@ RUN apt-get install -y apt-transport-https ca-certificates software-properties-c
 
 #Fix locales
 RUN apt-get install -y language-pack-en
-RUN locale-gen en_US
+RUN locale-gen en_US.UTF-8
 RUN update-locale LANG=en_US.UTF-8 LC_CTYPE=en_US.UTF-8
 RUN echo -n en_US.UTF-8 > /etc/container_environment/LANG
 RUN echo -n en_US.UTF-8 > /etc/container_environment/LC_CTYPE
+ENV LANG en_US.UTF-8
 RUN apt-get install localepurge
 
 #Fix: TERM environment variable not set.
