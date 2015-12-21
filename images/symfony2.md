@@ -1,6 +1,6 @@
 # whatwedo base image - Symfony 2
 
-In this image is a basic nginx webserver with PHP 5.6 installation available. It is configured to run a Symfony 2 application placed /var/www in. There are no SSL enabled per default.
+In this image is a basic nginx webserver with PHP 5.6 installation available. It is configured to run a Symfony 2 application placed in /var/www. There are no SSL enabled per default.
 
 ## Usage
 

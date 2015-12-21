@@ -1,6 +1,6 @@
 # whatwedo base image - Symfony 3
 
-In this image is a basic nginx webserver with PHP 7.0 installation available. It is configured to run a Symfony 3 application placed /var/www in. There are no SSL enabled per default.
+In this image is a basic nginx webserver with PHP 7.0 installation available. It is configured to run a Symfony 3 application placed in /var/www. There are no SSL enabled per default.
 
 ## Usage
 

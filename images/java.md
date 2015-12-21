@@ -1,6 +1,6 @@
 # whatwedo base image - Java
 
-In this image is the JVM 8 installed
+In this image is the JVM 8 and Maven installed.
 
 ## Usage
 
