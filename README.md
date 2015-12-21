@@ -6,26 +6,31 @@ We at [whatwedo](https://whatwedo.ch/) are slowly going away from traditional ap
 |---|---|
 | [base](https://registry.hub.docker.com/u/whatwedo/base/) | several base packages for daily working with docker installed |
 | [apache](https://registry.hub.docker.com/u/whatwedo/apache/) | Apache 2 webserver |
-| [apache-php](https://registry.hub.docker.com/u/whatwedo/apache-php/) | Apache 2 webserver including PHP |
+| [apache-php56](https://registry.hub.docker.com/u/whatwedo/apache-php56/) | Apache 2 webserver including PHP 5.6 |
+| [apache-php70](https://registry.hub.docker.com/u/whatwedo/apache-php70/) | Apache 2 webserver including PHP 7.0 |
 | [bind](https://registry.hub.docker.com/u/whatwedo/bind/) | Bind9 nameserver |
 | [elasticsearch](https://registry.hub.docker.com/u/whatwedo/elasticsearch/) | Elasticsearch server |
 | [golang](https://registry.hub.docker.com/u/whatwedo/golang/) | Golang compiler |
 | [icinga2](https://registry.hub.docker.com/u/whatwedo/icinga2/) | Icinga2 and Icinga2-Web |
+| [java](https://registry.hub.docker.com/u/whatwedo/java/) | Java 8 |
 | [kibana](https://registry.hub.docker.com/u/whatwedo/kibana/) | Kibana data exploration UI |
 | [logstash](https://registry.hub.docker.com/u/whatwedo/logstash/) | Logstash |
 | [logstash-forwarder](https://registry.hub.docker.com/u/whatwedo/logstash-forwarder/) | Logstash-Forwarder |
 | [mariadb](https://registry.hub.docker.com/u/whatwedo/mariadb/) | MariaDB server |
 | [mongodb](https://registry.hub.docker.com/u/whatwedo/mongodb/) | MongoDB server |
 | [nginx](https://registry.hub.docker.com/u/whatwedo/nginx/) | nginx webserver |
-| [nginx-php](https://registry.hub.docker.com/u/whatwedo/nginx-php/) | nginx webserver including PHP |
+| [nginx-php56](https://registry.hub.docker.com/u/whatwedo/nginx-php56/) | nginx webserver including PHP 5.6 |
+| [nginx-php70](https://registry.hub.docker.com/u/whatwedo/nginx-php70/) | nginx webserver including PHP 7.0 |
+| [php56](https://registry.hub.docker.com/u/whatwedo/php56/) | PHP 5.6 interpreter |
+| [php70](https://registry.hub.docker.com/u/whatwedo/postgres/) | PHP 7.0 interpreter |
 | [postgres](https://registry.hub.docker.com/u/whatwedo/postgres/) | Postgres database server |
 | [redis](https://registry.hub.docker.com/u/whatwedo/redis/) | Redis data structure server |
 | [ruby](https://registry.hub.docker.com/u/whatwedo/ruby/) | Ruby interpreter |
-| [symfony](https://registry.hub.docker.com/u/whatwedo/symfony/) | nginx configured for running Symfony |
+| [symfony2](https://registry.hub.docker.com/u/whatwedo/symfony2/) | nginx configured for running Symfony 2 |
+| [symfony3](https://registry.hub.docker.com/u/whatwedo/symfony3/) | nginx configured for running Symfony 3 |
 | [tomcat](https://registry.hub.docker.com/u/whatwedo/tomcat/) | Tomcat application server |
 | [wordpress](https://registry.hub.docker.com/u/whatwedo/wordpress/) | Wordpress installed on Apache 2 |
 
-Show on [imagelayers.io](https://imagelayers.io/?images=whatwedo%2Fbase:latest,whatwedo%2Fapache:latest,whatwedo%2Fapache-php:latest,whatwedo%2Fbind:latest,whatwedo%2Felasticsearch:latest,whatwedo%2Fgolang:latest,whatwedo%2Ficinga2:latest,whatwedo%2Fkibana:latest,whatwedo%2Flogstash:latest,whatwedo%2Flogstash-forwarder:latest,whatwedo%2Fmariadb:latest,whatwedo%2Fmongodb:latest,whatwedo%2Fnginx:latest,whatwedo%2Fnginx-php:latest,whatwedo%2Fpostgres:latest,whatwedo%2Fredis:latest,whatwedo%2Fruby:latest,whatwedo%2Fsymfony:latest,whatwedo%2Ftomcat:latest,whatwedo%2Fwordpress:latest)
 
 ## Directory/File Layout
 The following table show the directory Layout of this repository:
