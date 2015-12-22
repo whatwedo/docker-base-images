@@ -17,7 +17,8 @@ ADD files/icinga/conf /etc/dbconfig-common
 
 #Add nagios plugins
 ADD files/icinga/plugins /usr/lib/nagios/plugins
-RUN chmod 755 /usr/lib/nagios/plugins/check_ssl_cert
+RUN chmod 755 /usr/lib/nagios/plugins/check_rbl
+RUN chmod 755 /usr/lib/nagios/plugins/check_senderscore
 
 #Add Slack integration
 RUN apt-get -y install libwww-perl libcrypt-ssleay-perl

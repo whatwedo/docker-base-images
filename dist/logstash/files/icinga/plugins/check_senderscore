@@ -1,0 +1,47 @@
+#!/usr/bin/python
+ 
+import socket
+import sys
+ 
+ip = sys.argv[1]                                                                                                                                                                                                                             
+tmp = ip.split(".")                                                                                                                                                                                                                          
+backwards = "%s.%s.%s.%s" % (tmp[3], tmp[2], tmp[1], tmp[0])                                                                                                                                                                                 
+ 
+replists = ['cmplt.rating.senderscore.com', 'score.senderscore.com', 'uus.rating.senderscore.com', 'vol.rating.senderscore.com']                                                                                                             
+ 
+lookup_results = {}                                                                                                                                                                                                                          
+for rl in replists:                                                                                                                                                                                                                          
+        try:                                                                                                                                                                                                                                 
+                ret = socket.gethostbyname('%s.%s' % (backwards, rl))                                                                                                                                                                        
+                if ret:                                                                                                                                                                                                                      
+                        lookup_results[rl] = ret                                                                                                                                                                                             
+        except Exception, e:                                                                                                                                                                                                                 
+                continue                                                                                                                                                                                                                     
+ 
+warning_score = 70                                                                                                                                                                                                                           
+critical_score = 60                                                                                                                                                                                                                          
+bad_scores = []                                                                                                                                                                                                                              
+exit_code = 0                                                                                                                                                                                                                                
+warn = False                                                                                                                                                                                                                                 
+critical = False                                                                                                                                                                                                                             
+for rl, result in lookup_results.iteritems():                                                                                                                                                                                                
+        tmp = result.split(".")                                                                                                                                                                                                              
+        score = int(tmp[3])                                                                                                                                                                                                                  
+        if score < warning_score and score > critical_score:                                                                                                                                                                                 
+                warn = True                                                                                                                                                                                                                  
+                bad_scores.append("%s has a poor score of %s on %s." % (ip, score, rl))
+        elif score < critical_score:
+                critical = True
+                bad_scores.append("%s has a critically poor score of %s on %s" % (ip, score, rl))
+ 
+ 
+if len(bad_scores) > 0:
+        if warn:
+                exit_code = 1
+        if critical:
+                exit_code = 2
+        for i in bad_scores:
+                print i,
+else:
+        print ip, "has good reputational scores on all lists"
+sys.exit(exit_code)
