@@ -17,7 +17,7 @@
 ########################################################
 
 #Exit on error
-set -e
+#set -e
 
 #Check software
 dockerTest=$(which docker)
@@ -66,7 +66,14 @@ build-file() {
       echo "$lastline && \\" >> "dist/$1/Dockerfile"
       templine=$line
       lastline=$(echo "$line" | sed 's/^RUN //g' )
+    elif [[ $line == LASTRUN* ]] && [[ $templine == RUN* ]] ;
+    then
+      line=$(echo "$line" | sed 's/^LASTRUN\ /RUN\ /g' )
+      echo "$lastline" >> "dist/$1/Dockerfile"
+      templine=$line
+      lastline=$line
     else
+      line=$(echo "$line" | sed 's/^LASTRUN\ /RUN\ /g' )
       echo "$lastline" >> "dist/$1/Dockerfile"
       templine=$line
       lastline=$line
@@ -96,6 +103,14 @@ build-image() {
   cd ../..
 }
 
+#build the given image with cache
+build-cached-image() {
+  build-file $1
+  cd "dist/$1"
+  DOCKER_OPTS="--dns 8.8.8.8 --dns 8.8.4.4" docker build --rm -t "$1:latest" . 
+  cd ../..
+}
+
 #download latest base images
 update-base-images() {
   docker pull ubuntu:14.04
@@ -116,6 +131,11 @@ elif [ "$1" = "build-image" ]; then
   update-base-images
   build-file $2
   build-image $2
+elif [ "$1" = "build-cached-image" ]; then
+  [ -z "$2" ] && { echo "Image name not specified"; exit 1; }
+  update-base-images
+  build-file $2
+  build-cached-image $2
 else
 	echo "
   docker-builder.sh is a script for managing complex docker images

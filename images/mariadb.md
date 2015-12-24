@@ -9,7 +9,7 @@ docker run -p 3306:3306 -e MYSQL_ROOT_PASSWORD=mysecretpassword whatwedo/mariadb
 ```
 or with DB
 ```
-docker run -p 3306:3306 -e MYSQL_ROOT_PASSWORD= mysecretpassword -e MYSQL_DATABASE=gitlab mariadb
+docker run -p 3306:3306 -e MYSQL_ROOT_PASSWORD=mysecretpassword -e MYSQL_DATABASE=gitlab mariadb
 ```
 
 ## Environment Variables
