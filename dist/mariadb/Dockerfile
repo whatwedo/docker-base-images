@@ -56,6 +56,7 @@ sed -i 's/^\(bind-address\s.*\)/# \1/' /etc/mysql/my.cnf && \
 sed -i 's/log_bin/#log_bin/g' /etc/mysql/my.cnf && \
 sed -i 's/expire_logs_days/#expire_logs_days/g' /etc/mysql/my.cnf && \
 sed -i 's/max_binlog_size/#max_binlog_size/g' /etc/mysql/my.cnf && \
+sed -i 's/#innodb_log_file_size.*/innodb_log_file_size\=256M/g' /etc/mysql/my.cnf && \
 echo "mysqld_safe &" > /tmp/config && \
 echo "mysqladmin --silent --wait=30 ping || exit 1" >> /tmp/config && \
 echo "mysql -e 'GRANT ALL PRIVILEGES ON *.* TO \"root\"@\"%\" WITH GRANT OPTION;'" >> /tmp/config && \
@@ -65,6 +66,7 @@ rm -f /tmp/config && \
 /etc/init.d/mysql stop
 RUN echo "/etc/init.d/mysql start && sleep 10" >> /bin/firstboot && \
 echo 'echo "SET PASSWORD FOR \"root\"@\"%\" = PASSWORD(\"${MYSQL_ROOT_PASSWORD}\");" > /root/mysql-first-time.sql' >> /bin/firstboot && \
+echo 'if [ ! -z "${MYSQL_DATABASE}" ]; then echo "CREATE DATABASE IF NOT EXISTS ${MYSQL_DATABASE};" >> /root/mysql-first-time.sql; fi' >> /bin/firstboot && \
 echo 'mysql -u root < /root/mysql-first-time.sql' >> /bin/firstboot && \
 echo 'rm /root/mysql-first-time.sql' >> /bin/firstboot && \
 echo "/etc/init.d/mysql stop && sleep 10" >> /bin/firstboot
