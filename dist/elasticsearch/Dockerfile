@@ -65,4 +65,4 @@ apt-get clean -y && \
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 EXPOSE 9200
 EXPOSE 9300
-VOLUME  ["/data]
+VOLUME  ["/data"]
