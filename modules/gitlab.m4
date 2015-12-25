@@ -90,6 +90,7 @@ RUN echo 'echo -e "y\n"|sudo -u git -H ssh-keygen -q -t rsa -N "" -f /home/git/.
 
 RUN echo 'echo "Installing GitLab Shell"' >> /bin/firstboot
 RUN echo 'sudo -u git -H bundle exec rake gitlab:shell:install REDIS_URL=${REDIS_URL} RAILS_ENV=production' >> /bin/firstboot
+RUN echo 'sed -i s@gitlab_url\:.*@gitlab_url\:\ http\://127.0.0.1\:80@g gitlab-shell/config.yml' >> /bin/firstboot
 
 RUN echo 'echo "Wait for MySQL to boot..."' >> /bin/firstboot
 RUN echo 'echo "while ! nc -z ${DATABASE_HOST} 3306; do sleep 3; done"' >> /bin/firstboot
