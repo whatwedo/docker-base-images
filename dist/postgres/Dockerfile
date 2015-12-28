@@ -34,7 +34,7 @@ ADD files/firstboot /bin
 RUN chmod 755 /bin/firstboot
 VOLUME  ["/etc/firstboot"]
 ADD files/motd /etc
-RUN apt-get install -y curl less nano wget zip unzip supervisor rsyslog python-pip && \
+RUN apt-get install -y curl less nano wget zip unzip supervisor rsyslog python-pip git-core && \
 pip install supervisor-stdout
 COPY files/supervisord/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY files/supervisord/cron.conf /etc/supervisor/conf.d/cron.conf

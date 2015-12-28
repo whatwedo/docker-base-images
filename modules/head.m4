@@ -51,7 +51,7 @@ VOLUME  ["/etc/firstboot"]
 ADD files/motd /etc
 
 #Install often used tools
-RUN apt-get install -y curl less nano wget zip unzip supervisor rsyslog python-pip
+RUN apt-get install -y curl less nano wget zip unzip supervisor rsyslog python-pip git-core
 RUN pip install supervisor-stdout
 
 #Add default supervisord config
