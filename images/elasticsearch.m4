@@ -10,4 +10,4 @@ EXPOSE 9200
 EXPOSE 9300
 
 #Create volumes
-VOLUME  ["/data]
+VOLUME  ["/data"]
