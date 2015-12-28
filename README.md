@@ -25,6 +25,7 @@ We at [whatwedo](https://whatwedo.ch/) are slowly going away from traditional ap
 | [php56](https://registry.hub.docker.com/u/whatwedo/php56/) | PHP 5.6 interpreter |
 | [php70](https://registry.hub.docker.com/u/whatwedo/postgres/) | PHP 7.0 interpreter |
 | [postgres](https://registry.hub.docker.com/u/whatwedo/postgres/) | Postgres database server |
+| [puppet-client](https://registry.hub.docker.com/u/whatwedo/puppet-client/) | Puppet Client |
 | [redis](https://registry.hub.docker.com/u/whatwedo/redis/) | Redis data structure server |
 | [ruby](https://registry.hub.docker.com/u/whatwedo/ruby/) | Ruby interpreter |
 | [symfony2](https://registry.hub.docker.com/u/whatwedo/symfony2/) | nginx configured for running Symfony 2 |
