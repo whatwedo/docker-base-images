@@ -21,6 +21,7 @@ We at [whatwedo](https://whatwedo.ch/) are slowly going away from traditional ap
 | [nginx](https://registry.hub.docker.com/u/whatwedo/nginx/) | nginx webserver |
 | [nginx-php56](https://registry.hub.docker.com/u/whatwedo/nginx-php56/) | nginx webserver including PHP 5.6 |
 | [nginx-php70](https://registry.hub.docker.com/u/whatwedo/nginx-php70/) | nginx webserver including PHP 7.0 |
+| [node](https://registry.hub.docker.com/u/whatwedo/node/) | Node |
 | [php56](https://registry.hub.docker.com/u/whatwedo/php56/) | PHP 5.6 interpreter |
 | [php70](https://registry.hub.docker.com/u/whatwedo/postgres/) | PHP 7.0 interpreter |
 | [postgres](https://registry.hub.docker.com/u/whatwedo/postgres/) | Postgres database server |
