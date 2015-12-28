@@ -48,8 +48,8 @@ rm -f /etc/cron.daily/password && \
 rm -f /etc/cron.weekly/fstrim && \
 echo "force-unsafe-io" > /etc/dpkg/dpkg.cfg.d/02apt-speedup && \
 echo "Acquire::http {No-Cache=True;};" > /etc/apt/apt.conf.d/no-cache && \
-apt-get install -y npm nodejs && \
-ln -s /usr/bin/nodejs /usr/bin/node && \
+curl -sL https://deb.nodesource.com/setup_5.x | sudo -E bash - && \
+apt-get install -y nodejs && \
  ln -s /usr/bin/node /usr/local/bin/node && \
 apt-get autoremove -y && \
 apt-get clean -y && \
