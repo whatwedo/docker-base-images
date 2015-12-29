@@ -48,6 +48,10 @@ rm -f /etc/cron.daily/password && \
 rm -f /etc/cron.weekly/fstrim && \
 echo "force-unsafe-io" > /etc/dpkg/dpkg.cfg.d/02apt-speedup && \
 echo "Acquire::http {No-Cache=True;};" > /etc/apt/apt.conf.d/no-cache && \
+echo "#\0041/bin/bash" > /bin/start-rsyslog && \
+echo "rm -f /var/run/rsyslogd.pid" >> /bin/start-rsyslog && \
+echo "rsyslogd -n" >> /bin/start-rsyslog && \
+chmod 755 /bin/start-rsyslog && \
 apt-get install -y nginx libpcre3-dev libssl-dev zlib1g-dev && \
 touch /var/log/nginx/access.log && \
 touch /var/log/nginx/error.log && \

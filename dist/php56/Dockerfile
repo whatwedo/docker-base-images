@@ -48,6 +48,10 @@ rm -f /etc/cron.daily/password && \
 rm -f /etc/cron.weekly/fstrim && \
 echo "force-unsafe-io" > /etc/dpkg/dpkg.cfg.d/02apt-speedup && \
 echo "Acquire::http {No-Cache=True;};" > /etc/apt/apt.conf.d/no-cache && \
+echo "#\0041/bin/bash" > /bin/start-rsyslog && \
+echo "rm -f /var/run/rsyslogd.pid" >> /bin/start-rsyslog && \
+echo "rsyslogd -n" >> /bin/start-rsyslog && \
+chmod 755 /bin/start-rsyslog && \
 add-apt-repository -y ppa:ondrej/php5-5.6 && \
 apt-get update && \
 apt-get install php5-cli php5-common php5-cgi php5-curl php5-imagick php5-imap php5-pgsql php5-sqlite php5-mysql php5-fpm php5-mcrypt php5-ldap php5-json php5-intl php5-gd -y && \

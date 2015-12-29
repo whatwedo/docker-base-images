@@ -47,7 +47,11 @@ rm -f /etc/cron.daily/dpkg && \
 rm -f /etc/cron.daily/password && \
 rm -f /etc/cron.weekly/fstrim && \
 echo "force-unsafe-io" > /etc/dpkg/dpkg.cfg.d/02apt-speedup && \
-echo "Acquire::http {No-Cache=True;};" > /etc/apt/apt.conf.d/no-cache
+echo "Acquire::http {No-Cache=True;};" > /etc/apt/apt.conf.d/no-cache && \
+echo "#\0041/bin/bash" > /bin/start-rsyslog && \
+echo "rm -f /var/run/rsyslogd.pid" >> /bin/start-rsyslog && \
+echo "rsyslogd -n" >> /bin/start-rsyslog && \
+chmod 755 /bin/start-rsyslog
 ENV KIBANA_VERSION 4.1.1
 ENV KIBANA_SHA1 d43e039adcea43e1808229b9d55f3eaee6a5edb9
 RUN set -x \

@@ -48,6 +48,10 @@ rm -f /etc/cron.daily/password && \
 rm -f /etc/cron.weekly/fstrim && \
 echo "force-unsafe-io" > /etc/dpkg/dpkg.cfg.d/02apt-speedup && \
 echo "Acquire::http {No-Cache=True;};" > /etc/apt/apt.conf.d/no-cache && \
+echo "#\0041/bin/bash" > /bin/start-rsyslog && \
+echo "rm -f /var/run/rsyslogd.pid" >> /bin/start-rsyslog && \
+echo "rsyslogd -n" >> /bin/start-rsyslog && \
+chmod 755 /bin/start-rsyslog && \
 add-apt-repository ppa:webupd8team/java && \
 apt-get update && \
 echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections && \
