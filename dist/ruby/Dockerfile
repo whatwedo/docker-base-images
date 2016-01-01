@@ -7,51 +7,8 @@
 ##################################################
   
 
-FROM ubuntu:14.04
-MAINTAINER whatwedo GmbH <welove@whatwedo.ch>
-ENV DEBIAN_FRONTEND noninteractive
-ENV HOME /root
-RUN export INITRD=no && \
-mkdir -p /etc/container_environment && \
-echo -n no > /etc/container_environment/INITRD && \
-sed -i 's/^#\s*\(deb.*universe\)$/\1/g' /etc/apt/sources.list && \
-sed -i 's/^#\s*\(deb.*multiverse\)$/\1/g' /etc/apt/sources.list && \
-apt-get update -y && \
-apt-get upgrade -y && \
-apt-get install -y apt-transport-https ca-certificates software-properties-common && \
-apt-get install -y language-pack-en && \
-locale-gen en_US.UTF-8 && \
-update-locale LANG=en_US.UTF-8 LC_CTYPE=en_US.UTF-8 && \
-echo -n en_US.UTF-8 > /etc/container_environment/LANG && \
-echo -n en_US.UTF-8 > /etc/container_environment/LC_CTYPE
-ENV LANG en_US.UTF-8
-RUN apt-get install localepurge
-ENV TERM dumb
-ADD files/upstart /bin
-RUN chmod 755 /bin/upstart
-CMD /bin/upstart
-ADD files/firstboot /bin
-RUN chmod 755 /bin/firstboot
-VOLUME  ["/etc/firstboot"]
-ADD files/motd /etc
-RUN apt-get install -y curl less nano wget zip unzip supervisor rsyslog python-pip git-core && \
-pip install supervisor-stdout
-COPY files/supervisord/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-COPY files/supervisord/cron.conf /etc/supervisor/conf.d/cron.conf
-COPY files/supervisord/syslog.conf /etc/supervisor/conf.d/syslog.conf
-RUN touch /var/log/syslog && chown syslog:adm /var/log/syslog && \
-touch /var/log/cron.log && chown syslog:adm /var/log/cron.log && \
-rm -f /etc/cron.daily/standard && \
-rm -f /etc/cron.daily/upstart && \
-rm -f /etc/cron.daily/dpkg && \
-rm -f /etc/cron.daily/password && \
-rm -f /etc/cron.weekly/fstrim && \
-echo "force-unsafe-io" > /etc/dpkg/dpkg.cfg.d/02apt-speedup && \
-echo "Acquire::http {No-Cache=True;};" > /etc/apt/apt.conf.d/no-cache && \
-echo "#\0041/bin/bash" > /bin/start-rsyslog && \
-echo "rm -f /var/run/rsyslogd.pid" >> /bin/start-rsyslog && \
-echo "rsyslogd -n" >> /bin/start-rsyslog && \
-chmod 755 /bin/start-rsyslog && \
+FROM whatwedo/base:latest
+RUN apt-get update -y && \
 apt-get install -y ruby ruby-dev bundler && \
 apt-get autoremove -y && \
 apt-get clean -y && \
