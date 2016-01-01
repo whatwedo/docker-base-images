@@ -82,3 +82,4 @@ COPY files/supervisord/php-fpm56.conf /etc/supervisor/conf.d/php-fpm56.conf
 COPY files/supervisord/symfony2.conf /etc/supervisor/conf.d/symfony2.conf
 EXPOSE 80
 EXPOSE 443
+LABEL ch.whatwedo.image.base="whatwedo/symfony2"

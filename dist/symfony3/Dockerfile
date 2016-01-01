@@ -81,3 +81,4 @@ COPY files/supervisord/php-fpm70.conf /etc/supervisor/conf.d/php-fpm70.conf
 COPY files/supervisord/symfony3.conf /etc/supervisor/conf.d/symfony3.conf
 EXPOSE 80
 EXPOSE 443
+LABEL ch.whatwedo.image.base="whatwedo/symfony3"

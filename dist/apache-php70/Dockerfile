@@ -80,3 +80,4 @@ apt-get clean -y && \
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 EXPOSE 80
 EXPOSE 443
+LABEL ch.whatwedo.image.base="whatwedo/apache-php70"

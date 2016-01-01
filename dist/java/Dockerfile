@@ -60,3 +60,4 @@ apt-get install -y maven && \
 apt-get autoremove -y && \
 apt-get clean -y && \
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+LABEL ch.whatwedo.image.base="whatwedo/java"

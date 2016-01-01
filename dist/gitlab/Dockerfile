@@ -182,3 +182,4 @@ rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 EXPOSE 22
 EXPOSE 80
 VOLUME /home/git/gitlab/tmp/backups
+LABEL ch.whatwedo.image.base="whatwedo/gitlab"

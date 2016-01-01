@@ -70,3 +70,4 @@ rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 EXPOSE 9200
 EXPOSE 9300
 VOLUME  ["/data"]
+LABEL ch.whatwedo.image.base="whatwedo/elasticsearch"

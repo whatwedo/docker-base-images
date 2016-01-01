@@ -125,3 +125,4 @@ RUN apt-get autoremove -y && \
 apt-get clean -y && \
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 VOLUME  ["/etc/icinga2", "/etc/icingaweb2", "/var/lib/icinga2", "/etc/icinga2-classicui"]
+LABEL ch.whatwedo.image.base="whatwedo/icinga2"

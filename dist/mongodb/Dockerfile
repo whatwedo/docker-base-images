@@ -63,3 +63,4 @@ apt-get clean -y && \
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 EXPOSE 27017
 VOLUME  ["/data"]
+LABEL ch.whatwedo.image.base="whatwedo/mongodb"

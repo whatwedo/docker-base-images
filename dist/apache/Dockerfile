@@ -76,3 +76,4 @@ rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 EXPOSE 80
 EXPOSE 443
 VOLUME  ["/var/www"]
+LABEL ch.whatwedo.image.base="whatwedo/apache"

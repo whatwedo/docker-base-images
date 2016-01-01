@@ -26,13 +26,11 @@ RUN apt-get upgrade -y
 RUN apt-get install -y apt-transport-https ca-certificates software-properties-common
 
 # Fix locales
-RUN apt-get install -y language-pack-en
 RUN locale-gen en_US.UTF-8
 RUN update-locale LANG=en_US.UTF-8 LC_CTYPE=en_US.UTF-8
 RUN echo -n en_US.UTF-8 > /etc/container_environment/LANG
 RUN echo -n en_US.UTF-8 > /etc/container_environment/LC_CTYPE
 ENV LANG en_US.UTF-8
-RUN apt-get install localepurge
 
 # Fix: TERM environment variable not set.
 ENV TERM dumb
@@ -51,7 +49,7 @@ VOLUME  ["/etc/firstboot"]
 ADD files/motd /etc
 
 # Install often used tools
-RUN apt-get install -y curl less nano wget zip unzip supervisor rsyslog python-pip git-core
+RUN apt-get install -y curl wget supervisor rsyslog python-pip git-core
 RUN pip install supervisor-stdout
 
 # Add default supervisord config

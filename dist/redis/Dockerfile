@@ -61,3 +61,4 @@ apt-get clean -y && \
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 EXPOSE 6379
 VOLUME  ["/var/redis"]
+LABEL ch.whatwedo.image.base="whatwedo/redis"

@@ -70,3 +70,4 @@ apt-get clean -y && \
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 VOLUME  ["/var/lib/postgresql"]
 EXPOSE 5432
+LABEL ch.whatwedo.image.base="whatwedo/postgres"

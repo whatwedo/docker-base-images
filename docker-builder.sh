@@ -81,6 +81,8 @@ build-file() {
   done <<< "$(m4 -I "modules/*.m4" "images/$1.m4" | grep -v '^\#' | grep -v '^\s*$')"
   echo "$lastline" >> "dist/$1/Dockerfile"
 
+  echo "LABEL ch.whatwedo.image.base=\"whatwedo/$1\"" >> "dist/$1/Dockerfile"
+
   cp "images/$1.md" "dist/$1/README.md"
 }
 

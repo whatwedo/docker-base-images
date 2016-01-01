@@ -60,3 +60,4 @@ apt-get clean -y && \
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 EXPOSE 53/udp 53/tcp
 EXPOSE 953
+LABEL ch.whatwedo.image.base="whatwedo/bind"

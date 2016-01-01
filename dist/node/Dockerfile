@@ -58,3 +58,4 @@ apt-get install -y nodejs && \
 apt-get autoremove -y && \
 apt-get clean -y && \
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+LABEL ch.whatwedo.image.base="whatwedo/node"

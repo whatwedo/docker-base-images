@@ -87,3 +87,4 @@ apt-get clean -y && \
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 EXPOSE 80
 VOLUME  ["/var/www"]
+LABEL ch.whatwedo.image.base="whatwedo/wordpress"

@@ -72,3 +72,4 @@ RUN apt-get autoremove -y && \
 apt-get clean -y && \
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 EXPOSE 8080
+LABEL ch.whatwedo.image.base="whatwedo/tomcat"

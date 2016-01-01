@@ -81,3 +81,4 @@ ADD files/nginx-php56 /etc/nginx
 COPY files/supervisord/php-fpm56.conf /etc/supervisor/conf.d/php-fpm56.conf
 EXPOSE 80
 EXPOSE 443
+LABEL ch.whatwedo.image.base="whatwedo/nginx-php56"

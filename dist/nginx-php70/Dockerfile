@@ -80,3 +80,4 @@ ADD files/nginx-php70 /etc/nginx
 COPY files/supervisord/php-fpm70.conf /etc/supervisor/conf.d/php-fpm70.conf
 EXPOSE 80
 EXPOSE 443
+LABEL ch.whatwedo.image.base="whatwedo/nginx-php70"
