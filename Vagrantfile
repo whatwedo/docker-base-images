@@ -207,21 +207,6 @@ Vagrant.configure("2") do |config|
 
   end
 
-  # If using Vagrant-Cachier
-  # http://fgrehm.viewdocs.io/vagrant-cachier
-  if Vagrant.has_plugin?("vagrant-cachier")
-    # Configure cached packages to be shared between instances of the same base box.
-    # Usage docs: http://fgrehm.viewdocs.io/vagrant-cachier/usage
-    config.cache.scope = :box
-
-    config.cache.synced_folder_opts = {
-        type: :nfs,
-        mount_options: ['rw', 'vers=3', 'tcp', 'nolock']
-    }
-  else
-    warn "The recommeded plugin 'vagrant-cachier' is currently not installed. You can install it by executing: 'vagrant plugin install vagrant-cachier'"
-  end
-
   # Adding vagrant-digitalocean provider - https://github.com/smdahlen/vagrant-digitalocean
   # Needs to ensure that the vagrant plugin is installed
   config.vm.provider :digital_ocean do |provider, override|
