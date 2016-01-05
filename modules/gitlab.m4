@@ -107,6 +107,14 @@ RUN echo 'echo "${GITLAB_BACKUP_CRON} cd /home/git/gitlab && bundle exec rake gi
 RUN echo 'sudo -u git -H crontab /home/git/gitlab/tmp/cron' >> /bin/firstboot
 RUN echo 'sudo -u git -H rm /home/git/gitlab/tmp/cron' >> /bin/firstboot
 
+RUN echo 'touch /home/git/gitlab/log/gitlab-workhorse.log' >> /bin/firstboot
+RUN echo 'touch /home/git/gitlab/log/mail_room.log' >> /bin/firstboot
+RUN echo 'touch /home/git/gitlab/log/production.log' >> /bin/firstboot
+RUN echo 'touch /home/git/gitlab/log/sidekiq.log' >> /bin/firstboot
+RUN echo 'touch /home/git/gitlab/log/unicorn.stderr.log' >> /bin/firstboot
+RUN echo 'touch /home/git/gitlab/log/unicorn.stdout.log' >> /bin/firstboot
+RUN echo 'chown -R git:git /home/git/gitlab/log' >> /bin/firstboot
+
 RUN echo 'echo ""' >> /bin/firstboot
 RUN echo 'echo "#########################"' >> /bin/firstboot
 RUN echo 'echo "# GitLab Setup finished #"' >> /bin/firstboot
