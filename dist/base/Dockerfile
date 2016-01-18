@@ -31,6 +31,9 @@ CMD /bin/upstart
 ADD files/firstboot /bin
 RUN chmod 755 /bin/firstboot
 VOLUME  ["/etc/firstboot"]
+RUN echo "#\0041/bin/bash" > /bin/everyboot && \
+echo 'echo "Run content of /bin/everyboot..."' >> /bin/everyboot && \
+chmod 755 /bin/everyboot
 ADD files/motd /etc
 RUN apt-get install -y curl wget supervisor rsyslog python-pip git-core && \
 pip install supervisor-stdout

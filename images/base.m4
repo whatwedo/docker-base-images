@@ -45,6 +45,11 @@ ADD files/firstboot /bin
 RUN chmod 755 /bin/firstboot
 VOLUME  ["/etc/firstboot"]
 
+# Create everyboot script
+RUN echo "#\0041/bin/bash" > /bin/everyboot
+RUN echo 'echo "Run content of /bin/everyboot..."' >> /bin/everyboot
+RUN chmod 755 /bin/everyboot
+
 # Set motd
 ADD files/motd /etc
 

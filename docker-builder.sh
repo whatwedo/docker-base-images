@@ -116,6 +116,7 @@ build-cached-image() {
 #download latest base images
 update-base-images() {
   docker pull ubuntu:14.04
+  docker pull whatwedo/base:latest
 }
 
 
