@@ -73,7 +73,10 @@ echo 'echo "host = \"${DB_SERVER}\"," >> /etc/icinga2/features-available/ido-mys
 echo 'echo "port = \"${DB_PORT}\"" >> /etc/icinga2/features-available/ido-mysql.conf' >> /bin/firstboot && \
 echo 'echo "database = \"${DB_NAME}\"" >> /etc/icinga2/features-available/ido-mysql.conf' >> /bin/firstboot && \
 echo 'echo "}" >> /etc/icinga2/features-available/ido-mysql.conf' >> /bin/firstboot && \
-echo 'htpasswd -b -c /etc/icinga2-classicui/htpasswd.users icingaadmin ${ICINGAADMIN_PW}' >> /bin/firstboot && \
+echo 'htpasswd -b -c /etc/icinga2/conf.d/htpasswd.users icingaadmin ${ICINGAADMIN_PW}' >> /bin/firstboot && \
+touch /etc/icinga2/conf.d/htpasswd.users && \
+rm /etc/icinga2-classicui/htpasswd.users && \
+ln -s /etc/icinga2/conf.d/htpasswd.users /etc/icinga2-classicui/htpasswd.users && \
 echo 'sleep 30' >> /bin/firstboot && \
 echo 'mysql -u ${DB_USER} -p${DB_PW} -h ${DB_SERVER} -P ${DB_PORT} -e "CREATE DATABASE ${DB_NAME}"' >> /bin/firstboot && \
 echo 'mysql -u ${DB_USER} -p${DB_PW} -h ${DB_SERVER} -D ${DB_NAME} -P ${DB_PORT} < /usr/share/icinga2-ido-mysql/schema/mysql.sql' >> /bin/firstboot
