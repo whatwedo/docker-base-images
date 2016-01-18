@@ -67,10 +67,7 @@ RUN echo 'echo "database = \"${DB_NAME}\"" >> /etc/icinga2/features-available/id
 RUN echo 'echo "}" >> /etc/icinga2/features-available/ido-mysql.conf' >> /bin/firstboot
 
 #Icinga classicui settings
-RUN echo 'htpasswd -b -c /etc/icinga2/conf.d/htpasswd.users icingaadmin ${ICINGAADMIN_PW}' >> /bin/firstboot
-RUN touch /etc/icinga2/conf.d/htpasswd.users
-RUN rm /etc/icinga2-classicui/htpasswd.users
-RUN ln -s /etc/icinga2/conf.d/htpasswd.users /etc/icinga2-classicui/htpasswd.users
+RUN echo 'htpasswd -b -c /etc/icinga2-classicui/htpasswd.users icingaadmin ${ICINGAADMIN_PW}' >> /bin/firstboot
 
 #Wait until database service is started (in multi container environement)
 RUN echo 'sleep 30' >> /bin/firstboot
