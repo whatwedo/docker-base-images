@@ -29,13 +29,17 @@ RUN add-apt-repository -y ppa:ondrej/php-7.0 && \
 apt-get update && \
 apt-get install php7.0 php7.0-cli php7.0-common php7.0-cgi php7.0-curl php7.0-imap php7.0-pgsql php7.0-sqlite3 php7.0-mysql php7.0-fpm php7.0-intl php7.0-gd php7.0-json php7.0-ldap php-imagick -y && \
 mkdir -p /run/php && \
-apt-get autoremove -y && \
-apt-get clean -y && \
-rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
+curl -sL https://deb.nodesource.com/setup_5.x | sudo -E bash - && \
+apt-get install -y nodejs && \
+ ln -s /usr/bin/node /usr/local/bin/node && \
 rm /etc/nginx/nginx.conf
 ADD files/symfony3 /etc/nginx
 COPY files/supervisord/php-fpm70.conf /etc/supervisor/conf.d/php-fpm70.conf
 COPY files/supervisord/symfony3.conf /etc/supervisor/conf.d/symfony3.conf
+RUN echo 'php bin/console cache:clear --env=prod' >> /bin/everyboot
 EXPOSE 80
 EXPOSE 443
+RUN apt-get autoremove -y && \
+apt-get clean -y && \
+rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 LABEL ch.whatwedo.image.base="whatwedo/symfony3"
