@@ -11,9 +11,9 @@ docker run \
 ## docker-compose
 
 ```
-gitlab:
+owncloud:
   restart: always
-  image: owncloud
+  image: whatwedo/owncloud
   links:
     - "db:db"
   ports:
@@ -32,6 +32,7 @@ db:
 
 ## Volumes
 
+* /var/www/html
 * /etc/firstboot
 
 ## Exposed Ports

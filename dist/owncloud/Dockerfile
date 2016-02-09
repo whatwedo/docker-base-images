@@ -54,6 +54,11 @@ echo '    cd /var/www/html' >> /bin/everyboot && \
 echo '    tar cf - --one-file-system -C /usr/src/owncloud . | tar xf -' >> /bin/everyboot && \
 echo '    chown -R www-data /var/www' >> /bin/everyboot && \
 echo 'fi' >> /bin/everyboot && \
+echo 'echo "Installing Backup CronJob"' >> /bin/firstboot && \
+echo 'crontab -u www-data -l > /tmp/cron' >> /bin/firstboot && \
+echo 'echo "*/15  *  *  *  * php -f /var/www/owncloud/cron.php" >> /tmp/cron' >> /bin/firstboot && \
+echo 'crontab -u www-data /tmp/cron' >> /bin/firstboot && \
+echo 'rm /tmp/cron' >> /bin/firstboot && \
 apt-get autoremove -y && \
 apt-get clean -y && \
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*

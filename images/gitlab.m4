@@ -21,4 +21,4 @@ EXPOSE 22
 EXPOSE 80
 
 # Volumes
-VOLUME /home/git/gitlab/tmp/backups
+VOLUME /home/git/data

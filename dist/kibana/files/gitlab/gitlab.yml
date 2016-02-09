@@ -93,7 +93,7 @@ production: &base
     ## Repository downloads directory
     # When a user clicks e.g. 'Download zip' on a project, a temporary zip file is created in the following directory.
     # The default is 'tmp/repositories' relative to the root of the Rails app.
-    # repository_downloads_path: tmp/repositories
+    repository_downloads_path: /home/git/data/tmp/downloads
 
   ## Reply by email
   # Allow users to comment on issues and merge requests by replying to notification emails.
@@ -128,7 +128,7 @@ production: &base
   artifacts:
     enabled: true
     # The location where build artifacts are stored (default: shared/artifacts).
-    # path: shared/artifacts
+    path: /home/git/data/shared
 
   ## Git LFS
   lfs:
@@ -167,7 +167,7 @@ production: &base
     # add_pusher: true
 
     # The location where build traces are stored (default: builds/). Relative paths are relative to Rails.root
-    # builds_path: builds/
+    builds_path: /home/git/data/builds
 
   #
   # 3. Auth settings
@@ -352,7 +352,7 @@ production: &base
 
   ## Backup settings
   backup:
-    path: "tmp/backups"   # Relative paths are relative to Rails.root (default: tmp/backups/)
+    path: "/home/git/data/backups"   # Relative paths are relative to Rails.root (default: tmp/backups/)
     # archive_permissions: 0640 # Permissions for the resulting backup.tar file (default: 0600)
     keep_time: {{GITLAB_BACKUP_KEEP_TIME}} # default: 0 (forever) (in seconds)
     # pg_schema: public     # default: nil, it means that all schemas will be backed up
@@ -376,8 +376,7 @@ production: &base
     path: /home/git/gitlab-shell/
 
     # REPOS_PATH MUST NOT BE A SYMLINK!!!
-    repos_path: /home/git/repositories/
-    hooks_path: /home/git/gitlab-shell/hooks/
+    repos_path: /home/git/data/repositories/
 
     # File that contains the secret key for verifying access for gitlab-shell.
     # Default is '.gitlab_shell_secret' relative to Rails.root (i.e. root of the GitLab app).
