@@ -4,34 +4,34 @@ We at [whatwedo](https://whatwedo.ch/) are slowly going away from traditional ap
 ## Images
 | Name | Description |
 |---|---|
-| [base](https://registry.hub.docker.com/u/whatwedo/base/) | several base packages for daily working with docker installed |
-| [apache](https://registry.hub.docker.com/u/whatwedo/apache/) | Apache 2 webserver |
-| [apache-php56](https://registry.hub.docker.com/u/whatwedo/apache-php56/) | Apache 2 webserver including PHP 5.6 |
-| [apache-php70](https://registry.hub.docker.com/u/whatwedo/apache-php70/) | Apache 2 webserver including PHP 7.0 |
-| [bind](https://registry.hub.docker.com/u/whatwedo/bind/) | Bind9 nameserver |
-| [elasticsearch](https://registry.hub.docker.com/u/whatwedo/elasticsearch/) | Elasticsearch server |
-| [golang](https://registry.hub.docker.com/u/whatwedo/golang/) | Golang compiler |
-| [icinga2](https://registry.hub.docker.com/u/whatwedo/icinga2/) | Icinga2 and Icinga2-Web |
-| [java](https://registry.hub.docker.com/u/whatwedo/java/) | Java 8 |
-| [kibana](https://registry.hub.docker.com/u/whatwedo/kibana/) | Kibana data exploration UI |
-| [logstash](https://registry.hub.docker.com/u/whatwedo/logstash/) | Logstash |
-| [logstash-forwarder](https://registry.hub.docker.com/u/whatwedo/logstash-forwarder/) | Logstash-Forwarder |
-| [mariadb](https://registry.hub.docker.com/u/whatwedo/mariadb/) | MariaDB server |
-| [mongodb](https://registry.hub.docker.com/u/whatwedo/mongodb/) | MongoDB server |
-| [nginx](https://registry.hub.docker.com/u/whatwedo/nginx/) | nginx webserver |
-| [nginx-php56](https://registry.hub.docker.com/u/whatwedo/nginx-php56/) | nginx webserver including PHP 5.6 |
-| [nginx-php70](https://registry.hub.docker.com/u/whatwedo/nginx-php70/) | nginx webserver including PHP 7.0 |
-| [node](https://registry.hub.docker.com/u/whatwedo/node/) | Node |
-| [php56](https://registry.hub.docker.com/u/whatwedo/php56/) | PHP 5.6 interpreter |
-| [php70](https://registry.hub.docker.com/u/whatwedo/postgres/) | PHP 7.0 interpreter |
-| [postgres](https://registry.hub.docker.com/u/whatwedo/postgres/) | Postgres database server |
-| [puppet-client](https://registry.hub.docker.com/u/whatwedo/puppet-client/) | Puppet Client |
-| [redis](https://registry.hub.docker.com/u/whatwedo/redis/) | Redis data structure server |
-| [ruby](https://registry.hub.docker.com/u/whatwedo/ruby/) | Ruby interpreter |
-| [symfony2](https://registry.hub.docker.com/u/whatwedo/symfony2/) | nginx configured for running Symfony 2 |
-| [symfony3](https://registry.hub.docker.com/u/whatwedo/symfony3/) | nginx configured for running Symfony 3 |
-| [tomcat](https://registry.hub.docker.com/u/whatwedo/tomcat/) | Tomcat application server |
-| [wordpress](https://registry.hub.docker.com/u/whatwedo/wordpress/) | Wordpress installed on Apache 2 |
+| [whatwedo/base](https://github.com/whatwedo/docker-base-images/tree/master/dist/base/) | several base packages for daily working with docker installed |
+| [whatwedo/apache](https://github.com/whatwedo/docker-base-images/tree/master/dist/apache/) | Apache 2 webserver |
+| [whatwedo/apache-php56](https://github.com/whatwedo/docker-base-images/tree/master/dist/apache-php56/) | Apache 2 webserver including PHP 5.6 |
+| [whatwedo/apache-php70](https://github.com/whatwedo/docker-base-images/tree/master/dist/apache-php70/) | Apache 2 webserver including PHP 7.0 |
+| [whatwedo/bind](https://github.com/whatwedo/docker-base-images/tree/master/dist/bind/) | Bind9 nameserver |
+| [whatwedo/elasticsearch](https://github.com/whatwedo/docker-base-images/tree/master/dist/elasticsearch/) | Elasticsearch server |
+| [whatwedo/golang](https://github.com/whatwedo/docker-base-images/tree/master/dist/golang/) | Golang compiler |
+| [whatwedo/icinga2](https://github.com/whatwedo/docker-base-images/tree/master/dist/icinga2/) | Icinga2 and Icinga2-Web |
+| [whatwedo/java](https://github.com/whatwedo/docker-base-images/tree/master/dist/java/) | Java 8 |
+| [whatwedo/kibana](https://github.com/whatwedo/docker-base-images/tree/master/dist/kibana/) | Kibana data exploration UI |
+| [whatwedo/logstash](https://github.com/whatwedo/docker-base-images/tree/master/dist/logstash/) | Logstash |
+| [whatwedo/logstash-forwarder](https://github.com/whatwedo/docker-base-images/tree/master/dist/logstash-forwarder/) | Logstash-Forwarder |
+| [whatwedo/mariadb](https://github.com/whatwedo/docker-base-images/tree/master/dist/mariadb/) | MariaDB server |
+| [whatwedo/mongodb](https://github.com/whatwedo/docker-base-images/tree/master/dist/mongodb/) | MongoDB server |
+| [whatwedo/nginx](https://github.com/whatwedo/docker-base-images/tree/master/dist/nginx/) | nginx webserver |
+| [whatwedo/nginx-php56](https://github.com/whatwedo/docker-base-images/tree/master/dist/nginx-php56/) | nginx webserver including PHP 5.6 |
+| [whatwedo/nginx-php70](https://github.com/whatwedo/docker-base-images/tree/master/dist/nginx-php70/) | nginx webserver including PHP 7.0 |
+| [whatwedo/node](https://github.com/whatwedo/docker-base-images/tree/master/dist/node/) | Node |
+| [whatwedo/php56](https://github.com/whatwedo/docker-base-images/tree/master/dist/php56/) | PHP 5.6 interpreter |
+| [whatwedo/php70](https://github.com/whatwedo/docker-base-images/tree/master/dist/postgres/) | PHP 7.0 interpreter |
+| [whatwedo/postgres](https://github.com/whatwedo/docker-base-images/tree/master/dist/postgres/) | Postgres database server |
+| [whatwedo/puppet-client](https://github.com/whatwedo/docker-base-images/tree/master/dist/puppet-client/) | Puppet Client |
+| [whatwedo/redis](https://github.com/whatwedo/docker-base-images/tree/master/dist/redis/) | Redis data structure server |
+| [whatwedo/ruby](https://github.com/whatwedo/docker-base-images/tree/master/dist/ruby/) | Ruby interpreter |
+| [whatwedo/symfony2](https://github.com/whatwedo/docker-base-images/tree/master/dist/symfony2/) | nginx configured for running Symfony 2 |
+| [whatwedo/symfony3](https://github.com/whatwedo/docker-base-images/tree/master/dist/symfony3/) | nginx configured for running Symfony 3 |
+| [whatwedo/tomcat](https://github.com/whatwedo/docker-base-images/tree/master/dist/tomcat/) | Tomcat application server |
+| [whatwedo/wordpress](https://github.com/whatwedo/docker-base-images/tree/master/dist/wordpress/) | Wordpress installed on Apache 2 |
 
 
 ## Directory/File Layout
