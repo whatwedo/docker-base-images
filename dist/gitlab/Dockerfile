@@ -67,6 +67,14 @@ su git -c 'mkdir -p /home/git/gitlab/tmp/pid' && \
 su git -c 'mkdir -p /home/git/gitlab/tmp/sockets' && \
 su git -c 'mkdir -p /home/git/gitlab/tmp/backups' && \
 su git -c 'mkdir -p /home/git/gitlab/tmp/sessions' && \
+mkdir -p /home/git/data/tmp/downloads && \
+mkdir -p /home/git/data/shared && \
+mkdir -p /home/git/data/builds && \
+mkdir -p /home/git/data/backups && \
+mkdir -p /home/git/data/repositories && \
+mkdir -p /home/git/data/repositories && \
+chown -R git:git /home/git/data && \
+chmod -R 777 /home/git/data && \
 mkdir -p /home/git/.ssh && \
 chown -R git:git /home/git/.ssh && \
 chmod -R u+rwX /home/git/gitlab/tmp/pids/ && \
@@ -87,13 +95,6 @@ COPY files/gitlab/nginx.conf /etc/nginx/nginx.conf
 RUN su git -c 'git clone https://gitlab.com/gitlab-org/gitlab-workhorse.git /home/git/gitlab-workhorse' && \
 cd /home/git/gitlab-workhorse && su git -c 'git checkout 0.5.1'
 RUN cd /home/git/gitlab-workhorse && su git -c 'PATH=$PATH:/usr/local/go/bin:/go/bin ; make' && \
-echo 'mkdir -p /home/git/data/tmp/downloads' >> /bin/everyboot && \
-echo 'mkdir -p /home/git/data/shared' >> /bin/everyboot && \
-echo 'mkdir -p /home/git/data/builds' >> /bin/everyboot && \
-echo 'mkdir -p /home/git/data/backups' >> /bin/everyboot && \
-echo 'mkdir -p /home/git/data/repositories' >> /bin/everyboot && \
-echo 'chown -R git:git /home/git/data' >> /bin/everyboot && \
-echo 'chmod -R 777 /home/git/data' >> /bin/everyboot && \
 echo 'cd /home/git/gitlab' >> /bin/everyboot && \
 echo 'echo "configuring GitLab"' >> /bin/everyboot && \
 echo 'sed -i s/^worker_processes.*/worker_processes\ ${UNICORN_WORKER_PROCESSES}/g config/unicorn.rb' >> /bin/everyboot && \

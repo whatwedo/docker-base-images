@@ -30,6 +30,14 @@ RUN su git -c 'mkdir -p /home/git/gitlab/tmp/pid'
 RUN su git -c 'mkdir -p /home/git/gitlab/tmp/sockets'
 RUN su git -c 'mkdir -p /home/git/gitlab/tmp/backups'
 RUN su git -c 'mkdir -p /home/git/gitlab/tmp/sessions'
+RUN mkdir -p /home/git/data/tmp/downloads
+RUN mkdir -p /home/git/data/shared
+RUN mkdir -p /home/git/data/builds
+RUN mkdir -p /home/git/data/backups
+RUN mkdir -p /home/git/data/repositories
+RUN mkdir -p /home/git/data/repositories
+RUN chown -R git:git /home/git/data
+RUN chmod -R 777 /home/git/data
 RUN mkdir -p /home/git/.ssh
 RUN chown -R git:git /home/git/.ssh
 RUN chmod -R u+rwX /home/git/gitlab/tmp/pids/
@@ -56,13 +64,6 @@ RUN cd /home/git/gitlab-workhorse && su git -c 'git checkout 0.5.1'
 LASTRUN cd /home/git/gitlab-workhorse && su git -c 'PATH=$PATH:/usr/local/go/bin:/go/bin ; make'
 
 # everyboot
-RUN echo 'mkdir -p /home/git/data/tmp/downloads' >> /bin/everyboot
-RUN echo 'mkdir -p /home/git/data/shared' >> /bin/everyboot
-RUN echo 'mkdir -p /home/git/data/builds' >> /bin/everyboot
-RUN echo 'mkdir -p /home/git/data/backups' >> /bin/everyboot
-RUN echo 'mkdir -p /home/git/data/repositories' >> /bin/everyboot
-RUN echo 'chown -R git:git /home/git/data' >> /bin/everyboot
-RUN echo 'chmod -R 777 /home/git/data' >> /bin/everyboot
 RUN echo 'cd /home/git/gitlab' >> /bin/everyboot
 RUN echo 'echo "configuring GitLab"' >> /bin/everyboot
 RUN echo 'sed -i s/^worker_processes.*/worker_processes\ ${UNICORN_WORKER_PROCESSES}/g config/unicorn.rb' >> /bin/everyboot
