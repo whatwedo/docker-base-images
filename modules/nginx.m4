@@ -1,11 +1,12 @@
 #Install nginx
-RUN apt-get install -y nginx libpcre3-dev libssl-dev zlib1g-dev
+RUN apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0x7BD9BF62
+RUN add-apt-repository 'deb http://nginx.org/packages/mainline/ubuntu trusty nginx'
+RUN apt-get update
+RUN apt-get install -y nginx
 
 #Create required directories and files
 RUN touch /var/log/nginx/access.log
 RUN touch /var/log/nginx/error.log
-RUN mkdir /etc/nginx/ssl
-RUN chown -R www-data:www-data /var/lib/nginx
 
 #Edit config
 RUN mkdir /var/www

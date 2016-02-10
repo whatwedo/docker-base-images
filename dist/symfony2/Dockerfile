@@ -9,11 +9,12 @@
 
 FROM whatwedo/base:latest
 RUN apt-get update -y && \
-apt-get install -y nginx libpcre3-dev libssl-dev zlib1g-dev && \
+apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0x7BD9BF62 && \
+add-apt-repository 'deb http://nginx.org/packages/mainline/ubuntu trusty nginx' && \
+apt-get update && \
+apt-get install -y nginx && \
 touch /var/log/nginx/access.log && \
 touch /var/log/nginx/error.log && \
-mkdir /etc/nginx/ssl && \
-chown -R www-data:www-data /var/lib/nginx && \
 mkdir /var/www && \
 chown -R www-data:www-data /var/www/ && \
 chmod -R 2755 /var/www/ && \
