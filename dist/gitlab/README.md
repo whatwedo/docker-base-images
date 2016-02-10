@@ -36,7 +36,7 @@ docker run \
     whatwedo/gitlab
 ```
 
-## docker-compose
+## Composer
 
 ```
 gitlab:
