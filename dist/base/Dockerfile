@@ -35,7 +35,7 @@ RUN echo "#\0041/bin/bash" > /bin/everyboot && \
 echo 'echo "Run content of /bin/everyboot..."' >> /bin/everyboot && \
 chmod 755 /bin/everyboot
 ADD files/motd /etc
-RUN apt-get install -y curl wget supervisor rsyslog python-pip git-core && \
+RUN apt-get install -y curl wget supervisor rsyslog python-pip git-core zip unzip && \
 pip install supervisor-stdout
 COPY files/supervisord/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY files/supervisord/cron.conf /etc/supervisor/conf.d/cron.conf

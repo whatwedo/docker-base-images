@@ -54,7 +54,7 @@ RUN chmod 755 /bin/everyboot
 ADD files/motd /etc
 
 # Install often used tools
-RUN apt-get install -y curl wget supervisor rsyslog python-pip git-core
+RUN apt-get install -y curl wget supervisor rsyslog python-pip git-core zip unzip
 RUN pip install supervisor-stdout
 
 # Add default supervisord config
