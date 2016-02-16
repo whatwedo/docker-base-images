@@ -39,9 +39,7 @@ apt-get update -y && \
 apt-get -y install icinga2 icinga2-ido-mysql icinga2-classicui nagios-plugins icingaweb2 nmap && \
 apt-get -y install nagios-nrpe-plugin --no-install-recommends && \
 icinga2 feature enable ido-mysql && \
-icinga2 feature enable command && \
-rm /etc/dbconfig-common/icinga2-ido-mysql.conf
-ADD files/icinga/conf /etc/dbconfig-common
+icinga2 feature enable command
 ADD files/icinga/plugins /usr/lib/nagios/plugins
 RUN chmod 755 /usr/lib/nagios/plugins/check_rbl && \
 chmod 755 /usr/lib/nagios/plugins/check_senderscore && \
@@ -50,30 +48,36 @@ apt-get -y install libwww-perl libcrypt-ssleay-perl && \
 wget https://raw.github.com/tinyspeck/services-examples/master/nagios.pl && \
 mv nagios.pl /usr/local/bin/slack_nagios.pl && \
 chmod 755 /usr/local/bin/slack_nagios.pl && \
-wget https://raw.githubusercontent.com/bfg/nagios-twilio/master/bin/twilio-sms && \
-mv twilio-sms /usr/local/bin && \
-chmod 755 /usr/local/bin/twilio-sms && \
 /etc/init.d/icinga2 start && sleep 30 && /etc/init.d/icinga2 stop && \
 echo '<?php header("location: /icingaweb2"); ?>' > /var/www/html/index.php && \
 echo 'date.timezone = "Europe/Zurich"' >> /etc/php5/apache2/php.ini && \
-echo "icingacli setup config directory --group icingaweb2" >> /bin/firstboot && \
-echo 'echo "---------------------------------------------------"' >> /bin/firstboot && \
+echo "icingacli setup config directory --group icingaweb2" >> /bin/everyboot && \
+echo 'echo "---------------------------------------------------"' >> /bin/everyboot && \
 echo "icingacli setup token create" >> /bin/firstboot && \
-echo 'echo "---------------------------------------------------"' >> /bin/firstboot && \
-echo 'echo "dbc_dbuser=\"${DB_USER}\"" >> /etc/dbconfig-common/icinga2-ido-mysql.conf' >> /bin/firstboot && \
-echo 'echo "dbc_dbpass=\"${DB_PW}\"" >> /etc/dbconfig-common/icinga2-ido-mysql.conf' >> /bin/firstboot && \
-echo 'echo "dbc_dbserver=\"${DB_SERVER}\"" >> /etc/dbconfig-common/icinga2-ido-mysql.conf' >> /bin/firstboot && \
-echo 'echo "dbc_dbport=\"${DB_PORT}\"" >> /etc/dbconfig-common/icinga2-ido-mysql.conf' >> /bin/firstboot && \
-echo 'echo "dbc_dbname=\"${DB_NAME}\"" >> /etc/dbconfig-common/icinga2-ido-mysql.conf' >> /bin/firstboot && \
-echo 'echo "library \"db_ido_mysql\"" > /etc/icinga2/features-available/ido-mysql.conf' >> /bin/firstboot && \
-echo 'echo "object IdoMysqlConnection \"ido-mysql\" {" >> /etc/icinga2/features-available/ido-mysql.conf' >> /bin/firstboot && \
-echo 'echo "user = \"${DB_USER}\"," >> /etc/icinga2/features-available/ido-mysql.conf' >> /bin/firstboot && \
-echo 'echo "password = \"${DB_PW}\"," >> /etc/icinga2/features-available/ido-mysql.conf' >> /bin/firstboot && \
-echo 'echo "host = \"${DB_SERVER}\"," >> /etc/icinga2/features-available/ido-mysql.conf' >> /bin/firstboot && \
-echo 'echo "port = \"${DB_PORT}\"" >> /etc/icinga2/features-available/ido-mysql.conf' >> /bin/firstboot && \
-echo 'echo "database = \"${DB_NAME}\"" >> /etc/icinga2/features-available/ido-mysql.conf' >> /bin/firstboot && \
-echo 'echo "}" >> /etc/icinga2/features-available/ido-mysql.conf' >> /bin/firstboot && \
-echo 'htpasswd -b -c /etc/icinga2-classicui/htpasswd.users icingaadmin ${ICINGAADMIN_PW}' >> /bin/firstboot && \
+echo 'echo "---------------------------------------------------"' >> /bin/everyboot && \
+echo 'echo "dbc_install=\"true\"" > /etc/dbconfig-common/icinga2-ido-mysql.conf' >> /bin/everyboot && \
+echo 'echo "dbc_upgrade=\"true\"" >> /etc/dbconfig-common/icinga2-ido-mysql.conf' >> /bin/everyboot && \
+echo 'echo "dbc_remove=\"\"" >> /etc/dbconfig-common/icinga2-ido-mysql.conf' >> /bin/everyboot && \
+echo 'echo "dbc_dbtype=\"mysql\"" >> /etc/dbconfig-common/icinga2-ido-mysql.conf' >> /bin/everyboot && \
+echo 'echo "dbc_ssl=\"\"" >> /etc/dbconfig-common/icinga2-ido-mysql.conf' >> /bin/everyboot && \
+echo 'echo "dbc_dbadmin=\"root\"" >> /etc/dbconfig-common/icinga2-ido-mysql.conf' >> /bin/everyboot && \
+echo 'echo "dbc_basepath=\"\"" >> /etc/dbconfig-common/icinga2-ido-mysql.conf' >> /bin/everyboot && \
+echo 'echo "dbc_authmethod_admin=\"\"" >> /etc/dbconfig-common/icinga2-ido-mysql.conf' >> /bin/everyboot && \
+echo 'echo "dbc_authmethod_user=\"\"" >> /etc/dbconfig-common/icinga2-ido-mysql.conf' >> /bin/everyboot && \
+echo 'echo "dbc_dbuser=\"${DB_USER}\"" >> /etc/dbconfig-common/icinga2-ido-mysql.conf' >> /bin/everyboot && \
+echo 'echo "dbc_dbpass=\"${DB_PW}\"" >> /etc/dbconfig-common/icinga2-ido-mysql.conf' >> /bin/everyboot && \
+echo 'echo "dbc_dbserver=\"${DB_SERVER}\"" >> /etc/dbconfig-common/icinga2-ido-mysql.conf' >> /bin/everyboot && \
+echo 'echo "dbc_dbport=\"${DB_PORT}\"" >> /etc/dbconfig-common/icinga2-ido-mysql.conf' >> /bin/everyboot && \
+echo 'echo "dbc_dbname=\"${DB_NAME}\"" >> /etc/dbconfig-common/icinga2-ido-mysql.conf' >> /bin/everyboot && \
+echo 'echo "library \"db_ido_mysql\"" > /etc/icinga2/features-available/ido-mysql.conf' > /bin/everyboot && \
+echo 'echo "object IdoMysqlConnection \"ido-mysql\" {" >> /etc/icinga2/features-available/ido-mysql.conf' >> /bin/everyboot && \
+echo 'echo "user = \"${DB_USER}\"," >> /etc/icinga2/features-available/ido-mysql.conf' >> /bin/everyboot && \
+echo 'echo "password = \"${DB_PW}\"," >> /etc/icinga2/features-available/ido-mysql.conf' >> /bin/everyboot && \
+echo 'echo "host = \"${DB_SERVER}\"," >> /etc/icinga2/features-available/ido-mysql.conf' >> /bin/everyboot && \
+echo 'echo "port = \"${DB_PORT}\"" >> /etc/icinga2/features-available/ido-mysql.conf' >> /bin/everyboot && \
+echo 'echo "database = \"${DB_NAME}\"" >> /etc/icinga2/features-available/ido-mysql.conf' >> /bin/everyboot && \
+echo 'echo "}" >> /etc/icinga2/features-available/ido-mysql.conf' >> /bin/everyboot && \
+echo 'rm -f /etc/icinga2-classicui/htpasswd.users && htpasswd -b -c /etc/icinga2-classicui/htpasswd.users icingaadmin ${ICINGAADMIN_PW}' >> /bin/everyboot && \
 echo 'sleep 30' >> /bin/firstboot && \
 echo 'mysql -u ${DB_USER} -p${DB_PW} -h ${DB_SERVER} -P ${DB_PORT} -e "CREATE DATABASE ${DB_NAME}"' >> /bin/firstboot && \
 echo 'mysql -u ${DB_USER} -p${DB_PW} -h ${DB_SERVER} -D ${DB_NAME} -P ${DB_PORT} < /usr/share/icinga2-ido-mysql/schema/mysql.sql' >> /bin/firstboot
