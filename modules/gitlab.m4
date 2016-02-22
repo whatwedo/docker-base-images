@@ -8,15 +8,15 @@ LASTRUN apt-get update && apt-get install -y \
 
 # Install Ruby 2.1
 RUN mkdir /tmp/ruby
-RUN cd /tmp/ruby && curl -O --progress https://cache.ruby-lang.org/pub/ruby/2.1/ruby-2.1.7.tar.gz
-RUN cd /tmp/ruby && echo 'e2e195a4a58133e3ad33b955c829bb536fa3c075  ruby-2.1.7.tar.gz' | shasum -c - && tar xzf ruby-2.1.7.tar.gz
-RUN cd /tmp/ruby && cd ruby-2.1.7 && ./configure --disable-install-rdoc && make && make install
+RUN cd /tmp/ruby && curl -O --progress https://cache.ruby-lang.org/pub/ruby/2.1/ruby-2.1.8.tar.gz
+RUN cd /tmp/ruby && echo 'e2e195a4a58133e3ad33b955c829bb536fa3c075  ruby-2.1.8.tar.gz' | shasum -c - && tar xzf ruby-2.1.8.tar.gz
+RUN cd /tmp/ruby && cd ruby-2.1.8 && ./configure --disable-install-rdoc && make && make install
 LASTRUN gem install bundler --no-ri --no-rdoc
 
 # GitLab
 RUN adduser --disabled-login --gecos 'GitLab' git
 RUN sudo -u git -H git config --global core.autocrlf "input"
-RUN sudo -u git -H git clone https://gitlab.com/gitlab-org/gitlab-ce.git -b 8-3-stable /home/git/gitlab
+RUN sudo -u git -H git clone https://gitlab.com/gitlab-org/gitlab-ce.git -b 8-5-stable /home/git/gitlab
 RUN sudo -u git -H cp /home/git/gitlab/config/gitlab.yml.example /home/git/gitlab/config/gitlab.yml
 ADD files/gitlab/gitlab.yml /home/git/gitlab/config/
 RUN chown git /home/git/gitlab/config/
@@ -50,7 +50,7 @@ COPY files/gitlab/nginx.conf /etc/nginx/nginx.conf
 
 # GitLab Workhorse
 RUN sudo -u git -H git clone https://gitlab.com/gitlab-org/gitlab-workhorse.git /home/git/gitlab-workhorse
-RUN cd /home/git/gitlab-workhorse && sudo -u git -H git checkout 0.5.1
+RUN cd /home/git/gitlab-workhorse && sudo -u git -H git checkout 0.6.5
 LASTRUN cd /home/git/gitlab-workhorse && sudo -u git -H PATH=$PATH:/usr/local/go/bin:/go/bin ; make
 
 # firstboot
