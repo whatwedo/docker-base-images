@@ -47,13 +47,13 @@ checkinstall libxml2-dev libxslt-dev libcurl4-openssl-dev libicu-dev \
 logrotate python-docutils pkg-config cmake nodejs libmysqlclient-dev \
 mysql-client redis-tools
 RUN mkdir /tmp/ruby && \
-cd /tmp/ruby && curl -O --progress https://cache.ruby-lang.org/pub/ruby/2.1/ruby-2.1.7.tar.gz && \
-cd /tmp/ruby && echo 'e2e195a4a58133e3ad33b955c829bb536fa3c075  ruby-2.1.7.tar.gz' | shasum -c - && tar xzf ruby-2.1.7.tar.gz && \
-cd /tmp/ruby && cd ruby-2.1.7 && ./configure --disable-install-rdoc && make && make install
+cd /tmp/ruby && curl -O --progress https://cache.ruby-lang.org/pub/ruby/2.1/ruby-2.1.8.tar.gz && \
+cd /tmp/ruby && echo 'e2e195a4a58133e3ad33b955c829bb536fa3c075  ruby-2.1.8.tar.gz' | shasum -c - && tar xzf ruby-2.1.8.tar.gz && \
+cd /tmp/ruby && cd ruby-2.1.8 && ./configure --disable-install-rdoc && make && make install
 RUN gem install bundler --no-ri --no-rdoc && \
 adduser --disabled-login --gecos 'GitLab' git && \
 sudo -u git -H git config --global core.autocrlf "input" && \
-sudo -u git -H git clone https://gitlab.com/gitlab-org/gitlab-ce.git -b 8-3-stable /home/git/gitlab && \
+sudo -u git -H git clone https://gitlab.com/gitlab-org/gitlab-ce.git -b 8-5-stable /home/git/gitlab && \
 sudo -u git -H cp /home/git/gitlab/config/gitlab.yml.example /home/git/gitlab/config/gitlab.yml
 ADD files/gitlab/gitlab.yml /home/git/gitlab/config/
 RUN chown git /home/git/gitlab/config/ && \
@@ -83,7 +83,7 @@ sudo -u git -H chmod o-rwx /home/git/gitlab/config/database.yml
 RUN cd /home/git/gitlab && sudo -u git -H bundle install --deployment --without development test postgres aws kerberos
 COPY files/gitlab/nginx.conf /etc/nginx/nginx.conf
 RUN sudo -u git -H git clone https://gitlab.com/gitlab-org/gitlab-workhorse.git /home/git/gitlab-workhorse && \
-cd /home/git/gitlab-workhorse && sudo -u git -H git checkout 0.5.1
+cd /home/git/gitlab-workhorse && sudo -u git -H git checkout 0.6.5
 RUN cd /home/git/gitlab-workhorse && sudo -u git -H PATH=$PATH:/usr/local/go/bin:/go/bin ; make && \
 echo 'cd /home/git/gitlab' >> /bin/firstboot && \
 echo 'echo "configuring GitLab"' >> /bin/firstboot && \
