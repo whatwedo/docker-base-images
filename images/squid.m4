@@ -6,6 +6,3 @@ include(`modules/cleanup.m4')
 
 # expose ports
 EXPOSE 3128
-
-# set volumes
-VOLUME "/var/spool/squid3"

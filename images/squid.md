@@ -15,7 +15,6 @@ This image is not using any environment variables.
 ## Volumes
 
 * /etc/firstboot
-* /var/spool/squid3
 
 ## Exposed Ports
 
