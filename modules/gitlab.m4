@@ -9,7 +9,7 @@ LASTRUN apt-get update && apt-get install -y \
 # Install Ruby 2.1
 RUN mkdir /tmp/ruby
 RUN cd /tmp/ruby && curl -O --progress https://cache.ruby-lang.org/pub/ruby/2.1/ruby-2.1.8.tar.gz
-RUN cd /tmp/ruby && echo 'e2e195a4a58133e3ad33b955c829bb536fa3c075  ruby-2.1.8.tar.gz' | shasum -c - && tar xzf ruby-2.1.8.tar.gz
+RUN cd /tmp/ruby && echo 'c7e50159357afd87b13dc5eaf4ac486a70011149  ruby-2.1.8.tar.gz' | shasum -c - && tar xzf ruby-2.1.8.tar.gz
 RUN cd /tmp/ruby && cd ruby-2.1.8 && ./configure --disable-install-rdoc && make && make install
 LASTRUN gem install bundler --no-ri --no-rdoc
 
