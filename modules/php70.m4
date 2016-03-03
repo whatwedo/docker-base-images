@@ -1,5 +1,5 @@
 #Add PPA
-RUN add-apt-repository -y ppa:ondrej/php-7.0
+RUN add-apt-repository -y ppa:ondrej/php
 RUN apt-get update
 
 #Install PHP
