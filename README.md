@@ -10,6 +10,7 @@ We at [whatwedo](https://whatwedo.ch/) are slowly going away from traditional ap
 | [whatwedo/apache-php70](https://github.com/whatwedo/docker-base-images/tree/master/dist/apache-php70/) | Apache 2 webserver including PHP 7.0 |
 | [whatwedo/bind](https://github.com/whatwedo/docker-base-images/tree/master/dist/bind/) | Bind9 nameserver |
 | [whatwedo/elasticsearch](https://github.com/whatwedo/docker-base-images/tree/master/dist/elasticsearch/) | Elasticsearch server |
+| [whatwedo/gitlab](https://github.com/whatwedo/docker-base-images/tree/master/dist/gitlab/) | GitLab |
 | [whatwedo/golang](https://github.com/whatwedo/docker-base-images/tree/master/dist/golang/) | Golang compiler |
 | [whatwedo/icinga2](https://github.com/whatwedo/docker-base-images/tree/master/dist/icinga2/) | Icinga2 and Icinga2-Web |
 | [whatwedo/java](https://github.com/whatwedo/docker-base-images/tree/master/dist/java/) | Java 8 |
@@ -17,6 +18,7 @@ We at [whatwedo](https://whatwedo.ch/) are slowly going away from traditional ap
 | [whatwedo/logstash](https://github.com/whatwedo/docker-base-images/tree/master/dist/logstash/) | Logstash |
 | [whatwedo/logstash-forwarder](https://github.com/whatwedo/docker-base-images/tree/master/dist/logstash-forwarder/) | Logstash-Forwarder |
 | [whatwedo/mariadb](https://github.com/whatwedo/docker-base-images/tree/master/dist/mariadb/) | MariaDB server |
+| [whatwedo/memcached](https://github.com/whatwedo/docker-base-images/tree/master/dist/memcached/) | memcached server |
 | [whatwedo/mongodb](https://github.com/whatwedo/docker-base-images/tree/master/dist/mongodb/) | MongoDB server |
 | [whatwedo/nginx](https://github.com/whatwedo/docker-base-images/tree/master/dist/nginx/) | nginx webserver |
 | [whatwedo/nginx-php56](https://github.com/whatwedo/docker-base-images/tree/master/dist/nginx-php56/) | nginx webserver including PHP 5.6 |
@@ -31,7 +33,8 @@ We at [whatwedo](https://whatwedo.ch/) are slowly going away from traditional ap
 | [whatwedo/symfony2](https://github.com/whatwedo/docker-base-images/tree/master/dist/symfony2/) | nginx configured for running Symfony 2 |
 | [whatwedo/symfony3](https://github.com/whatwedo/docker-base-images/tree/master/dist/symfony3/) | nginx configured for running Symfony 3 |
 | [whatwedo/tomcat](https://github.com/whatwedo/docker-base-images/tree/master/dist/tomcat/) | Tomcat application server |
-| [whatwedo/wordpress](https://github.com/whatwedo/docker-base-images/tree/master/dist/wordpress/) | Wordpress installed on Apache 2 |
+| [whatwedo/wordpress](https://github.com/whatwedo/docker-base-images/tree/master/dist/wordpress/) | WordPress installed on Apache 2 |
+| [whatwedo/wordpress-nginx-w3tc](https://github.com/whatwedo/docker-base-images/tree/master/dist/wordpress-nginx-w3tc/) | WordPress running on nginx with PHP 7.0 and W3 Total Cache configuration |
 
 
 ## Directory/File Layout
