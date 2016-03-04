@@ -12,8 +12,8 @@ github_url      = "https://raw.githubusercontent.com/#{github_username}/#{github
 github_pat          = ""
 
 # Server Configuration
-
 hostname        = "base-images.dev"
+start_dir       = "/vagrant"
 
 # Set a local private network IP address.
 # See http://en.wikipedia.org/wiki/Private_network for explanation
@@ -46,21 +46,22 @@ server_swap = server_memory
 
 # UTC        for Universal Coordinated Time
 # EST        for Eastern Standard Time
+# CET        for Central European Time
 # US/Central for American Central
 # US/Eastern for American Eastern
-server_timezone  = "UTC"
+server_timezone  = "Europe/Zurich"
 
 # Database Configuration
-mysql_root_password   = "root"   # We'll assume user "root"
-mysql_version         = "5.5"    # Options: 5.5 | 5.6
-mysql_enable_remote   = "false"  # remote access enabled when true
-pgsql_root_password   = "root"   # We'll assume user "root"
-mongo_version         = "2.6"    # Options: 2.6 | 3.0
-mongo_enable_remote   = "false"  # remote access enabled when true
+mysql_root_password     = "root"   # We'll assume user "root"
+mysql_version           = "5.5"    # Options: 5.5 | 5.6
+mysql_enable_remote     = "false"  # remote access enabled when true
+pgsql_postgres_password = "postgres"   # We'll assume user "postgres"
+mongo_version           = "2.6"    # Options: 2.6 | 3.0
+mongo_enable_remote     = "false"  # remote access enabled when true
 
 # Languages and Packages
 php_timezone          = server_timezone    # http://php.net/manual/en/timezones.php
-php_version           = "5.6"    # Options: 5.5 | 5.6
+php_version           = "5.6"    # Options: 5.5 | 5.6 | 7.0
 ruby_version          = "latest" # Choose what ruby version should be installed (will also be the default version)
 ruby_gems             = [        # List any Ruby Gems that you want to install
   #"jekyll",
@@ -104,9 +105,15 @@ rabbitmq_password = "password"
 
 sphinxsearch_version  = "rel22" # rel20, rel21, rel22, beta, daily, stable
 
-# SSH public key
+elasticsearch_version = "2.1.1" # 2.1.1, 2.0.2, 1.7.4
+
+# Add SSH public key
 ssh_pub_key = File.readlines("#{Dir.home}/.ssh/id_rsa.pub").first.strip
 
+# Check vagrant version
+Vagrant.require_version ">= 1.8.0"
+
+# Configure VM
 Vagrant.configure("2") do |config|
 
   # Set server to Ubuntu 14.04
@@ -184,8 +191,10 @@ Vagrant.configure("2") do |config|
     vb.customize ["setextradata", :id, "VBoxInternal2/SharedFoldersEnableSymlinksCreate/v-root", "1"]
 
     # Prevent VMs running on Ubuntu to lose internet connection
-    # vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
     # vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
+
+    # Share VPN connection from host to guest
+    vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
 
     # Automatically update VirtualBox Guest Additions
     if Vagrant.has_plugin?("vagrant-vbguest")
@@ -196,37 +205,18 @@ Vagrant.configure("2") do |config|
       warn "The recommeded plugin 'vagrant-vbguest' is currently not installed. You can install it by executing: 'vagrant plugin install vagrant-vbguest'"
     end
 
-  end
-
-  # If using VMWare Fusion
-  config.vm.provider "vmware_fusion" do |vb, override|
-    override.vm.box_url = "http://files.vagrantup.com/precise64_vmware.box"
-
-    # Set server memory
-    vb.vmx["memsize"] = server_memory
+    # Force use of linked clones
+    vb.linked_clone = true
 
   end
 
-  # Adding vagrant-digitalocean provider - https://github.com/smdahlen/vagrant-digitalocean
-  # Needs to ensure that the vagrant plugin is installed
-  config.vm.provider :digital_ocean do |provider, override|
-    override.ssh.private_key_path = '~/.ssh/id_rsa'
-    override.ssh.username = 'vagrant'
-    override.vm.box = 'digital_ocean'
-    override.vm.box_url = "https://github.com/smdahlen/vagrant-digitalocean/raw/master/box/digital_ocean.box"
-
-    provider.token = 'YOUR TOKEN'
-    provider.image = 'ubuntu-14-04-x64'
-    provider.region = 'nyc2'
-    provider.size = '512mb'
-  end
 
   ####
   # Base Items
   ##########
 
   # Provision Base Packages
-  config.vm.provision "shell", path: "#{github_url}/scripts/base.sh", args: [github_url, server_swap, server_timezone]
+  config.vm.provision "shell", path: "#{github_url}/scripts/base.sh", args: [github_url, server_swap, server_timezone, start_dir]
 
   # optimize base box
   config.vm.provision "shell", path: "#{github_url}/scripts/base_box_optimizations.sh", privileged: true
@@ -266,13 +256,13 @@ Vagrant.configure("2") do |config|
   # config.vm.provision "shell", path: "#{github_url}/scripts/mysql.sh", args: [mysql_root_password, mysql_version, mysql_enable_remote]
 
   # Provision PostgreSQL
-  # config.vm.provision "shell", path: "#{github_url}/scripts/pgsql.sh", args: pgsql_root_password
+  # config.vm.provision "shell", path: "#{github_url}/scripts/pgsql.sh", args: pgsql_postgres_password
 
   # Provision SQLite
   # config.vm.provision "shell", path: "#{github_url}/scripts/sqlite.sh"
 
   # Provision RethinkDB
-  # config.vm.provision "shell", path: "#{github_url}/scripts/rethinkdb.sh", args: pgsql_root_password
+  # config.vm.provision "shell", path: "#{github_url}/scripts/rethinkdb.sh"
 
   # Provision Couchbase
   # config.vm.provision "shell", path: "#{github_url}/scripts/couchbase.sh"
@@ -295,7 +285,7 @@ Vagrant.configure("2") do |config|
   ##########
 
   # Install Elasticsearch
-  # config.vm.provision "shell", path: "#{github_url}/scripts/elasticsearch.sh"
+  # config.vm.provision "shell", path: "#{github_url}/scripts/elasticsearch.sh", args: [elasticsearch_version]
 
   # Install SphinxSearch
   # config.vm.provision "shell", path: "#{github_url}/scripts/sphinxsearch.sh", args: [sphinxsearch_version]
@@ -429,7 +419,18 @@ Vagrant.configure("2") do |config|
   # Any local scripts you may want to run post-provisioning.
   # Add these to the same directory as the Vagrantfile.
   ##########
-  # config.vm.provision "shell", path: "./local-script.sh"
+  # config.vm.provision "shell", path: "./vm-init.sh"
+  
+
+  ####
+  # System restart
+  # Restart VM after provisioning
+  ##########
+  if Vagrant.has_plugin?("vagrant-reload")
+    config.vm.provision :reload
+  else
+    warn "The recommeded plugin 'vagrant-reload' is currently not installed. You can install it by executing: 'vagrant plugin install vagrant-reload'"
+  end
 
 
   ####
