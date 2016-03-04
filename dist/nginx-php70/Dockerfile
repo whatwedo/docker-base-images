@@ -26,7 +26,7 @@ ADD files/nginx-default /etc/nginx
 RUN chown -R www-data /var/www/ && \
 chmod -R 755 /var/www/
 COPY files/supervisord/nginx.conf /etc/supervisor/conf.d/nginx.conf
-RUN add-apt-repository -y ppa:ondrej/php-7.0 && \
+RUN add-apt-repository -y ppa:ondrej/php && \
 apt-get update && \
 apt-get install php7.0 php7.0-cli php7.0-common php7.0-cgi php7.0-curl php7.0-imap php7.0-pgsql php7.0-sqlite3 php7.0-mysql php7.0-fpm php7.0-intl php7.0-gd php7.0-json php7.0-ldap php-imagick -y && \
 mkdir -p /run/php && \
