@@ -11,7 +11,8 @@ FROM whatwedo/base:latest
 RUN apt-get update -y && \
 add-apt-repository -y ppa:ondrej/php && \
 apt-get update && \
-apt-get install php7.0 php7.0-cli php7.0-common php7.0-cgi php7.0-curl php7.0-imap php7.0-pgsql php7.0-sqlite3 php7.0-mysql php7.0-fpm php7.0-intl php7.0-gd php7.0-json php7.0-ldap php-memcached php-imagick -y && \
+apt-get install php7.0 php7.0-cli php7.0-common php7.0-cgi php7.0-curl php7.0-imap php7.0-pgsql php7.0-sqlite3 php7.0-mysql php7.0-fpm php7.0-intl php7.0-gd php7.0-json php7.0-ldap php-memcached php-memcache php-imagick -y && \
+echo "php_flag[expose_php] = Off" >> /etc/php/7.0/fpm/pool.d/www.conf && \
 mkdir -p /run/php && \
 apt-get autoremove -y && \
 apt-get clean -y && \
