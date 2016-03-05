@@ -53,8 +53,10 @@ cd /tmp/ruby && cd ruby-2.1.8 && ./configure --disable-install-rdoc && make && m
 RUN gem install bundler --no-ri --no-rdoc && \
 adduser --disabled-login --gecos 'GitLab' git && \
 sudo -u git -H git config --global core.autocrlf "input" && \
-sudo -u git -H git clone https://gitlab.com/gitlab-org/gitlab-ce.git -b 8-5-stable /home/git/gitlab && \
-sudo -u git -H cp /home/git/gitlab/config/gitlab.yml.example /home/git/gitlab/config/gitlab.yml
+sudo -u git -H curl -L https://github.com/gitlabhq/gitlabhq/archive/v8.5.4.zip -o /home/git/gitlab.zip && \
+sudo -u git -H unzip /home/git/gitlab.zip -d /home/git && \
+sudo -u git -H mv /home/git/gitlabhq-* /home/git/gitlab && \
+sudo -u git -H rm /home/git/gitlab.zip
 ADD files/gitlab/gitlab.yml /home/git/gitlab/config/
 RUN chown git /home/git/gitlab/config/ && \
 sudo -u git -H cp /home/git/gitlab/config/secrets.yml.example /home/git/gitlab/config/secrets.yml && \
@@ -138,13 +140,22 @@ echo 'chown -R git:git /home/git/gitlab/log' >> /bin/firstboot && \
 echo 'echo ""' >> /bin/firstboot && \
 echo 'echo "#########################"' >> /bin/firstboot && \
 echo 'echo "# GitLab Setup finished #"' >> /bin/firstboot && \
-echo 'echo "#########################"' >> /bin/firstboot && \
-echo 'echo ""' >> /bin/firstboot
+echo 'echo "#########################"' >> /bin/firstboot
+RUN echo 'echo ""' >> /bin/firstboot && \
+echo 'sudo mkdir -p /data/artifacts' >> /bin/everyboot && \
+echo 'sudo mkdir -p /data/lfs/lfs-objects' >> /bin/everyboot && \
+echo 'sudo mkdir -p /data/ci/builds/' >> /bin/everyboot && \
+echo 'sudo mkdir -p /data/shared' >> /bin/everyboot && \
+echo 'sudo mkdir -p /data/gitlab-satellites' >> /bin/everyboot && \
+echo 'sudo mkdir -p /data/backups' >> /bin/everyboot && \
+echo 'sudo mkdir -p /data/repositories' >> /bin/everyboot && \
+echo 'sudo mkdir -p /data/gitlab-shell/hooks' >> /bin/everyboot
+RUN echo 'chown -R git:git /data' >> /bin/everyboot
 COPY files/supervisord/gitlab.conf /etc/supervisor/conf.d/gitlab.conf
 RUN apt-get autoremove -y && \
 apt-get clean -y && \
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 EXPOSE 22
 EXPOSE 80
-VOLUME /home/git/gitlab/tmp/backups
+VOLUME /data
 LABEL ch.whatwedo.image.base="whatwedo/gitlab"

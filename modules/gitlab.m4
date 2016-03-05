@@ -16,8 +16,10 @@ LASTRUN gem install bundler --no-ri --no-rdoc
 # GitLab
 RUN adduser --disabled-login --gecos 'GitLab' git
 RUN sudo -u git -H git config --global core.autocrlf "input"
-RUN sudo -u git -H git clone https://gitlab.com/gitlab-org/gitlab-ce.git -b 8-5-stable /home/git/gitlab
-RUN sudo -u git -H cp /home/git/gitlab/config/gitlab.yml.example /home/git/gitlab/config/gitlab.yml
+RUN sudo -u git -H curl -L https://github.com/gitlabhq/gitlabhq/archive/v8.5.4.zip -o /home/git/gitlab.zip
+RUN sudo -u git -H unzip /home/git/gitlab.zip -d /home/git
+RUN sudo -u git -H mv /home/git/gitlabhq-* /home/git/gitlab
+RUN sudo -u git -H rm /home/git/gitlab.zip
 ADD files/gitlab/gitlab.yml /home/git/gitlab/config/
 RUN chown git /home/git/gitlab/config/
 RUN sudo -u git -H cp /home/git/gitlab/config/secrets.yml.example /home/git/gitlab/config/secrets.yml
@@ -119,7 +121,18 @@ RUN echo 'echo ""' >> /bin/firstboot
 RUN echo 'echo "#########################"' >> /bin/firstboot
 RUN echo 'echo "# GitLab Setup finished #"' >> /bin/firstboot
 RUN echo 'echo "#########################"' >> /bin/firstboot
-RUN echo 'echo ""' >> /bin/firstboot
+LASTRUN echo 'echo ""' >> /bin/firstboot
+
+# everyboot
+RUN echo 'sudo mkdir -p /data/artifacts' >> /bin/everyboot
+RUN echo 'sudo mkdir -p /data/lfs/lfs-objects' >> /bin/everyboot
+RUN echo 'sudo mkdir -p /data/ci/builds/' >> /bin/everyboot
+RUN echo 'sudo mkdir -p /data/shared' >> /bin/everyboot
+RUN echo 'sudo mkdir -p /data/gitlab-satellites' >> /bin/everyboot
+RUN echo 'sudo mkdir -p /data/backups' >> /bin/everyboot
+RUN echo 'sudo mkdir -p /data/repositories' >> /bin/everyboot
+RUN echo 'sudo mkdir -p /data/gitlab-shell/hooks' >> /bin/everyboot
+LASTRUN echo 'chown -R git:git /data' >> /bin/everyboot
 
 # Add GitLab to supervisord config
 COPY files/supervisord/gitlab.conf /etc/supervisor/conf.d/gitlab.conf
