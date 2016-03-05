@@ -87,6 +87,15 @@ COPY files/gitlab/nginx.conf /etc/nginx/nginx.conf
 RUN sudo -u git -H git clone https://gitlab.com/gitlab-org/gitlab-workhorse.git /home/git/gitlab-workhorse && \
 cd /home/git/gitlab-workhorse && sudo -u git -H git checkout 0.6.5
 RUN cd /home/git/gitlab-workhorse && sudo -u git -H PATH=$PATH:/usr/local/go/bin:/go/bin ; make && \
+echo 'sudo mkdir -p /data/artifacts' >> /bin/firstboot && \
+echo 'sudo mkdir -p /data/lfs/lfs-objects' >> /bin/firstboot && \
+echo 'sudo mkdir -p /data/ci/builds/' >> /bin/firstboot && \
+echo 'sudo mkdir -p /data/shared' >> /bin/firstboot && \
+echo 'sudo mkdir -p /data/gitlab-satellites' >> /bin/firstboot && \
+echo 'sudo mkdir -p /data/backups' >> /bin/firstboot && \
+echo 'sudo mkdir -p /data/repositories' >> /bin/firstboot && \
+echo 'sudo mkdir -p /data/gitlab-shell/hooks' >> /bin/firstboot && \
+echo 'chown -R git:git /data' >> /bin/firstboot && \
 echo 'cd /home/git/gitlab' >> /bin/firstboot && \
 echo 'echo "configuring GitLab"' >> /bin/firstboot && \
 echo 'sed -i s/^worker_processes.*/worker_processes\ ${UNICORN_WORKER_PROCESSES}/g config/unicorn.rb' >> /bin/firstboot && \

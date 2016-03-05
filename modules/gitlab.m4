@@ -56,6 +56,17 @@ RUN cd /home/git/gitlab-workhorse && sudo -u git -H git checkout 0.6.5
 LASTRUN cd /home/git/gitlab-workhorse && sudo -u git -H PATH=$PATH:/usr/local/go/bin:/go/bin ; make
 
 # firstboot
+RUN echo 'echo "creating data directories"' >> /bin/firstboot
+RUN echo 'sudo mkdir -p /data/artifacts' >> /bin/firstboot
+RUN echo 'sudo mkdir -p /data/lfs/lfs-objects' >> /bin/firstboot
+RUN echo 'sudo mkdir -p /data/ci/builds/' >> /bin/firstboot
+RUN echo 'sudo mkdir -p /data/shared' >> /bin/firstboot
+RUN echo 'sudo mkdir -p /data/gitlab-satellites' >> /bin/firstboot
+RUN echo 'sudo mkdir -p /data/backups' >> /bin/firstboot
+RUN echo 'sudo mkdir -p /data/repositories' >> /bin/firstboot
+RUN echo 'sudo mkdir -p /data/gitlab-shell/hooks' >> /bin/firstboot
+RUN echo 'chown -R git:git /data' >> /bin/firstboot
+
 RUN echo 'cd /home/git/gitlab' >> /bin/firstboot
 RUN echo 'echo "configuring GitLab"' >> /bin/firstboot
 RUN echo 'sed -i s/^worker_processes.*/worker_processes\ ${UNICORN_WORKER_PROCESSES}/g config/unicorn.rb' >> /bin/firstboot
@@ -123,7 +134,7 @@ RUN echo 'echo "# GitLab Setup finished #"' >> /bin/firstboot
 RUN echo 'echo "#########################"' >> /bin/firstboot
 LASTRUN echo 'echo ""' >> /bin/firstboot
 
-# everyboot
+# everyboot - check that directories still exists
 RUN echo 'sudo mkdir -p /data/artifacts' >> /bin/everyboot
 RUN echo 'sudo mkdir -p /data/lfs/lfs-objects' >> /bin/everyboot
 RUN echo 'sudo mkdir -p /data/ci/builds/' >> /bin/everyboot
