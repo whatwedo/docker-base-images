@@ -10,16 +10,16 @@ docker run \
     -e REDIS_URL=redis://redis:6379
     -e GITLAB_ROOT_PASSWORD=mysecretpassword
     -e UNICORN_WORKER_PROCESSES=5
-    -e GITLAB_HOST=46.101.213.203
+    -e GITLAB_HOST=example.com
     -e GITLAB_PORT=443
     -e GITLAB_HTTPS=true
-    -e GITLAB_EMAIL_FROM=gitlab@whatwedo.ch
+    -e GITLAB_EMAIL_FROM=gitlab@example.com
     -e GITLAB_EMAIL_DISPLAY_NAME=GitLab
-    -e GITLAB_EMAIL_REPLY_TO=noreply@whatwedo.ch
+    -e GITLAB_EMAIL_REPLY_TO=noreply@example.com
     -e GITLAB_EMAIL_SMTP_ADDRESS=smtp.gmail.com
-    -e GITLAB_EMAIL_SMTP_USERNAME=example@whatwedo.ch
+    -e GITLAB_EMAIL_SMTP_USERNAME=example@example.com
     -e GITLAB_EMAIL_SMTP_PASSWORD=mysecretpassword
-    -e GITLAB_EMAIL_SMTP_DOMAIN=whatwedo.ch
+    -e GITLAB_EMAIL_SMTP_DOMAIN=example.com
     -e GITLAB_DEFAULT_THEME=6
     -e GITLAB_PROJECT_FEATURES_ISSUES=true
     -e GITLAB_PROJECT_FEATURES_MERGE_REQUEST=true
@@ -53,16 +53,16 @@ gitlab:
     - REDIS_URL=redis://redis:6379
     - GITLAB_ROOT_PASSWORD=mysecretpassword
     - UNICORN_WORKER_PROCESSES=5
-    - GITLAB_HOST=46.101.213.203
+    - GITLAB_HOST=example.com
     - GITLAB_PORT=443
     - GITLAB_HTTPS=true
-    - GITLAB_EMAIL_FROM=gitlab@whatwedo.ch
+    - GITLAB_EMAIL_FROM=gitlab@example.com
     - GITLAB_EMAIL_SMTP_ADDRESS=smtp.gmail.com
-    - GITLAB_EMAIL_SMTP_USERNAME=example@whatwedo.ch
+    - GITLAB_EMAIL_SMTP_USERNAME=example@example.com
     - GITLAB_EMAIL_SMTP_PASSWORD=mysecretpassword
-    - GITLAB_EMAIL_SMTP_DOMAIN=whatwedo.ch
+    - GITLAB_EMAIL_SMTP_DOMAIN=example.com
     - GITLAB_EMAIL_DISPLAY_NAME=GitLab
-    - GITLAB_EMAIL_REPLY_TO=noreply@whatwedo.ch
+    - GITLAB_EMAIL_REPLY_TO=noreply@example.com
     - GITLAB_DEFAULT_THEME=6
     - GITLAB_PROJECT_FEATURES_ISSUES=true
     - GITLAB_PROJECT_FEATURES_MERGE_REQUEST=true
@@ -76,6 +76,8 @@ gitlab:
     - DATABASE_PASSWORD=mysecretpassword
     - DATABASE_NAME=gitlabhq_production
     - DATABASE_HOST=db
+  volumes:
+    - /srv/docker/gitlab/gitlab/data:/data
 db:
   restart: always
   image: whatwedo/mariadb:latest
@@ -85,7 +87,7 @@ db:
     - MYSQL_ROOT_PASSWORD=mysecretpassword
     - MYSQL_DATABASE=gitlabhq_production
   volumes:
-    - /var/lib/mysql
+    - /srv/docker/gitlab/db/var/lib/mysql:/var/lib/mysql
 redis:
   restart: always
   image: whatwedo/redis:latest
@@ -108,6 +110,12 @@ docker exec -i -t ID bash -c "cd /home/git/gitlab && sudo -u git -H bundle exec 
 ### Restore GitLab
 ```
 docker exec -i -t ID bash -c "cd /home/git/gitlab && sudo -u git -H bundle exec rake gitlab:backup:restore RAILS_ENV=production force=yes BACKUP=timestamp_of_backup"
+
+```
+
+### Rebuild authorized_keys file
+```
+docker exec -i -t ID bash -c "cd /home/git/gitlab && sudo -u git -H bundle exec rake gitlab:shell:setup RAILS_ENV=production"
 
 ```
 
@@ -169,4 +177,4 @@ This image is licensed under the MIT License. The full license text is available
 
 ## Further information
 
-There are a number of images we are using at [https://whatwedo.ch/](whatwedo). Feel free to use them. More information about the other images are available in [our Github repo](https://github.com/whatwedo/docker-base-images).
+There are a number of images we are using at [https://example.com/](whatwedo). Feel free to use them. More information about the other images are available in [our Github repo](https://github.com/whatwedo/docker-base-images).
