@@ -76,6 +76,8 @@ gitlab:
     - DATABASE_PASSWORD=mysecretpassword
     - DATABASE_NAME=gitlabhq_production
     - DATABASE_HOST=db
+  volumes:
+    - /srv/docker/gitlab/gitlab/data:/data
 db:
   restart: always
   image: whatwedo/mariadb:latest
@@ -85,7 +87,7 @@ db:
     - MYSQL_ROOT_PASSWORD=mysecretpassword
     - MYSQL_DATABASE=gitlabhq_production
   volumes:
-    - /var/lib/mysql
+    - /srv/docker/gitlab/db/var/lib/mysql:/var/lib/mysql
 redis:
   restart: always
   image: whatwedo/redis:latest
@@ -108,6 +110,12 @@ docker exec -i -t ID bash -c "cd /home/git/gitlab && sudo -u git -H bundle exec 
 ### Restore GitLab
 ```
 docker exec -i -t ID bash -c "cd /home/git/gitlab && sudo -u git -H bundle exec rake gitlab:backup:restore RAILS_ENV=production force=yes BACKUP=timestamp_of_backup"
+
+```
+
+### Rebuild authorized_keys file
+```
+docker exec -i -t ID bash -c "cd /home/git/gitlab && sudo -u git -H bundle exec rake gitlab:shell:setup RAILS_ENV=production"
 
 ```
 
