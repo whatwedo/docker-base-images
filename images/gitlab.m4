@@ -22,3 +22,4 @@ EXPOSE 80
 
 # Volumes
 VOLUME /data
+VOLUME /home/git/.ssh

@@ -15,6 +15,8 @@ LASTRUN gem install bundler --no-ri --no-rdoc
 
 # GitLab
 RUN adduser --disabled-login --gecos 'GitLab' git
+RUN sudo -u git -H mkdir -p /home/git/.ssh
+RUN sudo -u git -H touch /home/git/.ssh/authorized_keys
 RUN sudo -u git -H git config --global core.autocrlf "input"
 RUN sudo -u git -H curl -L https://github.com/gitlabhq/gitlabhq/archive/v8.5.4.zip -o /home/git/gitlab.zip
 RUN sudo -u git -H unzip /home/git/gitlab.zip -d /home/git
@@ -64,15 +66,14 @@ RUN echo 'sudo mkdir -p /data/backups' >> /bin/everyboot
 RUN echo 'sudo mkdir -p /data/repositories' >> /bin/everyboot
 RUN echo 'sudo mkdir -p /data/gitlab-shell/hooks' >> /bin/everyboot
 RUN echo 'sudo mkdir -p /data/public/uploads' >> /bin/everyboot
-RUN echo 'sudo mkdir -p /data/.ssh' >> /bin/everyboot
 RUN echo 'chown -R git:git /data' >> /bin/everyboot
+RUN sudo -u git -H mkdir -p /home/git/.ssh
+RUN echo 'chown -R git:git /home/git/.ssh' >> /bin/everyboot
+RUN sudo -u git -H touch /home/git/.ssh/authorized_keys
 
 RUN echo 'echo "symlink uploads directory"' >> /bin/everyboot
 RUN echo 'rm -rf /home/git/gitlab/public/uploads' >> /bin/everyboot
 RUN echo 'sudo -u git -H ln -sf /data/public/uploads /home/git/gitlab/public/uploads' >> /bin/everyboot
-
-RUN echo 'rm -rf /home/git/.ssh' >> /bin/everyboot
-RUN echo 'sudo -u git -H ln -sf /data/.ssh /home/git/.ssh' >> /bin/everyboot
 
 RUN echo 'cd /home/git/gitlab' >> /bin/everyboot
 RUN echo 'echo "configuring GitLab"' >> /bin/everyboot
@@ -129,6 +130,8 @@ RUN echo '  echo "${GITLAB_BACKUP_CRON} cd /home/git/gitlab && bundle exec rake 
 RUN echo '  sudo -u git -H crontab /home/git/gitlab/tmp/cron' >> /bin/everyboot
 RUN echo '  sudo -u git -H rm /home/git/gitlab/tmp/cron' >> /bin/everyboot
 RUN echo '  date > /etc/firstboot/gitlab-flag' >> /bin/everyboot
+RUN echo 'chmod 600 /home/git/.ssh/id_rsa' >> /bin/everyboot
+RUN echo 'chmod 644 /home/git/.ssh/id_rsa.pub' >> /bin/everyboot
 
 RUN echo '  echo ""' >> /bin/everyboot
 RUN echo '  echo "#########################"' >> /bin/everyboot
@@ -156,7 +159,6 @@ RUN echo 'touch /home/git/gitlab/log/sidekiq.log' >> /bin/everyboot
 RUN echo 'touch /home/git/gitlab/log/unicorn.stderr.log' >> /bin/everyboot
 RUN echo 'touch /home/git/gitlab/log/unicorn.stdout.log' >> /bin/everyboot
 RUN echo 'chown -R git:git /home/git/gitlab/log' >> /bin/everyboot
-RUN echo 'chown -R git:git /home/git/.ssh' >> /bin/everyboot
 
 RUN echo 'echo ""' >> /bin/everyboot
 RUN echo 'echo "######################"' >> /bin/everyboot

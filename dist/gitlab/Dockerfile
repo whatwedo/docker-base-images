@@ -52,6 +52,8 @@ cd /tmp/ruby && echo 'c7e50159357afd87b13dc5eaf4ac486a70011149  ruby-2.1.8.tar.g
 cd /tmp/ruby && cd ruby-2.1.8 && ./configure --disable-install-rdoc && make && make install
 RUN gem install bundler --no-ri --no-rdoc && \
 adduser --disabled-login --gecos 'GitLab' git && \
+sudo -u git -H mkdir -p /home/git/.ssh && \
+sudo -u git -H touch /home/git/.ssh/authorized_keys && \
 sudo -u git -H git config --global core.autocrlf "input" && \
 sudo -u git -H curl -L https://github.com/gitlabhq/gitlabhq/archive/v8.5.4.zip -o /home/git/gitlab.zip && \
 sudo -u git -H unzip /home/git/gitlab.zip -d /home/git && \
@@ -95,13 +97,13 @@ echo 'sudo mkdir -p /data/backups' >> /bin/everyboot && \
 echo 'sudo mkdir -p /data/repositories' >> /bin/everyboot && \
 echo 'sudo mkdir -p /data/gitlab-shell/hooks' >> /bin/everyboot && \
 echo 'sudo mkdir -p /data/public/uploads' >> /bin/everyboot && \
-echo 'sudo mkdir -p /data/.ssh' >> /bin/everyboot && \
 echo 'chown -R git:git /data' >> /bin/everyboot && \
+sudo -u git -H mkdir -p /home/git/.ssh && \
+echo 'chown -R git:git /home/git/.ssh' >> /bin/everyboot && \
+sudo -u git -H touch /home/git/.ssh/authorized_keys && \
 echo 'echo "symlink uploads directory"' >> /bin/everyboot && \
 echo 'rm -rf /home/git/gitlab/public/uploads' >> /bin/everyboot && \
 echo 'sudo -u git -H ln -sf /data/public/uploads /home/git/gitlab/public/uploads' >> /bin/everyboot && \
-echo 'rm -rf /home/git/.ssh' >> /bin/everyboot && \
-echo 'sudo -u git -H ln -sf /data/.ssh /home/git/.ssh' >> /bin/everyboot && \
 echo 'cd /home/git/gitlab' >> /bin/everyboot && \
 echo 'echo "configuring GitLab"' >> /bin/everyboot && \
 echo 'sed -i s/^worker_processes.*/worker_processes\ ${UNICORN_WORKER_PROCESSES}/g config/unicorn.rb' >> /bin/everyboot && \
@@ -146,6 +148,8 @@ echo '  echo "${GITLAB_BACKUP_CRON} cd /home/git/gitlab && bundle exec rake gitl
 echo '  sudo -u git -H crontab /home/git/gitlab/tmp/cron' >> /bin/everyboot && \
 echo '  sudo -u git -H rm /home/git/gitlab/tmp/cron' >> /bin/everyboot && \
 echo '  date > /etc/firstboot/gitlab-flag' >> /bin/everyboot && \
+echo 'chmod 600 /home/git/.ssh/id_rsa' >> /bin/everyboot && \
+echo 'chmod 644 /home/git/.ssh/id_rsa.pub' >> /bin/everyboot && \
 echo '  echo ""' >> /bin/everyboot && \
 echo '  echo "#########################"' >> /bin/everyboot && \
 echo '  echo "# GitLab Setup finished #"' >> /bin/everyboot && \
@@ -165,7 +169,6 @@ echo 'touch /home/git/gitlab/log/sidekiq.log' >> /bin/everyboot && \
 echo 'touch /home/git/gitlab/log/unicorn.stderr.log' >> /bin/everyboot && \
 echo 'touch /home/git/gitlab/log/unicorn.stdout.log' >> /bin/everyboot && \
 echo 'chown -R git:git /home/git/gitlab/log' >> /bin/everyboot && \
-echo 'chown -R git:git /home/git/.ssh' >> /bin/everyboot && \
 echo 'echo ""' >> /bin/everyboot && \
 echo 'echo "######################"' >> /bin/everyboot && \
 echo 'echo "# GitLab initialized #"' >> /bin/everyboot && \
@@ -178,4 +181,5 @@ rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 EXPOSE 22
 EXPOSE 80
 VOLUME /data
+VOLUME /home/git/.ssh
 LABEL ch.whatwedo.image.base="whatwedo/gitlab"
