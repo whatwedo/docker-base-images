@@ -155,6 +155,7 @@ RUN echo 'touch /home/git/gitlab/log/sidekiq.log' >> /bin/everyboot
 RUN echo 'touch /home/git/gitlab/log/unicorn.stderr.log' >> /bin/everyboot
 RUN echo 'touch /home/git/gitlab/log/unicorn.stdout.log' >> /bin/everyboot
 RUN echo 'chown -R git:git /home/git/gitlab/log' >> /bin/everyboot
+RUN echo 'chown -R git:git /home/git/.ssh' >> /bin/everyboot
 
 RUN echo 'echo ""' >> /bin/everyboot
 RUN echo 'echo "######################"' >> /bin/everyboot

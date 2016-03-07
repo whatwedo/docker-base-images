@@ -164,6 +164,7 @@ echo 'touch /home/git/gitlab/log/sidekiq.log' >> /bin/everyboot && \
 echo 'touch /home/git/gitlab/log/unicorn.stderr.log' >> /bin/everyboot && \
 echo 'touch /home/git/gitlab/log/unicorn.stdout.log' >> /bin/everyboot && \
 echo 'chown -R git:git /home/git/gitlab/log' >> /bin/everyboot && \
+echo 'chown -R git:git /home/git/.ssh' >> /bin/everyboot && \
 echo 'echo ""' >> /bin/everyboot && \
 echo 'echo "######################"' >> /bin/everyboot && \
 echo 'echo "# GitLab initialized #"' >> /bin/everyboot && \
