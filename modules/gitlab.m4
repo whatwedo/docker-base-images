@@ -64,6 +64,7 @@ RUN echo 'sudo mkdir -p /data/backups' >> /bin/everyboot
 RUN echo 'sudo mkdir -p /data/repositories' >> /bin/everyboot
 RUN echo 'sudo mkdir -p /data/gitlab-shell/hooks' >> /bin/everyboot
 RUN echo 'sudo mkdir -p /data/public/uploads' >> /bin/everyboot
+RUN echo 'sudo mkdir -p /data/.ssh' >> /bin/everyboot
 RUN echo 'chown -R git:git /data' >> /bin/everyboot
 
 RUN echo 'echo "symlink uploads directory"' >> /bin/everyboot
