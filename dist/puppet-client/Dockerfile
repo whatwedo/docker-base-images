@@ -12,7 +12,7 @@ RUN apt-get update -y && \
 wget https://apt.puppetlabs.com/puppetlabs-release-trusty.deb && \
 dpkg -i puppetlabs-release-trusty.deb && \
 apt-get update && \
-apt-get install puppet=3.8.4-1puppetlabs1 -qq < "/dev/null" && \
+apt-get install puppet=3.8.* -qq < "/dev/null" && \
 rm puppetlabs-release-trusty.deb && \
 apt-get autoremove -y && \
 apt-get clean -y && \
