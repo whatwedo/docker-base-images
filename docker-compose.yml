@@ -1,0 +1,52 @@
+gitlab:
+  restart: always
+  image: gitlab
+  links:
+    - "db:db"
+    - "redis:redis"
+  ports:
+    - "443:443"
+    - "80:80"
+    - "2222:22"
+  environment:
+    - REDIS_URL=redis://redis:6379
+    - GITLAB_ROOT_PASSWORD=mysecretpassword
+    - UNICORN_WORKER_PROCESSES=5
+    - GITLAB_HOST=base-images.dev
+    - GITLAB_PORT=80
+    - GITLAB_HTTPS=false
+    - GITLAB_EMAIL_FROM=gitlab@whatwedo.ch
+    - GITLAB_EMAIL_SMTP_ADDRESS=smtp.gmail.com
+    - GITLAB_EMAIL_SMTP_USERNAME=example@whatwedo.ch
+    - GITLAB_EMAIL_SMTP_PASSWORD=mysecretpassword
+    - GITLAB_EMAIL_SMTP_DOMAIN=whatwedo.ch
+    - GITLAB_EMAIL_DISPLAY_NAME=GitLab
+    - GITLAB_EMAIL_REPLY_TO=noreply@whatwedo.ch
+    - GITLAB_DEFAULT_THEME=6
+    - GITLAB_PROJECT_FEATURES_ISSUES=true
+    - GITLAB_PROJECT_FEATURES_MERGE_REQUEST=true
+    - GITLAB_PROJECT_FEATURES_WIKI=true
+    - GITLAB_PROJECT_FEATURES_SNIPPETS=true
+    - GITLAB_PROJECT_FEATURES_BUILDS=true
+    - GITLAB_DATABASE_SECRET_KEY=mysecretkey
+    - GITLAB_BACKUP_KEEP_TIME=3600
+    - GITLAB_BACKUP_CRON=20 * * * *
+    - DATABASE_USER=root
+    - DATABASE_PASSWORD=mysecretpassword
+    - DATABASE_NAME=gitlabhq_production
+    - DATABASE_HOST=db
+  volumes:
+    - /srv/docker/gitlab/gitlab/data:/data
+db:
+  restart: always
+  image: whatwedo/mariadb:latest
+  ports:
+    - "3306:3306"
+  environment:
+    - MYSQL_ROOT_PASSWORD=mysecretpassword
+    - MYSQL_DATABASE=gitlabhq_production
+  volumes:
+    - /srv/docker/gitlab/db/var/lib/mysql:/var/lib/mysql
+redis:
+  restart: always
+  image: whatwedo/redis:latest
