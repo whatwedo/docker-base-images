@@ -49,10 +49,7 @@ LASTRUN cd /home/git/gitlab && sudo -u git -H bundle install --deployment --with
 
 # nginx
 RUN rm /etc/nginx/nginx.conf
-RUN rm -rf /etc/nginx/sites-available/
-RUN rm -rf /etc/nginx/sites-enabled/
 COPY files/gitlab/nginx.conf /etc/nginx/nginx.conf
-COPY files/supervisord/nginx.conf /etc/supervisor/conf.d/nginx.conf
 
 # GitLab Workhorse
 RUN sudo -u git -H git clone https://gitlab.com/gitlab-org/gitlab-workhorse.git /home/git/gitlab-workhorse

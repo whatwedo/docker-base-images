@@ -4,6 +4,7 @@ include(`modules/head.m4')
 
 # other services
 include(`modules/sshd.m4')
+include(`modules/nginx.m4')
 
 # install GitLab dependencies
 include(`modules/git.m4')
