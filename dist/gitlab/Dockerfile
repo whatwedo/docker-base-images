@@ -45,7 +45,7 @@ build-essential zlib1g-dev libyaml-dev libssl-dev libgdbm-dev \
 libreadline-dev libncurses5-dev libffi-dev curl openssh-server \
 checkinstall libxml2-dev libxslt-dev libcurl4-openssl-dev libicu-dev \
 logrotate python-docutils pkg-config cmake nodejs libmysqlclient-dev \
-mysql-client redis-tools nginx-extras
+mysql-client redis-tools
 RUN mkdir /tmp/ruby && \
 cd /tmp/ruby && curl -O --progress https://cache.ruby-lang.org/pub/ruby/2.1/ruby-2.1.8.tar.gz && \
 cd /tmp/ruby && echo 'c7e50159357afd87b13dc5eaf4ac486a70011149  ruby-2.1.8.tar.gz' | shasum -c - && tar xzf ruby-2.1.8.tar.gz && \

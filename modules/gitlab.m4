@@ -4,7 +4,7 @@ LASTRUN apt-get update && apt-get install -y \
     libreadline-dev libncurses5-dev libffi-dev curl openssh-server \
     checkinstall libxml2-dev libxslt-dev libcurl4-openssl-dev libicu-dev \
     logrotate python-docutils pkg-config cmake nodejs libmysqlclient-dev \
-    mysql-client redis-tools nginx-extras
+    mysql-client redis-tools
 
 # Install Ruby 2.1
 RUN mkdir /tmp/ruby
