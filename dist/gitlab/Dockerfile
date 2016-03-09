@@ -13,23 +13,6 @@ apt-get update && apt-get install -y openssh-server && \
 mkdir -p /var/run/sshd && \
 echo "UseDNS no" >> /etc/ssh/sshd_config
 COPY files/supervisord/sshd.conf /etc/supervisor/conf.d/sshd.conf
-RUN apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0x7BD9BF62 && \
-add-apt-repository 'deb http://nginx.org/packages/mainline/ubuntu trusty nginx' && \
-apt-get update && \
-apt-get install -y nginx && \
-touch /var/log/nginx/access.log && \
-touch /var/log/nginx/error.log && \
-mkdir /var/www && \
-chown -R www-data:www-data /var/www/ && \
-chmod -R 2755 /var/www/ && \
-rm -rf /etc/nginx/sites-available/ && \
-rm -rf /etc/nginx/sites-enabled/ && \
-rm -rf /etc/nginx/conf.d/ && \
-rm /etc/nginx/nginx.conf
-ADD files/nginx-default /etc/nginx
-RUN chown -R www-data /var/www/ && \
-chmod -R 755 /var/www/
-COPY files/supervisord/nginx.conf /etc/supervisor/conf.d/nginx.conf
 RUN apt-get install -y git && \
 apt-get update && apt-get install --no-install-recommends -y \
 ca-certificates \
@@ -45,7 +28,7 @@ build-essential zlib1g-dev libyaml-dev libssl-dev libgdbm-dev \
 libreadline-dev libncurses5-dev libffi-dev curl openssh-server \
 checkinstall libxml2-dev libxslt-dev libcurl4-openssl-dev libicu-dev \
 logrotate python-docutils pkg-config cmake nodejs libmysqlclient-dev \
-mysql-client redis-tools
+mysql-client redis-tools nginx-extras
 RUN mkdir /tmp/ruby && \
 cd /tmp/ruby && curl -O --progress https://cache.ruby-lang.org/pub/ruby/2.1/ruby-2.1.8.tar.gz && \
 cd /tmp/ruby && echo 'c7e50159357afd87b13dc5eaf4ac486a70011149  ruby-2.1.8.tar.gz' | shasum -c - && tar xzf ruby-2.1.8.tar.gz && \
@@ -82,8 +65,12 @@ sudo -u git -H cp /home/git/gitlab/config/initializers/rack_attack.rb.example /h
 sudo -u git -H cp /home/git/gitlab/config/resque.yml.example /home/git/gitlab/config/resque.yml && \
 sudo -u git -H cp /home/git/gitlab/config/database.yml.mysql /home/git/gitlab/config/database.yml && \
 sudo -u git -H chmod o-rwx /home/git/gitlab/config/database.yml
-RUN cd /home/git/gitlab && sudo -u git -H bundle install --deployment --without development test postgres aws kerberos
+RUN cd /home/git/gitlab && sudo -u git -H bundle install --deployment --without development test postgres aws kerberos && \
+rm /etc/nginx/nginx.conf && \
+rm -rf /etc/nginx/sites-available/ && \
+rm -rf /etc/nginx/sites-enabled/
 COPY files/gitlab/nginx.conf /etc/nginx/nginx.conf
+COPY files/supervisord/nginx.conf /etc/supervisor/conf.d/nginx.conf
 RUN sudo -u git -H git clone https://gitlab.com/gitlab-org/gitlab-workhorse.git /home/git/gitlab-workhorse && \
 cd /home/git/gitlab-workhorse && sudo -u git -H git checkout 0.6.5
 RUN cd /home/git/gitlab-workhorse && sudo -u git -H PATH=$PATH:/usr/local/go/bin:/go/bin ; make && \

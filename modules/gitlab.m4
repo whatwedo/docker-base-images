@@ -4,7 +4,7 @@ LASTRUN apt-get update && apt-get install -y \
     libreadline-dev libncurses5-dev libffi-dev curl openssh-server \
     checkinstall libxml2-dev libxslt-dev libcurl4-openssl-dev libicu-dev \
     logrotate python-docutils pkg-config cmake nodejs libmysqlclient-dev \
-    mysql-client redis-tools
+    mysql-client redis-tools nginx-extras
 
 # Install Ruby 2.1
 RUN mkdir /tmp/ruby
@@ -48,7 +48,11 @@ RUN sudo -u git -H chmod o-rwx /home/git/gitlab/config/database.yml
 LASTRUN cd /home/git/gitlab && sudo -u git -H bundle install --deployment --without development test postgres aws kerberos
 
 # nginx
+RUN rm /etc/nginx/nginx.conf
+RUN rm -rf /etc/nginx/sites-available/
+RUN rm -rf /etc/nginx/sites-enabled/
 COPY files/gitlab/nginx.conf /etc/nginx/nginx.conf
+COPY files/supervisord/nginx.conf /etc/supervisor/conf.d/nginx.conf
 
 # GitLab Workhorse
 RUN sudo -u git -H git clone https://gitlab.com/gitlab-org/gitlab-workhorse.git /home/git/gitlab-workhorse
