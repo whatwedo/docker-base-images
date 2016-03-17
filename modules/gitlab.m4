@@ -53,7 +53,7 @@ COPY files/gitlab/nginx.conf /etc/nginx/nginx.conf
 
 # GitLab Workhorse
 RUN sudo -u git -H git clone https://gitlab.com/gitlab-org/gitlab-workhorse.git /home/git/gitlab-workhorse
-RUN cd /home/git/gitlab-workhorse && sudo -u git -H git checkout 0.6.5
+RUN cd /home/git/gitlab-workhorse && sudo -u git -H git checkout $(cat /home/git/gitlab/GITLAB_WORKHORSE_VERSION)
 LASTRUN cd /home/git/gitlab-workhorse && sudo -u git -H PATH=$PATH:/usr/local/go/bin:/go/bin ; make
 
 # firstboot

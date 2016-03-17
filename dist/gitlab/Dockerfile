@@ -86,7 +86,7 @@ RUN cd /home/git/gitlab && sudo -u git -H bundle install --deployment --without 
 rm /etc/nginx/nginx.conf
 COPY files/gitlab/nginx.conf /etc/nginx/nginx.conf
 RUN sudo -u git -H git clone https://gitlab.com/gitlab-org/gitlab-workhorse.git /home/git/gitlab-workhorse && \
-cd /home/git/gitlab-workhorse && sudo -u git -H git checkout 0.6.5
+cd /home/git/gitlab-workhorse && sudo -u git -H git checkout $(cat /home/git/gitlab/GITLAB_WORKHORSE_VERSION)
 RUN cd /home/git/gitlab-workhorse && sudo -u git -H PATH=$PATH:/usr/local/go/bin:/go/bin ; make && \
 echo 'echo "checking data directories"' >> /bin/everyboot && \
 echo 'sudo mkdir -p /data/artifacts' >> /bin/everyboot && \
