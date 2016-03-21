@@ -103,6 +103,8 @@ RUN echo 'sed -i s/#\ host\:.*/host\:\ ${DATABASE_HOST}/g config/database.yml' >
 
 RUN echo 'cp config/initializers/smtp_settings.rb.sample config/initializers/smtp_settings.rb' >> /bin/everyboot
 RUN echo 'sed -i s/address\:.*/address\:\ \"${GITLAB_EMAIL_SMTP_ADDRESS}\",/g config/initializers/smtp_settings.rb' >> /bin/everyboot
+RUN echo 'sed -i s/port\:.*/port\:\ ${GITLAB_EMAIL_SMTP_PORT},/g config/initializers/smtp_settings.rb' >> /bin/everyboot
+RUN echo 'sed -i s/authentication\:.*/authentication\:\ \:${GITLAB_EMAIL_SMTP_AUTHENTICATION},/g config/initializers/smtp_settings.rb' >> /bin/everyboot
 RUN echo 'sed -i s/user_name\:.*/user_name\:\ \"${GITLAB_EMAIL_SMTP_USERNAME}\",/g config/initializers/smtp_settings.rb' >> /bin/everyboot
 RUN echo 'sed -i s/password\:.*/password\:\ \"${GITLAB_EMAIL_SMTP_PASSWORD}\",/g config/initializers/smtp_settings.rb' >> /bin/everyboot
 RUN echo 'sed -i s/domain\:.*/domain\:\ \"${GITLAB_EMAIL_SMTP_DOMAIN}\",/g config/initializers/smtp_settings.rb' >> /bin/everyboot

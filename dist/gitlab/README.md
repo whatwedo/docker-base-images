@@ -19,6 +19,8 @@ docker run \
     -e GITLAB_EMAIL_SMTP_ADDRESS=smtp.gmail.com
     -e GITLAB_EMAIL_SMTP_USERNAME=example@example.com
     -e GITLAB_EMAIL_SMTP_PASSWORD=mysecretpassword
+    -e GITLAB_EMAIL_SMTP_PORT=587
+    -e GITLAB_EMAIL_SMTP_AUTHENTICATION=plain
     -e GITLAB_EMAIL_SMTP_DOMAIN=example.com
     -e GITLAB_DEFAULT_THEME=6
     -e GITLAB_PROJECT_FEATURES_ISSUES=true
@@ -60,6 +62,8 @@ gitlab:
     - GITLAB_EMAIL_SMTP_ADDRESS=smtp.gmail.com
     - GITLAB_EMAIL_SMTP_USERNAME=example@example.com
     - GITLAB_EMAIL_SMTP_PASSWORD=mysecretpassword
+    - GITLAB_EMAIL_SMTP_PORT=587
+    - GITLAB_EMAIL_SMTP_AUTHENTICATION=plain
     - GITLAB_EMAIL_SMTP_DOMAIN=example.com
     - GITLAB_EMAIL_DISPLAY_NAME=GitLab
     - GITLAB_EMAIL_REPLY_TO=noreply@example.com
@@ -131,6 +135,8 @@ docker exec -i -t ID bash -c "cd /home/git/gitlab && sudo -u git -H bundle exec 
 * `GITLAB_EMAIL_SMTP_ADDRESS` - SMTP Server used by GitLab
 * `GITLAB_EMAIL_SMTP_USERNAME` - SMTP Server username
 * `GITLAB_EMAIL_SMTP_PASSWORD` - SMTP Server password
+* `GITLAB_EMAIL_SMTP_PORT` - SMTP Port
+* `GITLAB_EMAIL_SMTP_AUTHENTICATION` - SMTP Authentication Method (plain, login, ...)
 * `GITLAB_EMAIL_SMTP_DOMAIN` - SMTP Server e-mail domain
 * `GITLAB_EMAIL_DISPLAY_NAME` - E-Mail display name
 * `GITLAB_EMAIL_REPLY_TO` - E-Mail reply to
