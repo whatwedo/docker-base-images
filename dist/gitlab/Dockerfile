@@ -55,7 +55,7 @@ adduser --disabled-login --gecos 'GitLab' git && \
 sudo -u git -H mkdir -p /home/git/.ssh && \
 sudo -u git -H touch /home/git/.ssh/authorized_keys && \
 sudo -u git -H git config --global core.autocrlf "input" && \
-sudo -u git -H curl -L https://github.com/gitlabhq/gitlabhq/archive/v8.5.4.zip -o /home/git/gitlab.zip && \
+sudo -u git -H curl -L https://github.com/gitlabhq/gitlabhq/archive/v8.6.1.zip -o /home/git/gitlab.zip && \
 sudo -u git -H unzip /home/git/gitlab.zip -d /home/git && \
 sudo -u git -H mv /home/git/gitlabhq-* /home/git/gitlab && \
 sudo -u git -H rm /home/git/gitlab.zip
@@ -86,8 +86,8 @@ RUN cd /home/git/gitlab && sudo -u git -H bundle install --deployment --without 
 rm /etc/nginx/nginx.conf
 COPY files/gitlab/nginx.conf /etc/nginx/nginx.conf
 RUN sudo -u git -H git clone https://gitlab.com/gitlab-org/gitlab-workhorse.git /home/git/gitlab-workhorse && \
-cd /home/git/gitlab-workhorse && sudo -u git -H git checkout $(cat /home/git/gitlab/GITLAB_WORKHORSE_VERSION)
-RUN cd /home/git/gitlab-workhorse && sudo -u git -H PATH=$PATH:/usr/local/go/bin:/go/bin ; make && \
+cd /home/git/gitlab-workhorse && sudo -u git -H git checkout v$(cat /home/git/gitlab/GITLAB_WORKHORSE_VERSION)
+RUN cd /home/git/gitlab-workhorse && PATH=$PATH:/usr/local/go/bin:/go/bin make && chown -R git:git /home/git/gitlab-workhorse && \
 echo 'echo "checking data directories"' >> /bin/everyboot && \
 echo 'sudo mkdir -p /data/artifacts' >> /bin/everyboot && \
 echo 'sudo mkdir -p /data/lfs/lfs-objects' >> /bin/everyboot && \
@@ -162,8 +162,8 @@ echo '  echo ""' >> /bin/everyboot && \
 echo 'fi' >> /bin/everyboot && \
 echo 'echo "Migrate database"' >> /bin/everyboot && \
 echo 'sudo -u git -H bundle exec rake db:migrate RAILS_ENV=production' >> /bin/everyboot && \
-echo 'echo "Precompiling assets"' >> /bin/everyboot && \
-echo 'sudo -u git -H bundle exec rake assets:precompile RAILS_ENV=production' >> /bin/everyboot && \
+echo 'echo "Precompiling assets in the background"' >> /bin/everyboot && \
+echo 'sudo -u git -H bundle exec rake assets:precompile RAILS_ENV=production &' >> /bin/everyboot && \
 echo 'echo "Rebuild authorized_keys file"' >> /bin/everyboot && \
 echo 'sudo -u git -H bundle exec rake gitlab:shell:setup RAILS_ENV=production force=yes' >> /bin/everyboot && \
 echo 'touch /home/git/gitlab/log/gitlab-workhorse.log' >> /bin/everyboot && \

@@ -18,7 +18,7 @@ RUN adduser --disabled-login --gecos 'GitLab' git
 RUN sudo -u git -H mkdir -p /home/git/.ssh
 RUN sudo -u git -H touch /home/git/.ssh/authorized_keys
 RUN sudo -u git -H git config --global core.autocrlf "input"
-RUN sudo -u git -H curl -L https://github.com/gitlabhq/gitlabhq/archive/v8.5.4.zip -o /home/git/gitlab.zip
+RUN sudo -u git -H curl -L https://github.com/gitlabhq/gitlabhq/archive/v8.6.1.zip -o /home/git/gitlab.zip
 RUN sudo -u git -H unzip /home/git/gitlab.zip -d /home/git
 RUN sudo -u git -H mv /home/git/gitlabhq-* /home/git/gitlab
 RUN sudo -u git -H rm /home/git/gitlab.zip
@@ -53,8 +53,8 @@ COPY files/gitlab/nginx.conf /etc/nginx/nginx.conf
 
 # GitLab Workhorse
 RUN sudo -u git -H git clone https://gitlab.com/gitlab-org/gitlab-workhorse.git /home/git/gitlab-workhorse
-RUN cd /home/git/gitlab-workhorse && sudo -u git -H git checkout $(cat /home/git/gitlab/GITLAB_WORKHORSE_VERSION)
-LASTRUN cd /home/git/gitlab-workhorse && sudo -u git -H PATH=$PATH:/usr/local/go/bin:/go/bin ; make
+RUN cd /home/git/gitlab-workhorse && sudo -u git -H git checkout v$(cat /home/git/gitlab/GITLAB_WORKHORSE_VERSION)
+LASTRUN cd /home/git/gitlab-workhorse && PATH=$PATH:/usr/local/go/bin:/go/bin make && chown -R git:git /home/git/gitlab-workhorse
 
 # firstboot
 RUN echo 'echo "checking data directories"' >> /bin/everyboot
@@ -150,8 +150,8 @@ RUN echo 'fi' >> /bin/everyboot
 RUN echo 'echo "Migrate database"' >> /bin/everyboot
 RUN echo 'sudo -u git -H bundle exec rake db:migrate RAILS_ENV=production' >> /bin/everyboot
 
-RUN echo 'echo "Precompiling assets"' >> /bin/everyboot
-RUN echo 'sudo -u git -H bundle exec rake assets:precompile RAILS_ENV=production' >> /bin/everyboot
+RUN echo 'echo "Precompiling assets in the background"' >> /bin/everyboot
+RUN echo 'sudo -u git -H bundle exec rake assets:precompile RAILS_ENV=production &' >> /bin/everyboot
 
 RUN echo 'echo "Rebuild authorized_keys file"' >> /bin/everyboot
 RUN echo 'sudo -u git -H bundle exec rake gitlab:shell:setup RAILS_ENV=production force=yes' >> /bin/everyboot
