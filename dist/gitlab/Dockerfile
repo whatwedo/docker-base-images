@@ -86,8 +86,10 @@ RUN cd /home/git/gitlab && sudo -u git -H bundle install --deployment --without 
 rm /etc/nginx/nginx.conf
 COPY files/gitlab/nginx.conf /etc/nginx/nginx.conf
 RUN sudo -u git -H git clone https://gitlab.com/gitlab-org/gitlab-workhorse.git /home/git/gitlab-workhorse && \
-cd /home/git/gitlab-workhorse && sudo -u git -H git checkout v$(cat /home/git/gitlab/GITLAB_WORKHORSE_VERSION)
-RUN cd /home/git/gitlab-workhorse && PATH=$PATH:/usr/local/go/bin:/go/bin make && chown -R git:git /home/git/gitlab-workhorse && \
+cd /home/git/gitlab-workhorse && sudo -u git -H git checkout v$(cat /home/git/gitlab/GITLAB_WORKHORSE_VERSION) && \
+cd /home/git/gitlab-workhorse && PATH=$PATH:/usr/local/go/bin:/go/bin make && chown -R git:git /home/git/gitlab-workhorse && \
+ln -s /home/git/gitlab-workhorse/gitlab-zip-cat /usr/local/bin/gitlab-zip-cat
+RUN ln -s /home/git/gitlab-workhorse/gitlab-zip-metadata /usr/local/bin/gitlab-zip-metadata && \
 echo 'echo "checking data directories"' >> /bin/everyboot && \
 echo 'sudo mkdir -p /data/artifacts' >> /bin/everyboot && \
 echo 'sudo mkdir -p /data/lfs/lfs-objects' >> /bin/everyboot && \
