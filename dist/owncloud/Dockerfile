@@ -45,28 +45,36 @@ echo "php_flag[expose_php] = Off" >> /etc/php/7.0/fpm/pool.d/www.conf && \
 mkdir -p /run/php && \
 apt-get install -y libapache2-mod-php7.0 && \
 a2enmod rewrite && \
+apt-get install -qq zziplib-bin smbclient php7.0-zip libreoffice && \
 { \
+echo 'opcache.enable=1'; \
 echo 'opcache.memory_consumption=128'; \
 echo 'opcache.interned_strings_buffer=8'; \
 echo 'opcache.max_accelerated_files=4000'; \
 echo 'opcache.revalidate_freq=60'; \
 echo 'opcache.fast_shutdown=1'; \
 echo 'opcache.enable_cli=1'; \
-} > /etc/php/7.0/fpm/conf.d/20-opcache-recommended.ini
-RUN a2enmod rewrite && \
-gpg --keyserver ha.pool.sks-keyservers.net --recv-keys E3036906AD9F30807351FAC32D5D5E97F6978A26 && \
-curl -fsSL -o owncloud.tar.bz2 "https://download.owncloud.org/community/owncloud-8.2.2.tar.bz2" && \
-curl -fsSL -o owncloud.tar.bz2.asc "https://download.owncloud.org/community/owncloud-8.2.2.tar.bz2.asc" && \
-gpg --verify owncloud.tar.bz2.asc && \
-tar -xjf owncloud.tar.bz2 -C /usr/src/ && \
-rm owncloud.tar.bz2 owncloud.tar.bz2.asc && \
-mkdir -p /var/www/html && \
+} > /etc/php/7.0/apache2/conf.d/20-opcache-recommended.ini
+RUN echo "extension=zip.so;" > /etc/php/7.0/apache2/conf.d/20-zip.ini && \
+a2enmod rewrite
+ENV OWNCLOUD_VERSION 9.0.1
+RUN curl -fsSL -o owncloud.tar.bz2 \
+"https://download.owncloud.org/community/owncloud-${OWNCLOUD_VERSION}.tar.bz2" \
+&& curl -fsSL -o owncloud.tar.bz2.asc \
+"https://download.owncloud.org/community/owncloud-${OWNCLOUD_VERSION}.tar.bz2.asc" \
+&& export GNUPGHOME="$(mktemp -d)" \
+&& gpg --keyserver ha.pool.sks-keyservers.net --recv-keys E3036906AD9F30807351FAC32D5D5E97F6978A26 \
+&& gpg --batch --verify owncloud.tar.bz2.asc owncloud.tar.bz2 \
+&& rm -r "$GNUPGHOME" owncloud.tar.bz2.asc \
+&& tar -xjf owncloud.tar.bz2 -C /usr/src/ \
+&& rm owncloud.tar.bz2
+RUN mkdir -p /var/www/html && \
 echo 'if [ ! -e '/var/www/html/version.php' ]; then' >> /bin/everyboot && \
 echo '    cd /var/www/html' >> /bin/everyboot && \
 echo '    tar cf - --one-file-system -C /usr/src/owncloud . | tar xf -' >> /bin/everyboot && \
 echo '    chown -R www-data /var/www' >> /bin/everyboot && \
 echo 'fi' >> /bin/everyboot && \
-echo 'echo "Installing Backup CronJob"' >> /bin/firstboot && \
+echo 'echo "Installing ownCloud cronjob"' >> /bin/firstboot && \
 echo 'crontab -u www-data -l > /tmp/cron' >> /bin/firstboot && \
 echo 'echo "*/15  *  *  *  * php -f /var/www/owncloud/cron.php" >> /tmp/cron' >> /bin/firstboot && \
 echo 'crontab -u www-data /tmp/cron' >> /bin/firstboot && \
@@ -76,4 +84,5 @@ apt-get clean -y && \
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 EXPOSE 80
 EXPOSE 443
+VOLUME /var/www/html
 LABEL ch.whatwedo.image.base="whatwedo/owncloud"
