@@ -14,29 +14,13 @@ docker run -p 80:80 -e DB_USER=root -e DB_PW=mysecretpassword -e DB_SERVER=db -e
 
 Every of the following environment variables is required
 
-### DB_USER
-
-User of thy Icinga2 mysql-ido database. In the above example, it is being set to "root".
-
-### DB_PW
-
-Passowrd of thy Icinga2 mysql-ido database. In the above example, it is being set to "mysecretpassword".
-
-### DB_SERVER
-
-Server of thy Icinga2 mysql-ido database. In the above example, it is being set to "db".
-
-### DB_PORT
-
-Post of thy Icinga2 mysql-ido database. In the above example, it is being set to "3306".
-
-### DB_NAME
-
-Name of thy Icinga2 mysql-ido database. In the above example, it is being set to "icinga-ido".
-
-### ICINGAADMIN_PW
-
-Password of the "icingaadmin" user (classic-ui). In the above example, it is being set to "mysecretpassword".
+* `DB_USER` - User of thy Icinga2 mysql-ido database. In the above example, it is being set to "root".
+* `DB_PW` - Passowrd of thy Icinga2 mysql-ido database. In the above example, it is being set to "mysecretpassword".
+* `DB_SERVER` - Server of thy Icinga2 mysql-ido database. In the above example, it is being set to "db".
+* `DB_PORT` - Post of thy Icinga2 mysql-ido database. In the above example, it is being set to "3306".
+* `DB_NAME` - Name of thy Icinga2 mysql-ido database. In the above example, it is being set to "icinga-ido".
+* `ICINGAADMIN_PW` - Password of the "icingaadmin" user (classic-ui). In the above example, it is being set to "mysecretpassword".
+* `CONTAINER_TIMEZONE` - timezone which should be used, default: `Europe/Zurich` ([see Wikipedia](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones))
 
 ## Volumes
 

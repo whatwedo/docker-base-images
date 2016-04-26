@@ -10,9 +10,8 @@ docker run -p 5432:5432 -e PG_ROOT_PASSWORD=mysecretpassword whatwedo/postgres
 
 ## Environment Variables
 
-###PG_ROOT_PASSWORD
-
-This is the one environment variable that is required. This environment variable should be what you want to set the password for the root user to be. In the above example, it is being set to "mysecretpassword".
+* `PG_ROOT_PASSWORD` This is the one environment variable that is required. This environment variable should be what you want to set the password for the root user to be. In the above example, it is being set to "mysecretpassword".
+* `CONTAINER_TIMEZONE` - timezone which should be used, default: `Europe/Zurich` ([see Wikipedia](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones))
 
 ## Volumes
 

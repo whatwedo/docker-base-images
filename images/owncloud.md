@@ -30,6 +30,10 @@ db:
     - /var/lib/mysql
 ```
 
+## Environment Variables
+
+* `CONTAINER_TIMEZONE` - timezone which should be used, default: `Europe/Zurich` ([see Wikipedia](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones))
+
 ## Volumes
 
 * /var/www/html

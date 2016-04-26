@@ -7,20 +7,18 @@ In this image is a basic MariaDB server installation available.
 ```
 docker run -p 3306:3306 -e MYSQL_ROOT_PASSWORD=mysecretpassword whatwedo/mariadb
 ```
+
 or with DB
+
 ```
 docker run -p 3306:3306 -e MYSQL_ROOT_PASSWORD=mysecretpassword -e MYSQL_DATABASE=gitlab mariadb
 ```
 
 ## Environment Variables
 
-### MYSQL_ROOT_PASSWORD
-
-This is the one environment variable that is required. This environment variable should be what you want to set the password for the root user to be. In the above example, it is being set to "mysecretpassword".
-
-### MYSQL_DATABASE
-
-This environment variable is optional. if given, docker creates a database at the first run
+* `MYSQL_ROOT_PASSWORD` - This is the one environment variable that is required. This environment variable should be what you want to set the password for the root user to be. In the above example, it is being set to "mysecretpassword".
+* `MYSQL_DATABASE` - This environment variable is optional. if given, docker creates a database at the first run
+* `CONTAINER_TIMEZONE` - timezone which should be used, default: `Europe/Zurich` ([see Wikipedia](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones))
 
 ## Volumes
 

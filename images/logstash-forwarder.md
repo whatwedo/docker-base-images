@@ -10,7 +10,7 @@ docker run whatwedo/logstash-forwarder
 
 ## Environment Variables
 
-This image is not using any environment variables.
+* `CONTAINER_TIMEZONE` - timezone which should be used, default: `Europe/Zurich` ([see Wikipedia](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones))
 
 ## Volumes
 

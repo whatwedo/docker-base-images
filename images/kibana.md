@@ -9,9 +9,7 @@ docker run -p 5601:5601 -e ELASTICSEARCH_URL=http://elasticsearch:9200 whatwedo/
 
 ## Environment Variables
 
-###ELASTICSEARCH_URL
-
-URL to your [Elasticsearch](https://registry.hub.docker.com/u/whatwedo/elasticsearch/) installation.
+* `ELASTICSEARCH_URL` - URL to your [Elasticsearch](https://registry.hub.docker.com/u/whatwedo/elasticsearch/) installation.
 
 ## Volumes
 

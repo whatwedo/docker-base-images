@@ -1,4 +1,5 @@
 #!/bin/bash
+echo ${CONTAINER_TIMEZONE:=Europe/Zurich} > /etc/timezone && dpkg-reconfigure -f noninteractive tzdata
 /bin/firstboot
 /bin/everyboot
 python -u /usr/bin/supervisord
