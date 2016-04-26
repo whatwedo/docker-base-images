@@ -20,6 +20,7 @@ RUN mkdir -p $APACHE_RUN_DIR $APACHE_LOCK_DIR $APACHE_LOG_DIR && \
 rm -rf /var/www/html/* && \
 chown -R www-data /var/www/ && \
 chmod -R 755 /var/www/ && \
+sed -i '/<Directory \/var\/www\/>/,/<\/Directory>/ s/AllowOverride None/AllowOverride all/' /etc/apache2/apache2.conf && \
 echo "#\0041/bin/bash" > /bin/start-apache && \
 echo "rm -rf /run/httpd/*" >> /bin/start-apache && \
 echo "apache2 -D FOREGROUND" >> /bin/start-apache && \

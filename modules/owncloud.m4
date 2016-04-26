@@ -25,7 +25,7 @@ RUN echo '    chown -R www-data /var/www' >> /bin/everyboot
 RUN echo 'fi' >> /bin/everyboot
 
 
-RUN echo 'echo "Installing Backup CronJob"' >> /bin/firstboot
+RUN echo 'echo "Installing ownCloud cronjob"' >> /bin/firstboot
 RUN echo 'crontab -u www-data -l > /tmp/cron' >> /bin/firstboot
 RUN echo 'echo "*/15  *  *  *  * php -f /var/www/owncloud/cron.php" >> /tmp/cron' >> /bin/firstboot
 RUN echo 'crontab -u www-data /tmp/cron' >> /bin/firstboot

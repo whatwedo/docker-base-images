@@ -17,6 +17,9 @@ RUN rm -rf /var/www/html/*
 RUN chown -R www-data /var/www/
 RUN chmod -R 755 /var/www/
 
+# Set apache AllowOverride to all
+RUN sed -i '/<Directory \/var\/www\/>/,/<\/Directory>/ s/AllowOverride None/AllowOverride all/' /etc/apache2/apache2.conf
+
 #Create start script
 RUN echo "#\0041/bin/bash" > /bin/start-apache
 RUN echo "rm -rf /run/httpd/*" >> /bin/start-apache
