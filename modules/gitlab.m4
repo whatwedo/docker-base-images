@@ -18,7 +18,8 @@ RUN adduser --disabled-login --gecos 'GitLab' git
 RUN sudo -u git -H mkdir -p /home/git/.ssh
 RUN sudo -u git -H touch /home/git/.ssh/authorized_keys
 RUN sudo -u git -H git config --global core.autocrlf "input"
-RUN sudo -u git -H curl -L https://github.com/gitlabhq/gitlabhq/archive/v8.6.1.zip -o /home/git/gitlab.zip
+RUN sudo -u git -H git config --global gc.auto 0
+RUN sudo -u git -H curl -L https://github.com/gitlabhq/gitlabhq/archive/v8.7.0.zip -o /home/git/gitlab.zip
 RUN sudo -u git -H unzip /home/git/gitlab.zip -d /home/git
 RUN sudo -u git -H mv /home/git/gitlabhq-* /home/git/gitlab
 RUN sudo -u git -H rm /home/git/gitlab.zip
@@ -45,6 +46,7 @@ RUN sudo -u git -H cp /home/git/gitlab/config/initializers/rack_attack.rb.exampl
 RUN sudo -u git -H cp /home/git/gitlab/config/resque.yml.example /home/git/gitlab/config/resque.yml
 RUN sudo -u git -H cp /home/git/gitlab/config/database.yml.mysql /home/git/gitlab/config/database.yml
 RUN sudo -u git -H chmod o-rwx /home/git/gitlab/config/database.yml
+RUN echo 'PATH="/home/git/gitlab-workhorse:$PATH"' >> /home/git/.profile
 LASTRUN cd /home/git/gitlab && sudo -u git -H bundle install --deployment --without development test postgres aws kerberos
 
 # nginx

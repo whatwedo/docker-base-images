@@ -55,7 +55,8 @@ adduser --disabled-login --gecos 'GitLab' git && \
 sudo -u git -H mkdir -p /home/git/.ssh && \
 sudo -u git -H touch /home/git/.ssh/authorized_keys && \
 sudo -u git -H git config --global core.autocrlf "input" && \
-sudo -u git -H curl -L https://github.com/gitlabhq/gitlabhq/archive/v8.6.1.zip -o /home/git/gitlab.zip && \
+sudo -u git -H git config --global gc.auto 0 && \
+sudo -u git -H curl -L https://github.com/gitlabhq/gitlabhq/archive/v8.7.0.zip -o /home/git/gitlab.zip && \
 sudo -u git -H unzip /home/git/gitlab.zip -d /home/git && \
 sudo -u git -H mv /home/git/gitlabhq-* /home/git/gitlab && \
 sudo -u git -H rm /home/git/gitlab.zip
@@ -81,7 +82,8 @@ sudo -u git -H cp /home/git/gitlab/config/unicorn.rb.example /home/git/gitlab/co
 sudo -u git -H cp /home/git/gitlab/config/initializers/rack_attack.rb.example /home/git/gitlab/config/initializers/rack_attack.rb && \
 sudo -u git -H cp /home/git/gitlab/config/resque.yml.example /home/git/gitlab/config/resque.yml && \
 sudo -u git -H cp /home/git/gitlab/config/database.yml.mysql /home/git/gitlab/config/database.yml && \
-sudo -u git -H chmod o-rwx /home/git/gitlab/config/database.yml
+sudo -u git -H chmod o-rwx /home/git/gitlab/config/database.yml && \
+echo 'PATH="/home/git/gitlab-workhorse:$PATH"' >> /home/git/.profile
 RUN cd /home/git/gitlab && sudo -u git -H bundle install --deployment --without development test postgres aws kerberos && \
 rm /etc/nginx/nginx.conf
 COPY files/gitlab/nginx.conf /etc/nginx/nginx.conf
