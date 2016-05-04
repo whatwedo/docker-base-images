@@ -16,6 +16,7 @@ ADD files/icinga/plugins /usr/lib/nagios/plugins
 RUN chmod 755 /usr/lib/nagios/plugins/check_rbl
 RUN chmod 755 /usr/lib/nagios/plugins/check_senderscore
 RUN chmod 755 /usr/lib/nagios/plugins/check_open_ports
+RUN chmod 755 /usr/lib/nagios/plugins/check_symfony
 
 #Add Slack integration
 RUN apt-get -y install libwww-perl libcrypt-ssleay-perl
