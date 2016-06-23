@@ -8,9 +8,10 @@ LASTRUN apt-get update && apt-get install -y \
 
 # Install Ruby 2.1
 RUN mkdir /tmp/ruby
-RUN cd /tmp/ruby && curl -O --progress https://cache.ruby-lang.org/pub/ruby/2.1/ruby-2.1.8.tar.gz
-RUN cd /tmp/ruby && echo 'c7e50159357afd87b13dc5eaf4ac486a70011149  ruby-2.1.8.tar.gz' | shasum -c - && tar xzf ruby-2.1.8.tar.gz
-RUN cd /tmp/ruby && cd ruby-2.1.8 && ./configure --disable-install-rdoc && make && make install
+RUN cd /tmp/ruby
+RUN curl -O --progress https://cache.ruby-lang.org/pub/ruby/2.1/ruby-2.1.9.tar.gz
+RUN echo 'dd68afc652fe542f83a9a709a74f4da2662054bf  ruby-2.1.9.tar.gz' | shasum -c - && tar xzf ruby-2.1.9.tar.gz
+RUN cd ruby-2.1.9 && ./configure --disable-install-rdoc && make && make install
 LASTRUN gem install bundler --no-ri --no-rdoc
 
 # GitLab
@@ -19,7 +20,7 @@ RUN sudo -u git -H mkdir -p /home/git/.ssh
 RUN sudo -u git -H touch /home/git/.ssh/authorized_keys
 RUN sudo -u git -H git config --global core.autocrlf "input"
 RUN sudo -u git -H git config --global gc.auto 0
-RUN sudo -u git -H curl -L https://github.com/gitlabhq/gitlabhq/archive/v8.7.2.zip -o /home/git/gitlab.zip
+RUN sudo -u git -H curl -L https://github.com/gitlabhq/gitlabhq/archive/v8.9.0.zip -o /home/git/gitlab.zip
 RUN sudo -u git -H unzip /home/git/gitlab.zip -d /home/git
 RUN sudo -u git -H mv /home/git/gitlabhq-* /home/git/gitlab
 RUN sudo -u git -H rm /home/git/gitlab.zip
@@ -96,7 +97,21 @@ RUN echo 'sed -i s/{{GITLAB_PROJECT_FEATURES_MERGE_REQUEST}}/${GITLAB_PROJECT_FE
 RUN echo 'sed -i s/{{GITLAB_PROJECT_FEATURES_WIKI}}/${GITLAB_PROJECT_FEATURES_WIKI}/g config/gitlab.yml' >> /bin/everyboot
 RUN echo 'sed -i s/{{GITLAB_PROJECT_FEATURES_SNIPPETS}}/${GITLAB_PROJECT_FEATURES_SNIPPETS}/g config/gitlab.yml' >> /bin/everyboot
 RUN echo 'sed -i s/{{GITLAB_PROJECT_FEATURES_BUILDS}}/${GITLAB_PROJECT_FEATURES_BUILDS}/g config/gitlab.yml' >> /bin/everyboot
+RUN echo 'sed -i s/{{GITLAB_PROJECT_FEATURES_CONTAINER_REGISTRY}}/${GITLAB_PROJECT_FEATURES_CONTAINER_REGISTRY}/g config/gitlab.yml' >> /bin/everyboot
 RUN echo 'sed -i s/{{GITLAB_BACKUP_KEEP_TIME}}/${GITLAB_BACKUP_KEEP_TIME}/g config/gitlab.yml' >> /bin/everyboot
+RUN echo 'sed -i s/{{GITLAB_INCOMING_EMAIL_ENABLED}}/${GITLAB_INCOMING_EMAIL_ENABLED}/g config/gitlab.yml' >> /bin/everyboot
+RUN echo 'sed -i s/{{GITLAB_INCOMING_EMAIL_ADDRESS}}/${GITLAB_INCOMING_EMAIL_ADDRESS}/g config/gitlab.yml' >> /bin/everyboot
+RUN echo 'sed -i s/{{GITLAB_INCOMING_EMAIL_USER}}/${GITLAB_INCOMING_EMAIL_USER}/g config/gitlab.yml' >> /bin/everyboot
+RUN echo 'sed -i s/{{GITLAB_INCOMING_EMAIL_PASSWORD}}/${GITLAB_INCOMING_EMAIL_PASSWORD}/g config/gitlab.yml' >> /bin/everyboot
+RUN echo 'sed -i s/{{GITLAB_INCOMING_EMAIL_IMAP_HOST}}/${GITLAB_INCOMING_EMAIL_IMAP_HOST}/g config/gitlab.yml' >> /bin/everyboot
+RUN echo 'sed -i s/{{GITLAB_INCOMING_EMAIL_IMAP_PORT}}/${GITLAB_INCOMING_EMAIL_IMAP_PORT}/g config/gitlab.yml' >> /bin/everyboot
+RUN echo 'sed -i s/{{GITLAB_INCOMING_EMAIL_IMAP_SSL}}/${GITLAB_INCOMING_EMAIL_IMAP_SSL}/g config/gitlab.yml' >> /bin/everyboot
+RUN echo 'sed -i s/{{GITLAB_INCOMING_EMAIL_IMAP_STARTTLS}}/${GITLAB_INCOMING_EMAIL_IMAP_STARTTLS}/g config/gitlab.yml' >> /bin/everyboot
+RUN echo 'sed -i s/{{GITLAB_INCOMING_EMAIL_IMAP_MAILBOX}}/${GITLAB_INCOMING_EMAIL_IMAP_MAILBOX}/g config/gitlab.yml' >> /bin/everyboot
+RUN echo 'sed -i s/{{CONTAINER_REGISTRY_HOST}}/${CONTAINER_REGISTRY_HOST}/g config/gitlab.yml' >> /bin/everyboot
+RUN echo 'sed -i s/{{CONTAINER_REGISTRY_PORT}}/${CONTAINER_REGISTRY_PORT}/g config/gitlab.yml' >> /bin/everyboot
+RUN echo 'sed -i s@{{CONTAINER_REGISTRY_API_URL}}@${CONTAINER_REGISTRY_API_URL}@g config/gitlab.yml' >> /bin/everyboot
+RUN echo 'sed -i s/{{CONTAINER_REGISTRY_ISSUER}}/${CONTAINER_REGISTRY_ISSUER}/g config/gitlab.yml' >> /bin/everyboot
 
 RUN echo 'sed -i s/#\ db_key_base\:$/db_key_base:\ ${GITLAB_DATABASE_SECRET_KEY}/g config/secrets.yml' >> /bin/everyboot
 RUN echo 'sed -i s@production\:.*@production\:\ ${REDIS_URL}@g config/resque.yml' >> /bin/everyboot
@@ -104,6 +119,7 @@ RUN echo 'sed -i s/username\:.*/username\:\ ${DATABASE_USER}/g config/database.y
 RUN echo 'sed -i s/password\:.*/password\:\ "${DATABASE_PASSWORD}"/g config/database.yml' >> /bin/everyboot
 RUN echo 'sed -i s/database\:.*/database\:\ ${DATABASE_NAME}/g config/database.yml' >> /bin/everyboot
 RUN echo 'sed -i s/#\ host\:.*/host\:\ ${DATABASE_HOST}/g config/database.yml' >> /bin/everyboot
+RUN echo 'sed -i s/config.action_mailer.delivery_method\ =\ :sendmail/config.action_mailer.delivery_method\ =\ :smtp/g config/environments/production.rb' >> /bin/everyboot
 
 RUN echo 'cp config/initializers/smtp_settings.rb.sample config/initializers/smtp_settings.rb' >> /bin/everyboot
 RUN echo 'sed -i s/address\:.*/address\:\ \"${GITLAB_EMAIL_SMTP_ADDRESS}\",/g config/initializers/smtp_settings.rb' >> /bin/everyboot
@@ -112,7 +128,7 @@ RUN echo 'sed -i s/authentication\:.*/authentication\:\ \:${GITLAB_EMAIL_SMTP_AU
 RUN echo 'sed -i s/user_name\:.*/user_name\:\ \"${GITLAB_EMAIL_SMTP_USERNAME}\",/g config/initializers/smtp_settings.rb' >> /bin/everyboot
 RUN echo 'sed -i s/password\:.*/password\:\ \"${GITLAB_EMAIL_SMTP_PASSWORD}\",/g config/initializers/smtp_settings.rb' >> /bin/everyboot
 RUN echo 'sed -i s/domain\:.*/domain\:\ \"${GITLAB_EMAIL_SMTP_DOMAIN}\",/g config/initializers/smtp_settings.rb' >> /bin/everyboot
-RUN echo 'sed -i s/openssl_verify_mode\:.*/openssl_verify_mode\:\ \"${GITLAB_EMAIL_SMTP_VERIFY_MODE}\",/g config/initializers/smtp_settings.rb' >> /bin/everyboot
+RUN echo 'sed -i s/openssl_verify_mode\:.*/openssl_verify_mode\:\ \"${GITLAB_EMAIL_SMTP_VERIFY_MODE}\",\\n\ \ \ \ tls:\ true,/g config/initializers/smtp_settings.rb' >> /bin/everyboot
 
 RUN echo 'echo "Wait for MySQL to boot..."' >> /bin/everyboot
 RUN echo 'echo "while ! nc -z ${DATABASE_HOST} 3306; do sleep 3; done"' >> /bin/everyboot

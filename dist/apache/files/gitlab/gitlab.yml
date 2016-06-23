@@ -98,6 +98,7 @@ production: &base
       wiki: {{GITLAB_PROJECT_FEATURES_WIKI}}
       snippets: {{GITLAB_PROJECT_FEATURES_SNIPPETS}}
       builds: {{GITLAB_PROJECT_FEATURES_BUILDS}}
+      container_registry: {{GITLAB_PROJECT_FEATURES_CONTAINER_REGISTRY}}
 
     ## Webhook settings
     # Number of seconds to wait for HTTP response after sending webhook HTTP POST request (default: 10)
@@ -112,30 +113,30 @@ production: &base
   # Allow users to comment on issues and merge requests by replying to notification emails.
   # For documentation on how to set this up, see http://doc.gitlab.com/ce/incoming_email/README.html
   incoming_email:
-    enabled: false
+    enabled: {{GITLAB_INCOMING_EMAIL_ENABLED}}
 
     # The email address including the `%{key}` placeholder that will be replaced to reference the item being replied to.
     # The placeholder can be omitted but if present, it must appear in the "user" part of the address (before the `@`).
-    address: "gitlab-incoming+%{key}@gmail.com"
+    address: "{{GITLAB_INCOMING_EMAIL_ADDRESS}}"
 
     # Email account username
     # With third party providers, this is usually the full email address.
     # With self-hosted email servers, this is usually the user part of the email address.
-    user: "gitlab-incoming@gmail.com"
+    user: "{{GITLAB_INCOMING_EMAIL_USER}}"
     # Email account password
-    password: "[REDACTED]"
+    password: "{{GITLAB_INCOMING_EMAIL_PASSWORD}}"
 
     # IMAP server host
-    host: "imap.gmail.com"
+    host: "{{GITLAB_INCOMING_EMAIL_IMAP_HOST}}"
     # IMAP server port
-    port: 993
+    port: {{GITLAB_INCOMING_EMAIL_IMAP_PORT}}
     # Whether the IMAP server uses SSL
-    ssl: true
+    ssl: {{GITLAB_INCOMING_EMAIL_IMAP_SSL}}
     # Whether the IMAP server uses StartTLS
-    start_tls: false
+    start_tls: {{GITLAB_INCOMING_EMAIL_IMAP_STARTTLS}}
 
     # The mailbox where incoming mail will end up. Usually "inbox".
-    mailbox: "inbox"
+    mailbox: "{{GITLAB_INCOMING_EMAIL_IMAP_MAILBOX}}"
 
   ## Build Artifacts
   artifacts:
@@ -152,7 +153,6 @@ production: &base
   ## Gravatar
   ## For Libravatar see: http://doc.gitlab.com/ce/customization/libravatar.html
   gravatar:
-    enabled: true                 # Use user avatar image from Gravatar.com (default: true)
     # gravatar urls: possible placeholders: %{hash} %{size} %{email}
     # plain_url: "http://..."     # default: http://www.gravatar.com/avatar/%{hash}?s=%{size}&d=identicon
     # ssl_url:   "https://..."    # default: https://secure.gravatar.com/avatar/%{hash}?s=%{size}&d=identicon
@@ -164,17 +164,29 @@ production: &base
     # Flag stuck CI builds as failed
     stuck_ci_builds_worker:
       cron: "0 0 * * *"
+    # Remove expired build artifacts
+    expire_build_artifacts_worker:
+      cron: "50 * * * *"
     # Periodically run 'git fsck' on all repositories. If started more than
     # once per hour you will have concurrent 'git fsck' jobs.
     repository_check_worker:
       cron: "20 * * * *"
-    # Send admin emails once a day
+    # Send admin emails once a week
     admin_email_worker:
-      cron: "0 0 * * *"
+      cron: "0 0 * * 0"
 
     # Remove outdated repository archives
     repository_archive_cache_worker:
       cron: "0 * * * *"
+
+  registry:
+    enabled: {{GITLAB_PROJECT_FEATURES_CONTAINER_REGISTRY}}
+    host: {{CONTAINER_REGISTRY_HOST}}
+    port: {{CONTAINER_REGISTRY_PORT}}
+    api_url: {{CONTAINER_REGISTRY_API_URL}} # internal address to the registry, will be used by GitLab to directly communicate with API
+    key: /data/container-registry/registry.key
+    path: /data/container-registry/registry
+    issuer: {{CONTAINER_REGISTRY_ISSUER}}
 
   #
   # 2. GitLab CI settings
@@ -350,6 +362,8 @@ production: &base
       # - { name: 'github',
       #     app_id: 'YOUR_APP_ID',
       #     app_secret: 'YOUR_APP_SECRET',
+      #     url: "https://github.com/",
+      #     verify_ssl: true,
       #     args: { scope: 'user:email' } }
       # - { name: 'bitbucket',
       #     app_id: 'YOUR_APP_ID',
