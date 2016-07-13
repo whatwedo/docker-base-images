@@ -128,7 +128,7 @@ RUN echo 'sed -i s/authentication\:.*/authentication\:\ \:${GITLAB_EMAIL_SMTP_AU
 RUN echo 'sed -i s/user_name\:.*/user_name\:\ \"${GITLAB_EMAIL_SMTP_USERNAME}\",/g config/initializers/smtp_settings.rb' >> /bin/everyboot
 RUN echo 'sed -i s/password\:.*/password\:\ \"${GITLAB_EMAIL_SMTP_PASSWORD}\",/g config/initializers/smtp_settings.rb' >> /bin/everyboot
 RUN echo 'sed -i s/domain\:.*/domain\:\ \"${GITLAB_EMAIL_SMTP_DOMAIN}\",/g config/initializers/smtp_settings.rb' >> /bin/everyboot
-RUN echo 'sed -i s/openssl_verify_mode\:.*/openssl_verify_mode\:\ \"${GITLAB_EMAIL_SMTP_VERIFY_MODE}\",\\n\ \ \ \ tls:\ true,/g config/initializers/smtp_settings.rb' >> /bin/everyboot
+RUN echo 'sed -i s/openssl_verify_mode\:.*/openssl_verify_mode\:\ \"${GITLAB_EMAIL_SMTP_VERIFY_MODE}\",\\\\n\ \ \ \ tls:\ true,/g config/initializers/smtp_settings.rb' >> /bin/everyboot
 
 RUN echo 'echo "Wait for MySQL to boot..."' >> /bin/everyboot
 RUN echo 'echo "while ! nc -z ${DATABASE_HOST} 3306; do sleep 3; done"' >> /bin/everyboot
