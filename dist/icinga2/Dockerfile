@@ -56,13 +56,17 @@ apt-get -y install libwww-perl libcrypt-ssleay-perl && \
 wget https://raw.github.com/tinyspeck/services-examples/master/nagios.pl && \
 mv nagios.pl /usr/local/bin/slack_nagios.pl && \
 chmod 755 /usr/local/bin/slack_nagios.pl && \
+addgroup --system icingaweb2 && \
+usermod -a -G icingaweb2 www-data && \
 /etc/init.d/icinga2 start && sleep 30 && /etc/init.d/icinga2 stop && \
 echo '<?php header("location: /icingaweb2"); ?>' > /var/www/html/index.php && \
 echo 'date.timezone = "Europe/Zurich"' >> /etc/php5/apache2/php.ini && \
 echo "icingacli setup config directory --group icingaweb2" >> /bin/everyboot && \
-echo 'echo "---------------------------------------------------"' >> /bin/everyboot && \
+echo 'echo "---------------------------------------------------"' >> /bin/firstboot && \
 echo "icingacli setup token create" >> /bin/firstboot && \
-echo 'echo "---------------------------------------------------"' >> /bin/everyboot && \
+echo 'echo "---------------------------------------------------"' >> /bin/firstboot && \
+echo "chgrp -R icingaweb2 /etc/icingaweb2/setup.token" >> /bin/firstboot && \
+echo "chmod -R 777 /etc/icingaweb2" >> /bin/firstboot && \
 echo 'echo "dbc_install=\"true\"" > /etc/dbconfig-common/icinga2-ido-mysql.conf' >> /bin/everyboot && \
 echo 'echo "dbc_upgrade=\"true\"" >> /etc/dbconfig-common/icinga2-ido-mysql.conf' >> /bin/everyboot && \
 echo 'echo "dbc_remove=\"\"" >> /etc/dbconfig-common/icinga2-ido-mysql.conf' >> /bin/everyboot && \
@@ -87,7 +91,7 @@ echo 'echo "database = \"${DB_NAME}\"" >> /etc/icinga2/features-available/ido-my
 echo 'echo "}" >> /etc/icinga2/features-available/ido-mysql.conf' >> /bin/everyboot && \
 echo 'rm -f /etc/icinga2-classicui/htpasswd.users && htpasswd -b -c /etc/icinga2-classicui/htpasswd.users icingaadmin ${ICINGAADMIN_PW}' >> /bin/everyboot && \
 echo 'sleep 30' >> /bin/firstboot && \
-echo 'mysql -u ${DB_USER} -p${DB_PW} -h ${DB_SERVER} -P ${DB_PORT} -e "CREATE DATABASE ${DB_NAME}"' >> /bin/firstboot && \
+echo 'mysql -u ${DB_USER} -p${DB_PW} -h ${DB_SERVER} -P ${DB_PORT} -e "CREATE DATABASE IF NOT EXISTS ${DB_NAME}"' >> /bin/firstboot && \
 echo 'mysql -u ${DB_USER} -p${DB_PW} -h ${DB_SERVER} -D ${DB_NAME} -P ${DB_PORT} < /usr/share/icinga2-ido-mysql/schema/mysql.sql' >> /bin/firstboot
 COPY files/supervisord/icinga2.conf /etc/supervisor/conf.d/icinga2.conf
 RUN apt-get autoremove -y && \

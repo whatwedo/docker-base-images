@@ -24,6 +24,10 @@ RUN wget https://raw.github.com/tinyspeck/services-examples/master/nagios.pl
 RUN mv nagios.pl /usr/local/bin/slack_nagios.pl
 RUN chmod 755 /usr/local/bin/slack_nagios.pl
 
+#Add www-data user to icingaweb2 group
+RUN addgroup --system icingaweb2
+RUN usermod -a -G icingaweb2 www-data
+
 #Start and stop icinga (Init system)
 RUN /etc/init.d/icinga2 start && sleep 30 && /etc/init.d/icinga2 stop
 
@@ -33,13 +37,13 @@ RUN echo '<?php header("location: /icingaweb2"); ?>' > /var/www/html/index.php
 #Fix timezone
 RUN echo 'date.timezone = "Europe/Zurich"' >> /etc/php5/apache2/php.ini
 
-#Edit everyboot script
-
 #Generate setup token
 RUN echo "icingacli setup config directory --group icingaweb2" >> /bin/everyboot
-RUN echo 'echo "---------------------------------------------------"' >> /bin/everyboot
+RUN echo 'echo "---------------------------------------------------"' >> /bin/firstboot
 RUN echo "icingacli setup token create" >> /bin/firstboot
-RUN echo 'echo "---------------------------------------------------"' >> /bin/everyboot
+RUN echo 'echo "---------------------------------------------------"' >> /bin/firstboot
+RUN echo "chgrp -R icingaweb2 /etc/icingaweb2/setup.token" >> /bin/firstboot
+RUN echo "chmod -R 777 /etc/icingaweb2" >> /bin/firstboot
 
 #db-config settings
 RUN echo 'echo "dbc_install=\"true\"" > /etc/dbconfig-common/icinga2-ido-mysql.conf' >> /bin/everyboot
@@ -72,7 +76,7 @@ RUN echo 'rm -f /etc/icinga2-classicui/htpasswd.users && htpasswd -b -c /etc/ici
 
 #Wait until database service is started (in multi container environement)
 RUN echo 'sleep 30' >> /bin/firstboot
-RUN echo 'mysql -u ${DB_USER} -p${DB_PW} -h ${DB_SERVER} -P ${DB_PORT} -e "CREATE DATABASE ${DB_NAME}"' >> /bin/firstboot
+RUN echo 'mysql -u ${DB_USER} -p${DB_PW} -h ${DB_SERVER} -P ${DB_PORT} -e "CREATE DATABASE IF NOT EXISTS ${DB_NAME}"' >> /bin/firstboot
 RUN echo 'mysql -u ${DB_USER} -p${DB_PW} -h ${DB_SERVER} -D ${DB_NAME} -P ${DB_PORT} < /usr/share/icinga2-ido-mysql/schema/mysql.sql' >> /bin/firstboot
 
 #Add apache to icinga2 config
