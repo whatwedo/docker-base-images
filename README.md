@@ -9,7 +9,9 @@ We at [whatwedo](https://whatwedo.ch/) are slowly going away from traditional ap
 | [whatwedo/apache-php56](https://github.com/whatwedo/docker-base-images/tree/master/dist/apache-php56/) | Apache 2 webserver including PHP 5.6 |
 | [whatwedo/apache-php70](https://github.com/whatwedo/docker-base-images/tree/master/dist/apache-php70/) | Apache 2 webserver including PHP 7.0 |
 | [whatwedo/bind](https://github.com/whatwedo/docker-base-images/tree/master/dist/bind/) | Bind9 nameserver |
+| [whatwedo/docker](https://github.com/whatwedo/docker-base-images/tree/master/dist/docker/) | Docker in docker |
 | [whatwedo/elasticsearch](https://github.com/whatwedo/docker-base-images/tree/master/dist/elasticsearch/) | Elasticsearch server |
+| [whatwedo/gitlab-ci-multirunner](https://github.com/whatwedo/docker-base-images/tree/master/dist/gitlab-ci-multi-runner/) | GitLab CI Multirunner |
 | [whatwedo/gitlab](https://github.com/whatwedo/docker-base-images/tree/master/dist/gitlab/) | GitLab |
 | [whatwedo/golang](https://github.com/whatwedo/docker-base-images/tree/master/dist/golang/) | Golang compiler |
 | [whatwedo/icinga2](https://github.com/whatwedo/docker-base-images/tree/master/dist/icinga2/) | Icinga2 and Icinga2-Web |
@@ -24,12 +26,14 @@ We at [whatwedo](https://whatwedo.ch/) are slowly going away from traditional ap
 | [whatwedo/nginx-php56](https://github.com/whatwedo/docker-base-images/tree/master/dist/nginx-php56/) | nginx webserver including PHP 5.6 |
 | [whatwedo/nginx-php70](https://github.com/whatwedo/docker-base-images/tree/master/dist/nginx-php70/) | nginx webserver including PHP 7.0 |
 | [whatwedo/node](https://github.com/whatwedo/docker-base-images/tree/master/dist/node/) | Node |
+| [whatwedo/owncloud](https://github.com/whatwedo/docker-base-images/tree/master/dist/owncloud/) | ownCloud server |
 | [whatwedo/php56](https://github.com/whatwedo/docker-base-images/tree/master/dist/php56/) | PHP 5.6 interpreter |
 | [whatwedo/php70](https://github.com/whatwedo/docker-base-images/tree/master/dist/postgres/) | PHP 7.0 interpreter |
 | [whatwedo/postgres](https://github.com/whatwedo/docker-base-images/tree/master/dist/postgres/) | Postgres database server |
 | [whatwedo/puppet-client](https://github.com/whatwedo/docker-base-images/tree/master/dist/puppet-client/) | Puppet Client |
 | [whatwedo/redis](https://github.com/whatwedo/docker-base-images/tree/master/dist/redis/) | Redis data structure server |
 | [whatwedo/ruby](https://github.com/whatwedo/docker-base-images/tree/master/dist/ruby/) | Ruby interpreter |
+| [whatwedo/squid](https://github.com/whatwedo/docker-base-images/tree/master/dist/squid/) | Squid proxy server |
 | [whatwedo/symfony2](https://github.com/whatwedo/docker-base-images/tree/master/dist/symfony2/) | nginx configured for running Symfony 2 |
 | [whatwedo/symfony3](https://github.com/whatwedo/docker-base-images/tree/master/dist/symfony3/) | nginx configured for running Symfony 3 |
 | [whatwedo/tomcat](https://github.com/whatwedo/docker-base-images/tree/master/dist/tomcat/) | Tomcat application server |
