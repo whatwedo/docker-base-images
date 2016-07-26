@@ -106,8 +106,8 @@ production: &base
 
     ## Repository downloads directory
     # When a user clicks e.g. 'Download zip' on a project, a temporary zip file is created in the following directory.
-    # The default is 'tmp/repositories' relative to the root of the Rails app.
-    # repository_downloads_path: tmp/repositories
+    # The default is 'shared/cache/archive/' relative to the root of the Rails app.
+    # repository_downloads_path: shared/cache/archive/
 
   ## Reply by email
   # Allow users to comment on issues and merge requests by replying to notification emails.
@@ -428,6 +428,13 @@ production: &base
   satellites:
     path: /data/gitlab-satellites/
 
+  ## Repositories settings
+  repositories:
+    # Paths where repositories can be stored. Give the canonicalized absolute pathname.
+    # NOTE: REPOS PATHS MUST NOT CONTAIN ANY SYMLINK!!!
+    storages: # You must have at least a `default` storage path.
+      default: /data/repositories/
+
   ## Backup settings
   backup:
     path: "/data/backups"   # Relative paths are relative to Rails.root (default: tmp/backups/)
@@ -452,9 +459,6 @@ production: &base
   ## GitLab Shell settings
   gitlab_shell:
     path: /home/git/gitlab-shell/
-
-    # REPOS_PATH MUST NOT BE A SYMLINK!!!
-    repos_path: /data/repositories/
     hooks_path: /data/gitlab-shell/hooks/
 
     # File that contains the secret key for verifying access for gitlab-shell.
@@ -528,11 +532,13 @@ test:
     # user: YOUR_USERNAME
   satellites:
     path: tmp/tests/gitlab-satellites/
+  repositories:
+    storages:
+      default: tmp/tests/repositories/
   backup:
     path: tmp/tests/backups
   gitlab_shell:
     path: tmp/tests/gitlab-shell/
-    repos_path: tmp/tests/repositories/
     hooks_path: tmp/tests/gitlab-shell/hooks/
   issues_tracker:
     redmine:

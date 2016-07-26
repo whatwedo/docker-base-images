@@ -13,7 +13,8 @@ wget -O /usr/local/bin/gitlab-ci-multi-runner https://gitlab-ci-multi-runner-dow
 chmod +x /usr/local/bin/gitlab-ci-multi-runner && \
 curl -L https://github.com/docker/machine/releases/download/v0.6.0/docker-machine-$(uname -s)-$(uname -m) > /usr/local/bin/docker-machine && \
 chmod +x /usr/local/bin/docker-machine && \
-useradd --comment 'GitLab Runner' --create-home gitlab-runner --shell /bin/bash
+useradd --comment 'GitLab Runner' --create-home gitlab-runner --shell /bin/bash && \
+echo "rm -rf /root/.docker/machine/certs" >> /bin/everyboot
 COPY files/supervisord/gitlab-ci-multi-runner.conf /etc/supervisor/conf.d/gitlab-ci-multi-runner.conf
 RUN apt-get autoremove -y && \
 apt-get clean -y && \
