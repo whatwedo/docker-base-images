@@ -20,7 +20,7 @@ RUN sudo -u git -H mkdir -p /home/git/.ssh
 RUN sudo -u git -H touch /home/git/.ssh/authorized_keys
 RUN sudo -u git -H git config --global core.autocrlf "input"
 RUN sudo -u git -H git config --global gc.auto 0
-RUN sudo -u git -H curl -L https://github.com/gitlabhq/gitlabhq/archive/v8.10.1.zip -o /home/git/gitlab.zip
+RUN sudo -u git -H curl -L https://github.com/gitlabhq/gitlabhq/archive/v8.10.3.zip -o /home/git/gitlab.zip
 RUN sudo -u git -H unzip /home/git/gitlab.zip -d /home/git
 RUN sudo -u git -H mv /home/git/gitlabhq-* /home/git/gitlab
 RUN sudo -u git -H rm /home/git/gitlab.zip
