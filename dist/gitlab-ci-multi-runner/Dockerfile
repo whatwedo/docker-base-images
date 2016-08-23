@@ -11,7 +11,7 @@ FROM whatwedo/base:latest
 RUN apt-get update -y && \
 wget -O /usr/local/bin/gitlab-ci-multi-runner https://gitlab-ci-multi-runner-downloads.s3.amazonaws.com/latest/binaries/gitlab-ci-multi-runner-linux-amd64 && \
 chmod +x /usr/local/bin/gitlab-ci-multi-runner && \
-curl -L https://github.com/docker/machine/releases/download/v0.6.0/docker-machine-$(uname -s)-$(uname -m) > /usr/local/bin/docker-machine && \
+curl -L https://github.com/docker/machine/releases/download/v0.8.1/docker-machine-$(uname -s)-$(uname -m) > /usr/local/bin/docker-machine && \
 chmod +x /usr/local/bin/docker-machine && \
 useradd --comment 'GitLab Runner' --create-home gitlab-runner --shell /bin/bash && \
 echo "rm -rf /root/.docker/machine/certs" >> /bin/everyboot

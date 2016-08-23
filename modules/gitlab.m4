@@ -9,9 +9,9 @@ LASTRUN apt-get update && apt-get install -y \
 # Install Ruby 2.1
 RUN mkdir /tmp/ruby
 RUN cd /tmp/ruby
-RUN curl -O --progress https://cache.ruby-lang.org/pub/ruby/2.1/ruby-2.1.9.tar.gz
-RUN echo 'dd68afc652fe542f83a9a709a74f4da2662054bf  ruby-2.1.9.tar.gz' | shasum -c - && tar xzf ruby-2.1.9.tar.gz
-RUN cd ruby-2.1.9 && ./configure --disable-install-rdoc && make && make install
+RUN curl -O --progress https://cache.ruby-lang.org/pub/ruby/2.3/ruby-2.3.1.tar.gz
+RUN echo 'c39b4001f7acb4e334cb60a0f4df72d434bef711  ruby-2.3.1.tar.gz' | shasum -c - && tar xzf ruby-2.3.1.tar.gz
+RUN cd ruby-2.3.1 && ./configure --disable-install-rdoc && make && make install
 LASTRUN gem install bundler --no-ri --no-rdoc
 
 # GitLab
@@ -20,7 +20,7 @@ RUN sudo -u git -H mkdir -p /home/git/.ssh
 RUN sudo -u git -H touch /home/git/.ssh/authorized_keys
 RUN sudo -u git -H git config --global core.autocrlf "input"
 RUN sudo -u git -H git config --global gc.auto 0
-RUN sudo -u git -H curl -L https://github.com/gitlabhq/gitlabhq/archive/v8.10.3.zip -o /home/git/gitlab.zip
+RUN sudo -u git -H curl -L https://github.com/gitlabhq/gitlabhq/archive/v8.11.0.zip -o /home/git/gitlab.zip
 RUN sudo -u git -H unzip /home/git/gitlab.zip -d /home/git
 RUN sudo -u git -H mv /home/git/gitlabhq-* /home/git/gitlab
 RUN sudo -u git -H rm /home/git/gitlab.zip
@@ -114,7 +114,7 @@ RUN echo 'sed -i s@{{CONTAINER_REGISTRY_API_URL}}@${CONTAINER_REGISTRY_API_URL}@
 RUN echo 'sed -i s/{{CONTAINER_REGISTRY_ISSUER}}/${CONTAINER_REGISTRY_ISSUER}/g config/gitlab.yml' >> /bin/everyboot
 
 RUN echo 'sed -i s/#\ db_key_base\:$/db_key_base:\ ${GITLAB_DATABASE_SECRET_KEY}/g config/secrets.yml' >> /bin/everyboot
-RUN echo 'sed -i s@production\:.*@production\:\ ${REDIS_URL}@g config/resque.yml' >> /bin/everyboot
+RUN echo 'sed -i s@url\:.*@url\:\ ${REDIS_URL}@g config/resque.yml' >> /bin/everyboot
 RUN echo 'sed -i s/username\:.*/username\:\ ${DATABASE_USER}/g config/database.yml' >> /bin/everyboot
 RUN echo 'sed -i s/password\:.*/password\:\ "${DATABASE_PASSWORD}"/g config/database.yml' >> /bin/everyboot
 RUN echo 'sed -i s/database\:.*/database\:\ ${DATABASE_NAME}/g config/database.yml' >> /bin/everyboot
