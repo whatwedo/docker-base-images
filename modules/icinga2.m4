@@ -7,11 +7,6 @@ RUN apt-get update -y
 RUN apt-get -y install icinga2 icinga2-ido-mysql icinga2-classicui nagios-plugins icingaweb2 nmap php-htmlpurifier
 RUN apt-get -y install nagios-nrpe-plugin --no-install-recommends
 
-RUN cp -a /etc/icinga2 /etc/icinga2_copy
-RUN cp -a /etc/icingaweb2 /etc/icingaweb2_copy
-RUN cp -a /var/lib/icinga2 /var/lib/icinga2_copy
-RUN cp -a /etc/icinga2-classicui /etc/icinga2-classicui_copy
-
 #Enable features
 RUN icinga2 feature enable ido-mysql
 RUN icinga2 feature enable command
@@ -45,6 +40,10 @@ RUN echo 'date.timezone = "Europe/Zurich"' >> /etc/php5/apache2/php.ini
 #Generate setup token
 RUN echo "icingacli setup config directory --group icingaweb2" >> /bin/everyboot
 RUN echo 'echo "---------------------------------------------------"' >> /bin/firstboot
+RUN echo 'test "$(ls -A /etc/icinga2)" || cp -a /etc/icinga2_copy/. /etc/icinga2/' >> /bin/firstboot
+RUN echo 'test "$(ls -A /etc/icingaweb2)" || cp -a /etc/icingaweb2_copy/. /etc/icingaweb2/' >> /bin/firstboot
+RUN echo 'test "$(ls -A /var/lib/icinga2)" || cp -a /var/lib/icinga2_copy/. /var/lib/icinga2/' >> /bin/firstboot
+RUN echo 'test "$(ls -A /etc/icinga2-classicui)" || cp -a /etc/icinga2-classicui_copy/. /etc/icinga2-classicui/' >> /bin/firstboot
 RUN echo "icingacli setup token create" >> /bin/firstboot
 RUN echo 'echo "---------------------------------------------------"' >> /bin/firstboot
 RUN echo "chgrp -R icingaweb2 /etc/icingaweb2/setup.token" >> /bin/firstboot
@@ -81,12 +80,14 @@ RUN echo 'rm -f /etc/icinga2-classicui/htpasswd.users && htpasswd -b -c /etc/ici
 
 #Wait until database service is started (in multi container environement)
 RUN echo 'sleep 30' >> /bin/firstboot
-RUN echo 'test "$(ls -A /etc/icinga2)" || cp -a /etc/icinga2_copy/. /etc/icinga2/' >> /bin/firstboot
-RUN echo 'test "$(ls -A /etc/icingaweb2)" || cp -a /etc/icingaweb2_copy/. /etc/icingaweb2/' >> /bin/firstboot
-RUN echo 'test "$(ls -A /var/lib/icinga2)" || cp -a /var/lib/icinga2_copy/. /var/lib/icinga2/' >> /bin/firstboot
-RUN echo 'test "$(ls -A /etc/icinga2-classicui)" || cp -a /etc/icinga2-classicui_copy/. /etc/icinga2-classicui/' >> /bin/firstboot
 RUN echo 'mysql -u ${DB_USER} -p${DB_PW} -h ${DB_SERVER} -P ${DB_PORT} -e "CREATE DATABASE IF NOT EXISTS ${DB_NAME}"' >> /bin/firstboot
 RUN echo 'mysql -u ${DB_USER} -p${DB_PW} -h ${DB_SERVER} -D ${DB_NAME} -P ${DB_PORT} < /usr/share/icinga2-ido-mysql/schema/mysql.sql' >> /bin/firstboot
 
 #Add apache to icinga2 config
 COPY files/supervisord/icinga2.conf /etc/supervisor/conf.d/icinga2.conf
+
+RUN cp -a /etc/icinga2 /etc/icinga2_copy
+RUN cp -a /etc/icingaweb2 /etc/icingaweb2_copy
+RUN cp -a /var/lib/icinga2 /var/lib/icinga2_copy
+RUN cp -a /etc/icinga2-classicui /etc/icinga2-classicui_copy
+
