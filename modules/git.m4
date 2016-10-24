@@ -4,8 +4,8 @@ LASTRUN apt-get install -y build-essential libssl-dev libcurl4-gnutls-dev libexp
 # Compile git from source
 RUN mkdir /tmp/git
 RUN cd /tmp/git
-RUN curl -L --progress https://github.com/git/git/archive/v2.9.0.tar.gz -o git.tar.gz
-RUN echo '382d0446b4fdbd9e6fd1e474e535937e8d5446b5  git.tar.gz' | shasum -c -
+RUN curl -L https://github.com/git/git/archive/v2.10.1.tar.gz -o git.tar.gz
+RUN echo 'f97b9a7bbe3f0b359adab08766d53aae2a9ce703  git.tar.gz' | shasum -c -
 RUN tar xzf git.tar.gz
 RUN cd /tmp/git/git-* 
 RUN make prefix=/usr all 

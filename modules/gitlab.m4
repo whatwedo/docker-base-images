@@ -9,9 +9,9 @@ LASTRUN apt-get update && apt-get install -y \
 # Install Ruby 2.1
 RUN mkdir /tmp/ruby
 RUN cd /tmp/ruby
-RUN curl -O --progress https://cache.ruby-lang.org/pub/ruby/2.3/ruby-2.3.1.tar.gz
-RUN echo 'c39b4001f7acb4e334cb60a0f4df72d434bef711  ruby-2.3.1.tar.gz' | shasum -c - && tar xzf ruby-2.3.1.tar.gz
-RUN cd ruby-2.3.1 && ./configure --disable-install-rdoc && make && make install
+RUN curl -L https://cache.ruby-lang.org/pub/ruby/2.3/ruby-2.3.1.tar.gz -o ruby.tar.gz
+RUN echo 'c39b4001f7acb4e334cb60a0f4df72d434bef711  ruby.tar.gz' | shasum -c - && tar xzf ruby.tar.gz
+RUN ls -alh && cd ruby-2.3.1 && ./configure --disable-install-rdoc && make && make install
 LASTRUN gem install bundler --no-ri --no-rdoc
 
 # GitLab
@@ -20,7 +20,8 @@ RUN sudo -u git -H mkdir -p /home/git/.ssh
 RUN sudo -u git -H touch /home/git/.ssh/authorized_keys
 RUN sudo -u git -H git config --global core.autocrlf "input"
 RUN sudo -u git -H git config --global gc.auto 0
-RUN sudo -u git -H curl -L https://github.com/gitlabhq/gitlabhq/archive/v8.11.6.zip -o /home/git/gitlab.zip
+RUN sudo -u git -H curl -L --progress https://github.com/gitlabhq/gitlabhq/archive/v8.13.0.zip -o /home/git/gitlab.zip
+RUN sudo -u git -H echo 'd0697acb8c0cfdc933e41b60ff5e1b884cf6a273  /home/git/gitlab.zip' | shasum -c -
 RUN sudo -u git -H unzip /home/git/gitlab.zip -d /home/git
 RUN sudo -u git -H mv /home/git/gitlabhq-* /home/git/gitlab
 RUN sudo -u git -H rm /home/git/gitlab.zip
