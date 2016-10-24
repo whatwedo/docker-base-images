@@ -16,8 +16,8 @@ mercurial \
 git-core
 RUN mkdir /tmp/go && \
 cd /tmp/go && \
-curl -L --progress https://storage.googleapis.com/golang/go1.6.2.linux-amd64.tar.gz -o go.tar.gz && \
-echo 'b8318b09de06076d5397e6ec18ebef3b45cd315d  go.tar.gz' | shasum -c - && \
+curl -L https://storage.googleapis.com/golang/go1.7.3.linux-amd64.tar.gz -o go.tar.gz && \
+echo 'ead40e884ad4d6512bcf7b3c7420dd7fa4a96140  go.tar.gz' | shasum -c - && \
 tar -C /usr/local -xzf go.tar.gz
 ENV GOPATH /go
 ENV GOROOT /usr/local/go
@@ -25,8 +25,8 @@ ENV PATH $PATH:/usr/local/go/bin:/go/bin
 RUN apt-get install -y build-essential libssl-dev libcurl4-gnutls-dev libexpat1-dev gettext && \
 mkdir /tmp/git && \
 cd /tmp/git && \
-curl -L --progress https://github.com/git/git/archive/v2.9.0.tar.gz -o git.tar.gz && \
-echo '382d0446b4fdbd9e6fd1e474e535937e8d5446b5  git.tar.gz' | shasum -c - && \
+curl -L https://github.com/git/git/archive/v2.10.1.tar.gz -o git.tar.gz && \
+echo 'f97b9a7bbe3f0b359adab08766d53aae2a9ce703  git.tar.gz' | shasum -c - && \
 tar xzf git.tar.gz && \
 cd /tmp/git/git-* && \
 make prefix=/usr all && \

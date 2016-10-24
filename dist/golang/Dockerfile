@@ -16,8 +16,8 @@ mercurial \
 git-core
 RUN mkdir /tmp/go && \
 cd /tmp/go && \
-curl -L --progress https://storage.googleapis.com/golang/go1.6.2.linux-amd64.tar.gz -o go.tar.gz && \
-echo 'b8318b09de06076d5397e6ec18ebef3b45cd315d  go.tar.gz' | shasum -c - && \
+curl -L https://storage.googleapis.com/golang/go1.7.3.linux-amd64.tar.gz -o go.tar.gz && \
+echo 'ead40e884ad4d6512bcf7b3c7420dd7fa4a96140  go.tar.gz' | shasum -c - && \
 tar -C /usr/local -xzf go.tar.gz
 ENV GOPATH /go
 ENV GOROOT /usr/local/go

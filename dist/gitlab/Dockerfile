@@ -33,8 +33,8 @@ COPY files/supervisord/nginx.conf /etc/supervisor/conf.d/nginx.conf
 RUN apt-get install -y build-essential libssl-dev libcurl4-gnutls-dev libexpat1-dev gettext && \
 mkdir /tmp/git && \
 cd /tmp/git && \
-curl -L --progress https://github.com/git/git/archive/v2.9.0.tar.gz -o git.tar.gz && \
-echo '382d0446b4fdbd9e6fd1e474e535937e8d5446b5  git.tar.gz' | shasum -c - && \
+curl -L https://github.com/git/git/archive/v2.10.1.tar.gz -o git.tar.gz && \
+echo 'f97b9a7bbe3f0b359adab08766d53aae2a9ce703  git.tar.gz' | shasum -c - && \
 tar xzf git.tar.gz && \
 cd /tmp/git/git-* && \
 make prefix=/usr all && \
@@ -47,8 +47,8 @@ mercurial \
 git-core
 RUN mkdir /tmp/go && \
 cd /tmp/go && \
-curl -L --progress https://storage.googleapis.com/golang/go1.6.2.linux-amd64.tar.gz -o go.tar.gz && \
-echo 'b8318b09de06076d5397e6ec18ebef3b45cd315d  go.tar.gz' | shasum -c - && \
+curl -L https://storage.googleapis.com/golang/go1.7.3.linux-amd64.tar.gz -o go.tar.gz && \
+echo 'ead40e884ad4d6512bcf7b3c7420dd7fa4a96140  go.tar.gz' | shasum -c - && \
 tar -C /usr/local -xzf go.tar.gz
 ENV GOPATH /go
 ENV GOROOT /usr/local/go
@@ -61,16 +61,17 @@ logrotate python-docutils pkg-config cmake nodejs libmysqlclient-dev \
 mysql-client redis-tools
 RUN mkdir /tmp/ruby && \
 cd /tmp/ruby && \
-curl -O --progress https://cache.ruby-lang.org/pub/ruby/2.3/ruby-2.3.1.tar.gz && \
-echo 'c39b4001f7acb4e334cb60a0f4df72d434bef711  ruby-2.3.1.tar.gz' | shasum -c - && tar xzf ruby-2.3.1.tar.gz && \
-cd ruby-2.3.1 && ./configure --disable-install-rdoc && make && make install
+curl -L https://cache.ruby-lang.org/pub/ruby/2.3/ruby-2.3.1.tar.gz -o ruby.tar.gz && \
+echo 'c39b4001f7acb4e334cb60a0f4df72d434bef711  ruby.tar.gz' | shasum -c - && tar xzf ruby.tar.gz && \
+ls -alh && cd ruby-2.3.1 && ./configure --disable-install-rdoc && make && make install
 RUN gem install bundler --no-ri --no-rdoc && \
 adduser --disabled-login --gecos 'GitLab' git && \
 sudo -u git -H mkdir -p /home/git/.ssh && \
 sudo -u git -H touch /home/git/.ssh/authorized_keys && \
 sudo -u git -H git config --global core.autocrlf "input" && \
 sudo -u git -H git config --global gc.auto 0 && \
-sudo -u git -H curl -L https://github.com/gitlabhq/gitlabhq/archive/v8.11.6.zip -o /home/git/gitlab.zip && \
+sudo -u git -H curl -L --progress https://github.com/gitlabhq/gitlabhq/archive/v8.13.0.zip -o /home/git/gitlab.zip && \
+sudo -u git -H echo 'd0697acb8c0cfdc933e41b60ff5e1b884cf6a273  /home/git/gitlab.zip' | shasum -c - && \
 sudo -u git -H unzip /home/git/gitlab.zip -d /home/git && \
 sudo -u git -H mv /home/git/gitlabhq-* /home/git/gitlab && \
 sudo -u git -H rm /home/git/gitlab.zip
