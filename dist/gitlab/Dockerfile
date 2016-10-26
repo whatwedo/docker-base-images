@@ -70,8 +70,8 @@ sudo -u git -H mkdir -p /home/git/.ssh && \
 sudo -u git -H touch /home/git/.ssh/authorized_keys && \
 sudo -u git -H git config --global core.autocrlf "input" && \
 sudo -u git -H git config --global gc.auto 0 && \
-sudo -u git -H curl -L --progress https://github.com/gitlabhq/gitlabhq/archive/v8.13.0.zip -o /home/git/gitlab.zip && \
-sudo -u git -H echo 'd0697acb8c0cfdc933e41b60ff5e1b884cf6a273  /home/git/gitlab.zip' | shasum -c - && \
+sudo -u git -H curl -L --progress https://github.com/gitlabhq/gitlabhq/archive/v8.13.1.zip -o /home/git/gitlab.zip && \
+sudo -u git -H echo '0738cebfa158da3062455128da3c728fdddb4f64  /home/git/gitlab.zip' | shasum -c - && \
 sudo -u git -H unzip /home/git/gitlab.zip -d /home/git && \
 sudo -u git -H mv /home/git/gitlabhq-* /home/git/gitlab && \
 sudo -u git -H rm /home/git/gitlab.zip
