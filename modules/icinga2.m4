@@ -40,6 +40,10 @@ RUN echo 'date.timezone = "Europe/Zurich"' >> /etc/php5/apache2/php.ini
 #Generate setup token
 RUN echo "icingacli setup config directory --group icingaweb2" >> /bin/everyboot
 RUN echo 'echo "---------------------------------------------------"' >> /bin/firstboot
+RUN echo 'test "$(ls -A /etc/icinga2)" || cp -a /etc/icinga2_copy/. /etc/icinga2/' >> /bin/firstboot
+RUN echo 'test "$(ls -A /etc/icingaweb2)" || cp -a /etc/icingaweb2_copy/. /etc/icingaweb2/' >> /bin/firstboot
+RUN echo 'test "$(ls -A /var/lib/icinga2)" || cp -a /var/lib/icinga2_copy/. /var/lib/icinga2/' >> /bin/firstboot
+RUN echo 'test "$(ls -A /etc/icinga2-classicui)" || cp -a /etc/icinga2-classicui_copy/. /etc/icinga2-classicui/' >> /bin/firstboot
 RUN echo "icingacli setup token create" >> /bin/firstboot
 RUN echo 'echo "---------------------------------------------------"' >> /bin/firstboot
 RUN echo "chgrp -R icingaweb2 /etc/icingaweb2/setup.token" >> /bin/firstboot
@@ -81,3 +85,9 @@ RUN echo 'mysql -u ${DB_USER} -p${DB_PW} -h ${DB_SERVER} -D ${DB_NAME} -P ${DB_P
 
 #Add apache to icinga2 config
 COPY files/supervisord/icinga2.conf /etc/supervisor/conf.d/icinga2.conf
+
+RUN cp -a /etc/icinga2 /etc/icinga2_copy
+RUN cp -a /etc/icingaweb2 /etc/icingaweb2_copy
+RUN cp -a /var/lib/icinga2 /var/lib/icinga2_copy
+RUN cp -a /etc/icinga2-classicui /etc/icinga2-classicui_copy
+
