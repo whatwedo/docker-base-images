@@ -18,7 +18,7 @@ RUN echo "extension=zip.so;" > /etc/php/7.0/apache2/conf.d/20-zip.ini
 RUN a2enmod rewrite
 
 # Download ownCloud
-ENV OWNCLOUD_VERSION 9.0.1
+ENV OWNCLOUD_VERSION latest
 RUN curl -fsSL -o owncloud.tar.bz2 \
         "https://download.owncloud.org/community/owncloud-${OWNCLOUD_VERSION}.tar.bz2" \
     && curl -fsSL -o owncloud.tar.bz2.asc \
