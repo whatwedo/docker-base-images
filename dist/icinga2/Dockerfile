@@ -63,6 +63,10 @@ echo '<?php header("location: /icingaweb2"); ?>' > /var/www/html/index.php && \
 echo 'date.timezone = "Europe/Zurich"' >> /etc/php5/apache2/php.ini && \
 echo "icingacli setup config directory --group icingaweb2" >> /bin/everyboot && \
 echo 'echo "---------------------------------------------------"' >> /bin/firstboot && \
+echo 'test "$(ls -A /etc/icinga2)" || cp -a /etc/icinga2_copy/. /etc/icinga2/' >> /bin/firstboot && \
+echo 'test "$(ls -A /etc/icingaweb2)" || cp -a /etc/icingaweb2_copy/. /etc/icingaweb2/' >> /bin/firstboot && \
+echo 'test "$(ls -A /var/lib/icinga2)" || cp -a /var/lib/icinga2_copy/. /var/lib/icinga2/' >> /bin/firstboot && \
+echo 'test "$(ls -A /etc/icinga2-classicui)" || cp -a /etc/icinga2-classicui_copy/. /etc/icinga2-classicui/' >> /bin/firstboot && \
 echo "icingacli setup token create" >> /bin/firstboot && \
 echo 'echo "---------------------------------------------------"' >> /bin/firstboot && \
 echo "chgrp -R icingaweb2 /etc/icingaweb2/setup.token" >> /bin/firstboot && \
@@ -94,7 +98,11 @@ echo 'sleep 30' >> /bin/firstboot && \
 echo 'mysql -u ${DB_USER} -p${DB_PW} -h ${DB_SERVER} -P ${DB_PORT} -e "CREATE DATABASE IF NOT EXISTS ${DB_NAME}"' >> /bin/firstboot && \
 echo 'mysql -u ${DB_USER} -p${DB_PW} -h ${DB_SERVER} -D ${DB_NAME} -P ${DB_PORT} < /usr/share/icinga2-ido-mysql/schema/mysql.sql' >> /bin/firstboot
 COPY files/supervisord/icinga2.conf /etc/supervisor/conf.d/icinga2.conf
-RUN apt-get autoremove -y && \
+RUN cp -a /etc/icinga2 /etc/icinga2_copy && \
+cp -a /etc/icingaweb2 /etc/icingaweb2_copy && \
+cp -a /var/lib/icinga2 /var/lib/icinga2_copy && \
+cp -a /etc/icinga2-classicui /etc/icinga2-classicui_copy && \
+apt-get autoremove -y && \
 apt-get clean -y && \
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 VOLUME  ["/etc/icinga2", "/etc/icingaweb2", "/var/lib/icinga2", "/etc/icinga2-classicui"]
