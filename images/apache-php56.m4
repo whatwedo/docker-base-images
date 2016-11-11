@@ -5,7 +5,7 @@ include(`modules/apache.m4')
 include(`modules/php56.m4')
 
 #Install mod_php
-RUN apt-get install -y libapache2-mod-php5
+RUN apt-get install -y libapache2-mod-php5.6
 
 include(`modules/cleanup.m4')
 

@@ -28,18 +28,22 @@ chmod 755 /bin/start-apache && \
 touch /var/log/apache2/access.log && chown www-data /var/log/apache2/access.log && \
 touch /var/log/apache2/error.log && chown www-data /var/log/apache2/error.log
 COPY files/supervisord/apache.conf /etc/supervisor/conf.d/apache.conf
-RUN add-apt-repository -y ppa:ondrej/php5-5.6 && \
+RUN add-apt-repository -y ppa:ondrej/php && \
 apt-get update && \
-apt-get install php5-cli php5-common php5-cgi php5-curl php5-imagick php5-imap php5-pgsql php5-sqlite php5-mysql php5-fpm php5-mcrypt php5-ldap php5-json php5-intl php5-gd -y && \
-echo "cgi.fix_pathinfo = 0;" >> /etc/php5/fpm/php.ini && \
-echo "php_flag[expose_php] = Off" >> /etc/php5/fpm/pool.d/www.conf && \
-echo "php_admin_value[upload_max_filesize] = 32M" >> /etc/php5/fpm/pool.d/www.conf && \
-echo "php_admin_value[post_max_size] = 32M" >> /etc/php5/fpm/pool.d/www.conf && \
-echo "php_flag[display_errors] = off" >> /etc/php5/fpm/pool.d/www.conf && \
-echo "php_admin_flag[log_errors] = on" >> /etc/php5/fpm/pool.d/www.conf && \
-echo "php_flag[expose_php] = Off" >> /etc/php5/fpm/pool.d/www.conf && \
-chmod -R 777 /var/lib/php5 && \
-apt-get install -y libapache2-mod-php5 && \
+apt-get install php7.0 php7.0-cli php7.0-common php7.0-cgi php7.0-curl php7.0-imap php7.0-pgsql php7.0-sqlite3 php7.0-mysql php7.0-fpm php7.0-intl php7.0-gd php7.0-json php7.0-ldap php-memcached php-memcache php-imagick php7.0-xml php7.0-mbstring -y && \
+sed -i s/^upload_max_filesize.*/upload_max_filesize\ =\ 32M/g /etc/php/7.0/fpm/php.ini && \
+sed -i s/^upload_max_filesize.*/upload_max_filesize\ =\ 32M/g /etc/php/7.0/cgi/php.ini && \
+sed -i s/^upload_max_filesize.*/upload_max_filesize\ =\ 32M/g /etc/php/7.0/cli/php.ini && \
+sed -i s/^post_max_size.*/post_max_size\ =\ 32M/g /etc/php/7.0/fpm/php.ini && \
+sed -i s/^post_max_size.*/post_max_size\ =\ 32M/g /etc/php/7.0/cgi/php.ini && \
+sed -i s/^post_max_size.*/post_max_size\ =\ 32M/g /etc/php/7.0/cli/php.ini && \
+echo "php_admin_value[upload_max_filesize] = 32M" >> /etc/php/7.0/fpm/pool.d/www.conf && \
+echo "php_admin_value[post_max_size] = 32M" >> /etc/php/7.0/fpm/pool.d/www.conf && \
+echo "php_flag[display_errors] = off" >> /etc/php/7.0/fpm/pool.d/www.conf && \
+echo "php_admin_flag[log_errors] = on" >> /etc/php/7.0/fpm/pool.d/www.conf && \
+echo "php_flag[expose_php] = Off" >> /etc/php/7.0/fpm/pool.d/www.conf && \
+mkdir -p /run/php && \
+apt-get install -y libapache2-mod-php5.6 && \
 wget https://de.wordpress.org/latest-de_DE.zip && \
 unzip latest-de_DE.zip && \
 rm latest-de_DE.zip && \

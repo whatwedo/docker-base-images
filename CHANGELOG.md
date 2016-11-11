@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## v1.1.12 - 2016-11-09
+
+### Features
+
+* whatwedo/wordpress: Updated to PHP 7.0
+
+
+### Bugfixes
+
+* whatwedo/apache-php56: Fixed PPA issue
+* whatwedo/icinga: Fixed PPA issue
+* whatwedo/nginx-php56: Fixed PPA issue
+* whatwedo/php56: Fixed PPA issue
+* whatwedo/symfony2: Fixed PPA issue
+
+
+## v1.1.11 - 2016-11-09
+
+### Bugfixes
+
+* whatwedo/gitlab: Added secret keys to volume
+
+
+## v1.1.10 - 2016-11-09
+
+### Features
+
+* whatwedo/gitlab: Updated Gitlab to v8.13.3
+
+
 ## v1.1.9 - 2016-11-01
 
 ### Features
@@ -87,7 +117,6 @@ All notable changes to this project will be documented in this file. This projec
 ### Bugixes
 
 * whatwedo/gitlab-ci-multi-runner: Remove certificates on container startup
-
 
 
 ## v1.0.0 - 2016-07-15
