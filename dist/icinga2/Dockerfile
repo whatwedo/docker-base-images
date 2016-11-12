@@ -43,7 +43,7 @@ apt-get install -y libapache2-mod-php5.6 && \
 wget --quiet -O - http://packages.icinga.org/icinga.key | apt-key add - && \
 echo "deb http://packages.icinga.org/ubuntu icinga-trusty main" >> /etc/apt/sources.list && \
 apt-get update -y && \
-apt-get -y install icinga2 icinga2-ido-mysql icinga2-classicui nagios-plugins icingaweb2 nmap php-htmlpurifier && \
+apt-get -y install icinga2 icinga2-ido-mysql icinga2-classicui nagios-plugins icingaweb2 nmap php-htmlpurifier php5.6-dom && \
 apt-get -y install nagios-nrpe-plugin --no-install-recommends && \
 icinga2 feature enable ido-mysql && \
 icinga2 feature enable command
@@ -60,7 +60,7 @@ addgroup --system icingaweb2 && \
 usermod -a -G icingaweb2 www-data && \
 /etc/init.d/icinga2 start && sleep 30 && /etc/init.d/icinga2 stop && \
 echo '<?php header("location: /icingaweb2"); ?>' > /var/www/html/index.php && \
-echo 'date.timezone = "Europe/Zurich"' >> /etc/php5/apache2/php.ini && \
+echo 'echo date.timezone = ${CONTAINER_TIMEZONE:=Europe/Zurich} >> /etc/php/5.6/apache2/php.ini' >> /bin/everyboot && \
 echo "icingacli setup config directory --group icingaweb2" >> /bin/everyboot && \
 echo 'echo "---------------------------------------------------"' >> /bin/firstboot && \
 echo 'test "$(ls -A /etc/icinga2)" || cp -a /etc/icinga2_copy/. /etc/icinga2/' >> /bin/firstboot && \
@@ -85,7 +85,7 @@ echo 'echo "dbc_dbpass=\"${DB_PW}\"" >> /etc/dbconfig-common/icinga2-ido-mysql.c
 echo 'echo "dbc_dbserver=\"${DB_SERVER}\"" >> /etc/dbconfig-common/icinga2-ido-mysql.conf' >> /bin/everyboot && \
 echo 'echo "dbc_dbport=\"${DB_PORT}\"" >> /etc/dbconfig-common/icinga2-ido-mysql.conf' >> /bin/everyboot && \
 echo 'echo "dbc_dbname=\"${DB_NAME}\"" >> /etc/dbconfig-common/icinga2-ido-mysql.conf' >> /bin/everyboot && \
-echo 'echo "library \"db_ido_mysql\"" > /etc/icinga2/features-available/ido-mysql.conf' > /bin/everyboot && \
+echo 'echo "library \"db_ido_mysql\"" > /etc/icinga2/features-available/ido-mysql.conf' >> /bin/everyboot && \
 echo 'echo "object IdoMysqlConnection \"ido-mysql\" {" >> /etc/icinga2/features-available/ido-mysql.conf' >> /bin/everyboot && \
 echo 'echo "user = \"${DB_USER}\"," >> /etc/icinga2/features-available/ido-mysql.conf' >> /bin/everyboot && \
 echo 'echo "password = \"${DB_PW}\"," >> /etc/icinga2/features-available/ido-mysql.conf' >> /bin/everyboot && \

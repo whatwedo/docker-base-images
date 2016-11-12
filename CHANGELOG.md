@@ -3,7 +3,15 @@
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 
 
-## v1.1.12 - 2016-11-09
+## v1.1.13 - 2016-11-12
+
+### Bugfixes
+
+* whatwedo/icinga2: Fixed PHP timezone #8
+* whatwedo/icinga2: Added PHP DOM 5.6
+
+
+## v1.1.12 - 2016-11-11
 
 ### Features
 
@@ -13,13 +21,13 @@ All notable changes to this project will be documented in this file. This projec
 ### Bugfixes
 
 * whatwedo/apache-php56: Fixed PPA issue
-* whatwedo/icinga: Fixed PPA issue
+* whatwedo/icinga2: Fixed PPA issue
 * whatwedo/nginx-php56: Fixed PPA issue
 * whatwedo/php56: Fixed PPA issue
 * whatwedo/symfony2: Fixed PPA issue
 
 
-## v1.1.11 - 2016-11-09
+## v1.1.11 - 2016-11-11
 
 ### Bugfixes
 
