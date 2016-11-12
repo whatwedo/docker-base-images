@@ -4,7 +4,7 @@ RUN echo "deb http://packages.icinga.org/ubuntu icinga-trusty main" >> /etc/apt/
 RUN apt-get update -y
 
 # Install icinga and nagios plugins
-RUN apt-get -y install icinga2 icinga2-ido-mysql icinga2-classicui nagios-plugins icingaweb2 nmap php-htmlpurifier
+RUN apt-get -y install icinga2 icinga2-ido-mysql icinga2-classicui nagios-plugins icingaweb2 nmap php-htmlpurifier php5.6-dom
 RUN apt-get -y install nagios-nrpe-plugin --no-install-recommends
 
 # Enable features
@@ -34,8 +34,8 @@ RUN /etc/init.d/icinga2 start && sleep 30 && /etc/init.d/icinga2 stop
 # Auto redirect to icinga-web
 RUN echo '<?php header("location: /icingaweb2"); ?>' > /var/www/html/index.php
 
-# Fix timezone
-RUN echo 'date.timezone = "Europe/Zurich"' >> /etc/php5/apache2/php.ini
+# Set timezone
+RUN echo 'echo date.timezone = ${CONTAINER_TIMEZONE:=Europe/Zurich} >> /etc/php/5.6/apache2/php.ini' >> /bin/everyboot
 
 # Generate setup token
 RUN echo "icingacli setup config directory --group icingaweb2" >> /bin/everyboot
@@ -66,7 +66,7 @@ RUN echo 'echo "dbc_dbport=\"${DB_PORT}\"" >> /etc/dbconfig-common/icinga2-ido-m
 RUN echo 'echo "dbc_dbname=\"${DB_NAME}\"" >> /etc/dbconfig-common/icinga2-ido-mysql.conf' >> /bin/everyboot
 
 # Icinga db settings
-RUN echo 'echo "library \"db_ido_mysql\"" > /etc/icinga2/features-available/ido-mysql.conf' > /bin/everyboot
+RUN echo 'echo "library \"db_ido_mysql\"" > /etc/icinga2/features-available/ido-mysql.conf' >> /bin/everyboot
 RUN echo 'echo "object IdoMysqlConnection \"ido-mysql\" {" >> /etc/icinga2/features-available/ido-mysql.conf' >> /bin/everyboot
 RUN echo 'echo "user = \"${DB_USER}\"," >> /etc/icinga2/features-available/ido-mysql.conf' >> /bin/everyboot
 RUN echo 'echo "password = \"${DB_PW}\"," >> /etc/icinga2/features-available/ido-mysql.conf' >> /bin/everyboot
