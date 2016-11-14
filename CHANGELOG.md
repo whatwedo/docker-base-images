@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## v1.1.14 - 2016-11-14
+
+### Features
+
+* whatwedo/gitlab: Updated Gitlab to v8.13.5
+
+
 ## v1.1.13 - 2016-11-12
 
 ### Bugfixes
