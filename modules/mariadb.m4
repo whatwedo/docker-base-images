@@ -1,6 +1,9 @@
+# Config
+ENV INNODB_BUFFER_POOL_SIZE=128M
+
 # Edit sources
 RUN apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xcbcb082a1bb943db
-RUN add-apt-repository 'deb http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.0/ubuntu trusty main'
+RUN add-apt-repository 'deb http://ams2.mirrors.digitalocean.com/mariadb/repo/10.1/ubuntu trusty main'
 RUN apt-get update
 
 # Install MariaDB
@@ -27,6 +30,9 @@ RUN echo 'if [ ! -z "${MYSQL_DATABASE}" ]; then echo "CREATE DATABASE IF NOT EXI
 RUN echo 'mysql < /root/mysql-first-time.sql' >> /bin/firstboot
 RUN echo 'rm /root/mysql-first-time.sql' >> /bin/firstboot
 RUN echo 'mysqladmin shutdown -uroot -p${MYSQL_ROOT_PASSWORD}' >> /bin/firstboot
+
+# Edit everyboot script
+RUN echo 'if [ ! -z "${INNODB_BUFFER_POOL_SIZE}" ]; then sed -i "s/innodb_buffer_pool_size.*/innodb_buffer_pool_size = $INNODB_BUFFER_POOL_SIZE/g" /etc/mysql/my.cnf; fi' >> /bin/everyboot
 
 # Add mariadb to supervisord config
 COPY files/supervisord/mariadb.conf /etc/supervisor/conf.d/mariadb.conf

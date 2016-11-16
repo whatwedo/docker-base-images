@@ -8,9 +8,10 @@
   
 
 FROM whatwedo/base:latest
-RUN apt-get update -y && \
-apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xcbcb082a1bb943db && \
-add-apt-repository 'deb http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.0/ubuntu trusty main' && \
+RUN apt-get update -y
+ENV INNODB_BUFFER_POOL_SIZE=128M
+RUN apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xcbcb082a1bb943db && \
+add-apt-repository 'deb http://ams2.mirrors.digitalocean.com/mariadb/repo/10.1/ubuntu trusty main' && \
 apt-get update && \
 apt-get install -y mariadb-server && \
 sed -i 's/^\(bind-address\s.*\)/# \1/' /etc/mysql/my.cnf && \
@@ -30,7 +31,8 @@ echo 'echo "DROP DATABASE IF EXISTS test;" >> /root/mysql-first-time.sql' >> /bi
 echo 'if [ ! -z "${MYSQL_DATABASE}" ]; then echo "CREATE DATABASE IF NOT EXISTS ${MYSQL_DATABASE};" >> /root/mysql-first-time.sql; fi' >> /bin/firstboot && \
 echo 'mysql < /root/mysql-first-time.sql' >> /bin/firstboot && \
 echo 'rm /root/mysql-first-time.sql' >> /bin/firstboot && \
-echo 'mysqladmin shutdown -uroot -p${MYSQL_ROOT_PASSWORD}' >> /bin/firstboot
+echo 'mysqladmin shutdown -uroot -p${MYSQL_ROOT_PASSWORD}' >> /bin/firstboot && \
+echo 'if [ ! -z "${INNODB_BUFFER_POOL_SIZE}" ]; then sed -i "s/innodb_buffer_pool_size.*/innodb_buffer_pool_size = $INNODB_BUFFER_POOL_SIZE/g" /etc/mysql/my.cnf; fi' >> /bin/everyboot
 COPY files/supervisord/mariadb.conf /etc/supervisor/conf.d/mariadb.conf
 RUN apt-get autoremove -y && \
 apt-get clean -y && \
