@@ -37,7 +37,7 @@ echo "php_flag[display_errors] = off" >> /etc/php/5.6/fpm/pool.d/www.conf && \
 echo "php_admin_flag[log_errors] = on" >> /etc/php/5.6/fpm/pool.d/www.conf && \
 echo "php_flag[expose_php] = Off" >> /etc/php/5.6/fpm/pool.d/www.conf && \
 chmod -R 777 /var/lib/php/sessions && \
-curl -sL https://deb.nodesource.com/setup_5.x | sudo -E bash - && \
+curl -sL http://deb.nodesource.com/setup_5.x | sudo -E bash - && \
 apt-get install -y nodejs && \
  ln -s /usr/bin/node /usr/local/bin/node && \
 rm /etc/nginx/nginx.conf
