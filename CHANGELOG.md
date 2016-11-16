@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## v1.2.1 - 2016-11-16
+
+### Bugfixes
+
+* whatwedo/symfony2: disable downloading node.js by ssl [because of SNI support](https://github.com/nodesource/distributions/issues/353) for nodesource.com
+* whatwedo/symfony3: disable downloading node.js by ssl [because of SNI support](https://github.com/nodesource/distributions/issues/353) for nodesource.com
+* whatwedo/node: disable downloading node.js by ssl [because of SNI support](https://github.com/nodesource/distributions/issues/353) for nodesource.com
+
 ## v1.2.0 - 2016-11-16
 
 ### Features
