@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## v1.2.0 - 2016-11-16
+
+### Features
+
+* whatwedo/mariadb: Add parameter `INNODB_BUFFER_POOL_SIZE`
+* whatwedo/mariadb: Use MariaDB 10.1 with sources in Amsterdam instead of NYC
+
 ## v1.1.14 - 2016-11-14
 
 ### Features
