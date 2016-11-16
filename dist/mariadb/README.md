@@ -19,6 +19,7 @@ docker run -p 3306:3306 -e MYSQL_ROOT_PASSWORD=mysecretpassword -e MYSQL_DATABAS
 * `MYSQL_ROOT_PASSWORD` - This is the one environment variable that is required. This environment variable should be what you want to set the password for the root user to be. In the above example, it is being set to "mysecretpassword".
 * `MYSQL_DATABASE` - This environment variable is optional. if given, docker creates a database at the first run
 * `CONTAINER_TIMEZONE` - timezone which should be used, default: `Europe/Zurich` ([see Wikipedia](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones))
+* `INNODB_BUFFER_POOL_SIZE` - [InnoDB Buffer Pool Size](https://mariadb.com/kb/en/mariadb/xtradbinnodb-server-system-variables/#innodb_buffer_pool_size), defaults to 128M
 
 ## Volumes
 
