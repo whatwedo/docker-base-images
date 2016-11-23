@@ -20,8 +20,9 @@ RUN sudo -u git -H mkdir -p /home/git/.ssh
 RUN sudo -u git -H touch /home/git/.ssh/authorized_keys
 RUN sudo -u git -H git config --global core.autocrlf "input"
 RUN sudo -u git -H git config --global gc.auto 0
-RUN sudo -u git -H curl -L --progress https://github.com/gitlabhq/gitlabhq/archive/v8.13.5.zip -o /home/git/gitlab.zip
-RUN sudo -u git -H echo 'f0e88e2442f8bc34f2799f5138a21d7763daeb84  /home/git/gitlab.zip' | shasum -c -
+RUN sudo -u git -H git config --global repack.writeBitmaps true
+RUN sudo -u git -H curl -L --progress https://github.com/gitlabhq/gitlabhq/archive/v8.14.0.zip -o /home/git/gitlab.zip
+RUN sudo -u git -H echo 'f85de562203ad9df8d2d5aae4d6d8528393b3f10  /home/git/gitlab.zip' | shasum -c -
 RUN sudo -u git -H unzip /home/git/gitlab.zip -d /home/git
 RUN sudo -u git -H mv /home/git/gitlabhq-* /home/git/gitlab
 RUN sudo -u git -H rm /home/git/gitlab.zip
