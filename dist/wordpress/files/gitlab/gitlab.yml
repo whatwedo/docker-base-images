@@ -138,6 +138,8 @@ production: &base
 
     # The mailbox where incoming mail will end up. Usually "inbox".
     mailbox: "{{GITLAB_INCOMING_EMAIL_IMAP_MAILBOX}}"
+    # The IDLE command timeout.
+    idle_timeout: 60
 
   ## Build Artifacts
   artifacts:
@@ -432,7 +434,9 @@ production: &base
   ## Repositories settings
   repositories:
     # Paths where repositories can be stored. Give the canonicalized absolute pathname.
-    # NOTE: REPOS PATHS MUST NOT CONTAIN ANY SYMLINK!!!
+    # IMPORTANT: None of the path components may be symlink, because
+    # gitlab-shell invokes Dir.pwd inside the repository path and that results
+    # real path not the symlink.
     storages: # You must have at least a `default` storage path.
       default: /data/repositories/
 
@@ -547,6 +551,10 @@ test:
       project_url: "http://redmine/projects/:issues_tracker_id"
       issues_url: "http://redmine/:project_id/:issues_tracker_id/:id"
       new_issue_url: "http://redmine/projects/:issues_tracker_id/issues/new"
+    jira:
+      title: "JIRA"
+      url: https://sample_company.atlasian.net
+      project_key: PROJECT
   ldap:
     enabled: false
     servers:
