@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## v1.2.3 - 2016-12-05
+
+### Bugfixes
+
+* whatwedo/gitlab: Fixing hooks_path
+
 ## v1.2.2 - 2016-11-23
 
 ### Features

@@ -61,8 +61,8 @@ logrotate python-docutils pkg-config cmake nodejs libmysqlclient-dev \
 mysql-client redis-tools
 RUN mkdir /tmp/ruby && \
 cd /tmp/ruby && \
-curl -L https://cache.ruby-lang.org/pub/ruby/2.3/ruby-2.3.1.tar.gz -o ruby.tar.gz && \
-echo 'c39b4001f7acb4e334cb60a0f4df72d434bef711  ruby.tar.gz' | shasum -c - && tar xzf ruby.tar.gz && \
+curl -L https://cache.ruby-lang.org/pub/ruby/2.3/ruby-2.3.3.tar.gz -o ruby.tar.gz && \
+echo '1014ee699071aa2ddd501907d18cbe15399c997d  ruby.tar.gz' | shasum -c - && tar xzf ruby.tar.gz && \
 ls -alh && cd ruby-2.3.1 && ./configure --disable-install-rdoc && make && make install
 RUN gem install bundler --no-ri --no-rdoc && \
 adduser --disabled-login --gecos 'GitLab' git && \
@@ -71,8 +71,8 @@ sudo -u git -H touch /home/git/.ssh/authorized_keys && \
 sudo -u git -H git config --global core.autocrlf "input" && \
 sudo -u git -H git config --global gc.auto 0 && \
 sudo -u git -H git config --global repack.writeBitmaps true && \
-sudo -u git -H curl -L --progress https://github.com/gitlabhq/gitlabhq/archive/v8.14.0.zip -o /home/git/gitlab.zip && \
-sudo -u git -H echo 'f85de562203ad9df8d2d5aae4d6d8528393b3f10  /home/git/gitlab.zip' | shasum -c - && \
+sudo -u git -H curl -L --progress https://github.com/gitlabhq/gitlabhq/archive/v8.14.2.zip -o /home/git/gitlab.zip && \
+sudo -u git -H echo '443c88b153237bd8166ec42794dc332e91b2c5fb  /home/git/gitlab.zip' | shasum -c - && \
 sudo -u git -H unzip /home/git/gitlab.zip -d /home/git && \
 sudo -u git -H mv /home/git/gitlabhq-* /home/git/gitlab && \
 sudo -u git -H rm /home/git/gitlab.zip
