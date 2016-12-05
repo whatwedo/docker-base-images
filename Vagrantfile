@@ -152,11 +152,18 @@ Vagrant.configure("2") do |config|
   # Enable agent forwarding over SSH connections
   config.ssh.forward_agent = true
 
-  # Use NFS for the shared folder
-  config.vm.synced_folder ".", "/vagrant",
-    id: "core",
-    :nfs => true,
-    :mount_options => ['nolock,vers=3,udp,noatime,actimeo=2,fsc']
+  # Configure shared folder
+  if Vagrant::Util::Platform.windows? then
+    config.vm.synced_folder ".", "/vagrant",
+      id: "core",
+      type: "smb",
+      :mount_options => ['mfsymlinks,dir_mode=0755,file_mode=0755']
+  else
+    config.vm.synced_folder ".", "/vagrant",
+      id: "core",
+      :nfs => true,
+      :mount_options => ['nolock,vers=3,udp,noatime,actimeo=2,fsc']
+  end
 
   # Replicate local .gitconfig file if it exists
   if File.file?(File.expand_path("~/.gitconfig"))
