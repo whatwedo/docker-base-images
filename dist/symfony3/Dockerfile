@@ -43,7 +43,7 @@ echo "php_flag[expose_php] = Off" >> /etc/php/7.0/fpm/pool.d/www.conf && \
 mkdir -p /run/php && \
 curl -sL http://deb.nodesource.com/setup_5.x | sudo -E bash - && \
 apt-get install -y nodejs && \
- ln -s /usr/bin/node /usr/local/bin/node && \
+ln -s /usr/bin/node /usr/local/bin/node && \
 rm /etc/nginx/nginx.conf
 ADD files/symfony3 /etc/nginx
 COPY files/supervisord/php-fpm70.conf /etc/supervisor/conf.d/php-fpm70.conf
