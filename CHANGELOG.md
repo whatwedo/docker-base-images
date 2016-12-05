@@ -3,17 +3,31 @@
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## v1.2.4 - 2016-12-05
+
+### Bugfixes
+
+* Core: Added Editorconfig
+* whatwedo/apache-php56: Added missing php5.6-xml, php5.6-mbstring and php5.6-dom
+* whatwedo/icinga2: Added missing php5.6-xml, php5.6-mbstring and php5.6-dom
+* whatwedo/nginx-php56: Added missing php5.6-xml, php5.6-mbstring and php5.6-dom
+* whatwedo/php56: Added missing php5.6-xml, php5.6-mbstring and php5.6-dom
+* whatwedo/symfony2: Added missing php5.6-xml, php5.6-mbstring and php5.6-dom
+
+
 ## v1.2.3 - 2016-12-05
 
 ### Bugfixes
 
 * whatwedo/gitlab: Fixing hooks_path
 
+
 ## v1.2.2 - 2016-11-23
 
 ### Features
 
 * whatwedo/gitlab: Updated Gitlab to v8.14.0
+
 
 ## v1.2.1 - 2016-11-16
 
@@ -23,6 +37,7 @@ All notable changes to this project will be documented in this file. This projec
 * whatwedo/symfony3: disable downloading node.js by ssl [because of SNI support](https://github.com/nodesource/distributions/issues/353) for nodesource.com
 * whatwedo/node: disable downloading node.js by ssl [because of SNI support](https://github.com/nodesource/distributions/issues/353) for nodesource.com
 
+
 ## v1.2.0 - 2016-11-16
 
 ### Features
@@ -31,6 +46,7 @@ All notable changes to this project will be documented in this file. This projec
 * whatwedo/mariadb: Use MariaDB 10.1 with sources in Amsterdam instead of NYC
 
 ## v1.1.14 - 2016-11-14
+
 
 ### Features
 
