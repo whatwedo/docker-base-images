@@ -11,7 +11,7 @@ FROM whatwedo/base:latest
 RUN apt-get update -y && \
 curl -sL http://deb.nodesource.com/setup_5.x | sudo -E bash - && \
 apt-get install -y nodejs && \
- ln -s /usr/bin/node /usr/local/bin/node && \
+ln -s /usr/bin/node /usr/local/bin/node && \
 apt-get autoremove -y && \
 apt-get clean -y && \
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*

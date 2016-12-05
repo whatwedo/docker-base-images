@@ -28,7 +28,7 @@ chmod -R 755 /var/www/
 COPY files/supervisord/nginx.conf /etc/supervisor/conf.d/nginx.conf
 RUN add-apt-repository -y ppa:ondrej/php && \
 apt-get update && \
-apt-get install php5.6-cli php5.6-common php5.6-cgi php5.6-curl php5.6-imagick php5.6-imap php5.6-pgsql php5.6-sqlite php5.6-mysql php5.6-fpm php5.6-mcrypt php5.6-ldap php5.6-json php5.6-intl php5.6-gd -y && \
+apt-get install php5.6-cli php5.6-common php5.6-cgi php5.6-curl php5.6-imagick php5.6-imap php5.6-pgsql php5.6-sqlite php5.6-mysql php5.6-fpm php5.6-mcrypt php5.6-ldap php5.6-json php5.6-intl php5.6-gd php5.6-xml php5.6-mbstring php5.6-dom -y && \
 echo "cgi.fix_pathinfo = 0;" >> /etc/php/5.6/fpm/php.ini && \
 echo "php_flag[expose_php] = Off" >> /etc/php/5.6/fpm/pool.d/www.conf && \
 echo "php_admin_value[upload_max_filesize] = 32M" >> /etc/php/5.6/fpm/pool.d/www.conf && \
@@ -39,7 +39,7 @@ echo "php_flag[expose_php] = Off" >> /etc/php/5.6/fpm/pool.d/www.conf && \
 chmod -R 777 /var/lib/php/sessions && \
 curl -sL http://deb.nodesource.com/setup_5.x | sudo -E bash - && \
 apt-get install -y nodejs && \
- ln -s /usr/bin/node /usr/local/bin/node && \
+ln -s /usr/bin/node /usr/local/bin/node && \
 rm /etc/nginx/nginx.conf
 ADD files/symfony2 /etc/nginx
 COPY files/supervisord/php-fpm56.conf /etc/supervisor/conf.d/php-fpm56.conf

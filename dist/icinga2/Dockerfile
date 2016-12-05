@@ -30,7 +30,7 @@ touch /var/log/apache2/error.log && chown www-data /var/log/apache2/error.log
 COPY files/supervisord/apache.conf /etc/supervisor/conf.d/apache.conf
 RUN add-apt-repository -y ppa:ondrej/php && \
 apt-get update && \
-apt-get install php5.6-cli php5.6-common php5.6-cgi php5.6-curl php5.6-imagick php5.6-imap php5.6-pgsql php5.6-sqlite php5.6-mysql php5.6-fpm php5.6-mcrypt php5.6-ldap php5.6-json php5.6-intl php5.6-gd -y && \
+apt-get install php5.6-cli php5.6-common php5.6-cgi php5.6-curl php5.6-imagick php5.6-imap php5.6-pgsql php5.6-sqlite php5.6-mysql php5.6-fpm php5.6-mcrypt php5.6-ldap php5.6-json php5.6-intl php5.6-gd php5.6-xml php5.6-mbstring php5.6-dom -y && \
 echo "cgi.fix_pathinfo = 0;" >> /etc/php/5.6/fpm/php.ini && \
 echo "php_flag[expose_php] = Off" >> /etc/php/5.6/fpm/pool.d/www.conf && \
 echo "php_admin_value[upload_max_filesize] = 32M" >> /etc/php/5.6/fpm/pool.d/www.conf && \
@@ -43,7 +43,7 @@ apt-get install -y libapache2-mod-php5.6 && \
 wget --quiet -O - http://packages.icinga.org/icinga.key | apt-key add - && \
 echo "deb http://packages.icinga.org/ubuntu icinga-trusty main" >> /etc/apt/sources.list && \
 apt-get update -y && \
-apt-get -y install icinga2 icinga2-ido-mysql icinga2-classicui nagios-plugins icingaweb2 nmap php-htmlpurifier php5.6-dom && \
+apt-get -y install icinga2 icinga2-ido-mysql icinga2-classicui nagios-plugins icingaweb2 nmap php-htmlpurifier && \
 apt-get -y install nagios-nrpe-plugin --no-install-recommends && \
 icinga2 feature enable ido-mysql && \
 icinga2 feature enable command
