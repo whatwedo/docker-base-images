@@ -11,7 +11,7 @@ RUN mkdir /tmp/ruby
 RUN cd /tmp/ruby
 RUN curl -L https://cache.ruby-lang.org/pub/ruby/2.3/ruby-2.3.3.tar.gz -o ruby.tar.gz
 RUN echo '1014ee699071aa2ddd501907d18cbe15399c997d  ruby.tar.gz' | shasum -c - && tar xzf ruby.tar.gz
-RUN ls -alh && cd ruby-2.3.1 && ./configure --disable-install-rdoc && make && make install
+RUN ls -alh && cd ruby-2.3.3 && ./configure --disable-install-rdoc && make && make install
 LASTRUN gem install bundler --no-ri --no-rdoc
 
 # GitLab
