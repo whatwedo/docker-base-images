@@ -63,7 +63,7 @@ RUN mkdir /tmp/ruby && \
 cd /tmp/ruby && \
 curl -L https://cache.ruby-lang.org/pub/ruby/2.3/ruby-2.3.3.tar.gz -o ruby.tar.gz && \
 echo '1014ee699071aa2ddd501907d18cbe15399c997d  ruby.tar.gz' | shasum -c - && tar xzf ruby.tar.gz && \
-ls -alh && cd ruby-2.3.1 && ./configure --disable-install-rdoc && make && make install
+ls -alh && cd ruby-2.3.3 && ./configure --disable-install-rdoc && make && make install
 RUN gem install bundler --no-ri --no-rdoc && \
 adduser --disabled-login --gecos 'GitLab' git && \
 sudo -u git -H mkdir -p /home/git/.ssh && \
