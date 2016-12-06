@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## v1.2.5 - 2016-12-06
+
+### Bugfixes
+
+* whatwedo/gitlab: update ruby to v2.3.3
+
 ## v1.2.4 - 2016-12-05
 
 ### Bugfixes
@@ -13,7 +19,6 @@ All notable changes to this project will be documented in this file. This projec
 * whatwedo/nginx-php56: Added missing php5.6-xml, php5.6-mbstring and php5.6-dom
 * whatwedo/php56: Added missing php5.6-xml, php5.6-mbstring and php5.6-dom
 * whatwedo/symfony2: Added missing php5.6-xml, php5.6-mbstring and php5.6-dom
-
 
 ## v1.2.3 - 2016-12-05
 
