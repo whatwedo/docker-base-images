@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## v1.2.6 - 2016-12-12
+
+### Bugfixes
+
+* whatwedo/gitlab: fixed background workers
+
 ## v1.2.5 - 2016-12-06
 
 ### Bugfixes
