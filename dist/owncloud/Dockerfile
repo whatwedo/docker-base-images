@@ -45,7 +45,7 @@ echo "php_flag[expose_php] = Off" >> /etc/php/7.0/fpm/pool.d/www.conf && \
 mkdir -p /run/php && \
 apt-get install -y libapache2-mod-php7.0 && \
 a2enmod rewrite && \
-apt-get install -qq zziplib-bin smbclient php7.0-zip libreoffice && \
+apt-get install -qq zziplib-bin smbclient php7.0-zip libreoffice && \
 { \
 echo 'opcache.enable=1'; \
 echo 'opcache.memory_consumption=128'; \
@@ -55,7 +55,7 @@ echo 'opcache.revalidate_freq=60'; \
 echo 'opcache.fast_shutdown=1'; \
 echo 'opcache.enable_cli=1'; \
 } > /etc/php/7.0/apache2/conf.d/20-opcache-recommended.ini
-RUN echo "extension=zip.so;" > /etc/php/7.0/apache2/conf.d/20-zip.ini && \
+RUN echo "extension=zip.so;" > /etc/php/7.0/apache2/conf.d/20-zip.ini && \
 a2enmod rewrite
 ENV OWNCLOUD_VERSION latest
 RUN curl -fsSL -o owncloud.tar.bz2 \
@@ -68,17 +68,17 @@ RUN curl -fsSL -o owncloud.tar.bz2 \
 && rm -r "$GNUPGHOME" owncloud.tar.bz2.asc \
 && tar -xjf owncloud.tar.bz2 -C /usr/src/ \
 && rm owncloud.tar.bz2
-RUN mkdir -p /var/www/html && \
-echo 'if [ ! -e '/var/www/html/version.php' ]; then' >> /bin/everyboot && \
-echo '    cd /var/www/html' >> /bin/everyboot && \
-echo '    tar cf - --one-file-system -C /usr/src/owncloud . | tar xf -' >> /bin/everyboot && \
-echo '    chown -R www-data /var/www' >> /bin/everyboot && \
-echo 'fi' >> /bin/everyboot && \
-echo 'echo "Installing ownCloud cronjob"' >> /bin/firstboot && \
-echo 'crontab -u www-data -l > /tmp/cron' >> /bin/firstboot && \
-echo 'echo "*/15  *  *  *  * php -f /var/www/owncloud/cron.php" >> /tmp/cron' >> /bin/firstboot && \
-echo 'crontab -u www-data /tmp/cron' >> /bin/firstboot && \
-echo 'rm /tmp/cron' >> /bin/firstboot && \
+RUN mkdir -p /var/www/html && \
+echo 'if [ ! -e '/var/www/html/version.php' ]; then' >> /bin/everyboot && \
+echo '    cd /var/www/html' >> /bin/everyboot && \
+echo '    tar cf - --one-file-system -C /usr/src/owncloud . | tar xf -' >> /bin/everyboot && \
+echo '    chown -R www-data /var/www' >> /bin/everyboot && \
+echo 'fi' >> /bin/everyboot && \
+echo 'echo "Installing ownCloud cronjob"' >> /bin/everyboot && \
+echo 'crontab -u www-data -l > /tmp/cron' >> /bin/everyboot && \
+echo 'echo "*/15  *  *  *  * php -f /var/www/owncloud/cron.php" >> /tmp/cron' >> /bin/everyboot && \
+echo 'crontab -u www-data /tmp/cron' >> /bin/everyboot && \
+echo 'rm /tmp/cron' >> /bin/everyboot && \
 apt-get autoremove -y && \
 apt-get clean -y && \
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*

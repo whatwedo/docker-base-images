@@ -10,28 +10,28 @@
 FROM whatwedo/base:latest
 RUN apt-get update -y
 ENV INNODB_BUFFER_POOL_SIZE=128M
-RUN apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xcbcb082a1bb943db && \
-add-apt-repository 'deb http://ams2.mirrors.digitalocean.com/mariadb/repo/10.1/ubuntu trusty main' && \
-apt-get update && \
-apt-get install -y mariadb-server && \
+RUN apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xcbcb082a1bb943db && \
+add-apt-repository 'deb http://ams2.mirrors.digitalocean.com/mariadb/repo/10.1/ubuntu trusty main' && \
+apt-get update && \
+apt-get install -y mariadb-server && \
 sed -i 's/^\(bind-address\s.*\)/# \1/' /etc/mysql/my.cnf && \
 sed -i 's/log_bin/#log_bin/g' /etc/mysql/my.cnf && \
 sed -i 's/expire_logs_days/#expire_logs_days/g' /etc/mysql/my.cnf && \
 sed -i 's/max_binlog_size/#max_binlog_size/g' /etc/mysql/my.cnf && \
 sed -i 's/#innodb_log_file_size.*/innodb_log_file_size\=256M/g' /etc/mysql/my.cnf
-RUN echo "mkdir -p /var/lib/mysql" >> /bin/firstboot && \
-echo "chown -R mysql:mysql /var/lib/mysql" >> /bin/firstboot && \
-echo "mysql_install_db --user=mysql --datadir=/var/lib/mysql --rpm" >> /bin/firstboot && \
-echo "mysqld_safe & mysqladmin --silent --wait=30 ping || exit 1" >> /bin/firstboot && \
-echo 'echo "DELETE FROM mysql.user;" >> /root/mysql-first-time.sql' >> /bin/firstboot && \
-echo 'echo "CREATE USER \"root\"@\"%\" IDENTIFIED BY \"${MYSQL_ROOT_PASSWORD}\" ;" >> /root/mysql-first-time.sql' >> /bin/firstboot && \
-echo 'echo "GRANT ALL PRIVILEGES ON *.* TO \"root\"@\"%\" WITH GRANT OPTION;" >> /root/mysql-first-time.sql' >> /bin/firstboot && \
-echo 'echo "FLUSH PRIVILEGES;" >> /root/mysql-first-time.sql' >> /bin/firstboot && \
-echo 'echo "DROP DATABASE IF EXISTS test;" >> /root/mysql-first-time.sql' >> /bin/firstboot && \
-echo 'if [ ! -z "${MYSQL_DATABASE}" ]; then echo "CREATE DATABASE IF NOT EXISTS ${MYSQL_DATABASE};" >> /root/mysql-first-time.sql; fi' >> /bin/firstboot && \
-echo 'mysql < /root/mysql-first-time.sql' >> /bin/firstboot && \
-echo 'rm /root/mysql-first-time.sql' >> /bin/firstboot && \
-echo 'mysqladmin shutdown -uroot -p${MYSQL_ROOT_PASSWORD}' >> /bin/firstboot && \
+RUN echo "mkdir -p /var/lib/mysql" >> /bin/firstboot && \
+echo "chown -R mysql:mysql /var/lib/mysql" >> /bin/firstboot && \
+echo "mysql_install_db --user=mysql --datadir=/var/lib/mysql --rpm" >> /bin/firstboot && \
+echo "mysqld_safe & mysqladmin --silent --wait=30 ping || exit 1" >> /bin/firstboot && \
+echo 'echo "DELETE FROM mysql.user;" >> /root/mysql-first-time.sql' >> /bin/firstboot && \
+echo 'echo "CREATE USER \"root\"@\"%\" IDENTIFIED BY \"${MYSQL_ROOT_PASSWORD}\" ;" >> /root/mysql-first-time.sql' >> /bin/firstboot && \
+echo 'echo "GRANT ALL PRIVILEGES ON *.* TO \"root\"@\"%\" WITH GRANT OPTION;" >> /root/mysql-first-time.sql' >> /bin/firstboot && \
+echo 'echo "FLUSH PRIVILEGES;" >> /root/mysql-first-time.sql' >> /bin/firstboot && \
+echo 'echo "DROP DATABASE IF EXISTS test;" >> /root/mysql-first-time.sql' >> /bin/firstboot && \
+echo 'if [ ! -z "${MYSQL_DATABASE}" ]; then echo "CREATE DATABASE IF NOT EXISTS ${MYSQL_DATABASE};" >> /root/mysql-first-time.sql; fi' >> /bin/firstboot && \
+echo 'mysql < /root/mysql-first-time.sql' >> /bin/firstboot && \
+echo 'rm /root/mysql-first-time.sql' >> /bin/firstboot && \
+echo 'mysqladmin shutdown -uroot -p${MYSQL_ROOT_PASSWORD}' >> /bin/firstboot && \
 echo 'if [ ! -z "${INNODB_BUFFER_POOL_SIZE}" ]; then sed -i "s/innodb_buffer_pool_size.*/innodb_buffer_pool_size = $INNODB_BUFFER_POOL_SIZE/g" /etc/mysql/my.cnf; fi' >> /bin/everyboot
 COPY files/supervisord/mariadb.conf /etc/supervisor/conf.d/mariadb.conf
 RUN apt-get autoremove -y && \

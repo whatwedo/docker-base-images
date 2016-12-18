@@ -171,10 +171,10 @@ Vagrant.configure("2") do |config|
   end
 
   # Add SSH public key to authorized_keys
-  config.vm.provision "shell" do |s| 
+  config.vm.provision "shell" do |s|
     s.inline = <<-SHELL
       echo #{ssh_pub_key} >> /home/vagrant/.ssh/authorized_keys
-      echo #{ssh_pub_key} >> /root/.ssh/authorized_keys 
+      echo #{ssh_pub_key} >> /root/.ssh/authorized_keys
     SHELL
   end
 
@@ -411,13 +411,13 @@ Vagrant.configure("2") do |config|
 
   # Install docker-nuke
   config.vm.provision "shell", path: "#{github_url}/scripts/docker-nuke.sh"
-  
+
 
   ####
   # Customization
   ##########
 
-  #Corporate settings
+  # Corporate settings
   config.vm.provision "shell", path: "#{github_url}/scripts/whatwedo.sh"
 
 
@@ -426,8 +426,8 @@ Vagrant.configure("2") do |config|
   # Any local scripts you may want to run post-provisioning.
   # Add these to the same directory as the Vagrantfile.
   ##########
-  # config.vm.provision "shell", path: "./vm-init.sh"
-  
+  config.vm.provision "shell", path: "./vm-init.sh"
+
 
   ####
   # System restart

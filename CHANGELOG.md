@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## v1.4.0 - 2016-12-18
+
+### Features
+
+* Build: Added possibility to build image on gitlab ci
+* Build: Squash image to one layer
+
+
 ## v1.3.0 - 2016-12-18
 
 ### Features

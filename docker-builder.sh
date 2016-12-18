@@ -1,4 +1,4 @@
-#!/bin/bash 
+#!/bin/bash
 #########################################################################
 #                                                                       #
 # docker-builder.sh is a script for managing complex docker images     #
@@ -12,30 +12,30 @@
 #########################################################################
 
 
-######################################################## 
-# CHECK PREREQUISITES                                  # 
+########################################################
+# CHECK PREREQUISITES                                  #
 ########################################################
 
-#Exit on error
-#set -e
+# Exit on error
+set -e
 
-#Check software
+# Check software
 dockerTest=$(which docker)
 m4Test=$(which m4)
 [ -z "$dockerTest" ] && { echo "docker doesn't appear to be installed - this is required for script to run"; exit 1; }
 [ -z "$m4Test" ] && { echo "m4 doesn't appear to be installed - this is required for script to run"; exit 1; }
 
-#Set directory
+# Set directory
 cd "$(dirname "$0")"
 
 
-######################################################## 
-# MAIN                                                 # 
+########################################################
+# MAIN                                                 #
 ########################################################
 
-#build all dockerfiles
+# build all dockerfiles
 build-files() {
-  rm -rf "dist" 
+  rm -rf "dist"
 	for file in images/*.m4; do
 	  name="${file##*/}"
 	  name="${name%.*}"
@@ -44,9 +44,9 @@ build-files() {
 }
 
 
-#build the given dockerfile
+# build the given dockerfile
 build-file() {
-  rm -rf "dist/$1" 
+  rm -rf "dist/$1"
   mkdir -p "dist/$1"
   cp -R files "dist/$1"
   echo "
@@ -87,33 +87,36 @@ build-file() {
 }
 
 
-#build all images
-build-images() {
-  for file in images/*.m4; do
-    name="${file##*/}"
-    name="${name%.*}"
-    build-image $name
-  done
-}
-
-
-#build the given image
+# build the given image
 build-image() {
-  build-file $1
   cd "dist/$1"
-  DOCKER_OPTS="--dns 8.8.8.8 --dns 8.8.4.4" docker build --no-cache --rm -t "$1:latest" . 
+  DOCKER_OPTS="--dns 8.8.8.8 --dns 8.8.4.4" docker build --no-cache --rm -t "$1:latest" .
   cd ../..
+  if [[ $1 == "base" ]]; then
+    docker-squash $1 -t $1
+  else
+    docker-squash $1 -t $1 -f whatwedo/base:latest
+  fi
+
 }
 
-#build the given image with cache
+# build the given image with cache
 build-cached-image() {
-  build-file $1
   cd "dist/$1"
-  DOCKER_OPTS="--dns 8.8.8.8 --dns 8.8.4.4" docker build --rm -t "$1:latest" . 
+  DOCKER_OPTS="--dns 8.8.8.8 --dns 8.8.4.4" docker build --rm -t "$1:latest" .
   cd ../..
 }
 
-#download latest base images
+# Publish the given image
+publish-image() {
+  VERSION="$(git describe --tags `git rev-list --tags --max-count=1`)"
+  docker tag $1 whatwedo/$1:$VERSION
+  docker push whatwedo/$1:$VERSION
+  docker tag $1 whatwedo/$1:latest
+  docker push whatwedo/$1:latest
+}
+
+# download latest base images
 update-base-images() {
   docker pull ubuntu:14.04
   docker pull whatwedo/base:latest
@@ -125,10 +128,6 @@ if [ "$1" = "build-files" ]; then
 elif [ "$1" = "build-file" ]; then
   [ -z "$2" ] && { echo "Image name not specified"; exit 1; }
   build-file $2
-elif [ "$1" = "build-images" ]; then
-  update-base-images
-  build-files
-  build-images
 elif [ "$1" = "build-image" ]; then
   [ -z "$2" ] && { echo "Image name not specified"; exit 1; }
   update-base-images
@@ -139,19 +138,23 @@ elif [ "$1" = "build-cached-image" ]; then
   update-base-images
   build-file $2
   build-cached-image $2
+elif [ "$1" = "publish-image" ]; then
+  [ -z "$2" ] && { echo "Image name not specified"; exit 1; }
+  publish-image $2
 else
 	echo "
   docker-builder.sh is a script for managing complex docker images
   It provivides an easy mechanism for creating and building docker
-  images  
-  
+  images
+
   USAGE:
-  
-  ./docker-builder.sh build-files         - This will build all dockerfiles
-  ./docker-builder.sh build-file [name]   - This will build the given dockerfile
-  ./docker-builder.sh build-images        - This will build all images
-  ./docker-builder.sh build-image [name]  - This will build the given image
+
+  ./docker-builder.sh build-files                - This will build all dockerfiles
+  ./docker-builder.sh build-file [name]          - This will build the given dockerfile
+  ./docker-builder.sh build-images               - This will build all images
+  ./docker-builder.sh build-image [name]         - This will build the given image
   ./docker-builder.sh build-cached-image [name]  - This will build the given image with cache
+  ./docker-builder.sh publish-image [name]       - This will publish the given existing image
 
   "
 fi
