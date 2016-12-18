@@ -1,0 +1,36 @@
+before_script:
+    - docker info
+    - apt-get -qq install python-pip
+    - pip install docker-squash
+    - docker-squash --version
+    - export VERSION="`git tag | tail -n1`-`git log --format="%h" -n 1`"
+    - export BRANCH="`git rev-parse --abbrev-ref HEAD`"
+    - export DOCKER_TAG="`if [[ "$BRANCH" == "master" ]]; then echo latest; else echo $BRANCH; fi`"
+    - env | sort
+
+stages:
+    - base
+    - other
+
+build_base:
+    script:
+        - ./docker-builder.sh build-image base
+        - echo $VERSION
+    stage: base
+    only:
+        -  master
+
+build_nextcloud:
+    script:
+        - ./docker-builder.sh build-image nextcloud
+        - echo $BRANCH
+    stage: other
+
+build_nextcloud_tag:
+    script:
+        - ./docker-builder.sh build-image nextcloud
+        - echo $VERSION
+    stage: other
+    only:
+        -  tags
+

@@ -1,1 +1,0 @@
-*/5 * * * * cd /var/www; php wp-cron.php > /dev/null 2>&1
