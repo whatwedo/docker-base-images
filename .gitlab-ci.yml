@@ -18,7 +18,7 @@ test_files:
 base:
     script:
         - ./docker-builder.sh build-image $CI_BUILD_NAME
-#        - ./docker-builder.sh publish-image $CI_BUILD_NAME
+        - ./docker-builder.sh publish-image $CI_BUILD_NAME
     stage: base
     only:
         - master
@@ -26,15 +26,15 @@ base:
 apache-php56:
     script:
         - ./docker-builder.sh build-image $CI_BUILD_NAME
-#        - ./docker-builder.sh publish-image $CI_BUILD_NAME
+        - ./docker-builder.sh publish-image $CI_BUILD_NAME
     stage: other
     only:
         - master
 
-apapche-php70:
+apache-php70:
     script:
         - ./docker-builder.sh build-image $CI_BUILD_NAME
-#        - ./docker-builder.sh publish-image $CI_BUILD_NAME
+        - ./docker-builder.sh publish-image $CI_BUILD_NAME
     stage: other
     only:
         - master
@@ -42,7 +42,7 @@ apapche-php70:
 apache:
     script:
         - ./docker-builder.sh build-image $CI_BUILD_NAME
-#        - ./docker-builder.sh publish-image $CI_BUILD_NAME
+        - ./docker-builder.sh publish-image $CI_BUILD_NAME
     stage: other
     only:
         - master
@@ -50,7 +50,7 @@ apache:
 bind:
     script:
         - ./docker-builder.sh build-image $CI_BUILD_NAME
-#        - ./docker-builder.sh publish-image $CI_BUILD_NAME
+        - ./docker-builder.sh publish-image $CI_BUILD_NAME
     stage: other
     only:
         - master
@@ -58,7 +58,7 @@ bind:
 cloudflare-railgun:
     script:
         - ./docker-builder.sh build-image $CI_BUILD_NAME
-#        - ./docker-builder.sh publish-image $CI_BUILD_NAME
+        - ./docker-builder.sh publish-image $CI_BUILD_NAME
     stage: other
     only:
         - master
@@ -66,7 +66,7 @@ cloudflare-railgun:
 docker:
     script:
         - ./docker-builder.sh build-image $CI_BUILD_NAME
-#        - ./docker-builder.sh publish-image $CI_BUILD_NAME
+        - ./docker-builder.sh publish-image $CI_BUILD_NAME
     stage: other
     only:
         - master
@@ -74,7 +74,7 @@ docker:
 elasticsearch:
     script:
         - ./docker-builder.sh build-image $CI_BUILD_NAME
-#        - ./docker-builder.sh publish-image $CI_BUILD_NAME
+        - ./docker-builder.sh publish-image $CI_BUILD_NAME
     stage: other
     only:
         - master
@@ -82,7 +82,7 @@ elasticsearch:
 gitlab-ci-multi-runner:
     script:
         - ./docker-builder.sh build-image $CI_BUILD_NAME
-#        - ./docker-builder.sh publish-image $CI_BUILD_NAME
+        - ./docker-builder.sh publish-image $CI_BUILD_NAME
     stage: other
     only:
         - master
@@ -90,7 +90,7 @@ gitlab-ci-multi-runner:
 gitlab:
     script:
         - ./docker-builder.sh build-image $CI_BUILD_NAME
-#        - ./docker-builder.sh publish-image $CI_BUILD_NAME
+        - ./docker-builder.sh publish-image $CI_BUILD_NAME
     stage: other
     only:
         - master
@@ -98,7 +98,7 @@ gitlab:
 golang:
     script:
         - ./docker-builder.sh build-image $CI_BUILD_NAME
-#        - ./docker-builder.sh publish-image $CI_BUILD_NAME
+        - ./docker-builder.sh publish-image $CI_BUILD_NAME
     stage: other
     only:
         - master
@@ -106,7 +106,7 @@ golang:
 icinga2:
     script:
         - ./docker-builder.sh build-image $CI_BUILD_NAME
-#        - ./docker-builder.sh publish-image $CI_BUILD_NAME
+        - ./docker-builder.sh publish-image $CI_BUILD_NAME
     stage: other
     only:
         - master
@@ -114,7 +114,7 @@ icinga2:
 java:
     script:
         - ./docker-builder.sh build-image $CI_BUILD_NAME
-#        - ./docker-builder.sh publish-image $CI_BUILD_NAME
+        - ./docker-builder.sh publish-image $CI_BUILD_NAME
     stage: other
     only:
         - master
@@ -122,7 +122,7 @@ java:
 kibana:
     script:
         - ./docker-builder.sh build-image $CI_BUILD_NAME
-#        - ./docker-builder.sh publish-image $CI_BUILD_NAME
+        - ./docker-builder.sh publish-image $CI_BUILD_NAME
     stage: other
     only:
         - master
@@ -130,7 +130,7 @@ kibana:
 logstash-forwarder:
     script:
         - ./docker-builder.sh build-image $CI_BUILD_NAME
-#        - ./docker-builder.sh publish-image $CI_BUILD_NAME
+        - ./docker-builder.sh publish-image $CI_BUILD_NAME
     stage: other
     only:
         - master
@@ -138,7 +138,7 @@ logstash-forwarder:
 logstash:
     script:
         - ./docker-builder.sh build-image $CI_BUILD_NAME
-#        - ./docker-builder.sh publish-image $CI_BUILD_NAME
+        - ./docker-builder.sh publish-image $CI_BUILD_NAME
     stage: other
     only:
         - master
@@ -146,7 +146,7 @@ logstash:
 mariadb:
     script:
         - ./docker-builder.sh build-image $CI_BUILD_NAME
-#        - ./docker-builder.sh publish-image $CI_BUILD_NAME
+        - ./docker-builder.sh publish-image $CI_BUILD_NAME
     stage: other
     only:
         - master
@@ -154,7 +154,7 @@ mariadb:
 memcached:
     script:
         - ./docker-builder.sh build-image $CI_BUILD_NAME
-#        - ./docker-builder.sh publish-image $CI_BUILD_NAME
+        - ./docker-builder.sh publish-image $CI_BUILD_NAME
     stage: other
     only:
         - master
@@ -162,7 +162,7 @@ memcached:
 mongodb:
     script:
         - ./docker-builder.sh build-image $CI_BUILD_NAME
-#        - ./docker-builder.sh publish-image $CI_BUILD_NAME
+        - ./docker-builder.sh publish-image $CI_BUILD_NAME
     stage: other
     only:
         - master
@@ -178,7 +178,7 @@ nextcloud:
 nginx-php56:
     script:
         - ./docker-builder.sh build-image $CI_BUILD_NAME
-#        - ./docker-builder.sh publish-image $CI_BUILD_NAME
+        - ./docker-builder.sh publish-image $CI_BUILD_NAME
     stage: other
     only:
         - master
@@ -186,7 +186,7 @@ nginx-php56:
 nginx-php70:
     script:
         - ./docker-builder.sh build-image $CI_BUILD_NAME
-#        - ./docker-builder.sh publish-image $CI_BUILD_NAME
+        - ./docker-builder.sh publish-image $CI_BUILD_NAME
     stage: other
     only:
         - master
@@ -194,7 +194,7 @@ nginx-php70:
 nginx:
     script:
         - ./docker-builder.sh build-image $CI_BUILD_NAME
-#        - ./docker-builder.sh publish-image $CI_BUILD_NAME
+        - ./docker-builder.sh publish-image $CI_BUILD_NAME
     stage: other
     only:
         - master
@@ -202,7 +202,7 @@ nginx:
 node:
     script:
         - ./docker-builder.sh build-image $CI_BUILD_NAME
-#        - ./docker-builder.sh publish-image $CI_BUILD_NAME
+        - ./docker-builder.sh publish-image $CI_BUILD_NAME
     stage: other
     only:
         - master
@@ -210,7 +210,7 @@ node:
 owncloud:
     script:
         - ./docker-builder.sh build-image $CI_BUILD_NAME
-#        - ./docker-builder.sh publish-image $CI_BUILD_NAME
+        - ./docker-builder.sh publish-image $CI_BUILD_NAME
     stage: other
     only:
         - master
@@ -218,7 +218,7 @@ owncloud:
 php56:
     script:
         - ./docker-builder.sh build-image $CI_BUILD_NAME
-#        - ./docker-builder.sh publish-image $CI_BUILD_NAME
+        - ./docker-builder.sh publish-image $CI_BUILD_NAME
     stage: other
     only:
         - master
@@ -226,7 +226,7 @@ php56:
 php70:
     script:
         - ./docker-builder.sh build-image $CI_BUILD_NAME
-#        - ./docker-builder.sh publish-image $CI_BUILD_NAME
+        - ./docker-builder.sh publish-image $CI_BUILD_NAME
     stage: other
     only:
         - master
@@ -234,7 +234,7 @@ php70:
 postgres:
     script:
         - ./docker-builder.sh build-image $CI_BUILD_NAME
-#        - ./docker-builder.sh publish-image $CI_BUILD_NAME
+        - ./docker-builder.sh publish-image $CI_BUILD_NAME
     stage: other
     only:
         - master
@@ -242,7 +242,7 @@ postgres:
 puppet-client:
     script:
         - ./docker-builder.sh build-image $CI_BUILD_NAME
-#        - ./docker-builder.sh publish-image $CI_BUILD_NAME
+        - ./docker-builder.sh publish-image $CI_BUILD_NAME
     stage: other
     only:
         - master
@@ -250,7 +250,7 @@ puppet-client:
 redis:
     script:
         - ./docker-builder.sh build-image $CI_BUILD_NAME
-#        - ./docker-builder.sh publish-image $CI_BUILD_NAME
+        - ./docker-builder.sh publish-image $CI_BUILD_NAME
     stage: other
     only:
         - master
@@ -258,7 +258,7 @@ redis:
 ruby:
     script:
         - ./docker-builder.sh build-image $CI_BUILD_NAME
-#        - ./docker-builder.sh publish-image $CI_BUILD_NAME
+        - ./docker-builder.sh publish-image $CI_BUILD_NAME
     stage: other
     only:
         - master
@@ -266,7 +266,7 @@ ruby:
 squid:
     script:
         - ./docker-builder.sh build-image $CI_BUILD_NAME
-#        - ./docker-builder.sh publish-image $CI_BUILD_NAME
+        - ./docker-builder.sh publish-image $CI_BUILD_NAME
     stage: other
     only:
         - master
@@ -274,7 +274,7 @@ squid:
 symfony2:
     script:
         - ./docker-builder.sh build-image $CI_BUILD_NAME
-#        - ./docker-builder.sh publish-image $CI_BUILD_NAME
+        - ./docker-builder.sh publish-image $CI_BUILD_NAME
     stage: other
     only:
         - master
@@ -282,7 +282,7 @@ symfony2:
 symfony3:
     script:
         - ./docker-builder.sh build-image $CI_BUILD_NAME
-#        - ./docker-builder.sh publish-image $CI_BUILD_NAME
+        - ./docker-builder.sh publish-image $CI_BUILD_NAME
     stage: other
     only:
         - master
@@ -290,7 +290,7 @@ symfony3:
 tomcat:
     script:
         - ./docker-builder.sh build-image $CI_BUILD_NAME
-#        - ./docker-builder.sh publish-image $CI_BUILD_NAME
+        - ./docker-builder.sh publish-image $CI_BUILD_NAME
     stage: other
     only:
         - master
@@ -298,7 +298,7 @@ tomcat:
 wordpress-nginx-w3tc:
     script:
         - ./docker-builder.sh build-image $CI_BUILD_NAME
-#        - ./docker-builder.sh publish-image $CI_BUILD_NAME
+        - ./docker-builder.sh publish-image $CI_BUILD_NAME
     stage: other
     only:
         - master
@@ -306,7 +306,7 @@ wordpress-nginx-w3tc:
 wordpress:
     script:
         - ./docker-builder.sh build-image $CI_BUILD_NAME
-#        - ./docker-builder.sh publish-image $CI_BUILD_NAME
+        - ./docker-builder.sh publish-image $CI_BUILD_NAME
     stage: other
     only:
         - master
