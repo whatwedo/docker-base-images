@@ -12,8 +12,8 @@ RUN apt-get update -y && \
 apt-get install -y bind9 && \
 mkdir -p /var/run/named && chown bind:bind /var/run/named
 COPY files/supervisord/bind.conf /etc/supervisor/conf.d/bind.conf
-RUN apt-get autoremove -y && \
-apt-get clean -y && \
+RUN apt-get autoremove -y && \
+apt-get clean -y && \
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 EXPOSE 53/udp 53/tcp
 EXPOSE 953

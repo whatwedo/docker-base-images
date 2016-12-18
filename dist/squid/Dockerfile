@@ -11,8 +11,8 @@ FROM whatwedo/base:latest
 RUN apt-get update -y && \
 apt-get install squid -y
 COPY files/supervisord/squid.conf /etc/supervisor/conf.d/squid.conf
-RUN apt-get autoremove -y && \
-apt-get clean -y && \
+RUN apt-get autoremove -y && \
+apt-get clean -y && \
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 EXPOSE 3128
 LABEL ch.whatwedo.image.base="whatwedo/squid"

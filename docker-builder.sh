@@ -92,7 +92,12 @@ build-image() {
   cd "dist/$1"
   DOCKER_OPTS="--dns 8.8.8.8 --dns 8.8.4.4" docker build --no-cache --rm -t "$1:latest" .
   cd ../..
-  docker-squash $1 -t $1
+  if [[ $1 == "base" ]]; then
+    docker-squash $1 -t $1
+  else
+    docker-squash $1 -t $1 -f whatwedo/base:latest
+  fi
+
 }
 
 # build the given image with cache

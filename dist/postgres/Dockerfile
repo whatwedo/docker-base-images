@@ -22,8 +22,8 @@ echo "/etc/init.d/postgresql stop" >> /bin/firstboot
 COPY files/supervisord/postgres.conf /etc/supervisor/conf.d/postgres.conf
 RUN chown postgres /etc/ssl/private/ssl-cert-snakeoil.key && \
 sudo chown postgres /etc/ssl/certs/ssl-cert-snakeoil.pem && \
-apt-get autoremove -y && \
-apt-get clean -y && \
+apt-get autoremove -y && \
+apt-get clean -y && \
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 VOLUME  ["/var/lib/postgresql"]
 EXPOSE 5432

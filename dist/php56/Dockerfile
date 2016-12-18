@@ -20,7 +20,7 @@ echo "php_flag[display_errors] = off" >> /etc/php/5.6/fpm/pool.d/www.conf && \
 echo "php_admin_flag[log_errors] = on" >> /etc/php/5.6/fpm/pool.d/www.conf && \
 echo "php_flag[expose_php] = Off" >> /etc/php/5.6/fpm/pool.d/www.conf && \
 chmod -R 777 /var/lib/php/sessions && \
-apt-get autoremove -y && \
-apt-get clean -y && \
+apt-get autoremove -y && \
+apt-get clean -y && \
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 LABEL ch.whatwedo.image.base="whatwedo/php56"

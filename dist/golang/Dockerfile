@@ -22,7 +22,7 @@ tar -C /usr/local -xzf go.tar.gz
 ENV GOPATH /go
 ENV GOROOT /usr/local/go
 ENV PATH $PATH:/usr/local/go/bin:/go/bin
-RUN apt-get autoremove -y && \
-apt-get clean -y && \
+RUN apt-get autoremove -y && \
+apt-get clean -y && \
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 LABEL ch.whatwedo.image.base="whatwedo/golang"

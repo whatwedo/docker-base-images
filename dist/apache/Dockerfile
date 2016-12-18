@@ -28,8 +28,8 @@ chmod 755 /bin/start-apache && \
 touch /var/log/apache2/access.log && chown www-data /var/log/apache2/access.log && \
 touch /var/log/apache2/error.log && chown www-data /var/log/apache2/error.log
 COPY files/supervisord/apache.conf /etc/supervisor/conf.d/apache.conf
-RUN apt-get autoremove -y && \
-apt-get clean -y && \
+RUN apt-get autoremove -y && \
+apt-get clean -y && \
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 EXPOSE 80
 EXPOSE 443

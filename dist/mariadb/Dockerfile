@@ -34,8 +34,8 @@ echo 'rm /root/mysql-first-time.sql' >> /bin/firstboot && \
 echo 'mysqladmin shutdown -uroot -p${MYSQL_ROOT_PASSWORD}' >> /bin/firstboot && \
 echo 'if [ ! -z "${INNODB_BUFFER_POOL_SIZE}" ]; then sed -i "s/innodb_buffer_pool_size.*/innodb_buffer_pool_size = $INNODB_BUFFER_POOL_SIZE/g" /etc/mysql/my.cnf; fi' >> /bin/everyboot
 COPY files/supervisord/mariadb.conf /etc/supervisor/conf.d/mariadb.conf
-RUN apt-get autoremove -y && \
-apt-get clean -y && \
+RUN apt-get autoremove -y && \
+apt-get clean -y && \
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 VOLUME ["/var/lib/mysql"]
 EXPOSE 3306

@@ -15,8 +15,8 @@ apt-get update && \
 apt-get install -y mongodb-org && \
 mkdir -p /data/db
 COPY files/supervisord/mongodb.conf /etc/supervisor/conf.d/mongodb.conf
-RUN apt-get autoremove -y && \
-apt-get clean -y && \
+RUN apt-get autoremove -y && \
+apt-get clean -y && \
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 EXPOSE 27017
 VOLUME  ["/data"]

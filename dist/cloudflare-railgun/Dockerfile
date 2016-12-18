@@ -18,8 +18,8 @@ echo 'sed -i s/^activation\.token.*/activation\.token\ =\ ${ACTIVATION_TOKEN}/g 
 echo 'sed -i s/^activation\.railgun_host.*/activation\.railgun_host\ =\ ${ACTIVATION_RAILGUN_HOST}/g /etc/railgun/railgun.conf' >> /bin/everyboot && \
 touch /var/log/railgun/panic.log
 COPY files/supervisord/cloudflare-railgun.conf /etc/supervisor/conf.d/cloudflare-railgun.conf
-RUN apt-get autoremove -y && \
-apt-get clean -y && \
+RUN apt-get autoremove -y && \
+apt-get clean -y && \
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 EXPOSE 2408
 EXPOSE 24088

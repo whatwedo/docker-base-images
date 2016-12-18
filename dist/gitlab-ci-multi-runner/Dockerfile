@@ -18,8 +18,8 @@ chmod +x /usr/local/bin/docker-machine && \
 useradd --comment 'GitLab Runner' --create-home gitlab-runner --shell /bin/bash && \
 echo "rm -rf /root/.docker/machine/certs" >> /bin/everyboot
 COPY files/supervisord/gitlab-ci-multi-runner.conf /etc/supervisor/conf.d/gitlab-ci-multi-runner.conf
-RUN apt-get autoremove -y && \
-apt-get clean -y && \
+RUN apt-get autoremove -y && \
+apt-get clean -y && \
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 VOLUME /etc/gitlab-runner
 LABEL ch.whatwedo.image.base="whatwedo/gitlab-ci-multi-runner"

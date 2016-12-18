@@ -41,8 +41,8 @@ echo "php_flag[display_errors] = off" >> /etc/php/7.0/fpm/pool.d/www.conf && \
 echo "php_admin_flag[log_errors] = on" >> /etc/php/7.0/fpm/pool.d/www.conf && \
 echo "php_flag[expose_php] = Off" >> /etc/php/7.0/fpm/pool.d/www.conf && \
 mkdir -p /run/php && \
-apt-get autoremove -y && \
-apt-get clean -y && \
+apt-get autoremove -y && \
+apt-get clean -y && \
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
 rm /etc/nginx/nginx.conf
 ADD files/nginx-php70 /etc/nginx

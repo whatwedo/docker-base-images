@@ -26,8 +26,8 @@ ADD files/nginx-default /etc/nginx
 RUN chown -R www-data /var/www/ && \
 chmod -R 755 /var/www/
 COPY files/supervisord/nginx.conf /etc/supervisor/conf.d/nginx.conf
-RUN apt-get autoremove -y && \
-apt-get clean -y && \
+RUN apt-get autoremove -y && \
+apt-get clean -y && \
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 EXPOSE 80
 EXPOSE 443

@@ -35,7 +35,7 @@ RUN apt-get purge -y libssl-dev libcurl4-gnutls-dev libexpat1-dev && \
 git clone git://github.com/elasticsearch/logstash-forwarder.git /opt/logstash-forwarder && \
 cd /opt/logstash-forwarder && go build
 COPY files/supervisord/logstash-forwarder.conf /etc/supervisor/conf.d/logstash-forwarder.conf
-RUN apt-get autoremove -y && \
-apt-get clean -y && \
+RUN apt-get autoremove -y && \
+apt-get clean -y && \
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 LABEL ch.whatwedo.image.base="whatwedo/logstash-forwarder"

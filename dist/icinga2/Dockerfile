@@ -102,8 +102,8 @@ RUN cp -a /etc/icinga2 /etc/icinga2_copy && \
 cp -a /etc/icingaweb2 /etc/icingaweb2_copy && \
 cp -a /var/lib/icinga2 /var/lib/icinga2_copy && \
 cp -a /etc/icinga2-classicui /etc/icinga2-classicui_copy && \
-apt-get autoremove -y && \
-apt-get clean -y && \
+apt-get autoremove -y && \
+apt-get clean -y && \
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 VOLUME  ["/etc/icinga2", "/etc/icingaweb2", "/var/lib/icinga2", "/etc/icinga2-classicui"]
 LABEL ch.whatwedo.image.base="whatwedo/icinga2"

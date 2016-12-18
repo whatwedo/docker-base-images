@@ -172,8 +172,8 @@ nextcloud:
         - ./docker-builder.sh build-image $CI_BUILD_NAME
         - ./docker-builder.sh publish-image $CI_BUILD_NAME
     stage: other
-#    only:
-#        - master
+    only:
+        - master
 
 nginx-php56:
     script:

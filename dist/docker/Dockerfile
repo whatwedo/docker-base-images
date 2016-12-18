@@ -11,7 +11,7 @@ FROM whatwedo/base:latest
 RUN apt-get update -y && \
 curl -fsSL https://get.docker.com/ | sh && \
 docker -v && \
-apt-get autoremove -y && \
-apt-get clean -y && \
+apt-get autoremove -y && \
+apt-get clean -y && \
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 LABEL ch.whatwedo.image.base="whatwedo/docker"

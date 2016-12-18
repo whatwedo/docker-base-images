@@ -216,8 +216,8 @@ echo 'echo "# GitLab initialized #"' >> /bin/everyboot && \
 echo 'echo "######################"' >> /bin/everyboot
 RUN echo 'echo ""' >> /bin/everyboot
 COPY files/supervisord/gitlab.conf /etc/supervisor/conf.d/gitlab.conf
-RUN apt-get autoremove -y && \
-apt-get clean -y && \
+RUN apt-get autoremove -y && \
+apt-get clean -y && \
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 EXPOSE 22
 EXPOSE 80

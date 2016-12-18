@@ -25,8 +25,8 @@ chown tomcat:tomcat /opt/tomcat -R && \
 rm apache-tomcat-8.0.14.tar.gz && \
 rm -rf /opt/tomcat/webapps/*
 COPY files/supervisord/tomcat.conf /etc/supervisor/conf.d/tomcat.conf
-RUN apt-get autoremove -y && \
-apt-get clean -y && \
+RUN apt-get autoremove -y && \
+apt-get clean -y && \
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 EXPOSE 8080
 LABEL ch.whatwedo.image.base="whatwedo/tomcat"

@@ -43,8 +43,8 @@ echo "php_flag[expose_php] = Off" >> /etc/php/7.0/fpm/pool.d/www.conf && \
 mkdir -p /run/php && \
 apt-get install -y memcached
 COPY files/supervisord/memcached.conf /etc/supervisor/conf.d/memcached.conf
-RUN apt-get autoremove -y && \
-apt-get clean -y && \
+RUN apt-get autoremove -y && \
+apt-get clean -y && \
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
 rm /etc/nginx/nginx.conf
 ADD files/wordpress-nginx-w3tc/nginx.conf /etc/nginx/nginx.conf

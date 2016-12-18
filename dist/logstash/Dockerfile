@@ -18,8 +18,8 @@ add-apt-repository 'deb http://packages.elasticsearch.org/logstash/1.4/debian st
 apt-get update -y && \
 apt-get install -y logstash
 COPY files/supervisord/logstash.conf /etc/supervisor/conf.d/logstash.conf
-RUN apt-get autoremove -y && \
-apt-get clean -y && \
+RUN apt-get autoremove -y && \
+apt-get clean -y && \
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 EXPOSE 5000
 LABEL ch.whatwedo.image.base="whatwedo/logstash"

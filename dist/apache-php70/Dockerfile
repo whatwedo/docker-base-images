@@ -44,8 +44,8 @@ echo "php_admin_flag[log_errors] = on" >> /etc/php/7.0/fpm/pool.d/www.conf && \
 echo "php_flag[expose_php] = Off" >> /etc/php/7.0/fpm/pool.d/www.conf && \
 mkdir -p /run/php && \
 apt-get install -y libapache2-mod-php7.0 && \
-apt-get autoremove -y && \
-apt-get clean -y && \
+apt-get autoremove -y && \
+apt-get clean -y && \
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 EXPOSE 80
 EXPOSE 443

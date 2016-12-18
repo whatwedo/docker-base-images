@@ -79,8 +79,8 @@ echo 'crontab -u www-data -l > /tmp/cron' >> /bin/everyboot && \
 echo 'echo "*/15  *  *  *  * php -f /var/www/nextcloud/cron.php" >> /tmp/cron' >> /bin/everyboot && \
 echo 'crontab -u www-data /tmp/cron' >> /bin/everyboot && \
 echo 'rm /tmp/cron' >> /bin/everyboot && \
-apt-get autoremove -y && \
-apt-get clean -y && \
+apt-get autoremove -y && \
+apt-get clean -y && \
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 EXPOSE 80
 EXPOSE 443

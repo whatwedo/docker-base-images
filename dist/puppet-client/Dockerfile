@@ -14,7 +14,7 @@ dpkg -i puppetlabs-release-trusty.deb && \
 apt-get update && \
 apt-get install puppet=3.8.* -qq < "/dev/null" && \
 rm puppetlabs-release-trusty.deb && \
-apt-get autoremove -y && \
-apt-get clean -y && \
+apt-get autoremove -y && \
+apt-get clean -y && \
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 LABEL ch.whatwedo.image.base="whatwedo/puppet-client"

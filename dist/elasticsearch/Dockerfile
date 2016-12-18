@@ -21,8 +21,8 @@ rm -rf /etc/elasticsearch/elasticsearch.yml
 ADD files/elasticsearch /etc/elasticsearch
 RUN ln -s /etc/elasticsearch /usr/share/elasticsearch/config
 COPY files/supervisord/elasticsearch.conf /etc/supervisor/conf.d/elasticsearch.conf
-RUN apt-get autoremove -y && \
-apt-get clean -y && \
+RUN apt-get autoremove -y && \
+apt-get clean -y && \
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 EXPOSE 9200
 EXPOSE 9300

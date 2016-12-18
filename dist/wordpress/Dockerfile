@@ -50,8 +50,8 @@ rm latest-de_DE.zip && \
 cp -r wordpress/* /var/www/html && \
 rm -rf wordpress && \
 chown -R www-data:www-data /var/www && \
-apt-get autoremove -y && \
-apt-get clean -y && \
+apt-get autoremove -y && \
+apt-get clean -y && \
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 EXPOSE 80
 VOLUME  ["/var/www"]

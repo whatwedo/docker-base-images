@@ -19,8 +19,8 @@ RUN set -x \
 && rm kibana.tar.gz
 ENV PATH /opt/kibana/bin:$PATH
 COPY files/supervisord/kibana.conf /etc/supervisor/conf.d/kibana.conf
-RUN apt-get autoremove -y && \
-apt-get clean -y && \
+RUN apt-get autoremove -y && \
+apt-get clean -y && \
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 EXPOSE 3306
 LABEL ch.whatwedo.image.base="whatwedo/kibana"

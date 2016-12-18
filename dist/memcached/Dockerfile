@@ -11,8 +11,8 @@ FROM whatwedo/base:latest
 RUN apt-get update -y && \
 apt-get install -y memcached
 COPY files/supervisord/memcached.conf /etc/supervisor/conf.d/memcached.conf
-RUN apt-get autoremove -y && \
-apt-get clean -y && \
+RUN apt-get autoremove -y && \
+apt-get clean -y && \
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 EXPOSE 11211
 LABEL ch.whatwedo.image.base="whatwedo/memcached"
