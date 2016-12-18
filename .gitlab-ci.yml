@@ -3,9 +3,7 @@ before_script:
     - apt-get update && apt-get -qq install python-pip m4
     - pip install docker-squash
     - docker-squash --version
-    - export VERSION="`git tag | tail -n1`-`git log --format="%h" -n 1`"
-    - export BRANCH="`git rev-parse --abbrev-ref HEAD`"
-    - export DOCKER_TAG="`if [[ "$BRANCH" == "master" ]]; then echo latest; else echo $BRANCH; fi`"
+    - export VERSION="$(git describe --tags `git rev-list --tags --max-count=1`)"
     - env | sort
 
 stages:
@@ -17,6 +15,8 @@ build_base:
         - ./docker-builder.sh build-image base
         - echo $VERSION
     stage: base
+#    only:
+#        - tags
 
 build_nextcloud:
     script:
@@ -25,5 +25,5 @@ build_nextcloud:
         - echo $DOCKER_TAG
     stage: other
 #    only:
-#        -  tags
+#        - tags
 
