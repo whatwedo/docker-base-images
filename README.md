@@ -1,4 +1,7 @@
 # whatwedo - Docker Base Images
+
+[![build status](https://dev.whatwedo.ch/whatwedo/docker-base-images/badges/master/build.svg)](https://dev.whatwedo.ch/whatwedo/docker-base-images/commits/master)
+
 We at [whatwedo](https://whatwedo.ch/) are slowly going away from traditional application hosting to the approach of using Docker containers. For this reason we built several docker images. They are available on [Dockerhub](https://registry.hub.docker.com/repos/whatwedo/). You can use them easily in your own projects.
 
 ## Images
@@ -22,6 +25,7 @@ We at [whatwedo](https://whatwedo.ch/) are slowly going away from traditional ap
 | [whatwedo/mariadb](https://github.com/whatwedo/docker-base-images/tree/master/dist/mariadb/) | MariaDB server |
 | [whatwedo/memcached](https://github.com/whatwedo/docker-base-images/tree/master/dist/memcached/) | memcached server |
 | [whatwedo/mongodb](https://github.com/whatwedo/docker-base-images/tree/master/dist/mongodb/) | MongoDB server |
+| [whatwedo/nextcloud](https://github.com/whatwedo/docker-base-images/tree/master/dist/nextcloud/) | Nextcloud server |
 | [whatwedo/nginx](https://github.com/whatwedo/docker-base-images/tree/master/dist/nginx/) | nginx webserver |
 | [whatwedo/nginx-php56](https://github.com/whatwedo/docker-base-images/tree/master/dist/nginx-php56/) | nginx webserver including PHP 5.6 |
 | [whatwedo/nginx-php70](https://github.com/whatwedo/docker-base-images/tree/master/dist/nginx-php70/) | nginx webserver including PHP 7.0 |
