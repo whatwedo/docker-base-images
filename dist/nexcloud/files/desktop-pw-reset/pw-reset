@@ -1,0 +1,7 @@
+#!/bin/bash
+PASS=`pwgen -c -n -1 10`
+echo "ubuntu:$PASS" | chpasswd
+echo "---------------------------------------"
+echo "User: ubuntu"
+echo "Password: $PASS"
+echo "---------------------------------------"
