@@ -105,10 +105,10 @@ build-cached-image() {
 # Publish the given image
 publish-image() {
   VERSION="$(git describe --tags `git rev-list --tags --max-count=1`)"
-  docker tag nextcloud whatwedo/nexcloud:$VERSION
-  docker push whatwedo/nexcloud:$VERSION
-  docker tag nextcloud whatwedo/nexcloud:latest
-  docker push whatwedo/nexcloud:latest
+  docker tag $1 whatwedo/$1:$VERSION
+  docker push whatwedo/$1:$VERSION
+  docker tag $1 whatwedo/$1:latest
+  docker push whatwedo/$1:latest
 }
 
 # download latest base images
