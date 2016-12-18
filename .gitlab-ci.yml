@@ -1,29 +1,27 @@
 before_script:
-    - docker info
     - apt-get update && apt-get -qq install python-pip m4
     - pip install docker-squash
+    - docker info
     - docker-squash --version
-    - export VERSION="$(git describe --tags `git rev-list --tags --max-count=1`)"
-    - env | sort
+    - m4 --version
 
 stages:
     - base
     - other
 
-build_base:
+base:
     script:
-        - ./docker-builder.sh build-image base
-        - echo $VERSION
+        - ./docker-builder.sh build-image $CI_BUILD_NAME
+#        - ./docker-builder.sh publish-image $CI_BUILD_NAME
     stage: base
 #    only:
-#        - tags
+#        - master
 
-build_nextcloud:
+nextcloud:
     script:
-        - ./docker-builder.sh build-image nextcloud
-        - echo $VERSION
-        - echo $DOCKER_TAG
+        - ./docker-builder.sh build-image $CI_BUILD_NAME
+        - ./docker-builder.sh publish-image $CI_BUILD_NAME
     stage: other
 #    only:
-#        - tags
+#        - master
 

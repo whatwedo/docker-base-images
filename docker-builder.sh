@@ -16,6 +16,9 @@
 # CHECK PREREQUISITES                                  #
 ########################################################
 
+# Exit on error
+set -e
+
 # Check software
 dockerTest=$(which docker)
 m4Test=$(which m4)
@@ -99,6 +102,15 @@ build-cached-image() {
   cd ../..
 }
 
+# Publish the given image
+publish-image() {
+  VERSION="$(git describe --tags `git rev-list --tags --max-count=1`)"
+  docker tag nextcloud whatwedo/nexcloud:$VERSION
+  docker push whatwedo/nexcloud:$VERSION
+  docker tag nextcloud whatwedo/nexcloud:latest
+  docker push whatwedo/nexcloud:latest
+}
+
 # download latest base images
 update-base-images() {
   docker pull ubuntu:14.04
@@ -121,6 +133,9 @@ elif [ "$1" = "build-cached-image" ]; then
   update-base-images
   build-file $2
   build-cached-image $2
+elif [ "$1" = "publish-image" ]; then
+  [ -z "$2" ] && { echo "Image name not specified"; exit 1; }
+  publish-image $2
 else
 	echo "
   docker-builder.sh is a script for managing complex docker images
@@ -129,11 +144,12 @@ else
 
   USAGE:
 
-  ./docker-builder.sh build-files         - This will build all dockerfiles
-  ./docker-builder.sh build-file [name]   - This will build the given dockerfile
-  ./docker-builder.sh build-images        - This will build all images
-  ./docker-builder.sh build-image [name]  - This will build the given image
+  ./docker-builder.sh build-files                - This will build all dockerfiles
+  ./docker-builder.sh build-file [name]          - This will build the given dockerfile
+  ./docker-builder.sh build-images               - This will build all images
+  ./docker-builder.sh build-image [name]         - This will build the given image
   ./docker-builder.sh build-cached-image [name]  - This will build the given image with cache
+  ./docker-builder.sh publish-image [name]       - This will publish the given existing image
 
   "
 fi
