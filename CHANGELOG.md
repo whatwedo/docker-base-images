@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## v1.4.2 - Unreleased
+
+### Changed
+
+* whatwedo/gitlab: use 8 GB CI runner
+
 ## v1.4.2 - 2017-01-30
 
 ### Features
