@@ -9,6 +9,7 @@ include(`modules/nginx.m4')
 # install GitLab dependencies
 include(`modules/git.m4')
 include(`modules/golang.m4')
+include(`modules/node.m4')
 
 # install GitLab
 include(`modules/gitlab.m4')
