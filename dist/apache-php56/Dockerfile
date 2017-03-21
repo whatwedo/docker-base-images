@@ -23,21 +23,22 @@ chmod -R 755 /var/www/ && \
 sed -i '/<Directory \/var\/www\/>/,/<\/Directory>/ s/AllowOverride None/AllowOverride all/' /etc/apache2/apache2.conf && \
 echo "#\0041/bin/bash" > /bin/start-apache && \
 echo "rm -rf /run/httpd/*" >> /bin/start-apache && \
+echo "rm -f /var/run/apache2.pid" >> /bin/start-apache && \
 echo "apache2 -D FOREGROUND" >> /bin/start-apache && \
 chmod 755 /bin/start-apache && \
 touch /var/log/apache2/access.log && chown www-data /var/log/apache2/access.log && \
 touch /var/log/apache2/error.log && chown www-data /var/log/apache2/error.log
 COPY files/supervisord/apache.conf /etc/supervisor/conf.d/apache.conf
-RUN add-apt-repository -y ppa:ondrej/php && \
-apt-get update && \
-apt-get install php5.6-cli php5.6-common php5.6-cgi php5.6-curl php5.6-imagick php5.6-imap php5.6-pgsql php5.6-sqlite php5.6-mysql php5.6-fpm php5.6-mcrypt php5.6-ldap php5.6-json php5.6-intl php5.6-gd php5.6-xml php5.6-mbstring php5.6-dom -y && \
-echo "cgi.fix_pathinfo = 0;" >> /etc/php/5.6/fpm/php.ini && \
-echo "php_flag[expose_php] = Off" >> /etc/php/5.6/fpm/pool.d/www.conf && \
-echo "php_admin_value[upload_max_filesize] = 32M" >> /etc/php/5.6/fpm/pool.d/www.conf && \
-echo "php_admin_value[post_max_size] = 32M" >> /etc/php/5.6/fpm/pool.d/www.conf && \
-echo "php_flag[display_errors] = off" >> /etc/php/5.6/fpm/pool.d/www.conf && \
-echo "php_admin_flag[log_errors] = on" >> /etc/php/5.6/fpm/pool.d/www.conf && \
-echo "php_flag[expose_php] = Off" >> /etc/php/5.6/fpm/pool.d/www.conf && \
+RUN add-apt-repository -y ppa:ondrej/php && \
+apt-get update && \
+apt-get install php5.6-cli php5.6-common php5.6-cgi php5.6-curl php5.6-imagick php5.6-imap php5.6-pgsql php5.6-sqlite php5.6-mysql php5.6-fpm php5.6-mcrypt php5.6-ldap php5.6-json php5.6-intl php5.6-gd php5.6-xml php5.6-mbstring php5.6-dom -y && \
+echo "cgi.fix_pathinfo = 0;" >> /etc/php/5.6/fpm/php.ini && \
+echo "php_flag[expose_php] = Off" >> /etc/php/5.6/fpm/pool.d/www.conf && \
+echo "php_admin_value[upload_max_filesize] = 32M" >> /etc/php/5.6/fpm/pool.d/www.conf && \
+echo "php_admin_value[post_max_size] = 32M" >> /etc/php/5.6/fpm/pool.d/www.conf && \
+echo "php_flag[display_errors] = off" >> /etc/php/5.6/fpm/pool.d/www.conf && \
+echo "php_admin_flag[log_errors] = on" >> /etc/php/5.6/fpm/pool.d/www.conf && \
+echo "php_flag[expose_php] = Off" >> /etc/php/5.6/fpm/pool.d/www.conf && \
 chmod -R 777 /var/lib/php/sessions && \
 apt-get install -y libapache2-mod-php5.6 && \
 apt-get autoremove -y && \

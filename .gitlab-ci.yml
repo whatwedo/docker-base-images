@@ -94,6 +94,8 @@ gitlab:
     stage: other
     only:
         - master
+    tags:
+        - 8gb
 
 golang:
     script:

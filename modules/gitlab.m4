@@ -3,7 +3,7 @@ LASTRUN apt-get update && apt-get install -y \
     build-essential zlib1g-dev libyaml-dev libssl-dev libgdbm-dev \
     libreadline-dev libncurses5-dev libffi-dev curl openssh-server \
     checkinstall libxml2-dev libxslt-dev libcurl4-openssl-dev libicu-dev \
-    logrotate python-docutils pkg-config cmake nodejs libmysqlclient-dev \
+    logrotate python-docutils pkg-config cmake libmysqlclient-dev \
     mysql-client redis-tools
 
 # Install Ruby 2.3
@@ -21,8 +21,8 @@ RUN sudo -u git -H touch /home/git/.ssh/authorized_keys
 RUN sudo -u git -H git config --global core.autocrlf "input"
 RUN sudo -u git -H git config --global gc.auto 0
 RUN sudo -u git -H git config --global repack.writeBitmaps true
-RUN sudo -u git -H curl -L --progress https://github.com/gitlabhq/gitlabhq/archive/v8.16.3.zip -o /home/git/gitlab.zip
-RUN sudo -u git -H echo 'b4aab7674d1103269d244525bdcd8bbf3cc18597  /home/git/gitlab.zip' | shasum -c -
+RUN sudo -u git -H curl -L --progress https://github.com/gitlabhq/gitlabhq/archive/v8.17.4.zip -o /home/git/gitlab.zip
+RUN sudo -u git -H echo 'fe4317c90c794ea66004a398fd0c27c0c8d721f5  /home/git/gitlab.zip' | shasum -c -
 RUN sudo -u git -H unzip /home/git/gitlab.zip -d /home/git
 RUN sudo -u git -H mv /home/git/gitlabhq-* /home/git/gitlab
 RUN sudo -u git -H rm /home/git/gitlab.zip
