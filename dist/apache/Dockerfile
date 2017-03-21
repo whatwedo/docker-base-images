@@ -23,6 +23,7 @@ chmod -R 755 /var/www/ && \
 sed -i '/<Directory \/var\/www\/>/,/<\/Directory>/ s/AllowOverride None/AllowOverride all/' /etc/apache2/apache2.conf && \
 echo "#\0041/bin/bash" > /bin/start-apache && \
 echo "rm -rf /run/httpd/*" >> /bin/start-apache && \
+echo "rm -f /var/run/apache2.pid" >> /bin/start-apache && \
 echo "apache2 -D FOREGROUND" >> /bin/start-apache && \
 chmod 755 /bin/start-apache && \
 touch /var/log/apache2/access.log && chown www-data /var/log/apache2/access.log && \

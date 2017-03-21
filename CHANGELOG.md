@@ -14,6 +14,7 @@ All notable changes to this project will be documented in this file. This projec
 * whatwedo/gitlab: use 8 GB CI runner
 * whatwedo/nginx-php56: fix socket url
 * whatwedo/symfony2: fix socket url
+* whatwedo/apache: clean up old apache pids when starting apache
 
 ## v1.4.2 - 2017-01-30
 

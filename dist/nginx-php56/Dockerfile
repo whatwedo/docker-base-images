@@ -26,16 +26,16 @@ ADD files/nginx-default /etc/nginx
 RUN chown -R www-data /var/www/ && \
 chmod -R 755 /var/www/
 COPY files/supervisord/nginx.conf /etc/supervisor/conf.d/nginx.conf
-RUN add-apt-repository -y ppa:ondrej/php && \
-apt-get update && \
-apt-get install php5.6-cli php5.6-common php5.6-cgi php5.6-curl php5.6-imagick php5.6-imap php5.6-pgsql php5.6-sqlite php5.6-mysql php5.6-fpm php5.6-mcrypt php5.6-ldap php5.6-json php5.6-intl php5.6-gd php5.6-xml php5.6-mbstring php5.6-dom -y && \
-echo "cgi.fix_pathinfo = 0;" >> /etc/php/5.6/fpm/php.ini && \
-echo "php_flag[expose_php] = Off" >> /etc/php/5.6/fpm/pool.d/www.conf && \
-echo "php_admin_value[upload_max_filesize] = 32M" >> /etc/php/5.6/fpm/pool.d/www.conf && \
-echo "php_admin_value[post_max_size] = 32M" >> /etc/php/5.6/fpm/pool.d/www.conf && \
-echo "php_flag[display_errors] = off" >> /etc/php/5.6/fpm/pool.d/www.conf && \
-echo "php_admin_flag[log_errors] = on" >> /etc/php/5.6/fpm/pool.d/www.conf && \
-echo "php_flag[expose_php] = Off" >> /etc/php/5.6/fpm/pool.d/www.conf && \
+RUN add-apt-repository -y ppa:ondrej/php && \
+apt-get update && \
+apt-get install php5.6-cli php5.6-common php5.6-cgi php5.6-curl php5.6-imagick php5.6-imap php5.6-pgsql php5.6-sqlite php5.6-mysql php5.6-fpm php5.6-mcrypt php5.6-ldap php5.6-json php5.6-intl php5.6-gd php5.6-xml php5.6-mbstring php5.6-dom -y && \
+echo "cgi.fix_pathinfo = 0;" >> /etc/php/5.6/fpm/php.ini && \
+echo "php_flag[expose_php] = Off" >> /etc/php/5.6/fpm/pool.d/www.conf && \
+echo "php_admin_value[upload_max_filesize] = 32M" >> /etc/php/5.6/fpm/pool.d/www.conf && \
+echo "php_admin_value[post_max_size] = 32M" >> /etc/php/5.6/fpm/pool.d/www.conf && \
+echo "php_flag[display_errors] = off" >> /etc/php/5.6/fpm/pool.d/www.conf && \
+echo "php_admin_flag[log_errors] = on" >> /etc/php/5.6/fpm/pool.d/www.conf && \
+echo "php_flag[expose_php] = Off" >> /etc/php/5.6/fpm/pool.d/www.conf && \
 chmod -R 777 /var/lib/php/sessions && \
 apt-get autoremove -y && \
 apt-get clean -y && \
