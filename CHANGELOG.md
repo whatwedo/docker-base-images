@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## v1.4.4 - 2017-03-22
+
+### Changed
+
+* whatwedo/gitlab: fixed startup script: compile webpack assets
+
+
 ## v1.4.3 - 2017-03-21
 
 ### Features
