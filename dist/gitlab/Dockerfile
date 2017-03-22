@@ -98,12 +98,13 @@ chmod -R u+rwX /home/git/gitlab/tmp/sessions/ && \
 chmod -R u+rwX /home/git/gitlab/builds/ && \
 chmod -R u+rwX /home/git/gitlab/shared/artifacts/ && \
 sudo -u git -H cp /home/git/gitlab/config/unicorn.rb.example /home/git/gitlab/config/unicorn.rb && \
+sed s/127.0.0.1:8080/127.0.0.1:80/g /home/git/gitlab/config/unicorn.rb && \
 sudo -u git -H cp /home/git/gitlab/config/initializers/rack_attack.rb.example /home/git/gitlab/config/initializers/rack_attack.rb && \
 sudo -u git -H cp /home/git/gitlab/config/resque.yml.example /home/git/gitlab/config/resque.yml && \
 sudo -u git -H cp /home/git/gitlab/config/database.yml.mysql /home/git/gitlab/config/database.yml && \
 sudo -u git -H chmod o-rwx /home/git/gitlab/config/database.yml && \
 echo 'PATH="/home/git/gitlab-workhorse:$PATH"' >> /home/git/.profile
-RUN cd /home/git/gitlab && sudo -u git -H bundle install --deployment --without development test postgres aws kerberos && \
+RUN cd /home/git/gitlab && sudo -u git -H bundle install --deployment --without development test postgres aws kerberos && sudo -u git -H npm install && \
 rm /etc/nginx/nginx.conf
 COPY files/gitlab/nginx.conf /etc/nginx/nginx.conf
 RUN sudo -u git -H git clone https://gitlab.com/gitlab-org/gitlab-workhorse.git /home/git/gitlab-workhorse && \
@@ -204,6 +205,7 @@ echo 'echo "Migrate database"' >> /bin/everyboot && \
 echo 'sudo -u git -H bundle exec rake db:migrate RAILS_ENV=production' >> /bin/everyboot && \
 echo 'echo "Precompiling assets in the background"' >> /bin/everyboot && \
 echo 'sudo -u git -H bundle exec rake assets:precompile RAILS_ENV=production &' >> /bin/everyboot && \
+echo 'sudo -u git -H bundle exec rake webpack:compile RAILS_ENV=production &' >> /bin/everyboot && \
 echo 'echo "Rebuild authorized_keys file"' >> /bin/everyboot && \
 echo 'sudo -u git -H bundle exec rake gitlab:shell:setup RAILS_ENV=production force=yes' >> /bin/everyboot && \
 echo 'touch /home/git/gitlab/log/gitlab-workhorse.log' >> /bin/everyboot && \
