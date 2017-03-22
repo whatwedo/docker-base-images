@@ -45,12 +45,13 @@ RUN chmod -R u+rwX /home/git/gitlab/tmp/sessions/
 RUN chmod -R u+rwX /home/git/gitlab/builds/
 RUN chmod -R u+rwX /home/git/gitlab/shared/artifacts/
 RUN sudo -u git -H cp /home/git/gitlab/config/unicorn.rb.example /home/git/gitlab/config/unicorn.rb
+RUN sed s/127.0.0.1:8080/127.0.0.1:80/g /home/git/gitlab/config/unicorn.rb
 RUN sudo -u git -H cp /home/git/gitlab/config/initializers/rack_attack.rb.example /home/git/gitlab/config/initializers/rack_attack.rb
 RUN sudo -u git -H cp /home/git/gitlab/config/resque.yml.example /home/git/gitlab/config/resque.yml
 RUN sudo -u git -H cp /home/git/gitlab/config/database.yml.mysql /home/git/gitlab/config/database.yml
 RUN sudo -u git -H chmod o-rwx /home/git/gitlab/config/database.yml
 RUN echo 'PATH="/home/git/gitlab-workhorse:$PATH"' >> /home/git/.profile
-LASTRUN cd /home/git/gitlab && sudo -u git -H bundle install --deployment --without development test postgres aws kerberos
+LASTRUN cd /home/git/gitlab && sudo -u git -H bundle install --deployment --without development test postgres aws kerberos && sudo -u git -H npm install
 
 # nginx
 RUN rm /etc/nginx/nginx.conf
@@ -176,6 +177,7 @@ RUN echo 'sudo -u git -H bundle exec rake db:migrate RAILS_ENV=production' >> /b
 
 RUN echo 'echo "Precompiling assets in the background"' >> /bin/everyboot
 RUN echo 'sudo -u git -H bundle exec rake assets:precompile RAILS_ENV=production &' >> /bin/everyboot
+RUN echo 'sudo -u git -H bundle exec rake webpack:compile RAILS_ENV=production &' >> /bin/everyboot
 
 RUN echo 'echo "Rebuild authorized_keys file"' >> /bin/everyboot
 RUN echo 'sudo -u git -H bundle exec rake gitlab:shell:setup RAILS_ENV=production force=yes' >> /bin/everyboot
