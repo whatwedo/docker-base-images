@@ -9,10 +9,13 @@ LASTRUN apt-get update && apt-get install -y \
 # Install Ruby 2.3
 RUN mkdir /tmp/ruby
 RUN cd /tmp/ruby
-RUN curl -L https://cache.ruby-lang.org/pub/ruby/2.3/ruby-2.3.3.tar.gz -o ruby.tar.gz
-RUN echo '1014ee699071aa2ddd501907d18cbe15399c997d  ruby.tar.gz' | shasum -c - && tar xzf ruby.tar.gz
-RUN ls -alh && cd ruby-2.3.3 && ./configure --disable-install-rdoc && make && make install
+RUN curl -L https://cache.ruby-lang.org/pub/ruby/2.3/ruby-2.3.4.tar.gz -o ruby.tar.gz
+RUN echo 'd064b9c69329ca2eb2956ad57b7192184178e35d  ruby.tar.gz' | shasum -c - && tar xzf ruby.tar.gz
+RUN ls -alh && cd ruby-* && ./configure --disable-install-rdoc && make && make install
 LASTRUN gem install bundler --no-ri --no-rdoc
+
+# Install yarn
+RUN curl -L https://yarnpkg.com/install.sh | bash -
 
 # GitLab
 RUN adduser --disabled-login --gecos 'GitLab' git
@@ -21,10 +24,10 @@ RUN sudo -u git -H touch /home/git/.ssh/authorized_keys
 RUN sudo -u git -H git config --global core.autocrlf "input"
 RUN sudo -u git -H git config --global gc.auto 0
 RUN sudo -u git -H git config --global repack.writeBitmaps true
-RUN sudo -u git -H curl -L --progress https://github.com/gitlabhq/gitlabhq/archive/v8.17.4.zip -o /home/git/gitlab.zip
-RUN sudo -u git -H echo 'fe4317c90c794ea66004a398fd0c27c0c8d721f5  /home/git/gitlab.zip' | shasum -c -
+RUN sudo -u git -H curl -L https://gitlab.com/gitlab-org/gitlab-ce/repository/archive.zip?ref=v9.1.2 -o /home/git/gitlab.zip
+RUN sudo -u git -H echo 'c4d60ef5badd248f691bdb980e46e8e4c8f378fd  /home/git/gitlab.zip' | shasum -c -
 RUN sudo -u git -H unzip /home/git/gitlab.zip -d /home/git
-RUN sudo -u git -H mv /home/git/gitlabhq-* /home/git/gitlab
+RUN sudo -u git -H mv /home/git/gitlab-ce-* /home/git/gitlab
 RUN sudo -u git -H rm /home/git/gitlab.zip
 ADD files/gitlab/gitlab.yml /home/git/gitlab/config/
 RUN chown git /home/git/gitlab/config/
@@ -176,11 +179,13 @@ RUN echo 'echo "Migrate database"' >> /bin/everyboot
 RUN echo 'sudo -u git -H bundle exec rake db:migrate RAILS_ENV=production' >> /bin/everyboot
 
 RUN echo 'echo "Precompiling assets in the background"' >> /bin/everyboot
-RUN echo 'sudo -u git -H bundle exec rake assets:precompile RAILS_ENV=production &' >> /bin/everyboot
-RUN echo 'sudo -u git -H bundle exec rake webpack:compile RAILS_ENV=production &' >> /bin/everyboot
+RUN echo 'sudo -u git -H bundle exec rake yarn:install gitlab:assets:clean gitlab:assets:compile RAILS_ENV=production NODE_ENV=production &' >> /bin/everyboot
 
 RUN echo 'echo "Rebuild authorized_keys file"' >> /bin/everyboot
 RUN echo 'sudo -u git -H bundle exec rake gitlab:shell:setup RAILS_ENV=production force=yes' >> /bin/everyboot
+
+RUN echo 'echo "Clear cache"' >> /bin/everyboot
+RUN echo 'sudo -u git -H bundle exec rake cache:clear RAILS_ENV=production' >> /bin/everyboot
 
 RUN echo 'touch /home/git/gitlab/log/gitlab-workhorse.log' >> /bin/everyboot
 RUN echo 'touch /home/git/gitlab/log/mail_room.log' >> /bin/everyboot
