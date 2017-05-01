@@ -53,7 +53,7 @@ tar -C /usr/local -xzf go.tar.gz
 ENV GOPATH /go
 ENV GOROOT /usr/local/go
 ENV PATH $PATH:/usr/local/go/bin:/go/bin
-RUN curl -sL http://deb.nodesource.com/setup_5.x | sudo -E bash - && \
+RUN curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash - && \
 apt-get install -y nodejs && \
 ln -s /usr/bin/node /usr/local/bin/node
 RUN apt-get update && apt-get install -y \
@@ -64,20 +64,21 @@ logrotate python-docutils pkg-config cmake libmysqlclient-dev \
 mysql-client redis-tools
 RUN mkdir /tmp/ruby && \
 cd /tmp/ruby && \
-curl -L https://cache.ruby-lang.org/pub/ruby/2.3/ruby-2.3.3.tar.gz -o ruby.tar.gz && \
-echo '1014ee699071aa2ddd501907d18cbe15399c997d  ruby.tar.gz' | shasum -c - && tar xzf ruby.tar.gz && \
-ls -alh && cd ruby-2.3.3 && ./configure --disable-install-rdoc && make && make install
+curl -L https://cache.ruby-lang.org/pub/ruby/2.3/ruby-2.3.4.tar.gz -o ruby.tar.gz && \
+echo 'd064b9c69329ca2eb2956ad57b7192184178e35d  ruby.tar.gz' | shasum -c - && tar xzf ruby.tar.gz && \
+ls -alh && cd ruby-* && ./configure --disable-install-rdoc && make && make install
 RUN gem install bundler --no-ri --no-rdoc && \
+curl -L https://yarnpkg.com/install.sh | bash - && \
 adduser --disabled-login --gecos 'GitLab' git && \
 sudo -u git -H mkdir -p /home/git/.ssh && \
 sudo -u git -H touch /home/git/.ssh/authorized_keys && \
 sudo -u git -H git config --global core.autocrlf "input" && \
 sudo -u git -H git config --global gc.auto 0 && \
 sudo -u git -H git config --global repack.writeBitmaps true && \
-sudo -u git -H curl -L --progress https://github.com/gitlabhq/gitlabhq/archive/v8.17.4.zip -o /home/git/gitlab.zip && \
-sudo -u git -H echo 'fe4317c90c794ea66004a398fd0c27c0c8d721f5  /home/git/gitlab.zip' | shasum -c - && \
+sudo -u git -H curl -L https://gitlab.com/gitlab-org/gitlab-ce/repository/archive.zip?ref=v9.1.2 -o /home/git/gitlab.zip && \
+sudo -u git -H echo 'c4d60ef5badd248f691bdb980e46e8e4c8f378fd  /home/git/gitlab.zip' | shasum -c - && \
 sudo -u git -H unzip /home/git/gitlab.zip -d /home/git && \
-sudo -u git -H mv /home/git/gitlabhq-* /home/git/gitlab && \
+sudo -u git -H mv /home/git/gitlab-ce-* /home/git/gitlab && \
 sudo -u git -H rm /home/git/gitlab.zip
 ADD files/gitlab/gitlab.yml /home/git/gitlab/config/
 RUN chown git /home/git/gitlab/config/ && \
@@ -204,10 +205,11 @@ echo 'fi' >> /bin/everyboot && \
 echo 'echo "Migrate database"' >> /bin/everyboot && \
 echo 'sudo -u git -H bundle exec rake db:migrate RAILS_ENV=production' >> /bin/everyboot && \
 echo 'echo "Precompiling assets in the background"' >> /bin/everyboot && \
-echo 'sudo -u git -H bundle exec rake assets:precompile RAILS_ENV=production &' >> /bin/everyboot && \
-echo 'sudo -u git -H bundle exec rake webpack:compile RAILS_ENV=production &' >> /bin/everyboot && \
+echo 'sudo -u git -H bundle exec rake yarn:install gitlab:assets:clean gitlab:assets:compile RAILS_ENV=production NODE_ENV=production &' >> /bin/everyboot && \
 echo 'echo "Rebuild authorized_keys file"' >> /bin/everyboot && \
 echo 'sudo -u git -H bundle exec rake gitlab:shell:setup RAILS_ENV=production force=yes' >> /bin/everyboot && \
+echo 'echo "Clear cache"' >> /bin/everyboot && \
+echo 'sudo -u git -H bundle exec rake cache:clear RAILS_ENV=production' >> /bin/everyboot && \
 echo 'touch /home/git/gitlab/log/gitlab-workhorse.log' >> /bin/everyboot && \
 echo 'touch /home/git/gitlab/log/mail_room.log' >> /bin/everyboot && \
 echo 'touch /home/git/gitlab/log/production.log' >> /bin/everyboot && \

@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## v1.4.6 - 2017-05-01
+
+### Changed
+
+* whatwedo/gitlab: Updated to GitLab v9.1.2
+* whatwedo/gitlab: use GitLab.com releases
+* whatwedo/node: update Node.js to v6 LTS
+* whatwedo/gitlab-ci-multi-runner: update to v1.11.1
+
+## v1.4.5 - 2017-04-04
+
+### Changed
+
+* whatwedo/gitlab-ci-multi-runner: update to v1.11.1
+
+
 ## v1.4.4 - 2017-03-22
 
 ### Changed

@@ -165,8 +165,8 @@ production: &base
     host: example.com
     port: 80 # Set to 443 if you serve the pages with HTTPS
     https: false # Set to true if you serve the pages with HTTPS
-    # external_http: "1.1.1.1:80" # If defined, enables custom domain support in GitLab Pages
-    # external_https: "1.1.1.1:443" # If defined, enables custom domain and certificate support in GitLab Pages
+    # external_http: ["1.1.1.1:80", "[2001::1]:80"] # If defined, enables custom domain support in GitLab Pages
+    # external_https: ["1.1.1.1:443", "[2001::1]:443"] # If defined, enables custom domain and certificate support in GitLab Pages
 
   ## Mattermost
   ## For enabling Add to Mattermost button
@@ -185,9 +185,12 @@ production: &base
   # Periodically executed jobs, to self-heal Gitlab, do external synchronizations, etc.
   # Please read here for more information: https://github.com/ondrejbartas/sidekiq-cron#adding-cron-job
   cron_jobs:
-    # Flag stuck CI builds as failed
-    stuck_ci_builds_worker:
-      cron: "0 0 * * *"
+    # Flag stuck CI jobs as failed
+    stuck_ci_jobs_worker:
+      cron: "0 * * * *"
+    # Execute scheduled triggers
+    trigger_schedule_worker:
+      cron: "* * * * *"
     # Remove expired build artifacts
     expire_build_artifacts_worker:
       cron: "50 * * * *"
@@ -449,6 +452,12 @@ production: &base
   shared:
     path: /data/shared
 
+  # Gitaly settings
+  gitaly:
+    # This setting controls whether GitLab uses Gitaly (new component
+    # introduced in 9.0). Eventually Gitaly use will become mandatory and
+    # this option will disappear.
+    enabled: false
 
   #
   # 4. Advanced settings
@@ -469,7 +478,9 @@ production: &base
     # gitlab-shell invokes Dir.pwd inside the repository path and that results
     # real path not the symlink.
     storages: # You must have at least a `default` storage path.
-      default: /data/repositories/
+      default:
+        path: /data/repositories/
+        gitaly_address: unix:/home/git/gitlab/tmp/sockets/private/gitaly.socket # TCP connections are supported too (e.g. tcp://host:port)
 
   ## Backup settings
   backup:
@@ -576,11 +587,15 @@ test:
     # In order to setup it correctly you need to specify
     # your system username you use to run GitLab
     # user: YOUR_USERNAME
-  satellites:
-    path: tmp/tests/gitlab-satellites/
+  pages:
+    path: tmp/tests/pages
   repositories:
     storages:
-      default: tmp/tests/repositories/
+      default:
+        path: tmp/tests/repositories/
+        gitaly_address: unix:<%= Rails.root.join('tmp/sockets/private/gitaly.socket') %>
+  gitaly:
+    enabled: false
   backup:
     path: tmp/tests/backups
   gitlab_shell:
@@ -594,7 +609,7 @@ test:
       new_issue_url: "http://redmine/projects/:issues_tracker_id/issues/new"
     jira:
       title: "JIRA"
-      url: https://sample_company.atlasian.net
+      url: https://sample_company.atlassian.net
       project_key: PROJECT
   ldap:
     enabled: false

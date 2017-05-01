@@ -9,7 +9,7 @@
 
 FROM whatwedo/base:latest
 RUN apt-get update -y && \
-curl -sL http://deb.nodesource.com/setup_5.x | sudo -E bash - && \
+curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash - && \
 apt-get install -y nodejs && \
 ln -s /usr/bin/node /usr/local/bin/node && \
 apt-get autoremove -y && \
