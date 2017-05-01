@@ -15,7 +15,9 @@ RUN ls -alh && cd ruby-* && ./configure --disable-install-rdoc && make && make i
 LASTRUN gem install bundler --no-ri --no-rdoc
 
 # Install yarn
-RUN curl -L https://yarnpkg.com/install.sh | bash -
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+LASTRUN apt-get update && sudo apt-get install yarn -y
 
 # GitLab
 RUN adduser --disabled-login --gecos 'GitLab' git
@@ -179,7 +181,9 @@ RUN echo 'echo "Migrate database"' >> /bin/everyboot
 RUN echo 'sudo -u git -H bundle exec rake db:migrate RAILS_ENV=production' >> /bin/everyboot
 
 RUN echo 'echo "Precompiling assets in the background"' >> /bin/everyboot
-RUN echo 'sudo -u git -H bundle exec rake yarn:install gitlab:assets:clean gitlab:assets:compile RAILS_ENV=production NODE_ENV=production &' >> /bin/everyboot
+RUN echo 'sudo -u git -H bundle exec rake yarn:install RAILS_ENV=production NODE_ENV=production' >> /bin/everyboot
+RUN echo 'sudo -u git -H bundle exec rake gitlab:assets:clean RAILS_ENV=production NODE_ENV=production' >> /bin/everyboot
+RUN echo 'sudo -u git -H bundle exec rake gitlab:assets:compile RAILS_ENV=production NODE_ENV=production' >> /bin/everyboot
 
 RUN echo 'echo "Rebuild authorized_keys file"' >> /bin/everyboot
 RUN echo 'sudo -u git -H bundle exec rake gitlab:shell:setup RAILS_ENV=production force=yes' >> /bin/everyboot

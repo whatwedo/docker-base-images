@@ -68,7 +68,9 @@ curl -L https://cache.ruby-lang.org/pub/ruby/2.3/ruby-2.3.4.tar.gz -o ruby.tar.g
 echo 'd064b9c69329ca2eb2956ad57b7192184178e35d  ruby.tar.gz' | shasum -c - && tar xzf ruby.tar.gz && \
 ls -alh && cd ruby-* && ./configure --disable-install-rdoc && make && make install
 RUN gem install bundler --no-ri --no-rdoc && \
-curl -L https://yarnpkg.com/install.sh | bash - && \
+curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
+echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+RUN apt-get update && sudo apt-get install yarn -y && \
 adduser --disabled-login --gecos 'GitLab' git && \
 sudo -u git -H mkdir -p /home/git/.ssh && \
 sudo -u git -H touch /home/git/.ssh/authorized_keys && \
@@ -205,7 +207,9 @@ echo 'fi' >> /bin/everyboot && \
 echo 'echo "Migrate database"' >> /bin/everyboot && \
 echo 'sudo -u git -H bundle exec rake db:migrate RAILS_ENV=production' >> /bin/everyboot && \
 echo 'echo "Precompiling assets in the background"' >> /bin/everyboot && \
-echo 'sudo -u git -H bundle exec rake yarn:install gitlab:assets:clean gitlab:assets:compile RAILS_ENV=production NODE_ENV=production &' >> /bin/everyboot && \
+echo 'sudo -u git -H bundle exec rake yarn:install RAILS_ENV=production NODE_ENV=production' >> /bin/everyboot && \
+echo 'sudo -u git -H bundle exec rake gitlab:assets:clean RAILS_ENV=production NODE_ENV=production' >> /bin/everyboot && \
+echo 'sudo -u git -H bundle exec rake gitlab:assets:compile RAILS_ENV=production NODE_ENV=production' >> /bin/everyboot && \
 echo 'echo "Rebuild authorized_keys file"' >> /bin/everyboot && \
 echo 'sudo -u git -H bundle exec rake gitlab:shell:setup RAILS_ENV=production force=yes' >> /bin/everyboot && \
 echo 'echo "Clear cache"' >> /bin/everyboot && \
