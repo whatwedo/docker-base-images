@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## v1.4.8 - 2017-06-06
+
+### Bugfixes
+
+* whatwedo/apache: fix removal of old apache2 PID file
+* whatwedo/apache-php5.6: fix removal of old apache2 PID file
+* whatwedo/apache-php70: fix removal of old apache2 PID file
+* whatwedo/icinga2: fix removal of old apache2 PID file
+* whatwedo/nextcloud: fix removal of old apache2 PID file
+* whatwedo/owncloud: fix removal of old apache2 PID file
+* whatwedo/wordpress: fix removal of old apache2 PID file
+
+## v1.4.7 - 2017-05-02
+
+### Bugfixes
+
+* whatwedo/gitlab: fixing yarn installation
+
 ## v1.4.6 - 2017-05-01
 
 ### Changed
