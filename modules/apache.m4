@@ -24,6 +24,7 @@ RUN sed -i '/<Directory \/var\/www\/>/,/<\/Directory>/ s/AllowOverride None/Allo
 RUN echo "#\0041/bin/bash" > /bin/start-apache
 RUN echo "rm -rf /run/httpd/*" >> /bin/start-apache
 RUN echo "rm -f /var/run/apache2.pid" >> /bin/start-apache
+RUN echo "rm -f rm /run/apache2.pid" >> /bin/start-apache
 RUN echo "apache2 -D FOREGROUND" >> /bin/start-apache
 RUN chmod 755 /bin/start-apache
 
