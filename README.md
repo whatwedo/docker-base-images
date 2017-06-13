@@ -7,43 +7,45 @@ We at [whatwedo](https://whatwedo.ch/) are slowly going away from traditional ap
 ## Images
 | Name | Description |
 |---|---|
-| [whatwedo/base](https://github.com/whatwedo/docker-base-images/tree/master/dist/base/) | several base packages for daily working with docker installed |
-| [whatwedo/apache](https://github.com/whatwedo/docker-base-images/tree/master/dist/apache/) | Apache 2 webserver |
-| [whatwedo/apache-php56](https://github.com/whatwedo/docker-base-images/tree/master/dist/apache-php56/) | Apache 2 webserver including PHP 5.6 |
-| [whatwedo/apache-php70](https://github.com/whatwedo/docker-base-images/tree/master/dist/apache-php70/) | Apache 2 webserver including PHP 7.0 |
-| [whatwedo/bind](https://github.com/whatwedo/docker-base-images/tree/master/dist/bind/) | Bind9 nameserver |
-| [whatwedo/docker](https://github.com/whatwedo/docker-base-images/tree/master/dist/docker/) | Docker in docker |
-| [whatwedo/elasticsearch](https://github.com/whatwedo/docker-base-images/tree/master/dist/elasticsearch/) | Elasticsearch server |
-| [whatwedo/gitlab-ci-multirunner](https://github.com/whatwedo/docker-base-images/tree/master/dist/gitlab-ci-multi-runner/) | GitLab CI Multirunner |
-| [whatwedo/gitlab](https://github.com/whatwedo/docker-base-images/tree/master/dist/gitlab/) | GitLab |
-| [whatwedo/golang](https://github.com/whatwedo/docker-base-images/tree/master/dist/golang/) | Golang compiler |
-| [whatwedo/icinga2](https://github.com/whatwedo/docker-base-images/tree/master/dist/icinga2/) | Icinga2 and Icinga2-Web |
-| [whatwedo/java](https://github.com/whatwedo/docker-base-images/tree/master/dist/java/) | Java 8 |
-| [whatwedo/kibana](https://github.com/whatwedo/docker-base-images/tree/master/dist/kibana/) | Kibana data exploration UI |
-| [whatwedo/logstash](https://github.com/whatwedo/docker-base-images/tree/master/dist/logstash/) | Logstash |
-| [whatwedo/logstash-forwarder](https://github.com/whatwedo/docker-base-images/tree/master/dist/logstash-forwarder/) | Logstash-Forwarder |
-| [whatwedo/mariadb](https://github.com/whatwedo/docker-base-images/tree/master/dist/mariadb/) | MariaDB server |
-| [whatwedo/memcached](https://github.com/whatwedo/docker-base-images/tree/master/dist/memcached/) | memcached server |
-| [whatwedo/mongodb](https://github.com/whatwedo/docker-base-images/tree/master/dist/mongodb/) | MongoDB server |
-| [whatwedo/nextcloud](https://github.com/whatwedo/docker-base-images/tree/master/dist/nextcloud/) | Nextcloud server |
-| [whatwedo/nginx](https://github.com/whatwedo/docker-base-images/tree/master/dist/nginx/) | nginx webserver |
-| [whatwedo/nginx-php56](https://github.com/whatwedo/docker-base-images/tree/master/dist/nginx-php56/) | nginx webserver including PHP 5.6 |
-| [whatwedo/nginx-php70](https://github.com/whatwedo/docker-base-images/tree/master/dist/nginx-php70/) | nginx webserver including PHP 7.0 |
-| [whatwedo/node](https://github.com/whatwedo/docker-base-images/tree/master/dist/node/) | Node |
-| [whatwedo/owncloud](https://github.com/whatwedo/docker-base-images/tree/master/dist/owncloud/) | ownCloud server |
-| [whatwedo/php56](https://github.com/whatwedo/docker-base-images/tree/master/dist/php56/) | PHP 5.6 interpreter |
-| [whatwedo/php70](https://github.com/whatwedo/docker-base-images/tree/master/dist/postgres/) | PHP 7.0 interpreter |
-| [whatwedo/postgres](https://github.com/whatwedo/docker-base-images/tree/master/dist/postgres/) | Postgres database server |
-| [whatwedo/puppet-client](https://github.com/whatwedo/docker-base-images/tree/master/dist/puppet-client/) | Puppet Client |
-| [whatwedo/redis](https://github.com/whatwedo/docker-base-images/tree/master/dist/redis/) | Redis data structure server |
-| [whatwedo/ruby](https://github.com/whatwedo/docker-base-images/tree/master/dist/ruby/) | Ruby interpreter |
-| [whatwedo/squid](https://github.com/whatwedo/docker-base-images/tree/master/dist/squid/) | Squid proxy server |
-| [whatwedo/symfony2](https://github.com/whatwedo/docker-base-images/tree/master/dist/symfony2/) | nginx configured for running Symfony 2 |
-| [whatwedo/symfony3](https://github.com/whatwedo/docker-base-images/tree/master/dist/symfony3/) | nginx configured for running Symfony 3 |
-| [whatwedo/tomcat](https://github.com/whatwedo/docker-base-images/tree/master/dist/tomcat/) | Tomcat application server |
-| [whatwedo/wordpress](https://github.com/whatwedo/docker-base-images/tree/master/dist/wordpress/) | WordPress installed on Apache 2 |
-| [whatwedo/wordpress-nginx-w3tc](https://github.com/whatwedo/docker-base-images/tree/master/dist/wordpress-nginx-w3tc/) | WordPress running on nginx with PHP 7.0 and W3 Total Cache configuration |
+| [whatwedo/base](https://github.com/whatwedo/docker-base-images/tree/master/images/base.md) | several base packages for daily working with docker installed |
+| [whatwedo/apache](https://github.com/whatwedo/docker-base-images/tree/master/images/apache.md) | Apache 2 webserver |
+| [whatwedo/apache-php56](https://github.com/whatwedo/docker-base-images/tree/master/images/apache-php56.md) | Apache 2 webserver including PHP 5.6 |
+| [whatwedo/apache-php70](https://github.com/whatwedo/docker-base-images/tree/master/images/apache-php70.md) | Apache 2 webserver including PHP 7.0 |
+| [whatwedo/bind](https://github.com/whatwedo/docker-base-images/tree/master/images/bind.md) | Bind9 nameserver |
+| [whatwedo/docker](https://github.com/whatwedo/docker-base-images/tree/master/images/docker.md) | Docker in docker |
+| [whatwedo/elasticsearch](https://github.com/whatwedo/docker-base-images/tree/master/images/elasticsearch.md) | Elasticsearch server |
+| [whatwedo/gitlab-ci-multirunner](https://github.com/whatwedo/docker-base-images/tree/master/images/gitlab-ci-multi-runner.md) | GitLab CI Multirunner |
+| [whatwedo/gitlab](https://github.com/whatwedo/docker-base-images/tree/master/images/gitlab.md) | GitLab |
+| [whatwedo/golang](https://github.com/whatwedo/docker-base-images/tree/master/images/golang.md) | Golang compiler |
+| [whatwedo/icinga2](https://github.com/whatwedo/docker-base-images/tree/master/images/icinga2.md) | Icinga2 and Icinga2-Web |
+| [whatwedo/java](https://github.com/whatwedo/docker-base-images/tree/master/images/java.md) | Java 8 |
+| [whatwedo/kibana](https://github.com/whatwedo/docker-base-images/tree/master/images/kibana.md) | Kibana data exploration UI |
+| [whatwedo/logstash](https://github.com/whatwedo/docker-base-images/tree/master/images/logstash.md) | Logstash |
+| [whatwedo/logstash-forwarder](https://github.com/whatwedo/docker-base-images/tree/master/images/logstash-forwarder.md) | Logstash-Forwarder |
+| [whatwedo/mariadb](https://github.com/whatwedo/docker-base-images/tree/master/images/mariadb.md) | MariaDB server |
+| [whatwedo/memcached](https://github.com/whatwedo/docker-base-images/tree/master/images/memcached.md) | memcached server |
+| [whatwedo/mongodb](https://github.com/whatwedo/docker-base-images/tree/master/images/mongodb.md) | MongoDB server |
+| [whatwedo/nextcloud](https://github.com/whatwedo/docker-base-images/tree/master/images/nextcloud.md) | Nextcloud server |
+| [whatwedo/nginx](https://github.com/whatwedo/docker-base-images/tree/master/images/nginx.md) | nginx webserver |
+| [whatwedo/nginx-php56](https://github.com/whatwedo/docker-base-images/tree/master/images/nginx-php56.md) | nginx webserver including PHP 5.6 |
+| [whatwedo/nginx-php70](https://github.com/whatwedo/docker-base-images/tree/master/images/nginx-php70.md) | nginx webserver including PHP 7.0 |
+| [whatwedo/node](https://github.com/whatwedo/docker-base-images/tree/master/images/node.md) | Node |
+| [whatwedo/openldap](https://github.com/whatwedo/docker-base-images/tree/master/images/openldap.md) | openLDAP server |
+| [whatwedo/owncloud](https://github.com/whatwedo/docker-base-images/tree/master/images/owncloud.md) | ownCloud server |
+| [whatwedo/php56](https://github.com/whatwedo/docker-base-images/tree/master/images/php56.md) | PHP 5.6 interpreter |
+| [whatwedo/php70](https://github.com/whatwedo/docker-base-images/tree/master/images/postgres.md) | PHP 7.0 interpreter |
+| [whatwedo/postgres](https://github.com/whatwedo/docker-base-images/tree/master/images/postgres.md) | Postgres database server |
+| [whatwedo/puppet-client](https://github.com/whatwedo/docker-base-images/tree/master/images/puppet-client.md) | Puppet Client |
+| [whatwedo/redis](https://github.com/whatwedo/docker-base-images/tree/master/images/redis.md) | Redis data structure server |
+| [whatwedo/ruby](https://github.com/whatwedo/docker-base-images/tree/master/images/ruby.md) | Ruby interpreter |
+| [whatwedo/squid](https://github.com/whatwedo/docker-base-images/tree/master/images/squid.md) | Squid proxy server |
+| [whatwedo/symfony2](https://github.com/whatwedo/docker-base-images/tree/master/images/symfony2.md) | nginx configured for running Symfony 2 |
+| [whatwedo/symfony3](https://github.com/whatwedo/docker-base-images/tree/master/images/symfony3.md) | nginx configured for running Symfony 3 |
+| [whatwedo/tomcat](https://github.com/whatwedo/docker-base-images/tree/master/images/tomcat.md) | Tomcat application server |
+| [whatwedo/wordpress](https://github.com/whatwedo/docker-base-images/tree/master/images/wordpress.md) | WordPress installed on Apache 2 |
+| [whatwedo/wordpress-nginx-w3tc](https://github.com/whatwedo/docker-base-images/tree/master/images/wordpress-nginx-w3tc.md) | WordPress running on nginx with PHP 7.0 and W3 Total Cache configuration |
 
+https://github.com/whatwedo/docker-base-images/tree/master/images
 
 ## Directory/File Layout
 The following table show the directory Layout of this repository:

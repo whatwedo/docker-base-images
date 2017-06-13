@@ -209,6 +209,14 @@ node:
     only:
         - master
 
+openldap:
+    script:
+        - ./docker-builder.sh build-image $CI_BUILD_NAME
+        - ./docker-builder.sh publish-image $CI_BUILD_NAME
+    stage: other
+    only:
+        - master
+
 owncloud:
     script:
         - ./docker-builder.sh build-image $CI_BUILD_NAME

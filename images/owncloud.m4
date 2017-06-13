@@ -14,6 +14,3 @@ include(`modules/cleanup.m4')
 #Expose Ports
 EXPOSE 80
 EXPOSE 443
-
-# Define volume
-VOLUME /var/www/html

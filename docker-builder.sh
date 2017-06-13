@@ -22,8 +22,8 @@ set -e
 # Check software
 dockerTest=$(which docker)
 m4Test=$(which m4)
-[ -z "$dockerTest" && "$1" -ne "lint-file" && "$1" -ne "lint-files" ] && { echo "docker doesn't appear to be installed - this is required for script to run"; exit 1; }
-[ -z "$m4Test" && "$1" -ne "lint-file" && "$1" -ne "lint-files" ] && { echo "m4 doesn't appear to be installed - this is required for script to run"; exit 1; }
+[[ -z "$dockerTest" && "$1" -ne "lint-file" && "$1" -ne "lint-files" ]] && { echo "docker doesn't appear to be installed - this is required for script to run"; exit 1; }
+[[ -z "$m4Test" && "$1" -ne "lint-file" && "$1" -ne "lint-files" ]] && { echo "m4 doesn't appear to be installed - this is required for script to run"; exit 1; }
 
 # Set directory
 cd "$(dirname "$0")"
@@ -145,7 +145,7 @@ lint-file() {
   if [[ -f /root/.local/bin/hadolint ]]; then
     /root/.local/bin/hadolint ./Dockerfile
   else
-    docker run --rm -i -v `pwd`:/data lukasmartinelli/hadolint hadolint /data/Dockerfile || true 
+    docker run --rm -i -v `pwd`:/data lukasmartinelli/hadolint hadolint /data/Dockerfile || true
     # allow failure to not interrupt the ci task
   fi
   cd ../..
