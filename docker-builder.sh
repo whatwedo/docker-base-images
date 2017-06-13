@@ -22,8 +22,8 @@ set -e
 # Check software
 dockerTest=$(which docker)
 m4Test=$(which m4)
-[ -z "$dockerTest" ] && { echo "docker doesn't appear to be installed - this is required for script to run"; exit 1; }
-[ -z "$m4Test" ] && { echo "m4 doesn't appear to be installed - this is required for script to run"; exit 1; }
+[[ -z "$dockerTest" && "$1" -ne "lint-file" && "$1" -ne "lint-files" ]] && { echo "docker doesn't appear to be installed - this is required for script to run"; exit 1; }
+[[ -z "$m4Test" && "$1" -ne "lint-file" && "$1" -ne "lint-files" ]] && { echo "m4 doesn't appear to be installed - this is required for script to run"; exit 1; }
 
 # Set directory
 cd "$(dirname "$0")"
@@ -122,6 +122,34 @@ update-base-images() {
   docker pull whatwedo/base:latest
 }
 
+# lint all dockerfiles
+lint-files() {
+  echo "start"
+  for file in dist/*; do
+    name="${file##*/}"
+    echo ""
+    echo ""
+    echo "##########################################"
+    echo "# Linting image $name"
+    echo "##########################################"
+    echo ""
+    lint-file $name
+  done
+    echo ""
+    echo ""
+}
+
+# Lint file with hadolint
+lint-file() {
+  cd "dist/$1"
+  if [[ -f /root/.local/bin/hadolint ]]; then
+    /root/.local/bin/hadolint ./Dockerfile
+  else
+    docker run --rm -i -v `pwd`:/data lukasmartinelli/hadolint hadolint /data/Dockerfile || true
+    # allow failure to not interrupt the ci task
+  fi
+  cd ../..
+}
 
 if [ "$1" = "build-files" ]; then
   build-files
@@ -141,6 +169,11 @@ elif [ "$1" = "build-cached-image" ]; then
 elif [ "$1" = "publish-image" ]; then
   [ -z "$2" ] && { echo "Image name not specified"; exit 1; }
   publish-image $2
+elif [ "$1" = "lint-file" ]; then
+  [ -z "$2" ] && { echo "Image name not specified"; exit 1; }
+  lint-file $2
+elif [ "$1" = "lint-files" ]; then
+  lint-files
 else
 	echo "
   docker-builder.sh is a script for managing complex docker images
@@ -155,6 +188,8 @@ else
   ./docker-builder.sh build-image [name]         - This will build the given image
   ./docker-builder.sh build-cached-image [name]  - This will build the given image with cache
   ./docker-builder.sh publish-image [name]       - This will publish the given existing image
+  ./docker-builder.sh lint-file [name]           - This will linting a given Dockerfiles with hadolint
+  ./docker-builder.sh lint-files [name]          - This will lint all Dockerfiles
 
   "
 fi
