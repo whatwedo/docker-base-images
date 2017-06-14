@@ -14,8 +14,5 @@ RUN echo 'debconf-set-selections <<< "slapd slapd/purge_database boolean false"'
 RUN echo 'debconf-set-selections <<< "slapd slapd/move_old_database boolean true"' >> /bin/firstboot
 RUN echo 'dpkg-reconfigure -f noninteractive slapd' >> /bin/firstboot
 
-# Edit everyboot
-RUN echo 'ulimit -n 1024' >> /bin/everyboot # When not limiting the open file descritors limit, the memory consumption of slapd is absurdly high
-
 #Add openldap to supervisord config
 COPY files/supervisord/openldap.conf /etc/supervisor/conf.d/openldap.conf
