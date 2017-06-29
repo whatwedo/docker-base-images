@@ -58,9 +58,9 @@ RUN apt-get install -y curl wget supervisor rsyslog python-pip git-core zip unzi
 RUN pip install supervisor-stdout
 
 # Add Supervisord Healthcheck
-COPY files/healthcheck/health_check.sh /bin/
-RUN chmod 777 /bin/health_check.sh
-HEALTHCHECK CMD /bin/bash /bin/health_check.sh
+COPY files/healthcheck/health_check /bin/
+RUN chmod +x /bin/health_check
+HEALTHCHECK CMD /bin/bash /bin/health_check
 
 # Add default supervisord config
 COPY files/supervisord/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
