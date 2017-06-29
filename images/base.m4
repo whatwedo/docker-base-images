@@ -57,6 +57,11 @@ ADD files/motd /etc
 RUN apt-get install -y curl wget supervisor rsyslog python-pip git-core zip unzip
 RUN pip install supervisor-stdout
 
+# Add Supervisord Healthcheck
+COPY files/healthcheck/health_check.sh /bin/
+RUN chmod 777 /bin/health_check.sh
+HEALTHCHECK CMD /bin/bash /bin/health_check.sh
+
 # Add default supervisord config
 COPY files/supervisord/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY files/supervisord/cron.conf /etc/supervisor/conf.d/cron.conf

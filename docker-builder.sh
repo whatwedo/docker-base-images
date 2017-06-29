@@ -184,7 +184,6 @@ else
 
   ./docker-builder.sh build-files                - This will build all dockerfiles
   ./docker-builder.sh build-file [name]          - This will build the given dockerfile
-  ./docker-builder.sh build-images               - This will build all images
   ./docker-builder.sh build-image [name]         - This will build the given image
   ./docker-builder.sh build-cached-image [name]  - This will build the given image with cache
   ./docker-builder.sh publish-image [name]       - This will publish the given existing image
