@@ -55,13 +55,14 @@ ENV GOROOT /usr/local/go
 ENV PATH $PATH:/usr/local/go/bin:/go/bin
 RUN curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash - && \
 apt-get install -y nodejs && \
-ln -s /usr/bin/node /usr/local/bin/node
+ln -s /usr/bin/node /usr/local/bin/node && \
+add-apt-repository ppa:pi-rho/security -y
 RUN apt-get update && apt-get install -y \
 build-essential zlib1g-dev libyaml-dev libssl-dev libgdbm-dev \
 libreadline-dev libncurses5-dev libffi-dev curl openssh-server \
 checkinstall libxml2-dev libxslt-dev libcurl4-openssl-dev libicu-dev \
 logrotate python-docutils pkg-config cmake libmysqlclient-dev \
-mysql-client redis-tools
+mysql-client redis-tools libre2-0 libre2-0-dev
 RUN mkdir /tmp/ruby && \
 cd /tmp/ruby && \
 curl -L https://cache.ruby-lang.org/pub/ruby/2.3/ruby-2.3.4.tar.gz -o ruby.tar.gz && \
@@ -69,7 +70,7 @@ echo 'd064b9c69329ca2eb2956ad57b7192184178e35d  ruby.tar.gz' | shasum -c - && ta
 ls -alh && cd ruby-* && ./configure --disable-install-rdoc && make && make install
 RUN gem install bundler --no-ri --no-rdoc && \
 curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
-echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarnpkg.list
 RUN apt-get update && sudo apt-get install yarn -y && \
 adduser --disabled-login --gecos 'GitLab' git && \
 sudo -u git -H mkdir -p /home/git/.ssh && \
@@ -77,8 +78,8 @@ sudo -u git -H touch /home/git/.ssh/authorized_keys && \
 sudo -u git -H git config --global core.autocrlf "input" && \
 sudo -u git -H git config --global gc.auto 0 && \
 sudo -u git -H git config --global repack.writeBitmaps true && \
-sudo -u git -H curl -L https://gitlab.com/gitlab-org/gitlab-ce/repository/archive.zip?ref=v9.1.2 -o /home/git/gitlab.zip && \
-sudo -u git -H echo 'c4d60ef5badd248f691bdb980e46e8e4c8f378fd  /home/git/gitlab.zip' | shasum -c - && \
+sudo -u git -H curl -L https://gitlab.com/gitlab-org/gitlab-ce/repository/archive.zip?ref=v9.4.1 -o /home/git/gitlab.zip && \
+sudo -u git -H echo 'a6632067f157f302c56f5c997dfd1d8777095b16  /home/git/gitlab.zip' | shasum -c - && \
 sudo -u git -H unzip /home/git/gitlab.zip -d /home/git && \
 sudo -u git -H mv /home/git/gitlab-ce-* /home/git/gitlab && \
 sudo -u git -H rm /home/git/gitlab.zip
