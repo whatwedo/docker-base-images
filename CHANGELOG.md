@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## Unreleased
+
+### Changed
+
+* redis moved to a later build stage than all other images because our registry is using it and is unavailable for a short time while updating the container.
+* whatwedo/gitlab: Updated to GitLab v9.4.1
+
+## v1.4.15 - 2017-05-14
+
+### Bugfixes
+
+* whatwedo/openladp: fixes a memory leak 
+
+## v1.4.9 - 2017-06-13
+
+### Features
+
+* whatwedo/openladp: new OpenLDAP image
+
 ## v1.4.8 - 2017-06-06
 
 ### Bugfixes
