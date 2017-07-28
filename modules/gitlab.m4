@@ -136,6 +136,7 @@ RUN echo 'sed -i s/{{CONTAINER_REGISTRY_HOST}}/${CONTAINER_REGISTRY_HOST}/g conf
 RUN echo 'sed -i s/{{CONTAINER_REGISTRY_PORT}}/${CONTAINER_REGISTRY_PORT}/g config/gitlab.yml' >> /bin/everyboot
 RUN echo 'sed -i s@{{CONTAINER_REGISTRY_API_URL}}@${CONTAINER_REGISTRY_API_URL}@g config/gitlab.yml' >> /bin/everyboot
 RUN echo 'sed -i s/{{CONTAINER_REGISTRY_ISSUER}}/${CONTAINER_REGISTRY_ISSUER}/g config/gitlab.yml' >> /bin/everyboot
+RUN echo 'sed -i s/{{CONTAINER_TIMEZONE}}/${CONTAINER_TIMEZONE}/g config/gitlab.yml' >> /bin/everyboot
 
 RUN echo 'sed -i s/db_key_base\:$/db_key_base:\ ${GITLAB_DATABASE_SECRET_KEY}/g config/secrets.yml' >> /bin/everyboot
 RUN echo 'sed -i s/secret_key_base\:$/secret_key_base:\ ${GITLAB_SECRET_KEY_BASE}/g config/secrets.yml' >> /bin/everyboot
