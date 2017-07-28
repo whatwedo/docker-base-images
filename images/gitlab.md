@@ -38,6 +38,20 @@ docker run \
     -e DATABASE_PASSWORD=mysecretpassword
     -e DATABASE_NAME=gitlabhq_production
     -e DATABASE_HOST=db
+    -e GITLAB_PROJECT_FEATURES_CONTAINER_REGISTRY=false
+    -e GITLAB_INCOMING_EMAIL_ENABLED=false
+    -e GITLAB_INCOMING_EMAIL_ADDRESS=example@example.com 
+    -e GITLAB_INCOMING_EMAIL_USER=exanoke
+    -e GITLAB_INCOMING_EMAIL_PASSWORD=mysecretpassword
+    -e GITLAB_INCOMING_EMAIL_IMAP_HOST=imap.example.com
+    -e GITLAB_INCOMING_EMAIL_IMAP_PORT=143
+    -e GITLAB_INCOMING_EMAIL_IMAP_SSL=false
+    -e GITLAB_INCOMING_EMAIL_IMAP_STARTTLS=false
+    -e GITLAB_INCOMING_EMAIL_IMAP_MAILBOX= "inbox"        
+    -e CONTAINER_REGISTRY_HOST=registry.gitlab.example.com
+    -e CONTAINER_REGISTRY_PORT=5005
+    -e CONTAINER_REGISTRY_API_URL=http://localhost:5000/
+    -e CONTAINER_REGISTRY_ISSUER=gitlab-issuer
     whatwedo/gitlab
 ```
 
@@ -84,6 +98,20 @@ gitlab:
     - DATABASE_PASSWORD=mysecretpassword
     - DATABASE_NAME=gitlabhq_production
     - DATABASE_HOST=db
+    - GITLAB_PROJECT_FEATURES_CONTAINER_REGISTRY=false
+    - GITLAB_INCOMING_EMAIL_ENABLED=false
+    - GITLAB_INCOMING_EMAIL_ADDRESS=example@example.com
+    - GITLAB_INCOMING_EMAIL_USER=exanoke
+    - GITLAB_INCOMING_EMAIL_PASSWORD=mysecretpassword
+    - GITLAB_INCOMING_EMAIL_IMAP_HOST=imap.example.com
+    - GITLAB_INCOMING_EMAIL_IMAP_PORT=143
+    - GITLAB_INCOMING_EMAIL_IMAP_SSL=false
+    - GITLAB_INCOMING_EMAIL_IMAP_STARTTLS=false
+    - GITLAB_INCOMING_EMAIL_IMAP_MAILBOX= "inbox"
+    - CONTAINER_REGISTRY_HOST=registry.gitlab.example.com
+    - CONTAINER_REGISTRY_PORT=5005
+    - CONTAINER_REGISTRY_API_URL=http://localhost:5000/
+    - CONTAINER_REGISTRY_ISSUER=gitlab-issuer 
   volumes:
     - /srv/docker/gitlab/gitlab/data:/data
 db:
@@ -158,6 +186,21 @@ docker exec -i -t ID bash -c "cd /home/git/gitlab && sudo -u git -H bundle exec 
 * `DATABASE_NAME` - database name
 * `DATABASE_HOST` - database host
 * `CONTAINER_TIMEZONE` - timezone which should be used, default: `Europe/Zurich` ([see Wikipedia](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones))
+* `GITLAB_PROJECT_FEATURES_CONTAINER_REGISTRY` - `true`/`false` if registry should be enabled 
+* `GITLAB_INCOMING_EMAIL_ENABLED` - Allow users to comment on issues and merge requests by replying to notification emails.
+* `GITLAB_INCOMING_EMAIL_ADDRESS` - The email address including the `%{key}` placeholder that will be replaced to reference the item being replied to. The placeholder can be omitted but if present, it must appear in the "user" part of the address (before the `@`).
+* `GITLAB_INCOMING_EMAIL_USER` -  Email account username      
+* `GITLAB_INCOMING_EMAIL_PASSWORD` - Email account password
+* `GITLAB_INCOMING_EMAIL_IMAP_HOST` - IMAP server host
+* `GITLAB_INCOMING_EMAIL_IMAP_PORT` - IMAP server port
+* `GITLAB_INCOMING_EMAIL_IMAP_SSL` -  Whether the IMAP server uses SSL
+* `GITLAB_INCOMING_EMAIL_IMAP_STARTTLS` - Whether the IMAP server uses StartTLS
+* `GITLAB_INCOMING_EMAIL_IMAP_MAILBOX` - The mailbox where incoming mail will end up. Usually "inbox".
+* `CONTAINER_REGISTRY_HOST` - Registry Server Host
+* `CONTAINER_REGISTRY_PORT` - Registry Server Port
+* `CONTAINER_REGISTRY_API_URL` - Registry Server API url
+* `CONTAINER_REGISTRY_ISSUER` - This should be the same value as configured in Registry's issuer
+
 
 ## Volumes
 
