@@ -1,27 +1,15 @@
 # Install GitLab from package sources
 
-RUN add-apt-repository ppa:pi-rho/security -y
-
-LASTRUN apt-get update && apt-get install -y \
+LASTRUN 
+    RUN add-apt-repository ppa:pi-rho/security -y \
+    apt-get update && apt-get install -y \
     build-essential zlib1g-dev libyaml-dev libssl-dev libgdbm-dev \
     libreadline-dev libncurses5-dev libffi-dev curl openssh-server \
     checkinstall libxml2-dev libxslt-dev libcurl4-openssl-dev libicu-dev \
     logrotate python-docutils pkg-config cmake libmysqlclient-dev \
     mysql-client redis-tools libre2-0 libre2-0-dev
 
-
-# Install Ruby 2.4.0
-# Ruby 2.4.1 not supported, crashes Authentication
-# 2.4.0 also not supported -.-
-# RUN mkdir /tmp/ruby
-# RUN cd /tmp/ruby
-# RUN curl -L http://cache.ruby-lang.org/pub/ruby/2.4/ruby-2.4.0.tar.gz -o ruby.tar.gz
-# RUN echo 'd44a3c50a0e742341ed3033d5db79d865151a4f4  ruby.tar.gz' | shasum -c - && tar xzf ruby.tar.gz
-# RUN ls -alh && cd ruby-* && ./configure --disable-install-rdoc && make && make install
-# LASTRUN gem install bundler --no-ri --no-rdoc
-
-
-#Install Ruby 2.3
+# Install Ruby 2.3
 RUN mkdir /tmp/ruby
 RUN cd /tmp/ruby
 RUN curl -L https://cache.ruby-lang.org/pub/ruby/2.3/ruby-2.3.4.tar.gz -o ruby.tar.gz
@@ -29,10 +17,11 @@ RUN echo 'd064b9c69329ca2eb2956ad57b7192184178e35d  ruby.tar.gz' | shasum -c - &
 RUN ls -alh && cd ruby-* && ./configure --disable-install-rdoc && make && make install
 LASTRUN gem install bundler --no-ri --no-rdoc
 
+# Install Yarn
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
 RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarnpkg.list
-# Install yarnyarn.list
 LASTRUN apt-get update && sudo apt-get install yarn -y
+
 # GitLab
 RUN adduser --disabled-login --gecos 'GitLab' git
 RUN sudo -u git -H mkdir -p /home/git/.ssh
