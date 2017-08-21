@@ -8,7 +8,7 @@ All notable changes to this project will be documented in this file. This projec
 ### Changed
 
 * redis moved to a later build stage than all other images because our registry is using it and is unavailable for a short time while updating the container.
-* whatwedo/gitlab: Updated to GitLab v9.4.1
+* whatwedo/gitlab: Updated to GitLab v9.4.5
 
 ## v1.4.15 - 2017-05-14
 
