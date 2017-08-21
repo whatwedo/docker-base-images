@@ -1,13 +1,12 @@
 # Install GitLab from package sources
 
-LASTRUN 
-    RUN add-apt-repository ppa:pi-rho/security -y \
-    apt-get update && apt-get install -y \
-    build-essential zlib1g-dev libyaml-dev libssl-dev libgdbm-dev \
-    libreadline-dev libncurses5-dev libffi-dev curl openssh-server \
-    checkinstall libxml2-dev libxslt-dev libcurl4-openssl-dev libicu-dev \
-    logrotate python-docutils pkg-config cmake libmysqlclient-dev \
-    mysql-client redis-tools libre2-0 libre2-0-dev
+LASTRUN add-apt-repository ppa:pi-rho/security -y
+RUN apt-get update 
+RUN apt-get install -y build-essential zlib1g-dev libyaml-dev libssl-dev libgdbm-dev \
+                       libreadline-dev libncurses5-dev libffi-dev curl openssh-server \
+                       checkinstall libxml2-dev libxslt-dev libcurl4-openssl-dev libicu-dev \
+                       logrotate python-docutils pkg-config cmake libmysqlclient-dev \
+                       mysql-client redis-tools libre2-0 libre2-0-dev
 
 # Install Ruby 2.3
 RUN mkdir /tmp/ruby
