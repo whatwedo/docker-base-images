@@ -29,8 +29,8 @@ RUN sudo -u git -H touch /home/git/.ssh/authorized_keys
 RUN sudo -u git -H git config --global core.autocrlf "input"
 RUN sudo -u git -H git config --global gc.auto 0
 RUN sudo -u git -H git config --global repack.writeBitmaps true
-RUN sudo -u git -H curl -L https://gitlab.com/gitlab-org/gitlab-ce/repository/archive.zip?ref=v9.4.1 -o /home/git/gitlab.zip
-RUN sudo -u git -H echo 'a6632067f157f302c56f5c997dfd1d8777095b16  /home/git/gitlab.zip' | shasum -c -
+RUN sudo -u git -H curl -L https://gitlab.com/gitlab-org/gitlab-ce/repository/v9.4.5/archive.zip -o /home/git/gitlab.zip
+RUN sudo -u git -H echo '1c8fec9e40a479c365b253fe554668b495d8eb2d  /home/git/gitlab.zip' | shasum -c -
 RUN sudo -u git -H unzip /home/git/gitlab.zip -d /home/git
 RUN sudo -u git -H mv /home/git/gitlab-ce-* /home/git/gitlab
 RUN sudo -u git -H rm /home/git/gitlab.zip
