@@ -1,10 +1,13 @@
 # Install GitLab from package sources
-LASTRUN apt-get update && apt-get install -y \
+
+LASTRUN 
+    RUN add-apt-repository ppa:pi-rho/security -y \
+    apt-get update && apt-get install -y \
     build-essential zlib1g-dev libyaml-dev libssl-dev libgdbm-dev \
     libreadline-dev libncurses5-dev libffi-dev curl openssh-server \
     checkinstall libxml2-dev libxslt-dev libcurl4-openssl-dev libicu-dev \
     logrotate python-docutils pkg-config cmake libmysqlclient-dev \
-    mysql-client redis-tools
+    mysql-client redis-tools libre2-0 libre2-0-dev
 
 # Install Ruby 2.3
 RUN mkdir /tmp/ruby
@@ -14,9 +17,9 @@ RUN echo 'd064b9c69329ca2eb2956ad57b7192184178e35d  ruby.tar.gz' | shasum -c - &
 RUN ls -alh && cd ruby-* && ./configure --disable-install-rdoc && make && make install
 LASTRUN gem install bundler --no-ri --no-rdoc
 
-# Install yarn
+# Install Yarn
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
-RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarnpkg.list
 LASTRUN apt-get update && sudo apt-get install yarn -y
 
 # GitLab
@@ -26,13 +29,15 @@ RUN sudo -u git -H touch /home/git/.ssh/authorized_keys
 RUN sudo -u git -H git config --global core.autocrlf "input"
 RUN sudo -u git -H git config --global gc.auto 0
 RUN sudo -u git -H git config --global repack.writeBitmaps true
-RUN sudo -u git -H curl -L https://gitlab.com/gitlab-org/gitlab-ce/repository/archive.zip?ref=v9.1.2 -o /home/git/gitlab.zip
-RUN sudo -u git -H echo 'c4d60ef5badd248f691bdb980e46e8e4c8f378fd  /home/git/gitlab.zip' | shasum -c -
+RUN sudo -u git -H curl -L https://gitlab.com/gitlab-org/gitlab-ce/repository/v9.4.5/archive.zip -o /home/git/gitlab.zip
+RUN sudo -u git -H echo '1c8fec9e40a479c365b253fe554668b495d8eb2d  /home/git/gitlab.zip' | shasum -c -
 RUN sudo -u git -H unzip /home/git/gitlab.zip -d /home/git
 RUN sudo -u git -H mv /home/git/gitlab-ce-* /home/git/gitlab
 RUN sudo -u git -H rm /home/git/gitlab.zip
 ADD files/gitlab/gitlab.yml /home/git/gitlab/config/
-RUN chown git /home/git/gitlab/config/
+ADD files/gitlab/secrets.yml /home/git/gitlab/config/
+RUN chown git:git /home/git/gitlab/config/
+RUN chown git:git /home/git/gitlab/config/*
 RUN sudo -u git -H cp /home/git/gitlab/config/secrets.yml.example /home/git/gitlab/config/secrets.yml
 RUN sudo -u git -H chmod 0600 /home/git/gitlab/config/secrets.yml
 RUN chown -R git /home/git/gitlab/log/
@@ -120,10 +125,11 @@ RUN echo 'sed -i s/{{CONTAINER_REGISTRY_HOST}}/${CONTAINER_REGISTRY_HOST}/g conf
 RUN echo 'sed -i s/{{CONTAINER_REGISTRY_PORT}}/${CONTAINER_REGISTRY_PORT}/g config/gitlab.yml' >> /bin/everyboot
 RUN echo 'sed -i s@{{CONTAINER_REGISTRY_API_URL}}@${CONTAINER_REGISTRY_API_URL}@g config/gitlab.yml' >> /bin/everyboot
 RUN echo 'sed -i s/{{CONTAINER_REGISTRY_ISSUER}}/${CONTAINER_REGISTRY_ISSUER}/g config/gitlab.yml' >> /bin/everyboot
+RUN echo 'sed -i s/{{CONTAINER_TIMEZONE}}/${CONTAINER_TIMEZONE}/g config/gitlab.yml' >> /bin/everyboot
 
-RUN echo 'sed -i s/#\ db_key_base\:$/db_key_base:\ ${GITLAB_DATABASE_SECRET_KEY}/g config/secrets.yml' >> /bin/everyboot
-RUN echo 'sed -i s/#\ secret_key_base\:$/secret_key_base:\ ${GITLAB_SECRET_KEY_BASE}/g config/secrets.yml' >> /bin/everyboot
-RUN echo 'sed -i s/#\ otp_key_base\:$/otp_key_base:\ ${GITLAB_DATABASE_OTP_KEY_BASE}/g config/secrets.yml' >> /bin/everyboot
+RUN echo 'sed -i s/db_key_base\:$/db_key_base:\ ${GITLAB_DATABASE_SECRET_KEY}/g config/secrets.yml' >> /bin/everyboot
+RUN echo 'sed -i s/secret_key_base\:$/secret_key_base:\ ${GITLAB_SECRET_KEY_BASE}/g config/secrets.yml' >> /bin/everyboot
+RUN echo 'sed -i s/otp_key_base\:$/otp_key_base:\ ${GITLAB_DATABASE_OTP_KEY_BASE}/g config/secrets.yml' >> /bin/everyboot
 RUN echo 'sed -i s@url\:.*@url\:\ ${REDIS_URL}@g config/resque.yml' >> /bin/everyboot
 RUN echo 'sed -i s/username\:.*/username\:\ ${DATABASE_USER}/g config/database.yml' >> /bin/everyboot
 RUN echo 'sed -i s/password\:.*/password\:\ "${DATABASE_PASSWORD}"/g config/database.yml' >> /bin/everyboot
