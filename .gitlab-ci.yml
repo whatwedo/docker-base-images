@@ -1,3 +1,4 @@
+# installing dependencies
 before_script:
     - apt-get update && apt-get -qq install python-pip m4
     - pip install docker-squash
@@ -5,318 +6,144 @@ before_script:
     - docker-squash --version
     - m4 --version
 
+# different stages
 stages:
     - test
     - base
-    - other
+    - main
+    - late # used for redis because the registry is down while updating the redis
 
+# test if building of the files is possible
 test_files:
     script:
         - ./docker-builder.sh build-files
     stage: test
 
-base:
+# template for build jobs
+.docker_build_image: &docker_build_image
     script:
         - ./docker-builder.sh build-image $CI_BUILD_NAME
         - ./docker-builder.sh publish-image $CI_BUILD_NAME
-    stage: base
+    stage: main
     only:
         - master
 
+# ubuntu base image
+base:
+    <<: *docker_build_image
+    stage: base
+
+# custom docker images
 apache-php56:
-    script:
-        - ./docker-builder.sh build-image $CI_BUILD_NAME
-        - ./docker-builder.sh publish-image $CI_BUILD_NAME
-    stage: other
-    only:
-        - master
+    <<: *docker_build_image
 
 apache-php70:
-    script:
-        - ./docker-builder.sh build-image $CI_BUILD_NAME
-        - ./docker-builder.sh publish-image $CI_BUILD_NAME
-    stage: other
-    only:
-        - master
+    <<: *docker_build_image
 
 apache:
-    script:
-        - ./docker-builder.sh build-image $CI_BUILD_NAME
-        - ./docker-builder.sh publish-image $CI_BUILD_NAME
-    stage: other
-    only:
-        - master
+    <<: *docker_build_image
 
 bind:
-    script:
-        - ./docker-builder.sh build-image $CI_BUILD_NAME
-        - ./docker-builder.sh publish-image $CI_BUILD_NAME
-    stage: other
-    only:
-        - master
+    <<: *docker_build_image
 
 cloudflare-railgun:
-    script:
-        - ./docker-builder.sh build-image $CI_BUILD_NAME
-        - ./docker-builder.sh publish-image $CI_BUILD_NAME
-    stage: other
-    only:
-        - master
+    <<: *docker_build_image
 
 docker:
-    script:
-        - ./docker-builder.sh build-image $CI_BUILD_NAME
-        - ./docker-builder.sh publish-image $CI_BUILD_NAME
-    stage: other
-    only:
-        - master
+    <<: *docker_build_image
 
 elasticsearch:
-    script:
-        - ./docker-builder.sh build-image $CI_BUILD_NAME
-        - ./docker-builder.sh publish-image $CI_BUILD_NAME
-    stage: other
-    only:
-        - master
+    <<: *docker_build_image
 
 gitlab-ci-multi-runner:
-    script:
-        - ./docker-builder.sh build-image $CI_BUILD_NAME
-        - ./docker-builder.sh publish-image $CI_BUILD_NAME
-    stage: other
-    only:
-        - master
+    <<: *docker_build_image
 
 gitlab:
-    script:
-        - ./docker-builder.sh build-image $CI_BUILD_NAME
-        - ./docker-builder.sh publish-image $CI_BUILD_NAME
-    stage: other
-    only:
-        - master
+    <<: *docker_build_image
     tags:
         - 8gb
 
 golang:
-    script:
-        - ./docker-builder.sh build-image $CI_BUILD_NAME
-        - ./docker-builder.sh publish-image $CI_BUILD_NAME
-    stage: other
-    only:
-        - master
+    <<: *docker_build_image
 
 icinga2:
-    script:
-        - ./docker-builder.sh build-image $CI_BUILD_NAME
-        - ./docker-builder.sh publish-image $CI_BUILD_NAME
-    stage: other
-    only:
-        - master
+    <<: *docker_build_image
 
 java:
-    script:
-        - ./docker-builder.sh build-image $CI_BUILD_NAME
-        - ./docker-builder.sh publish-image $CI_BUILD_NAME
-    stage: other
-    only:
-        - master
+    <<: *docker_build_image
 
 kibana:
-    script:
-        - ./docker-builder.sh build-image $CI_BUILD_NAME
-        - ./docker-builder.sh publish-image $CI_BUILD_NAME
-    stage: other
-    only:
-        - master
+    <<: *docker_build_image
 
 logstash-forwarder:
-    script:
-        - ./docker-builder.sh build-image $CI_BUILD_NAME
-        - ./docker-builder.sh publish-image $CI_BUILD_NAME
-    stage: other
-    only:
-        - master
+    <<: *docker_build_image
 
 logstash:
-    script:
-        - ./docker-builder.sh build-image $CI_BUILD_NAME
-        - ./docker-builder.sh publish-image $CI_BUILD_NAME
-    stage: other
-    only:
-        - master
+    <<: *docker_build_image
 
 mariadb:
-    script:
-        - ./docker-builder.sh build-image $CI_BUILD_NAME
-        - ./docker-builder.sh publish-image $CI_BUILD_NAME
-    stage: other
-    only:
-        - master
+    <<: *docker_build_image
 
 memcached:
-    script:
-        - ./docker-builder.sh build-image $CI_BUILD_NAME
-        - ./docker-builder.sh publish-image $CI_BUILD_NAME
-    stage: other
-    only:
-        - master
+    <<: *docker_build_image
 
 mongodb:
-    script:
-        - ./docker-builder.sh build-image $CI_BUILD_NAME
-        - ./docker-builder.sh publish-image $CI_BUILD_NAME
-    stage: other
-    only:
-        - master
+    <<: *docker_build_image
 
 nextcloud:
-    script:
-        - ./docker-builder.sh build-image $CI_BUILD_NAME
-        - ./docker-builder.sh publish-image $CI_BUILD_NAME
-    stage: other
-    only:
-        - master
+    <<: *docker_build_image
 
 nginx-php56:
-    script:
-        - ./docker-builder.sh build-image $CI_BUILD_NAME
-        - ./docker-builder.sh publish-image $CI_BUILD_NAME
-    stage: other
-    only:
-        - master
+    <<: *docker_build_image
 
 nginx-php70:
-    script:
-        - ./docker-builder.sh build-image $CI_BUILD_NAME
-        - ./docker-builder.sh publish-image $CI_BUILD_NAME
-    stage: other
-    only:
-        - master
+    <<: *docker_build_image
 
 nginx:
-    script:
-        - ./docker-builder.sh build-image $CI_BUILD_NAME
-        - ./docker-builder.sh publish-image $CI_BUILD_NAME
-    stage: other
-    only:
-        - master
+    <<: *docker_build_image
 
 node:
-    script:
-        - ./docker-builder.sh build-image $CI_BUILD_NAME
-        - ./docker-builder.sh publish-image $CI_BUILD_NAME
-    stage: other
-    only:
-        - master
+    <<: *docker_build_image
 
 openldap:
-    script:
-        - ./docker-builder.sh build-image $CI_BUILD_NAME
-        - ./docker-builder.sh publish-image $CI_BUILD_NAME
-    stage: other
-    only:
-        - master
+    <<: *docker_build_image
 
 owncloud:
-    script:
-        - ./docker-builder.sh build-image $CI_BUILD_NAME
-        - ./docker-builder.sh publish-image $CI_BUILD_NAME
-    stage: other
-    only:
-        - master
+    <<: *docker_build_image
 
 php56:
-    script:
-        - ./docker-builder.sh build-image $CI_BUILD_NAME
-        - ./docker-builder.sh publish-image $CI_BUILD_NAME
-    stage: other
-    only:
-        - master
+    <<: *docker_build_image
 
 php70:
-    script:
-        - ./docker-builder.sh build-image $CI_BUILD_NAME
-        - ./docker-builder.sh publish-image $CI_BUILD_NAME
-    stage: other
-    only:
-        - master
+    <<: *docker_build_image
 
 postgres:
-    script:
-        - ./docker-builder.sh build-image $CI_BUILD_NAME
-        - ./docker-builder.sh publish-image $CI_BUILD_NAME
-    stage: other
-    only:
-        - master
+    <<: *docker_build_image
 
 puppet-client:
-    script:
-        - ./docker-builder.sh build-image $CI_BUILD_NAME
-        - ./docker-builder.sh publish-image $CI_BUILD_NAME
-    stage: other
-    only:
-        - master
+    <<: *docker_build_image
 
 redis:
-    script:
-        - ./docker-builder.sh build-image $CI_BUILD_NAME
-        - ./docker-builder.sh publish-image $CI_BUILD_NAME
-    stage: other
-    only:
-        - master
+    <<: *docker_build_image
+    stage: late
 
 ruby:
-    script:
-        - ./docker-builder.sh build-image $CI_BUILD_NAME
-        - ./docker-builder.sh publish-image $CI_BUILD_NAME
-    stage: other
-    only:
-        - master
+    <<: *docker_build_image
 
 squid:
-    script:
-        - ./docker-builder.sh build-image $CI_BUILD_NAME
-        - ./docker-builder.sh publish-image $CI_BUILD_NAME
-    stage: other
-    only:
-        - master
+    <<: *docker_build_image
 
 symfony2:
-    script:
-        - ./docker-builder.sh build-image $CI_BUILD_NAME
-        - ./docker-builder.sh publish-image $CI_BUILD_NAME
-    stage: other
-    only:
-        - master
+    <<: *docker_build_image
 
 symfony3:
-    script:
-        - ./docker-builder.sh build-image $CI_BUILD_NAME
-        - ./docker-builder.sh publish-image $CI_BUILD_NAME
-    stage: other
-    only:
-        - master
+    <<: *docker_build_image
 
 tomcat:
-    script:
-        - ./docker-builder.sh build-image $CI_BUILD_NAME
-        - ./docker-builder.sh publish-image $CI_BUILD_NAME
-    stage: other
-    only:
-        - master
+    <<: *docker_build_image
 
 wordpress-nginx-w3tc:
-    script:
-        - ./docker-builder.sh build-image $CI_BUILD_NAME
-        - ./docker-builder.sh publish-image $CI_BUILD_NAME
-    stage: other
-    only:
-        - master
+    <<: *docker_build_image
 
 wordpress:
-    script:
-        - ./docker-builder.sh build-image $CI_BUILD_NAME
-        - ./docker-builder.sh publish-image $CI_BUILD_NAME
-    stage: other
-    only:
-        - master
+    <<: *docker_build_image
