@@ -59,7 +59,7 @@ RUN sudo -u git -H cp /home/git/gitlab/config/initializers/rack_attack.rb.exampl
 RUN sudo -u git -H cp /home/git/gitlab/config/resque.yml.example /home/git/gitlab/config/resque.yml
 RUN sudo -u git -H cp /home/git/gitlab/config/database.yml.mysql /home/git/gitlab/config/database.yml
 RUN sudo -u git -H chmod o-rwx /home/git/gitlab/config/database.yml
-RUN echo 'PATH="/home/git/gitlab-workhorse:$PATH"' >> /home/git/.profile
+RUN echo 'PATH="/home/git/gitlab-workhorse:/usr/local/go/bin:/go/bin:$PATH"' >> /home/git/.profile
 LASTRUN cd /home/git/gitlab && sudo -u git -H bundle install --deployment --without development test postgres aws kerberos && sudo -u git -H npm install
 
 # nginx
@@ -149,8 +149,13 @@ RUN echo 'echo "Wait for MySQL to boot..."' >> /bin/everyboot
 RUN echo 'echo "while ! nc -z ${DATABASE_HOST} 3306; do sleep 3; done"' >> /bin/everyboot
 
 RUN echo 'echo "Installing GitLab Shell"' >> /bin/everyboot
-RUN echo 'sudo -u git -H bundle exec rake gitlab:shell:install REDIS_URL=${REDIS_URL} RAILS_ENV=production' >> /bin/everyboot
+RUN echo 'sudo -u git -H bundle exec rake gitlab:shell:install REDIS_URL=${REDIS_URL} RAILS_ENV=production PATH=$PATH:/usr/local/go/bin' >> /bin/everyboot
 RUN echo 'sed -i s@gitlab_url\:.*@gitlab_url\:\ http\://127.0.0.1\:8080@g /home/git/gitlab-shell/config.yml' >> /bin/everyboot
+
+RUN echo 'echo "Installing Gitaly"' >> /bin/everyboot
+RUN echo 'sudo -u git -H bundle exec rake "gitlab:gitaly:install[/home/git/gitaly]" RAILS_ENV=production PATH=$PATH:/usr/local/go/bin' >> /bin/everyboot
+RUN echo 'chmod 0700 /home/git/gitlab/tmp/sockets/private'
+RUN echo 'chown git /home/git/gitlab/tmp/sockets/private'
 
 # START GitLab initial installation
 
