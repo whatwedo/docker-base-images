@@ -2,7 +2,11 @@
 
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 
-## Unreleased
+## v1.4.17 - 2017-08-22
+
+### Bugfixes
+
+* whatwedo/gitlab: fixing gitaly
 
 ### Changed
 
