@@ -1,7 +1,7 @@
 # Install GitLab from package sources
 
 LASTRUN add-apt-repository ppa:pi-rho/security -y
-RUN apt-get update 
+RUN apt-get update
 RUN apt-get install -y build-essential zlib1g-dev libyaml-dev libssl-dev libgdbm-dev \
                        libreadline-dev libncurses5-dev libffi-dev curl openssh-server \
                        checkinstall libxml2-dev libxslt-dev libcurl4-openssl-dev libicu-dev \
@@ -100,6 +100,7 @@ RUN echo 'sed -i s/^worker_processes.*/worker_processes\ ${UNICORN_WORKER_PROCES
 RUN echo 'sed -i s/{{GITLAB_HOST}}/${GITLAB_HOST}/g config/gitlab.yml' >> /bin/everyboot
 RUN echo 'sed -i s/{{GITLAB_PORT}}/${GITLAB_PORT}/g config/gitlab.yml' >> /bin/everyboot
 RUN echo 'sed -i s/{{GITLAB_HTTPS}}/${GITLAB_HTTPS}/g config/gitlab.yml' >> /bin/everyboot
+RUN echo 'sed -i s/{{{GITLAB_TIMEZONE}}}/${{GITLAB_TIMEZONE}}/g config/gitlab.yml' >> /bin/everyboot
 RUN echo 'sed -i s/{{GITLAB_EMAIL_FROM}}/${GITLAB_EMAIL_FROM}/g config/gitlab.yml' >> /bin/everyboot
 RUN echo 'sed -i s/{{GITLAB_EMAIL_DISPLAY_NAME}}/${GITLAB_EMAIL_DISPLAY_NAME}/g config/gitlab.yml' >> /bin/everyboot
 RUN echo 'sed -i s/{{GITLAB_EMAIL_REPLY_TO}}/${GITLAB_EMAIL_REPLY_TO}/g config/gitlab.yml' >> /bin/everyboot
