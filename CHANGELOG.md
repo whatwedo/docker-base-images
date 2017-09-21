@@ -2,11 +2,23 @@
 
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 
-## v1.4.17 - 2017-08-22
+## v1.4.19 - 2017-09-21
+
+### Bugfixes
+
+* whatwedo/wordpress-nginx-w3tc: run wp cron as www-data
+
+## v1.4.18 - 2017-08-22
 
 ### Bugfixes
 
 * whatwedo/gitlab: fixing gitaly
+
+## v1.4.17 - 2017-08-22
+
+### Bugfixes
+
+* whatwedo/gitlab: fixing gitlab build
 
 ### Changed
 
