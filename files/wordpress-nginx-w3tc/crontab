@@ -1,1 +1,1 @@
-*/5 * * * * cd /var/www; php wp-cron.php > /dev/null 2>&1
+*/5 * * * * /usr/bin/sudo -u www-data /usr/bin/php /var/www/wp-cron.php
