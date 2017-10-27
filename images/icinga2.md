@@ -7,7 +7,7 @@ You need a seperate [MySQL or MariaDB](https://registry.hub.docker.com/u/whatwed
 ## Usage
 
 ```
-docker run -p 80:80 -e DB_USER=root -e DB_PW=mysecretpassword -e DB_SERVER=db -e DB_PORT=3306 -e DB_NAME= -e MYSQL_ROOT_PASSWORD=icinga-ido -e ICINGAADMIN_PW=mysecretpassword whatwedo/icinga2
+docker run -p 80:80 -e DB_USER=root -e DB_PW=mysecretpassword -e DB_SERVER=db -e DB_PORT=3306 -e DB_NAME=icinga-ido -e MYSQL_ROOT_PASSWORD=icinga-ido -e ICINGAADMIN_PW=mysecretpassword whatwedo/icinga2
 ```
 
 ## Environment Variables
