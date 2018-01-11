@@ -129,6 +129,12 @@ php56:
 php70:
     <<: *docker_build_image
 
+php71:
+    <<: *docker_build_image
+
+php72:
+    <<: *docker_build_image
+
 postgres:
     <<: *docker_build_image
 
