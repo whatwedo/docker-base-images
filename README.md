@@ -11,6 +11,8 @@ We at [whatwedo](https://whatwedo.ch/) are slowly going away from traditional ap
 | [whatwedo/apache](https://github.com/whatwedo/docker-base-images/tree/master/images/apache.md) | Apache 2 webserver |
 | [whatwedo/apache-php56](https://github.com/whatwedo/docker-base-images/tree/master/images/apache-php56.md) | Apache 2 webserver including PHP 5.6 |
 | [whatwedo/apache-php70](https://github.com/whatwedo/docker-base-images/tree/master/images/apache-php70.md) | Apache 2 webserver including PHP 7.0 |
+| [whatwedo/apache-php71](https://github.com/whatwedo/docker-base-images/tree/master/images/apache-php71.md) | Apache 2 webserver including PHP 7.1 |
+| [whatwedo/apache-php72](https://github.com/whatwedo/docker-base-images/tree/master/images/apache-php72.md) | Apache 2 webserver including PHP 7.2 |
 | [whatwedo/bind](https://github.com/whatwedo/docker-base-images/tree/master/images/bind.md) | Bind9 nameserver |
 | [whatwedo/docker](https://github.com/whatwedo/docker-base-images/tree/master/images/docker.md) | Docker in docker |
 | [whatwedo/elasticsearch](https://github.com/whatwedo/docker-base-images/tree/master/images/elasticsearch.md) | Elasticsearch server |
@@ -29,11 +31,15 @@ We at [whatwedo](https://whatwedo.ch/) are slowly going away from traditional ap
 | [whatwedo/nginx](https://github.com/whatwedo/docker-base-images/tree/master/images/nginx.md) | nginx webserver |
 | [whatwedo/nginx-php56](https://github.com/whatwedo/docker-base-images/tree/master/images/nginx-php56.md) | nginx webserver including PHP 5.6 |
 | [whatwedo/nginx-php70](https://github.com/whatwedo/docker-base-images/tree/master/images/nginx-php70.md) | nginx webserver including PHP 7.0 |
+| [whatwedo/nginx-php71](https://github.com/whatwedo/docker-base-images/tree/master/images/nginx-php72.md) | nginx webserver including PHP 7.1 |
+| [whatwedo/nginx-php72](https://github.com/whatwedo/docker-base-images/tree/master/images/nginx-php72.md) | nginx webserver including PHP 7.2 |
 | [whatwedo/node](https://github.com/whatwedo/docker-base-images/tree/master/images/node.md) | Node |
 | [whatwedo/openldap](https://github.com/whatwedo/docker-base-images/tree/master/images/openldap.md) | openLDAP server |
 | [whatwedo/owncloud](https://github.com/whatwedo/docker-base-images/tree/master/images/owncloud.md) | ownCloud server |
 | [whatwedo/php56](https://github.com/whatwedo/docker-base-images/tree/master/images/php56.md) | PHP 5.6 interpreter |
-| [whatwedo/php70](https://github.com/whatwedo/docker-base-images/tree/master/images/postgres.md) | PHP 7.0 interpreter |
+| [whatwedo/php70](https://github.com/whatwedo/docker-base-images/tree/master/images/php70.md) | PHP 7.0 interpreter |
+| [whatwedo/php71](https://github.com/whatwedo/docker-base-images/tree/master/images/php71.md) | PHP 7.1 interpreter |
+| [whatwedo/php72](https://github.com/whatwedo/docker-base-images/tree/master/images/php72.md) | PHP 7.2 interpreter |
 | [whatwedo/postgres](https://github.com/whatwedo/docker-base-images/tree/master/images/postgres.md) | Postgres database server |
 | [whatwedo/puppet-client](https://github.com/whatwedo/docker-base-images/tree/master/images/puppet-client.md) | Puppet Client |
 | [whatwedo/redis](https://github.com/whatwedo/docker-base-images/tree/master/images/redis.md) | Redis data structure server |
@@ -41,6 +47,7 @@ We at [whatwedo](https://whatwedo.ch/) are slowly going away from traditional ap
 | [whatwedo/squid](https://github.com/whatwedo/docker-base-images/tree/master/images/squid.md) | Squid proxy server |
 | [whatwedo/symfony2](https://github.com/whatwedo/docker-base-images/tree/master/images/symfony2.md) | nginx configured for running Symfony 2 |
 | [whatwedo/symfony3](https://github.com/whatwedo/docker-base-images/tree/master/images/symfony3.md) | nginx configured for running Symfony 3 |
+| [whatwedo/symfony4](https://github.com/whatwedo/docker-base-images/tree/master/images/symfony4.md) | nginx configured for running Symfony 4 |
 | [whatwedo/tomcat](https://github.com/whatwedo/docker-base-images/tree/master/images/tomcat.md) | Tomcat application server |
 | [whatwedo/wordpress](https://github.com/whatwedo/docker-base-images/tree/master/images/wordpress.md) | WordPress installed on Apache 2 |
 | [whatwedo/wordpress-nginx-w3tc](https://github.com/whatwedo/docker-base-images/tree/master/images/wordpress-nginx-w3tc.md) | WordPress running on nginx with PHP 7.0 and W3 Total Cache configuration |

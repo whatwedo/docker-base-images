@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 
+## v1.5.0 - 2018-01-11
+
+### Feature
+
+* whatwedo/php71: add PHP 7.1 interpreter
+* whatwedo/php72: add PHP 7.2 interpreter
+* whatwedo/apache-php71: add Apache webserver with PHP 7.1 interpreter
+* whatwedo/apache-php72: add Apache webserver with PHP 7.2 interpreter
+* whatwedo/nginx-php71: add nginx webserver with PHP 7.1 interpreter
+* whatwedo/nginx-php72: add nginx webserver with PHP 7.2 interpreter
+* whatwedo/symfony4: add symfony4 container with nginx and PHP 7.2
+
 ## v1.4.19 - 2017-09-21
 
 ### Bugfixes
