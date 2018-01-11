@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 
+## v1.5.2 - 2018-01-11
+
+### Bugfixes
+
+* whatwedo/php72: fixing error "php: undefined symbol: pcre_jit_exec"
+
 ## v1.5.1 - 2018-01-11
 
 ### Bugfixes
