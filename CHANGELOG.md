@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 
+## v1.5.1 - 2018-01-11
+
+### Bugfixes
+
+* add whatwedo/php71 and whatwedo/php72 image to our gitlab ci file
+
 ## v1.5.0 - 2018-01-11
 
 ### Feature
