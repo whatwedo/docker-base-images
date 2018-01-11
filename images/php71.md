@@ -1,11 +1,11 @@
-# whatwedo base image - PHP 7.0
+# whatwedo base image - PHP 7.1
 
-In this image is the PHP 7.0 interpreter installed
+In this image is the PHP 7.1 interpreter installed
 
 ## Usage
 
 ```
-docker run whatwedo/php70
+docker run whatwedo/php71
 ```
 
 ## Environment Variables

@@ -1,11 +1,11 @@
-# whatwedo base image - PHP 7.0
+# whatwedo base image - Apache with PHP 7.1
 
-In this image is the PHP 7.0 interpreter installed
+In this image is a basic apache webserver with PHP 7.1 installation available. There are no SSL enabled per default.
 
 ## Usage
 
 ```
-docker run whatwedo/php70
+docker run -p 80:80 whatwedo/apache-php71
 ```
 
 ## Environment Variables
@@ -18,7 +18,8 @@ docker run whatwedo/php70
 
 ## Exposed Ports
 
-This image is not exposing any ports.
+* 80
+* 443
 
 ## Built
 

@@ -40,6 +40,12 @@ apache-php56:
 apache-php70:
     <<: *docker_build_image
 
+apache-php71:
+    <<: *docker_build_image
+
+apache-php72:
+    <<: *docker_build_image
+
 apache:
     <<: *docker_build_image
 
@@ -99,6 +105,12 @@ nginx-php56:
 nginx-php70:
     <<: *docker_build_image
 
+nginx-php71:
+    <<: *docker_build_image
+
+nginx-php72:
+    <<: *docker_build_image
+
 nginx:
     <<: *docker_build_image
 
@@ -137,6 +149,9 @@ symfony2:
     <<: *docker_build_image
 
 symfony3:
+    <<: *docker_build_image
+
+symfony4:
     <<: *docker_build_image
 
 tomcat:

@@ -13,6 +13,7 @@ docker run \
     -e GITLAB_HOST=example.com
     -e GITLAB_PORT=443
     -e GITLAB_HTTPS=true
+    -e GITLAB_EMAIL_FROM=utc
     -e GITLAB_EMAIL_FROM=gitlab@example.com
     -e GITLAB_EMAIL_DISPLAY_NAME=GitLab
     -e GITLAB_EMAIL_REPLY_TO=noreply@example.com
@@ -163,6 +164,7 @@ docker exec -i -t ID bash -c "cd /home/git/gitlab && sudo -u git -H bundle exec 
 * `GITLAB_HOST` - GitLab host
 * `GITLAB_PORT` - GitLab port
 * `GITLAB_HTTPS` - `true`/`false` if GitLab is running SSL encrypted
+* `GITLAB_TIMEZONE` - GitLab timezone
 * `GITLAB_EMAIL_FROM` - GitLab mails from address
 * `GITLAB_EMAIL_SMTP_ADDRESS` - SMTP Server used by GitLab
 * `GITLAB_EMAIL_SMTP_USERNAME` - SMTP Server username

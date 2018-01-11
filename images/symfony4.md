@@ -1,11 +1,11 @@
-# whatwedo base image - PHP 7.0
+# whatwedo base image - Symfony 4
 
-In this image is the PHP 7.0 interpreter installed
+In this image is a basic nginx webserver with PHP 7.2 installation available. It is configured to run a Symfony 4 application placed in /var/www. There are no SSL enabled per default.
 
 ## Usage
 
 ```
-docker run whatwedo/php70
+docker run -p 80:80 whatwedo/symfony4
 ```
 
 ## Environment Variables
@@ -18,7 +18,8 @@ docker run whatwedo/php70
 
 ## Exposed Ports
 
-This image is not exposing any ports.
+* 80
+* 443
 
 ## Built
 
