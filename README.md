@@ -2,7 +2,7 @@
 
 [![build status](https://dev.whatwedo.ch/whatwedo/docker-base-images/badges/master/build.svg)](https://dev.whatwedo.ch/whatwedo/docker-base-images/commits/master)
 
-We at [whatwedo](https://whatwedo.ch/) are slowly going away from traditional application hosting to the approach of using Docker containers. For this reason we built several docker images. They are available on [Dockerhub](https://registry.hub.docker.com/repos/whatwedo/). You can use them easily in your own projects.
+We at [whatwedo](https://whatwedo.ch/) are slowly going away from traditional application hosting to the approach of using Docker containers. For this reason we built several docker images. They are available on [Dockerhub](https://hub.docker.com/u/whatwedo/). You can use them easily in your own projects.
 
 ## Images
 | Name | Description |
@@ -59,7 +59,7 @@ The following table show the directory Layout of this repository:
 
 | Folder | Description |
 |---|---|
-| `dist`  	| Includes all Dockerfiles and REAMDE's which are also available on [Dockerhub](https://registry.hub.docker.com/repos/whatwedo/)|
+| `dist`  	| Includes all Dockerfiles and REAMDE's which are also available on [Dockerhub](https://hub.docker.com/u/whatwedo/)|
 | `files` | Includes static files which are used by the Dockerfiles. For example a webserver configuration file |
 | `images` | Dockerfiles and README's for the single images. All Dockerfiles are saved as `*.m4`. On this way they can include files from the `modules` folder |
 | `modules`| Modules which can be included from a Dockerfile |
