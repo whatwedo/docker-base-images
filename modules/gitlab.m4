@@ -6,13 +6,13 @@ RUN apt-get install -y build-essential zlib1g-dev libyaml-dev libssl-dev libgdbm
                        libreadline-dev libncurses5-dev libffi-dev curl openssh-server \
                        checkinstall libxml2-dev libxslt-dev libcurl4-openssl-dev libicu-dev \
                        logrotate python-docutils pkg-config cmake libmysqlclient-dev \
-                       mysql-client redis-tools libre2-0 libre2-0-dev
+                       mysql-client redis-tools libre2-0 libre2-0-dev rsync
 
 # Install Ruby 2.3
 RUN mkdir /tmp/ruby
 RUN cd /tmp/ruby
-RUN curl -L https://cache.ruby-lang.org/pub/ruby/2.3/ruby-2.3.4.tar.gz -o ruby.tar.gz
-RUN echo 'd064b9c69329ca2eb2956ad57b7192184178e35d  ruby.tar.gz' | shasum -c - && tar xzf ruby.tar.gz
+RUN curl -L https://cache.ruby-lang.org/pub/ruby/ruby-2.3.7.tar.gz -o ruby.tar.gz
+RUN echo '540996fec64984ab6099e34d2f5820b14904f15a  ruby.tar.gz' | shasum -c - && tar xzf ruby.tar.gz
 RUN ls -alh && cd ruby-* && ./configure --disable-install-rdoc && make && make install
 LASTRUN gem install bundler --no-ri --no-rdoc
 
@@ -28,8 +28,9 @@ RUN sudo -u git -H touch /home/git/.ssh/authorized_keys
 RUN sudo -u git -H git config --global core.autocrlf "input"
 RUN sudo -u git -H git config --global gc.auto 0
 RUN sudo -u git -H git config --global repack.writeBitmaps true
-RUN sudo -u git -H curl -L https://gitlab.com/gitlab-org/gitlab-ce/repository/v9.4.5/archive.zip -o /home/git/gitlab.zip
-RUN sudo -u git -H echo '1c8fec9e40a479c365b253fe554668b495d8eb2d  /home/git/gitlab.zip' | shasum -c -
+RUN sudo -u git -H git config --global receive.advertisePushOptions true
+RUN sudo -u git -H curl -L https://gitlab.com/gitlab-org/gitlab-ce/repository/v10.5.4/archive.zip -o /home/git/gitlab.zip
+RUN sudo -u git -H echo 'daf76e534718ca7b547a04e03789375f5b4d95eb  /home/git/gitlab.zip' | shasum -c -
 RUN sudo -u git -H unzip /home/git/gitlab.zip -d /home/git
 RUN sudo -u git -H mv /home/git/gitlab-ce-* /home/git/gitlab
 RUN sudo -u git -H rm /home/git/gitlab.zip
@@ -127,9 +128,9 @@ RUN echo 'sed -i s@{{CONTAINER_REGISTRY_API_URL}}@${CONTAINER_REGISTRY_API_URL}@
 RUN echo 'sed -i s/{{CONTAINER_REGISTRY_ISSUER}}/${CONTAINER_REGISTRY_ISSUER}/g config/gitlab.yml' >> /bin/everyboot
 RUN echo 'sed -i s/{{CONTAINER_TIMEZONE}}/${CONTAINER_TIMEZONE}/g config/gitlab.yml' >> /bin/everyboot
 
-RUN echo 'sed -i s/db_key_base\:.*$/db_key_base:\ ${GITLAB_DATABASE_SECRET_KEY}/g config/secrets.yml' >> /bin/everyboot
-RUN echo 'sed -i s/secret_key_base\:.*$/secret_key_base:\ ${GITLAB_SECRET_KEY_BASE}/g config/secrets.yml' >> /bin/everyboot
-RUN echo 'sed -i s/otp_key_base\:.*$/otp_key_base:\ ${GITLAB_DATABASE_OTP_KEY_BASE}/g config/secrets.yml' >> /bin/everyboot
+RUN echo 'sed -i s/db_key_base\:.*$/db_key_base:\.*{GITLAB_DATABASE_SECRET_KEY}/g config/secrets.yml' >> /bin/everyboot
+RUN echo 'sed -i s/secret_key_base\:.*$/secret_key_base:\.*{GITLAB_SECRET_KEY_BASE}/g config/secrets.yml' >> /bin/everyboot
+RUN echo 'sed -i s/otp_key_base\:.*$/otp_key_base:\.*{GITLAB_DATABASE_OTP_KEY_BASE}/g config/secrets.yml' >> /bin/everyboot
 RUN echo 'sed -i s@url\:.*@url\:\ ${REDIS_URL}@g config/resque.yml' >> /bin/everyboot
 RUN echo 'sed -i s/username\:.*/username\:\ ${DATABASE_USER}/g config/database.yml' >> /bin/everyboot
 RUN echo 'sed -i s/password\:.*/password\:\ "${DATABASE_PASSWORD}"/g config/database.yml' >> /bin/everyboot
@@ -191,8 +192,11 @@ RUN echo 'fi' >> /bin/everyboot
 RUN echo 'echo "Migrate database"' >> /bin/everyboot
 RUN echo 'sudo -u git -H bundle exec rake db:migrate RAILS_ENV=production' >> /bin/everyboot
 
+RUN echo 'echo "Compile GetText PO files"' >> /bin/everyboot
+RUN echo 'sudo -u git -H bundle exec rake gettext:compile RAILS_ENV=production' >> /bin/everyboot
+
 RUN echo 'echo "Precompiling assets in the background"' >> /bin/everyboot
-RUN echo 'sudo -u git -H bundle exec rake yarn:install RAILS_ENV=production NODE_ENV=production' >> /bin/everyboot
+RUN echo 'sudo -u git -H yarn install --production --pure-lockfile' >> /bin/everyboot
 RUN echo 'sudo -u git -H bundle exec rake gitlab:assets:clean RAILS_ENV=production NODE_ENV=production' >> /bin/everyboot
 RUN echo 'sudo -u git -H bundle exec rake gitlab:assets:compile RAILS_ENV=production NODE_ENV=production' >> /bin/everyboot
 

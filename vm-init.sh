@@ -2,4 +2,4 @@
 
 # Install docker-squash
 apt-get -qq install python-pip
-pip install docker-squash
+pip install git+https://github.com/goldmann/docker-squash@master
