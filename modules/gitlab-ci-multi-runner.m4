@@ -1,11 +1,11 @@
 # gitlab-ci-multi-runner
-RUN curl -L https://gitlab-ci-multi-runner-downloads.s3.amazonaws.com/v9.4.1/binaries/gitlab-ci-multi-runner-linux-amd64 -o /usr/local/bin/gitlab-ci-multi-runner
-RUN echo '85829edca56ef09fa2701a404b37062ca5d0c63d  /usr/local/bin/gitlab-ci-multi-runner' | shasum -c -
-RUN chmod +x /usr/local/bin/gitlab-ci-multi-runner
+RUN curl -L https://gitlab-runner-downloads.s3.amazonaws.com/v10.5.0/binaries/gitlab-runner-linux-amd64 -o /usr/local/bin/gitlab-runner
+RUN echo '2d25e5288e7a54804f775f900d081d624c483eba  /usr/local/bin/gitlab-runner' | shasum -c -
+RUN chmod +x /usr/local/bin/gitlab-runner
 
 # docker-machine
-RUN curl -L https://github.com/docker/machine/releases/download/v0.12.2/docker-machine-Linux-x86_64 -o /usr/local/bin/docker-machine
-RUN echo '92b476a4dc3c6957d549c5d848528bb2de8756d4  /usr/local/bin/docker-machine' | shasum -c -
+RUN curl -L https://github.com/docker/machine/releases/download/v0.14.0/docker-machine-Linux-x86_64 -o /usr/local/bin/docker-machine
+RUN echo 'f6ba566758ee5347ee757252fbd5626eb83c5628  /usr/local/bin/docker-machine' | shasum -c -
 RUN chmod +x /usr/local/bin/docker-machine
 
 # GitLab Runner User
