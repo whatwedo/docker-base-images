@@ -2,7 +2,7 @@
 
 [![build status](https://dev.whatwedo.ch/whatwedo/docker-base-images/badges/master/build.svg)](https://dev.whatwedo.ch/whatwedo/docker-base-images/commits/master)
 
-We at [whatwedo](https://whatwedo.ch/) are slowly going away from traditional application hosting to the approach of using Docker containers. For this reason we built several docker images. They are available on [Dockerhub](https://registry.hub.docker.com/repos/whatwedo/). You can use them easily in your own projects.
+We at [whatwedo](https://whatwedo.ch/) are slowly going away from traditional application hosting to the approach of using Docker containers. For this reason we built several docker images. They are available on [Dockerhub](https://hub.docker.com/u/whatwedo/). You can use them easily in your own projects.
 
 ## Images
 | Name | Description |
@@ -16,8 +16,6 @@ We at [whatwedo](https://whatwedo.ch/) are slowly going away from traditional ap
 | [whatwedo/bind](https://github.com/whatwedo/docker-base-images/tree/master/images/bind.md) | Bind9 nameserver |
 | [whatwedo/docker](https://github.com/whatwedo/docker-base-images/tree/master/images/docker.md) | Docker in docker |
 | [whatwedo/elasticsearch](https://github.com/whatwedo/docker-base-images/tree/master/images/elasticsearch.md) | Elasticsearch server |
-| [whatwedo/gitlab-ci-multirunner](https://github.com/whatwedo/docker-base-images/tree/master/images/gitlab-ci-multi-runner.md) | GitLab CI Multirunner |
-| [whatwedo/gitlab](https://github.com/whatwedo/docker-base-images/tree/master/images/gitlab.md) | GitLab |
 | [whatwedo/golang](https://github.com/whatwedo/docker-base-images/tree/master/images/golang.md) | Golang compiler |
 | [whatwedo/icinga2](https://github.com/whatwedo/docker-base-images/tree/master/images/icinga2.md) | Icinga2 and Icinga2-Web |
 | [whatwedo/java](https://github.com/whatwedo/docker-base-images/tree/master/images/java.md) | Java 8 |
@@ -59,7 +57,7 @@ The following table show the directory Layout of this repository:
 
 | Folder | Description |
 |---|---|
-| `dist`  	| Includes all Dockerfiles and REAMDE's which are also available on [Dockerhub](https://registry.hub.docker.com/repos/whatwedo/)|
+| `dist`  	| Includes all Dockerfiles and REAMDE's which are also available on [Dockerhub](https://hub.docker.com/u/whatwedo/)|
 | `files` | Includes static files which are used by the Dockerfiles. For example a webserver configuration file |
 | `images` | Dockerfiles and README's for the single images. All Dockerfiles are saved as `*.m4`. On this way they can include files from the `modules` folder |
 | `modules`| Modules which can be included from a Dockerfile |
