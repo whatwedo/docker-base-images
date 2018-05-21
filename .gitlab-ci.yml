@@ -61,14 +61,6 @@ docker:
 elasticsearch:
     <<: *docker_build_image
 
-gitlab-ci-multi-runner:
-    <<: *docker_build_image
-
-gitlab:
-    <<: *docker_build_image
-    tags:
-        - 8gb
-
 golang:
     <<: *docker_build_image
 

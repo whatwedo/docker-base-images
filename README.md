@@ -16,8 +16,6 @@ We at [whatwedo](https://whatwedo.ch/) are slowly going away from traditional ap
 | [whatwedo/bind](https://github.com/whatwedo/docker-base-images/tree/master/images/bind.md) | Bind9 nameserver |
 | [whatwedo/docker](https://github.com/whatwedo/docker-base-images/tree/master/images/docker.md) | Docker in docker |
 | [whatwedo/elasticsearch](https://github.com/whatwedo/docker-base-images/tree/master/images/elasticsearch.md) | Elasticsearch server |
-| [whatwedo/gitlab-ci-multirunner](https://github.com/whatwedo/docker-base-images/tree/master/images/gitlab-ci-multi-runner.md) | GitLab CI Multirunner |
-| [whatwedo/gitlab](https://github.com/whatwedo/docker-base-images/tree/master/images/gitlab.md) | GitLab |
 | [whatwedo/golang](https://github.com/whatwedo/docker-base-images/tree/master/images/golang.md) | Golang compiler |
 | [whatwedo/icinga2](https://github.com/whatwedo/docker-base-images/tree/master/images/icinga2.md) | Icinga2 and Icinga2-Web |
 | [whatwedo/java](https://github.com/whatwedo/docker-base-images/tree/master/images/java.md) | Java 8 |
