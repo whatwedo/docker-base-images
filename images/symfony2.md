@@ -21,7 +21,7 @@ docker run -p 80:80 whatwedo/symfony2
 * 80
 * 443
 
-## Built
+## Build
 
 Because we are using several base images with recurring tasks in the Dockerfile, we are using a script to include commands. This script is available under [https://github.com/whatwedo/docker-base-images/blob/master/docker-builder.sh](https://github.com/whatwedo/docker-base-images/blob/master/docker-builder.sh)
 
