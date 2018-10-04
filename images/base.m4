@@ -48,6 +48,7 @@ VOLUME  ["/etc/firstboot"]
 # Create everyboot script
 RUN echo "#\0041/bin/bash" > /bin/everyboot
 RUN echo 'echo "Run content of /bin/everyboot..."' >> /bin/everyboot
+RUN echo 'touch /etc/crontab /etc/cron.*/*' >> /bin/everyboot
 RUN chmod 755 /bin/everyboot
 
 # Set motd
