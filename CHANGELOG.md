@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 
+## v1.6.2 - 2018-08-04
+
+### Changed
+
+* whatwedo/base: touch cron files on startup to avoid hardlinks on crontab (see https://stackoverflow.com/a/38850273/319776)
+
 ## v1.6.1 - 2018-08-12
 
 ### Changed
