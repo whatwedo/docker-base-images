@@ -7,6 +7,9 @@ All notable changes to this project will be documented in this file. This projec
 ### Changed
 
 * whatwedo/mariadb: updating from 10.1 to 10.3
+* whatwedo/php72: always set `clear_env = no`
+* whatwedo/php71: always set `clear_env = no`
+* whatwedo/php70: always set `clear_env = no`
 
 ## v1.6.2 - 2018-08-04
 
