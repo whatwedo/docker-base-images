@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 
+
+## v1.7.1 - 2018-11-28
+
+### Bugfixes
+
+* whatwedo/mariadb: create `/var/run/mysqld` on every boot
+* whatwedo/php71: fix config path
+* whatwedo/php70: fix config path
+
 ## v1.7.0 - 2018-11-28
 
 ### Changed
