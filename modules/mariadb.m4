@@ -3,7 +3,7 @@ ENV INNODB_BUFFER_POOL_SIZE=128M
 
 # Edit sources
 RUN apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xcbcb082a1bb943db
-RUN add-apt-repository 'deb http://ams2.mirrors.digitalocean.com/mariadb/repo/10.1/ubuntu trusty main'
+RUN add-apt-repository 'deb http://ams2.mirrors.digitalocean.com/mariadb/repo/10.3/ubuntu trusty main'
 RUN apt-get update
 
 # Install MariaDB
