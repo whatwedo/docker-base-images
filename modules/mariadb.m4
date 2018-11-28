@@ -33,6 +33,8 @@ RUN echo 'mysqladmin shutdown -uroot -p${MYSQL_ROOT_PASSWORD}' >> /bin/firstboot
 
 # Edit everyboot script
 RUN echo 'if [ ! -z "${INNODB_BUFFER_POOL_SIZE}" ]; then sed -i "s/innodb_buffer_pool_size.*/innodb_buffer_pool_size = $INNODB_BUFFER_POOL_SIZE/g" /etc/mysql/my.cnf; fi' >> /bin/everyboot
+RUN echo "mkdir -p /var/run/mysqld" >> /bin/everyboot
+RUN echo "chown -R mysql:mysql /var/lib/mysql" >> /bin/everyboot
 
 # Add mariadb to supervisord config
 COPY files/supervisord/mariadb.conf /etc/supervisor/conf.d/mariadb.conf
