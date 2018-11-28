@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 
+## v1.7.0 - 2018-11-28
+
+### Changed
+
+* whatwedo/mariadb: updating from 10.1 to 10.3
+
 ## v1.6.2 - 2018-08-04
 
 ### Changed
