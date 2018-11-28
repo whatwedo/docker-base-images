@@ -16,7 +16,7 @@ RUN echo "php_admin_value[post_max_size] = 32M" >> /etc/php/7.0/fpm/pool.d/www.c
 RUN echo "php_flag[display_errors] = off" >> /etc/php/7.0/fpm/pool.d/www.conf
 RUN echo "php_admin_flag[log_errors] = on" >> /etc/php/7.0/fpm/pool.d/www.conf
 RUN echo "php_flag[expose_php] = Off" >> /etc/php/7.0/fpm/pool.d/www.conf
-RUN echo "clear_env = no" >> /etc/php/7.2/fpm/pool.d/www.conf
+RUN echo "clear_env = no" >> /etc/php/7.0/fpm/pool.d/www.conf
 
 # Create unix socket folder
 RUN mkdir -p /run/php
