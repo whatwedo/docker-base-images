@@ -20,7 +20,9 @@ FROM whatwedo/base:$BASE_IMAGE_TAG
 RUN apk add --no-cache runit && \
     mkdir -p /etc/service
 
-# Add upstart script
+# Add files
 COPY ./files /
+
+# Configure upstart script
 RUN mkdir -p /etc/upstart
 CMD ["/sbin/upstart"]
