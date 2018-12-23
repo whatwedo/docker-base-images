@@ -5,7 +5,7 @@ set -e
 
 # Preparation
 if [[ $# -ne 2 ]]; then
-    echo 'Usage ./build.sh [image-name] [tag]'
+    echo 'Usage ./build-image.sh [image-name] [tag]'
     exit 1
 fi
 
