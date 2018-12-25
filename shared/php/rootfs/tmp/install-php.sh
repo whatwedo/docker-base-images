@@ -15,7 +15,7 @@ curl https://php.codecasts.rocks/php-alpine.rsa.pub -o /etc/apk/keys/php-alpine.
 echo "@php https://php.codecasts.rocks/v$ALPINE_VERSION/php-$PHP_VERSION" >> /etc/apk/repositories
 
 # Remove build dependencies
-apk del .build-deps
+apk del --no-cache .build-deps
 
 # Install PHP
 # TODO: Add php-memcached if available on PHP 7.3

@@ -9,7 +9,7 @@ LABEL maintainer="whatwedo GmbH <welove@whatwedo.ch>"
 # Install goss
 RUN apk add --no-cache --virtual .build-deps curl && \
     curl -fsSL https://goss.rocks/install | sh && \
-    apk del .build-deps
+    apk del --no-cache .build-deps
 ENV GOSS_FILE=/etc/goss/goss.yaml
 
 # Add rootfs files
