@@ -1,0 +1,9 @@
+stages:
+     - build
+
+build:
+    stage: build
+    script:
+        - scripts/build-all.sh $CI_COMMIT_REF_NAME --push
+    only:
+        - branches
