@@ -1,6 +1,3 @@
-gossfile:
-    base.yaml: {}
-
 package:
     php{{ .Env.PHP_MAJOR_VERSION }}:
         installed: true
