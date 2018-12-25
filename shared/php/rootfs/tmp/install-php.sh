@@ -18,27 +18,34 @@ echo "@php https://php.codecasts.rocks/v$ALPINE_VERSION/php-$PHP_MINOR_VERSION" 
 # Remove build dependencies
 apk del --no-cache .build-deps
 
-# Install PHP
+# Install PHP, composer and git
 # TODO: Add php-memcached if available on PHP 7.3
 apk add --no-cache php@php \
     php-apcu@php \
     php-common@php \
     php-curl@php \
+    php-ctype@php \
+    php-dom@php \
+    php-iconv@php \
     php-imagick@php \
     php-intl@php \
     php-json@php \
     php-ldap@php \
     php-mbstring@php \
+    php-opcache@php \
     php-pdo_mysql@php \
     php-pdo_sqlite@php \
     php-phar@php \
+    php-posix@php \
+    php-session@php \
     php-soap@php \
     php-xml@php \
     php-zip@php \
-    composer
+    composer \
+    git
 
 # Configure PHP
-sed -i s/^upload_max_filesize.*/upload_max_filesize\ =\ 50M/g /etc/php$PHP_MAJOR_VERSION/php.ini
+sed -i s/^upload_max_filesize.*/upload_max_filesize\ =\ 32M/g /etc/php$PHP_MAJOR_VERSION/php.ini
 sed -i s/^post_max_size.*/post_max_size\ =\ 50M/g /etc/php$PHP_MAJOR_VERSION/php.ini
 echo "error_log = /dev/stderr" >> /etc/php$PHP_MAJOR_VERSION/php.ini
 
