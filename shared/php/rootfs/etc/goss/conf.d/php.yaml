@@ -4,8 +4,16 @@ gossfile:
 package:
     php7:
         installed: true
+    composer:
+        installed: true
 
 file:
     /usr/bin/php:
         exists: true
         filetype: symlink
+    /usr/bin/php7:
+        exists: true
+        filetype: file
+    /usr/bin/composer:
+        exists: true
+        filetype: file

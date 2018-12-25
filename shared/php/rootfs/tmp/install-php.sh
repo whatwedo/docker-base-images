@@ -32,7 +32,8 @@ apk add --no-cache php@php \
     php-pdo_sqlite@php \
     php-soap@php \
     php-xml@php \
-    php-zip@php
+    php-zip@php \
+    composer
 
 # Add CLI symlink
 ln -s /usr/bin/php`echo $PHP_VERSION | cut -d'.' -f 1` /usr/bin/php
