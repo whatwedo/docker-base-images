@@ -3,18 +3,18 @@ ARG BASE_IMAGE_TAG
 
 ################################################################################
 
-# Golang container to build healthcheck
-FROM golang:alpine AS healthcheck
+# Golang container to build runit-health
+FROM golang:alpine AS runit-health
 
 # Install dependencies
 RUN apk add --no-cache git && \
     go get -u github.com/soundcloud/go-runit/runit
 
 # Add source code
-ADD ./healthcheck /src
+ADD ./runit-health /src
 
 # Build app
-RUN cd /src && go build -o healthcheck .
+RUN cd /src && go build -o runit-health .
 
 ################################################################################
 
@@ -26,10 +26,8 @@ FROM whatwedo/base:$BASE_IMAGE_TAG
 RUN apk add --no-cache runit && \
     mkdir -p /etc/service
 
-# Add healthcheck
-COPY --from=healthcheck /src/healthcheck /usr/local/bin
-HEALTHCHECK --interval=60s --timeout=10s --start-period=60s \
-    CMD /usr/local/bin/healthcheck
+# Add runit-health
+COPY --from=runit-health /src/runit-health /usr/local/bin
 
 # Add rootfs files
 COPY ./rootfs /

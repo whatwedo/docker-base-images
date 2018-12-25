@@ -1,0 +1,31 @@
+gossfile:
+    daemon.yaml: {}
+
+user:
+    nginx:
+        exists: true
+        groups:
+            - nginx
+            - www-data
+        home: /var/lib/nginx
+        shell: /sbin/nologin
+
+group:
+    nginx:
+        exists: true
+    www-data:
+        exists: true
+
+process:
+    nginx:
+        running: true
+
+port:
+    tcp:80:
+        listening: true
+        ip:
+            - 0.0.0.0
+
+http:
+    http://localhost/nginx-health:
+        status: 200

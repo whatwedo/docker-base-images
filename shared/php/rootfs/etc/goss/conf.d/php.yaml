@@ -1,0 +1,11 @@
+gossfile:
+    base.yaml: {}
+
+package:
+    php7:
+        installed: true
+
+file:
+    /usr/bin/php:
+        exists: true
+        filetype: symlink

@@ -1,0 +1,12 @@
+gossfile:
+    base.yaml: {}
+
+command:
+    runit-health:
+        exit-status: 0
+
+process:
+    upstart:
+        running: true
+    runsvdir:
+        running: true

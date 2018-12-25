@@ -1,0 +1,2 @@
+gossfile:
+    conf.d/*.yaml: {}

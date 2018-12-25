@@ -8,10 +8,7 @@ RUN apk add --no-cache nginx && \
     chown -R nginx:nginx /var/www
 
 # Add rootfs files
-COPY ./rootfs /
-
-# Configure healthcheck
-ENV HEALTHCHECK_URL="http://localhost/"
+COPY ./rootfs ./shared/nginx/rootfs /
 
 # Expose port 80
 EXPOSE 80

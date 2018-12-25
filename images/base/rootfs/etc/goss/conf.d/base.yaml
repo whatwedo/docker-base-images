@@ -1,0 +1,4 @@
+file:
+    /etc/alpine-release:
+        exists: true
+        contains: [/^\d+\.\d+\.\d+$/]
