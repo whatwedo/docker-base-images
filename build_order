@@ -2,3 +2,4 @@ base
 daemon
 php
 nginx
+nginx-php

@@ -10,5 +10,8 @@ RUN apk add --no-cache nginx && \
 # Add rootfs files
 COPY ./rootfs ./shared/nginx/rootfs /
 
+# Set workdir
+WORKDIR /var/www
+
 # Expose port 80
 EXPOSE 80

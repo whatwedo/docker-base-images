@@ -2,7 +2,7 @@ gossfile:
     base.yaml: {}
 
 package:
-    php7:
+    php{{ .Env.PHP_MAJOR_VERSION }}:
         installed: true
     composer:
         installed: true
@@ -11,7 +11,7 @@ file:
     /usr/bin/php:
         exists: true
         filetype: symlink
-    /usr/bin/php7:
+    /usr/bin/php{{ .Env.PHP_MAJOR_VERSION }}:
         exists: true
         filetype: file
     /usr/bin/composer:
