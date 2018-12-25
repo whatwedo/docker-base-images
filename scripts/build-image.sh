@@ -4,8 +4,8 @@
 set -e
 
 # Preparation
-if [[ $# -ne 2 ]]; then
-    echo 'Usage ./build-image.sh [image-name] [tag]'
+if [[ $# -lt 2 ]]; then
+    echo 'Usage ./build-image.sh [image-name] [tag] [--push]'
     exit 1
 fi
 
@@ -26,3 +26,8 @@ rm -rf $IMAGE_DIR/shared
 CID=`docker run -d $FULL_IMAGE_NAME sh -c "[[ -e /sbin/upstart ]] && /sbin/upstart || while true; do echo Waiting...; sleep 2; done"`
 docker exec $CID goss validate --retry-timeout 30s --sleep 1s
 docker kill $CID
+
+# Push
+if [ "$3" = "--push" ]; then
+    docker push $FULL_IMAGE_NAME
+fi

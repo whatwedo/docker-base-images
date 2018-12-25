@@ -4,8 +4,8 @@
 set -e
 
 # Preparation
-if [[ $# -ne 1 ]]; then
-    echo 'Usage ./build-all.sh [tag]'
+if [[ $# -lt 1 ]]; then
+    echo 'Usage ./build-all.sh [tag] [--push]'
     exit 1
 fi
 
@@ -17,5 +17,5 @@ BUILD_ORDER_FILE=$DIR/../build_order
 # Build
 while read image; do
     echo Building $image image
-    $DIR/build-image.sh $image $TAG
+    $DIR/build-image.sh $image $TAG $2
 done < $BUILD_ORDER_FILE
