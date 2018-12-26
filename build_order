@@ -1,6 +1,7 @@
 base
 daemon
 php
+yarn
 nginx
 nginx-php
 symfony4

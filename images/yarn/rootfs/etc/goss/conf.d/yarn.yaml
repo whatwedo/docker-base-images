@@ -1,0 +1,5 @@
+command:
+    node -v:
+        exit-status: 0
+    yarn -v:
+        exit-status: 0
