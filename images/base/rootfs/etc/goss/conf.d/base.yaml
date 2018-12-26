@@ -6,6 +6,10 @@ file:
 command:
     runit-health:
         exit-status: 0
+    gosu --version:
+        exit-status: 0
+    gosu nobody true:
+        exit-status: 0
 
 process:
     upstart:
