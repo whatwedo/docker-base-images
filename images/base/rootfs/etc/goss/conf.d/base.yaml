@@ -2,3 +2,13 @@ file:
     /etc/alpine-release:
         exists: true
         contains: [/^\d+\.\d+\.\d+$/]
+
+command:
+    runit-health:
+        exit-status: 0
+
+process:
+    upstart:
+        running: true
+    runsvdir:
+        running: true

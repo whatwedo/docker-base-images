@@ -1,5 +1,4 @@
 base
-daemon
 php
 yarn
 nginx

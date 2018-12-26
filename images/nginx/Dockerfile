@@ -1,5 +1,5 @@
 ARG BASE_IMAGE_TAG
-FROM whatwedo/daemon:$BASE_IMAGE_TAG
+FROM whatwedo/base:$BASE_IMAGE_TAG
 
 # Install nginx
 RUN apk add --no-cache nginx && \
