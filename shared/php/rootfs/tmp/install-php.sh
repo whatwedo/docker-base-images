@@ -44,10 +44,6 @@ apk add --no-cache php@php \
     composer \
     git
 
-# Install prestissimo
-composer global require hirak/prestissimo
-composer clearcache
-
 # Configure PHP
 sed -i s/^upload_max_filesize.*/upload_max_filesize\ =\ 32M/g /etc/php$PHP_MAJOR_VERSION/php.ini
 sed -i s/^post_max_size.*/post_max_size\ =\ 50M/g /etc/php$PHP_MAJOR_VERSION/php.ini
@@ -55,3 +51,7 @@ echo "error_log = /dev/stderr" >> /etc/php$PHP_MAJOR_VERSION/php.ini
 
 # Add CLI symlink
 ln -s /usr/bin/php$PHP_MAJOR_VERSION /usr/bin/php
+
+# Install prestissimo
+composer global require hirak/prestissimo
+composer clearcache
