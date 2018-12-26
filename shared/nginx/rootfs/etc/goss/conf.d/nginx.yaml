@@ -17,6 +17,10 @@ process:
     nginx:
         running: true
 
+command:
+    nginx -t:
+        exit-status: 0
+
 port:
     tcp:80:
         listening: true
