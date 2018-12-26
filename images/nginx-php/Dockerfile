@@ -3,6 +3,7 @@ FROM whatwedo/nginx:$BASE_IMAGE_TAG
 
 # Add rootfs files
 COPY ./rootfs ./shared/php/rootfs ./shared/php-fpm/rootfs /
+RUN chmod 777 /tmp
 
 # Install PHP and PHP-FPM
 # TODO: Updated to 7.3 if php-memcached and FriendsOfPHP/PHP-CS-Fixer is available

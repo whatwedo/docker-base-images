@@ -3,6 +3,7 @@ FROM whatwedo/base:$BASE_IMAGE_TAG
 
 # Add rootfs files
 COPY ./shared/php/rootfs /
+RUN chmod 777 /tmp
 
 # Install PHP
 # TODO: Updated to 7.3 if php-memcached and FriendsOfPHP/PHP-CS-Fixer is available
