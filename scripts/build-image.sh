@@ -23,7 +23,7 @@ docker build -t $FULL_IMAGE_NAME --build-arg BASE_IMAGE_TAG=$TAG --no-cache $IMA
 rm -rf $IMAGE_DIR/shared
 
 # Test
-CID=`docker run -d $FULL_IMAGE_NAME sh -c "[[ -e /sbin/upstart ]] && /sbin/upstart || while true; do echo Waiting...; sleep 2; done"`
+CID=`docker run -d --rm $FULL_IMAGE_NAME sh -c "[[ -e /sbin/upstart ]] && /sbin/upstart || while true; do echo Waiting...; sleep 2; done"`
 docker exec $CID goss validate --retry-timeout 30s --sleep 1s
 docker kill $CID
 
