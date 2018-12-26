@@ -1,4 +1,4 @@
-FROM alpine:latest
+FROM alpine:3.8
 
 # Maintainer as instruction (deprecated)
 MAINTAINER whatwedo GmbH <welove@whatwedo.ch>
