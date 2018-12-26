@@ -8,6 +8,7 @@ COPY ./rootfs ./shared/php/rootfs ./shared/php-fpm/rootfs /
 # TODO: Updated to 7.3 if php-memcached and FriendsOfPHP/PHP-CS-Fixer is available
 ENV PHP_MAJOR_VERSION=7
 ENV PHP_MINOR_VERSION=7.2
+ENV COMPOSER_ALLOW_SUPERUSER=1
 RUN /tmp/install-php.sh && \
     rm /tmp/install-php.sh && \
     /tmp/install-php-fpm.sh && \
