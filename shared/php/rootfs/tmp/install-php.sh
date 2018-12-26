@@ -19,7 +19,6 @@ echo "@php https://php.codecasts.rocks/v$ALPINE_VERSION/php-$PHP_MINOR_VERSION" 
 apk del --no-cache .build-deps
 
 # Install PHP, composer and git
-# TODO: Add php-memcached if available on PHP 7.3
 apk add --no-cache php@php \
     php-apcu@php \
     php-common@php \
@@ -32,6 +31,7 @@ apk add --no-cache php@php \
     php-json@php \
     php-ldap@php \
     php-mbstring@php \
+    php-memcached@php \
     php-opcache@php \
     php-pdo_mysql@php \
     php-pdo_sqlite@php \
