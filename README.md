@@ -1,4 +1,4 @@
-[![build status](https://dev.whatwedo.ch/whatwedo/docker-base-images/badges/v2.0/build.svg)](https://dev.whatwedo.ch/whatwedo/docker-base-images/commits/v2.0)
+[![build status](https://dev.whatwedo.ch/whatwedo/docker-base-images/badges/v2.0-dev/build.svg)](https://dev.whatwedo.ch/whatwedo/docker-base-images/commits/v2.0-dev)
 
 
 # whatwedo - Docker Base Images
