@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Exit on error
-set -e
+set -ex
 
 # Configuration
 [ -z "$PHP_MAJOR_VERSION" ] && echo "PHP_MAJOR_VERSION is not set" && exit 1;
