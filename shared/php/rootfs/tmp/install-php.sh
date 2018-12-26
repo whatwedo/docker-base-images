@@ -47,6 +47,7 @@ apk add --no-cache php@php \
 # Configure PHP
 sed -i s/^upload_max_filesize.*/upload_max_filesize\ =\ 32M/g /etc/php$PHP_MAJOR_VERSION/php.ini
 sed -i s/^post_max_size.*/post_max_size\ =\ 50M/g /etc/php$PHP_MAJOR_VERSION/php.ini
+sed -i s/^memory_limit.*/memory_limit\ =\ \-1/g /etc/php$PHP_MAJOR_VERSION/php.ini
 echo "error_log = /dev/stderr" >> /etc/php$PHP_MAJOR_VERSION/php.ini
 
 # Add CLI symlink

@@ -19,6 +19,7 @@ echo "php_admin_value[post_max_size] = 50M" >> /etc/php$PHP_MAJOR_VERSION/php-fp
 echo "php_flag[display_errors] = off" >> /etc/php$PHP_MAJOR_VERSION/php-fpm.d/www.conf
 echo "php_admin_flag[log_errors] = on" >> /etc/php$PHP_MAJOR_VERSION/php-fpm.d/www.conf
 echo "php_admin_value[error_log] = /dev/sdterr" >> /etc/php$PHP_MAJOR_VERSION/php-fpm.d/www.conf
+echo "php_admin_value[memory_limit] = 128M" >> /etc/php$PHP_MAJOR_VERSION/php-fpm.d/www.conf
 echo "php_flag[expose_php] = Off" >> /etc/php$PHP_MAJOR_VERSION/php-fpm.d/www.conf
 echo "clear_env = no" >> /etc/php$PHP_MAJOR_VERSION/php-fpm.d/www.conf
 echo "catch_workers_output = yes" >> /etc/php$PHP_MAJOR_VERSION/php-fpm.d/www.conf
