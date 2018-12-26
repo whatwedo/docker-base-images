@@ -1,16 +1,5 @@
-package:
-    php{{ .Env.PHP_MAJOR_VERSION }}:
-        installed: true
-    composer:
-        installed: true
-
-file:
-    /usr/bin/php:
-        exists: true
-        filetype: symlink
-    /usr/bin/php{{ .Env.PHP_MAJOR_VERSION }}:
-        exists: true
-        filetype: file
-    /usr/bin/composer:
-        exists: true
-        filetype: file
+command:
+    php --version:
+        exit-status: 0
+    composer --version:
+        exit-status: 0
