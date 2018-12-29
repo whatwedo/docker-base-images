@@ -1,0 +1,3 @@
+file:
+    /usr/bin/docker:
+        exists: true

@@ -1,9 +1,11 @@
+image: whatwedo/ci:v2.0-dev
+
 stages:
      - build
 
 build:
     stage: build
     script:
-        - scripts/build-all.sh $CI_COMMIT_REF_NAME --push
+        - ./build.sh --push
     only:
         - branches
