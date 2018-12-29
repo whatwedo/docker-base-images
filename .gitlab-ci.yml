@@ -6,6 +6,7 @@ stages:
 build:
     stage: build
     script:
+        - apk add bash
         - ./build.sh --push
     only:
         - branches
