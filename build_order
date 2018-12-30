@@ -1,4 +1,7 @@
 base
-php;yarn;nginx;ci
+php
+yarn
+nginx
+ci
 nginx-php
 symfony4

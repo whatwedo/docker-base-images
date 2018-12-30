@@ -43,23 +43,17 @@ push-image() {
 # Building all images
 build-all() {
     echo Building all images
-    while read LINE; do
-        for IMAGE_NAME in `echo $LINE | sed "s/;/ /g"`; do
-            build-image $IMAGE_NAME | xargs -L 1 echo $IMAGE_NAME: &
-        done
-        wait # Wait until line/step finished
+    while read IMAGE_NAME; do
+        build-image $IMAGE_NAME
     done < $BUILD_ORDER_FILE
 }
 
 # Pushing all images
 push-all() {
     echo Pushing all images
-    while read LINE; do
-        for IMAGE_NAME in `echo $LINE | sed "s/;/ /g"`; do
-            push-image $IMAGE_NAME | xargs -L 1 echo $IMAGE_NAME: &
-        done
+    while read IMAGE_NAME; do
+        push-image $IMAGE_NAME
     done < $BUILD_ORDER_FILE
-    wait # Wait until all images are pulled (push all parallel and just one line/step)
 }
 
 # Display help
