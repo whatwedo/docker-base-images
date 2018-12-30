@@ -6,6 +6,7 @@ stages:
 build:
     stage: build
     script:
+        - git checkout -b $CI_COMMIT_REF_NAME # Checkout branch explicitly due to build script logic
         - apk add bash
         - ./build.sh --push
     only:
