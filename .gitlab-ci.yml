@@ -1,3 +1,6 @@
+variables:
+    DOCKER_HOST: tcp://localhost:2375
+
 stages:
      - build
 
@@ -8,5 +11,7 @@ build:
         - ./build.sh --push
     only:
         - branches
+    services:
+        - docker:stable-dind
     tags:
         - kubernetes
