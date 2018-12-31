@@ -1,16 +1,16 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 # Exit on error
 set -e
 
 # Configuration
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+DIR="$(dirname "$SCRIPT")"
 BUILD_ORDER_FILE=$DIR/build_order
 GIT_BRANCH=`git rev-parse --abbrev-ref HEAD`
 export DOCKER_BUILDKIT=1
 
 # Build single image
-build-image() {
+build_image() {
     # Configuration
     IMAGE_NAME=$1
     IMAGE_DIR=$DIR/images/$IMAGE_NAME
@@ -30,7 +30,7 @@ build-image() {
 }
 
 # Push single image
-push-image() {
+push_image() {
     # Configuration
     IMAGE_NAME=$1
     FULL_IMAGE_NAME=whatwedo/$IMAGE_NAME:$GIT_BRANCH
@@ -41,18 +41,18 @@ push-image() {
 }
 
 # Building all images
-build-all() {
+build_all() {
     echo Building all images
     while read IMAGE_NAME; do
-        build-image $IMAGE_NAME
+        build_image $IMAGE_NAME
     done < $BUILD_ORDER_FILE
 }
 
 # Pushing all images
-push-all() {
+push_all() {
     echo Pushing all images
     while read IMAGE_NAME; do
-        push-image $IMAGE_NAME
+        push_image $IMAGE_NAME
     done < $BUILD_ORDER_FILE
 }
 
@@ -73,15 +73,15 @@ help() {
 if [[ "$@" == "--help" ]]; then
     help
 elif [[ $# -eq 1 ]] && [[ "$1" != "--push" ]]; then
-    build-image $1
+    build_image $1
 elif [[ $# -eq 2 ]] && [[ "$2" == "--push" ]]; then
-    build-image $1
-    push-image $1
+    build_image $1
+    push_image $1
 elif [[ $# -eq 0 ]]; then
-    build-all
+    build_all
 elif [[ $# -eq 1 ]] && [[ "$1" == "--push" ]]; then
-    build-all
-    push-all
+    build_all
+    push_all
 else
 	help
 fi
