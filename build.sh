@@ -7,6 +7,7 @@ set -e
 DIR="$(dirname "$SCRIPT")"
 BUILD_ORDER_FILE=$DIR/build_order
 GIT_BRANCH=`git rev-parse --abbrev-ref HEAD`
+DATE=`date +%Y%m%d`
 export DOCKER_BUILDKIT=1
 
 # Build single image
@@ -34,10 +35,15 @@ push_image() {
     # Configuration
     IMAGE_NAME=$1
     FULL_IMAGE_NAME=whatwedo/$IMAGE_NAME:$GIT_BRANCH
+    FULL_IMAGE_NAME_DATE=$FULL_IMAGE_NAME-$DATE
+
+    # Tag
+    docker tag $FULL_IMAGE_NAME $FULL_IMAGE_NAME_DATE
 
     # Push image
     echo Pushing image $FULL_IMAGE_NAME
     docker push $FULL_IMAGE_NAME
+    docker push $FULL_IMAGE_NAME_DATE
 }
 
 # Building all images
