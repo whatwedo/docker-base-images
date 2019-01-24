@@ -32,6 +32,7 @@ apk add --no-cache php@php \
     php-ldap@php \
     php-mbstring@php \
     php-memcached@php \
+    php-mysqli@php \
     php-opcache@php \
     php-pcntl@php \
     php-pdo_mysql@php \
