@@ -33,6 +33,7 @@ apk add --no-cache php@php \
     php-mbstring@php \
     php-mysqli@php \
     php-opcache@php \
+    php-openssl@php \
     php-pcntl@php \
     php-pdo_mysql@php \
     php-pdo_sqlite@php \
