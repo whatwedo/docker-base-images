@@ -32,9 +32,11 @@ apk add --no-cache php@php \
     php-ldap@php \
     php-mbstring@php \
     php-mysqli@php \
+    php-mysqlnd@php \
     php-opcache@php \
     php-openssl@php \
     php-pcntl@php \
+    php-pdo@php \
     php-pdo_mysql@php \
     php-pdo_sqlite@php \
     php-phar@php \
