@@ -14,7 +14,7 @@ RUN cd /src && go build -o runit-health .
 ################################################################################
 
 # Final image
-FROM alpine:3.8
+FROM alpine:3.9
 
 # Maintainer as instruction (deprecated)
 MAINTAINER whatwedo GmbH <welove@whatwedo.ch>
