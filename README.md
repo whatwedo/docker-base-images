@@ -10,17 +10,27 @@ We at [whatwedo](https://whatwedo.ch/) are slowly going away from traditional ap
 
 ## Images
 
-TODO
+| Name | Description |
+|---|---|
+| [whatwedo/base](images/base) | Base image with healthcheck and init system |
+| [whatwedo/nginx](images/nginx) | nginx web server |
+| [whatwedo/nginx-php](images/nginx-php) | nginx web server and PHP-FPM |
+| [whatwedo/php](images/php) | PHP interpreter |
+| [whatwedo/symfony2](images/symfony2) | Symfony 2 image based on nginx and PHP-FPM |
+| [whatwedo/symfony3](images/symfony3) | Symfony 3 image based on nginx and PHP-FPM |
+| [whatwedo/symfony4](images/symfony4) | Symfony 4 image based on nginx and PHP-FPM |
 
 
 ## Directory/File Layout
 
-TODO
+The following table show the directory layout of this repository:
 
-
-## Contribute
-
-TODO
+| Folder | Description |
+|---|---|
+| `images` | Dockerfiles, additional files and README's for the single images. |
+| `shared`| Files which are use by several images |
+| `build_order`| File to defined the order used while building all images |
+| `build.sh`| build.sh is a script for building and/or pushing all or single image/s |
 
 
 ## Bugs and Issues
