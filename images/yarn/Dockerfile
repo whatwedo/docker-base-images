@@ -1,5 +1,5 @@
-ARG BASE_IMAGE_TAG
-FROM whatwedo/base:$BASE_IMAGE_TAG
+ARG VERSION
+FROM whatwedo/base:$VERSION
 
 # Add rootfs files
 COPY ./rootfs /

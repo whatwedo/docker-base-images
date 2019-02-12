@@ -1,5 +1,5 @@
-ARG BASE_IMAGE_TAG
-FROM whatwedo/nginx-php:$BASE_IMAGE_TAG
+ARG VERSION
+FROM whatwedo/nginx-php:$VERSION
 
 # Add rootfs files
 COPY ./rootfs /

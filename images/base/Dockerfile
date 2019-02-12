@@ -19,8 +19,15 @@ FROM alpine:3.9
 # Maintainer as instruction (deprecated)
 MAINTAINER whatwedo GmbH <welove@whatwedo.ch>
 
-# Maintainer as label
-LABEL maintainer="whatwedo GmbH <welove@whatwedo.ch>"
+# Set labels
+ARG VERSION
+LABEL maintainer="whatwedo GmbH <welove@whatwedo.ch>" \
+    org.label-schema.name="whatwedo/docker-base-images" \
+    org.label-schema.url="https://github.com/whatwedo/docker-base-images" \
+    org.label-schema.vcs-url="https://github.com/whatwedo/docker-base-images" \
+    org.label-schema.vendor="whatwedo GmbH" \
+    org.label-schema.version=$VERSION \
+    org.label-schema.schema-version="1.0"
 
 # Install gosu
 ENV GOSU_VERSION 1.11
