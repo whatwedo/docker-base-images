@@ -18,7 +18,7 @@ DIR="$(dirname "$SCRIPT")"
 # Update given README's
 for IMAGE in "nginx-php" "php" "yarn"; do
     echo Upating README of $IMAGE
-    echo docker run --rm -v `pwd`/images/$IMAGE/README.md:/data/README.md -e DOCKERHUB_USERNAME=$DOCKERHUB_USERNAME -e DOCKERHUB_PASSWORD=$DOCKERHUB_PASSWORD -e DOCKERHUB_REPO_PREFIX=whatwedo -e DOCKERHUB_REPO_NAME=$IMAGE sheogorath/readme-to-dockerhub
+    docker run --rm -v `pwd`/images/$IMAGE/README.md:/data/README.md -e DOCKERHUB_USERNAME=$DOCKERHUB_USERNAME -e DOCKERHUB_PASSWORD=$DOCKERHUB_PASSWORD -e DOCKERHUB_REPO_PREFIX=whatwedo -e DOCKERHUB_REPO_NAME=$IMAGE sheogorath/readme-to-dockerhub
 done
 
 # if [[ "$IMAGE_NAME" =~ ^(base|symfony2|symfony3|symfony4|nginx)$ ]]; then
