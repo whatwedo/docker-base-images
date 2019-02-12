@@ -4,15 +4,25 @@ variables:
 stages:
      - build
 
-build:
+.build_job:
     stage: build
+    services:
+        - docker:stable-dind
+    tags:
+        - kubernetes
+
+build:
+    extends: .build_job
     script:
         - docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
         - git checkout -b $CI_COMMIT_REF_NAME # Checkout branch explicitly due to build script logic
         - ./build.sh --push
     only:
         - branches
-    services:
-        - docker:stable-dind
-    tags:
-        - kubernetes
+
+update_readme:
+    extends: .build_job
+    script:
+        - ./update-readme.sh
+    only:
+        - v2.0-dev
