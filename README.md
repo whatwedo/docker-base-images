@@ -19,6 +19,7 @@ We at [whatwedo](https://whatwedo.ch/) are slowly going away from traditional ap
 | [whatwedo/symfony2](images/symfony2) | Symfony 2 image based on nginx and PHP-FPM |
 | [whatwedo/symfony3](images/symfony3) | Symfony 3 image based on nginx and PHP-FPM |
 | [whatwedo/symfony4](images/symfony4) | Symfony 4 image based on nginx and PHP-FPM |
+| [whatwedo/yarn](yarn) | yarn package manager |
 
 
 ## Directory/File Layout

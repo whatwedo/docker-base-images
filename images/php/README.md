@@ -1,4 +1,4 @@
-# whatwedo/php
+# whatwedo/php
 
 `whatwedo/php` has an installed [PHP](http://www.php.net/) interpreter, git, [Composer](https://getcomposer.org/), an init system and a container healthcheck. It's based on [Alpine Linux](https://alpinelinux.org/).
 
@@ -21,7 +21,7 @@ docker run whatwedo/php:v2-0-dev
 
 ## Installed Software
 
-### gosu
+### gosu
 
 [gosu](https://github.com/tianon/gosu) is a lightweight tool used for changing the current user. gosu don't have very strange and often annoying TTY and signal-forwarding behavior like `su` or `sudo`.
 

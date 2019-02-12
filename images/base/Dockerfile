@@ -65,7 +65,7 @@ RUN set -eux; \
 RUN apk add --no-cache runit && \
     mkdir -p /etc/service
 
-# Add runit-health
+# Add runit-health
 COPY --from=runit-health /src/runit-health /usr/local/bin
 
 # Install goss

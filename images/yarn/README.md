@@ -1,4 +1,4 @@
-# whatwedo/yarn
+# whatwedo/yarn
 
 `whatwedo/yarn` is a small image providing [yarn](https://yarnpkg.com), git, an init system and container healthcheck. It's based on [Alpine Linux](https://alpinelinux.org/).
 
@@ -21,7 +21,7 @@ docker run whatwedo/yarn:v2-0-dev
 
 ## Installed Software
 
-### gosu
+### gosu
 
 [gosu](https://github.com/tianon/gosu) is a lightweight tool used for changing the current user. gosu don't have very strange and often annoying TTY and signal-forwarding behavior like `su` or `sudo`.
 

@@ -1,4 +1,4 @@
-# whatwedo/symfony4
+# whatwedo/symfony4
 
 `whatwedo/symfony4` is an image configured for serving Symfony 4 applications. It has an installed [nginx](https://www.nginx.com/) server, [PHP](http://www.php.net/) interpreter, PHP-FPM, git, [Composer](https://getcomposer.org/), an init system and a container healthcheck. It's based on [Alpine Linux](https://alpinelinux.org/).
 
@@ -20,7 +20,7 @@ docker run -p 80:80 -v [YOUR-PROJECT-ROOT]:/var/www whatwedo/symfony4:v2-0-dev
 
 ## Installed Software
 
-### gosu
+### gosu
 
 [gosu](https://github.com/tianon/gosu) is a lightweight tool used for changing the current user. gosu don't have very strange and often annoying TTY and signal-forwarding behavior like `su` or `sudo`.
 
