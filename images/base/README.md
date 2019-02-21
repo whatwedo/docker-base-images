@@ -70,7 +70,7 @@ If you have any problems with this image, feel free to open a new issue in our i
 
 
 ## License
-This image is licensed under the MIT License. The full license text is available under https://github.com/whatwedo/docker-base-images/blob/v2.0-dev/LICENSE.
+This image is licensed under the MIT License. The full license text is available under https://github.com/whatwedo/docker-base-images/blob/v2.0/LICENSE.
 
 
 ## Further information

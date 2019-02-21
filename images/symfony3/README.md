@@ -2,8 +2,6 @@
 
 `whatwedo/symfony3` is an image configured for serving Symfony 3 applications. It has an installed [nginx](https://www.nginx.com/) server, [PHP](http://www.php.net/) interpreter, PHP-FPM, git, [Composer](https://getcomposer.org/), an init system and a container healthcheck. It's based on [Alpine Linux](https://alpinelinux.org/).
 
-**Note:** You are currently looking at the unstable v2.0-dev branch. You should use the current stable version available at https://github.com/whatwedo/docker-base-images.
-
 
 ## Supported tags respective tag specific documentation link/Dockerfile
 
@@ -108,7 +106,7 @@ If you have any problems with this image, feel free to open a new issue in our i
 
 
 ## License
-This image is licensed under the MIT License. The full license text is available under https://github.com/whatwedo/docker-base-images/blob/v2.0-dev/LICENSE.
+This image is licensed under the MIT License. The full license text is available under https://github.com/whatwedo/docker-base-images/blob/v2.0/LICENSE.
 
 
 ## Further information

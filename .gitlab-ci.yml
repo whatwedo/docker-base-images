@@ -25,4 +25,4 @@ update_readme:
     script:
         - ./update-readme.sh
     only:
-        - v2.0-dev
+        - v2.0
