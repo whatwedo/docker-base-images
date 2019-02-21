@@ -2,14 +2,14 @@
 
 `whatwedo/yarn` is a small image providing [yarn](https://yarnpkg.com), git, an init system and container healthcheck. It's based on [Alpine Linux](https://alpinelinux.org/).
 
-**Note:** You are currently looking at the unstable v2.0-dev branch. You should use the current stable version available at https://github.com/whatwedo/docker-base-images.
 
+## Supported tags respective tag specific documentation link/Dockerfile
 
-## Supported tags respective tag specific documentation links
+| Tag | State | OS |
+|---|---|---|
+| [`v2.0`, `v2.0-[BUILD-DATE]`](https://github.com/whatwedo/docker-base-images/blob/v2.0/images/yarn) | Stable | Alpine 3.9 |
 
-* [`v2.0-dev`, `v2.0-dev-[BUILD-DATE]`](https://github.com/whatwedo/docker-base-images/blob/v2.0-dev/images/yarn)
-
-There will be no `latest` tag available in future. Using a `latest` can cause a lot of troubles, especially if you are using Docker in production.
+There is no `latest` latest tag available. Using a `latest` tag can cause a lot of troubles, especially if you are using Docker in production. Please use the current stable tag (`v2.0`) instead.
 
 
 ## Usage

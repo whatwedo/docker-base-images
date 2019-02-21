@@ -2,14 +2,15 @@
 
 `whatwedo/base` is a small image providing an init system and a container healthcheck. It's based on [Alpine Linux](https://alpinelinux.org/).
 
-**Note:** You are currently looking at the unstable v2.0-dev branch. You should use the current stable version available at https://github.com/whatwedo/docker-base-images.
 
+## Supported tags respective tag specific documentation link/Dockerfile
 
-## Supported tags respective tag specific documentation links
+| Tag | State | OS |
+|---|---|---|
+| [`v2.0`, `v2.0-[BUILD-DATE]`](https://github.com/whatwedo/docker-base-images/blob/v2.0/images/base) | Stable | Alpine 3.9 |
+| [`v1.7`, `v1.7-[BUILD-DATE]`](https://github.com/whatwedo/docker-base-images/blob/v1.7/images/base.md) | Security fixes only | Ubuntu 14.04 |
 
-* [`v2.0-dev`, `v2.0-dev-[BUILD-DATE]`](https://github.com/whatwedo/docker-base-images/blob/v2.0-dev/images/base) (Alpine Linux 3.9)
-
-There will be no `latest` tag available in future. Using a `latest` can cause a lot of troubles, especially if you are using Docker in production. Currently there is a latest tag available due to compatibility issues, but it will be remove in a short period of time. 
+There will be no `latest` tag available in future. Using a `latest` tag can cause a lot of troubles, especially if you are using Docker in production. Currently there is a latest tag available due to compatibility issues, but it will be removed in summer 2019. Please use the current stable tag (`v2.0`) instead.
 
 
 ## Usage
