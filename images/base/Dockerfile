@@ -29,6 +29,9 @@ LABEL maintainer="whatwedo GmbH <welove@whatwedo.ch>" \
     org.label-schema.version=$VERSION \
     org.label-schema.schema-version="1.0"
 
+# Install ca-certificates
+RUN apk add --no-cache ca-certificates
+
 # Install gosu
 ENV GOSU_VERSION 1.11
 RUN set -eux; \
