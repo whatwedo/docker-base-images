@@ -7,16 +7,10 @@ set -ex
 [ -z "$PHP_MAJOR_VERSION" ] && echo "PHP_MAJOR_VERSION is not set" && exit 1;
 [ -z "$PHP_MINOR_VERSION" ] && echo "PHP_MINOR_VERSION is not set" && exit 1;
 
-# Install build dependencies
-apk add --no-cache --virtual .build-deps curl
-
 # Add repository
 ALPINE_VERSION=`cat /etc/alpine-release | cut -d'.' -f-2`
-curl https://dl.bintray.com/php-alpine/key/php-alpine.rsa.pub -o /etc/apk/keys/php-alpine.rsa.pub
+wget -O /etc/apk/keys/php-alpine.rsa.pub https://dl.bintray.com/php-alpine/key/php-alpine.rsa.pub
 echo "@php https://dl.bintray.com/php-alpine/v$ALPINE_VERSION/php-$PHP_MINOR_VERSION" >> /etc/apk/repositories
-
-# Remove build dependencies
-apk del --no-cache .build-deps
 
 # Install PHP, composer and git
 apk add --no-cache php@php \
