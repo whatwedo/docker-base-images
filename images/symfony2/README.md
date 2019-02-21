@@ -93,6 +93,11 @@ This image is not using any environment variables.
 This Image is not using any volumes.
 
 
+## Development Workflow
+
+It's sometimes quite hard to use Docker in your development workflow. We decided to face this problem with our own helper toolset called `dde` (available on GitHub at [whatwedo/dde](https://github.com/whatwedo/dde)). `dde` is optimised to use it together with this image. Using `dde` is just a suggestion and not a requirement to use this image in your project.
+
+
 ## Bugs and Issues
 
 If you have any problems with this image, feel free to open a new issue in our issue tracker https://github.com/whatwedo/docker-base-images/issues.
