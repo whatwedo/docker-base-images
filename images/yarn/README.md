@@ -1,6 +1,6 @@
 # whatwedo/yarn
 
-`whatwedo/yarn` is a small image providing [yarn](https://yarnpkg.com), git, an init system and container healthcheck. It's based on [Alpine Linux](https://alpinelinux.org/).
+`whatwedo/yarn` is a small image providing [yarn](https://yarnpkg.com), git, an init system and container health check. It's based on [Alpine Linux](https://alpinelinux.org/).
 
 
 ## Supported tags respective tag specific documentation link/Dockerfile
@@ -28,7 +28,7 @@ docker run whatwedo/yarn:v2-0-dev
 
 ### goss
 
-[goss](https://github.com/aelsabbahy/goss) is a tool for validating a server’s configuration and health. goss is preconfigured to run several checks which are automatically exposed to Docker healthcheck. If you are using [Kubernetes](https://kubernetes.io/), you can run `goss validate` as liveness/readyness probe.
+[goss](https://github.com/aelsabbahy/goss) is a tool for validating a server’s configuration and health. goss is preconfigured to run several checks which are automatically exposed to Docker health check. If you are using [Kubernetes](https://kubernetes.io/), you can run `goss validate` as liveness/readyness probe.
 
 If you want to add you own checks, you can place it in the `/etc/goss/conf.d` directory.
 

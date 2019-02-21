@@ -80,7 +80,7 @@ ENV GOSS_FILE=/etc/goss/goss.yaml
 # Add rootfs files
 COPY ./rootfs /
 
-# Set healthcheck
+# Set health check
 HEALTHCHECK --interval=60s --timeout=10s --start-period=60s \
     CMD goss validate
 

@@ -10,7 +10,7 @@ We at [whatwedo](https://whatwedo.ch/) are slowly going away from traditional ap
 
 | Name | Description |
 |---|---|
-| [whatwedo/base](images/base) | Base image with healthcheck and init system |
+| [whatwedo/base](images/base) | Base image with health check and init system |
 | [whatwedo/nginx](images/nginx) | nginx web server |
 | [whatwedo/nginx-php](images/nginx-php) | nginx web server and PHP-FPM |
 | [whatwedo/php](images/php) | PHP interpreter |
