@@ -12,8 +12,8 @@ apk add --no-cache --virtual .build-deps curl
 
 # Add repository
 ALPINE_VERSION=`cat /etc/alpine-release | cut -d'.' -f-2`
-curl https://php.codecasts.rocks/php-alpine.rsa.pub -o /etc/apk/keys/php-alpine.rsa.pub
-echo "@php https://php.codecasts.rocks/v$ALPINE_VERSION/php-$PHP_MINOR_VERSION" >> /etc/apk/repositories
+curl https://dl.bintray.com/php-alpine/key/php-alpine.rsa.pub -o /etc/apk/keys/php-alpine.rsa.pub
+echo "@php https://dl.bintray.com/php-alpine/v$ALPINE_VERSION/php-$PHP_MINOR_VERSION" >> /etc/apk/repositories
 
 # Remove build dependencies
 apk del --no-cache .build-deps
