@@ -1,3 +1,7 @@
+[![Docker Pulls](https://img.shields.io/docker/pulls/whatwedo/symfony3.svg)](https://cloud.docker.com/u/whatwedo/repository/docker/whatwedo/symfony3)
+[![GitHub issues](https://img.shields.io/github/issues/whatwedo/docker-base-images.svg)](https://github.com/whatwedo/docker-base-images/issues)
+[![build status](https://dev.whatwedo.ch/whatwedo/docker-base-images/badges/v2.0/build.svg)](https://dev.whatwedo.ch/whatwedo/docker-base-images/commits/v2.0)
+
 # whatwedo/symfony3
 
 `whatwedo/symfony3` is an image configured for serving Symfony 3 applications. It has an installed [nginx](https://www.nginx.com/) server, [PHP](http://www.php.net/) interpreter, PHP-FPM, git, [Composer](https://getcomposer.org/), an init system and a container health check. It's based on [Alpine Linux](https://alpinelinux.org/).

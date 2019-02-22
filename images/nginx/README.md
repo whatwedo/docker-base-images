@@ -1,3 +1,7 @@
+[![Docker Pulls](https://img.shields.io/docker/pulls/whatwedo/nginx.svg)](https://cloud.docker.com/u/whatwedo/repository/docker/whatwedo/nginx)
+[![GitHub issues](https://img.shields.io/github/issues/whatwedo/docker-base-images.svg)](https://github.com/whatwedo/docker-base-images/issues)
+[![build status](https://dev.whatwedo.ch/whatwedo/docker-base-images/badges/v2.0/build.svg)](https://dev.whatwedo.ch/whatwedo/docker-base-images/commits/v2.0)
+
 # whatwedo/nginx
 
 `whatwedo/nginx` is a small providing [nginx](https://www.nginx.com/), an init system and a container health check. It's based on [Alpine Linux](https://alpinelinux.org/).
