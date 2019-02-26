@@ -19,7 +19,7 @@ There is no `latest` latest tag available. Using a `latest` tag can cause a lot 
 ## Usage
 
 ```
-docker run whatwedo/php:v2-0-dev
+docker run whatwedo/php:v2.0
 ```
 
 

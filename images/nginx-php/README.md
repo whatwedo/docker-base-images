@@ -19,7 +19,7 @@ There is no `latest` latest tag available. Using a `latest` tag can cause a lot 
 ## Usage
 
 ```
-docker run -p 80:80 -v [YOUR-PROJECT-ROOT]:/var/www whatwedo/nginx-php:v2-0-dev
+docker run -p 80:80 -v [YOUR-PROJECT-ROOT]:/var/www whatwedo/nginx-php:v2.0
 ```
 
 

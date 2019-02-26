@@ -21,7 +21,7 @@ There will be no `latest` tag available in future. Using a `latest` tag can caus
 ## Usage
 
 ```
-docker run whatwedo/base:v2-0-dev
+docker run whatwedo/base:v2.0
 ```
 
 

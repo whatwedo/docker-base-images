@@ -20,7 +20,7 @@ There will be no `latest` tag available in future. Using a `latest` tag can caus
 ## Usage
 
 ```
-docker run -p 80:80 -v [YOUR-PROJECT-ROOT]:/var/www whatwedo/symfony2:v2-0-dev
+docker run -p 80:80 -v [YOUR-PROJECT-ROOT]:/var/www whatwedo/symfony2:v2.0
 ```
 
 

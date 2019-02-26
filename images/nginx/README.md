@@ -21,7 +21,7 @@ There will be no `latest` tag available in future. Using a `latest` can cause a 
 ## Usage
 
 ```
-docker run -p 80:80 -v [YOUR-PROJECT-ROOT]:/var/www whatwedo/nginx:v2-0-dev
+docker run -p 80:80 -v [YOUR-PROJECT-ROOT]:/var/www whatwedo/nginx:v2.0
 ```
 
 
