@@ -13,6 +13,8 @@ apk add --no-cache php-fpm@php
 # Configure PHP-FPM
 sed -i s,^\;error_log\ =\ .*,error_log\ =\ /proc/self/fd/2,g /etc/php$PHP_MAJOR_VERSION/php-fpm.conf
 sed -i s,^listen\ =\ .*,listen\ =\ /var/run/php-fpm.sock,g /etc/php$PHP_MAJOR_VERSION/php-fpm.d/www.conf
+sed -i s,^user\ =\ .*,user\ =\ nginx,g /etc/php$PHP_MAJOR_VERSION/php-fpm.d/www.conf
+sed -i s,^group\ =\ .*,group\ =\ nginx,g /etc/php$PHP_MAJOR_VERSION/php-fpm.d/www.conf
 echo "listen.owner = nginx" >> /etc/php$PHP_MAJOR_VERSION/php-fpm.d/www.conf
 echo "listen.group = nginx" >> /etc/php$PHP_MAJOR_VERSION/php-fpm.d/www.conf
 echo "php_admin_value[upload_max_filesize] = 32M" >> /etc/php$PHP_MAJOR_VERSION/php-fpm.d/www.conf
