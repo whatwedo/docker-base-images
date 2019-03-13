@@ -12,7 +12,7 @@ ALPINE_VERSION=`cat /etc/alpine-release | cut -d'.' -f-2`
 wget -O /etc/apk/keys/php-alpine.rsa.pub https://dl.bintray.com/php-alpine/key/php-alpine.rsa.pub
 echo "@php https://dl.bintray.com/php-alpine/v$ALPINE_VERSION/php-$PHP_MINOR_VERSION" >> /etc/apk/repositories
 
-# Install PHP, composer and git
+# Install PHP, composer and git with SSH support
 apk add --no-cache php@php \
     php-apcu@php \
     php-common@php \
@@ -40,7 +40,8 @@ apk add --no-cache php@php \
     php-xml@php \
     php-zip@php \
     composer \
-    git
+    git \
+    openssh-client
 
 # Configure PHP
 sed -i s/^upload_max_filesize.*/upload_max_filesize\ =\ 32M/g /etc/php$PHP_MAJOR_VERSION/php.ini
