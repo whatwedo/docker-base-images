@@ -2,17 +2,28 @@ variables:
     DOCKER_HOST: tcp://localhost:2375
 
 stages:
-     - build
+    - test
+    - build
 
-.build_job:
+.base_job:
     stage: build
     services:
         - docker:stable-dind
     tags:
         - kubernetes
 
+validate_readme:
+    extends: .base_job
+    stage: test
+    allow_failure: true # Link checking fails sometimes because of sloppy third party servers
+    script:
+        - ./validate-readme.sh
+    only:
+        - v2.0
+
 build:
-    extends: .build_job
+    extends: .base_job
+    stage: build
     script:
         - docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
         - git checkout -B $CI_COMMIT_REF_NAME # Checkout branch explicitly due to build script logic
@@ -21,7 +32,8 @@ build:
         - branches
 
 update_readme:
-    extends: .build_job
+    extends: .base_job
+    stage: build
     script:
         - ./update-readme.sh
     only:

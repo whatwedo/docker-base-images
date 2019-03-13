@@ -7,15 +7,9 @@ set -e
 [ -z "$DOCKERHUB_USERNAME" ] && echo "Need to set DOCKERHUB_USERNAME" && exit 1
 [ -z "$DOCKERHUB_PASSWORD" ] && echo "Need to set DOCKERHUB_PASSWORD" && exit 1
 
-# Validating main README
-echo Validting main README
-docker run --rm -i paasmule/markdown-link-check < README.md
-
 # Update all README's
 for IMAGE_DIR in $(find ./images/* -maxdepth 1 -type f -name README.md -exec dirname {} \;); do
     IMAGE_NAME=${IMAGE_DIR##*/}
-    echo Validting README of $IMAGE_NAME
-    docker run --rm -i paasmule/markdown-link-check < images/$IMAGE_NAME/README.md
     echo Upating README of $IMAGE_NAME
     docker run --rm -v `pwd`/images/$IMAGE_NAME/README.md:/data/README.md -e DOCKERHUB_USERNAME=$DOCKERHUB_USERNAME -e DOCKERHUB_PASSWORD=$DOCKERHUB_PASSWORD -e DOCKERHUB_REPO_PREFIX=whatwedo -e DOCKERHUB_REPO_NAME=$IMAGE_NAME sheogorath/readme-to-dockerhub
 done
