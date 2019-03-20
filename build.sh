@@ -6,7 +6,7 @@ set -e
 # Configuration
 DIR="$(dirname "$SCRIPT")"
 BUILD_ORDER_FILE=$DIR/build_order
-GIT_BRANCH=`git rev-parse --abbrev-ref HEAD`
+GIT_BRANCH=`git rev-parse --abbrev-ref HEAD | sed  's/\//-/g'`
 DATE=`date +%Y%m%d`
 export DOCKER_BUILDKIT=1
 
