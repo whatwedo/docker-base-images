@@ -29,7 +29,7 @@ build:
         - git checkout -B $CI_COMMIT_REF_NAME # Checkout branch explicitly due to build script logic
         - ./build.sh --push
     only:
-        - branches
+        - v2.0
 
 update_readme:
     extends: .base_job
