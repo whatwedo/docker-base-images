@@ -19,6 +19,7 @@ apk add --no-cache php@php \
     php-curl@php \
     php-ctype@php \
     php-dom@php \
+    php-gd@php \
     php-iconv@php \
     php-imagick@php \
     php-intl@php \
@@ -38,7 +39,9 @@ apk add --no-cache php@php \
     php-session@php \
     php-soap@php \
     php-xml@php \
+    php-xmlreader@php \
     php-zip@php \
+    php-zlib@php \
     composer \
     git \
     openssh-client
