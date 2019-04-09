@@ -46,6 +46,7 @@ If you want to add you own checks, you can place it in the `/etc/goss/conf.d` di
 * php-curl
 * php-ctype
 * php-dom
+* php-gd
 * php-iconv
 * php-imagick
 * php-intl
@@ -65,7 +66,9 @@ If you want to add you own checks, you can place it in the `/etc/goss/conf.d` di
 * php-session
 * php-soap
 * php-xml
+* php-xmlreader
 * php-zip
+* php-zlib
 
 
 ### runit
