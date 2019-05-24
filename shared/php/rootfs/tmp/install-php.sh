@@ -47,10 +47,10 @@ apk add --no-cache php@php \
     openssh-client
 
 # Configure PHP
-sed -i s/^upload_max_filesize.*/upload_max_filesize\ =\ 32M/g /etc/php$PHP_MAJOR_VERSION/php.ini
-sed -i s/^post_max_size.*/post_max_size\ =\ 50M/g /etc/php$PHP_MAJOR_VERSION/php.ini
-sed -i s/^memory_limit.*/memory_limit\ =\ \-1/g /etc/php$PHP_MAJOR_VERSION/php.ini
+sed -i "s/upload_max_filesize.*/upload_max_filesize = 128M/g" /etc/php$PHP_MAJOR_VERSION/php.ini
+sed -i "s/post_max_size.*/post_max_size = 128M/g" /etc/php$PHP_MAJOR_VERSION/php.ini
 echo "error_log = /dev/stderr" >> /etc/php$PHP_MAJOR_VERSION/php.ini
+echo "php_admin_value[upload_max_filesize] = 128M" >> /etc/php$PHP_MAJOR_VERSION/php.ini
 
 # Add CLI symlink
 ln -s /usr/bin/php$PHP_MAJOR_VERSION /usr/bin/php

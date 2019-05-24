@@ -75,6 +75,18 @@ If you want to add you own checks, you can place it in the `/etc/goss/conf.d` di
 * php-zip
 * php-zlib
 
+#### Custom Settings
+The following custom setting were made
+
+|key|value|
+|---|--- |
+| upload_max_filesize| 128M |
+| post_max_size| 128M |
+| php_admin_value[upload_max_filesize]| 128M |
+| pm.max_children| 10 |
+| pm.start_servers| 1 |
+| pm.min_spare_servers| 1 |
+| pm.max_spare_servers| 5 | 
 
 ### runit
 
