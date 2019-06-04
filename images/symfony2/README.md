@@ -88,7 +88,6 @@ The following custom setting were made
 | pm.start_servers| 1 |
 | pm.min_spare_servers| 1 |
 | pm.max_spare_servers| 5 | 
-| opcache.validate_timestamps | 0 | 
 
 
 ### runit
