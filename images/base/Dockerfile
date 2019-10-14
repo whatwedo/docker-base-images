@@ -77,6 +77,12 @@ RUN apk add --no-cache --virtual .build-deps curl && \
     apk del --no-cache .build-deps
 ENV GOSS_FILE=/etc/goss/goss.yaml
 
+# configure default timezone
+RUN apk add --no-cache tzdata && \
+    cp /usr/share/zoneinfo/Europe/Zurich /etc/localtime && \
+    echo "Europe/Zurich" > /etc/timezone && \
+    apk del tzdata
+
 # Add rootfs files
 COPY ./rootfs /
 

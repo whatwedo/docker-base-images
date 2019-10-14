@@ -51,6 +51,7 @@ sed -i "s/upload_max_filesize.*/upload_max_filesize = 128M/g" /etc/php$PHP_MAJOR
 sed -i "s/post_max_size.*/post_max_size = 128M/g" /etc/php$PHP_MAJOR_VERSION/php.ini
 echo "error_log = /dev/stderr" >> /etc/php$PHP_MAJOR_VERSION/php.ini
 echo "php_admin_value[upload_max_filesize] = 128M" >> /etc/php$PHP_MAJOR_VERSION/php.ini
+echo "date.timezone = Europe/Zurich" >> /etc/php$PHP_MAJOR_VERSION/php.ini
 
 # Add CLI symlink
 ln -s /usr/bin/php$PHP_MAJOR_VERSION /usr/bin/php
