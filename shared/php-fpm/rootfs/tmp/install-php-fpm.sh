@@ -22,6 +22,7 @@ echo "php_admin_value[post_max_size] = 50M" >> /etc/php$PHP_MAJOR_VERSION/php-fp
 echo "php_flag[display_errors] = off" >> /etc/php$PHP_MAJOR_VERSION/php-fpm.d/www.conf
 echo "php_admin_flag[log_errors] = on" >> /etc/php$PHP_MAJOR_VERSION/php-fpm.d/www.conf
 echo "php_admin_value[memory_limit] = 128M" >> /etc/php$PHP_MAJOR_VERSION/php-fpm.d/www.conf
+echo "php_admin_value[date.timezone] = Europe/Zurich" >> /etc/php$PHP_MAJOR_VERSION/php-fpm.d/www.conf
 echo "php_flag[expose_php] = Off" >> /etc/php$PHP_MAJOR_VERSION/php-fpm.d/www.conf
 sed -i 's/^pm.max_children.*/pm.max_children\ =\ 10/g' /etc/php$PHP_MAJOR_VERSION/php-fpm.d/www.conf
 sed -i 's/^pm.start_servers.*/pm.start_servers\ =\ 1/g' /etc/php$PHP_MAJOR_VERSION/php-fpm.d/www.conf
