@@ -15,6 +15,7 @@ echo "@php https://dl.bintray.com/php-alpine/v$ALPINE_VERSION/php-$PHP_MINOR_VER
 # Install PHP, composer and git with SSH support
 apk add --no-cache php@php \
     php-apcu@php \
+    php-calendar@php \
     php-common@php \
     php-curl@php \
     php-ctype@php \
