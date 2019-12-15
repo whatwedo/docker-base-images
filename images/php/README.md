@@ -1,6 +1,6 @@
 [![Docker Pulls](https://img.shields.io/docker/pulls/whatwedo/php.svg)](https://cloud.docker.com/u/whatwedo/repository/docker/whatwedo/php)
 [![GitHub issues](https://img.shields.io/github/issues/whatwedo/docker-base-images.svg)](https://github.com/whatwedo/docker-base-images/issues)
-[![build status](https://dev.whatwedo.ch/whatwedo/docker-base-images/badges/v2.0/build.svg)](https://dev.whatwedo.ch/whatwedo/docker-base-images/commits/v2.0)
+[![build status](https://dev.whatwedo.ch/whatwedo/docker-base-images/badges/v2.1/build.svg)](https://dev.whatwedo.ch/whatwedo/docker-base-images/commits/v2.1)
 
 # whatwedo/php
 
@@ -11,15 +11,16 @@
 
 | Tag | State | OS | PHP Version |
 |---|---|---|---|
-| [`v2.0`, `v2.0-[BUILD-DATE]`](https://github.com/whatwedo/docker-base-images/blob/v2.0/images/nginx-php) | Stable | Alpine 3.9 | 7.3 |
+| [`v2.1`, `v2.1-[BUILD-DATE]`](https://github.com/whatwedo/docker-base-images/blob/v2.1/images/nginx-php) | Stable | Alpine 3.10 |
+| [`v2.0`, `v2.0-[BUILD-DATE]`](https://github.com/whatwedo/docker-base-images/blob/v2.0/images/nginx-php) | Security fixes only | Alpine 3.9 |
 
-There is no `latest` latest tag available. Using a `latest` tag can cause a lot of troubles, especially if you are using Docker in production. Please use the current stable tag (`v2.0`) instead.
+There is no `latest` latest tag available. Using a `latest` tag can cause a lot of troubles, especially if you are using Docker in production. Please use the current stable tag (`v2.1`) instead.
 
 
 ## Usage
 
 ```
-docker run whatwedo/php:v2.0
+docker run whatwedo/php:v2.1
 ```
 
 
@@ -42,6 +43,7 @@ If you want to add you own checks, you can place it in the `/etc/goss/conf.d` di
 [PHP](http://www.php.net/) is installed using the [codecasts/php-alpine](https://github.com/codecasts/php-alpine) apk repository. The following PHP modules are installed per default:
 
 * php-apcu
+* php-calendar
 * php-common
 * php-curl
 * php-ctype
@@ -120,7 +122,7 @@ If you have any problems with this image, feel free to open a new issue in our i
 
 
 ## License
-This image is licensed under the MIT License. The full license text is available under https://github.com/whatwedo/docker-base-images/blob/v2.0/LICENSE.
+This image is licensed under the MIT License. The full license text is available under https://github.com/whatwedo/docker-base-images/blob/v2.1/LICENSE.
 
 
 ## Further information
