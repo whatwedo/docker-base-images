@@ -11,7 +11,7 @@ _term() {
 trap _term SIGTERM
 
 # Run upstart files
-find /etc/upstart -mindepth 1 -maxdepth 1 -type f | sort -n | xargs -n 1 -- sh -c 'echo Running upstart file $0... && $0'
+find /etc/upstart -mindepth 1 -maxdepth 1 -type f | sort -n | xargs -r -n 1 -- sh -c 'echo Running upstart file $0... && $0'
 
 # Run runit
 echo Running runit services...
