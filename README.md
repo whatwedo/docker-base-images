@@ -1,5 +1,5 @@
 [![GitHub issues](https://img.shields.io/github/issues/whatwedo/docker-base-images.svg)](https://github.com/whatwedo/docker-base-images/issues)
-[![build status](https://dev.whatwedo.ch/whatwedo/docker-base-images/badges/v2.0/build.svg)](https://dev.whatwedo.ch/whatwedo/docker-base-images/commits/v2.0)
+[![build status](https://dev.whatwedo.ch/whatwedo/docker-base-images/badges/v2.1/build.svg)](https://dev.whatwedo.ch/whatwedo/docker-base-images/commits/v2.1)
 
 # whatwedo - Docker Base Images
 
@@ -10,14 +10,15 @@ We at [whatwedo](https://whatwedo.ch/) are slowly going away from traditional ap
 
 | Name | Description |
 |---|---|
-| [whatwedo/base](https://github.com/whatwedo/docker-base-images/tree/v2.0/images/base) | Base image with health check and init system |
-| [whatwedo/nginx](https://github.com/whatwedo/docker-base-images/tree/v2.0/images/nginx) | nginx web server |
-| [whatwedo/nginx-php](https://github.com/whatwedo/docker-base-images/tree/v2.0/images/nginx-php) | nginx web server and PHP-FPM |
-| [whatwedo/php](https://github.com/whatwedo/docker-base-images/tree/v2.0/images/php) | PHP interpreter |
-| [whatwedo/symfony2](https://github.com/whatwedo/docker-base-images/tree/v2.0/images/symfony2) | Symfony 2 image based on nginx and PHP-FPM |
-| [whatwedo/symfony3](https://github.com/whatwedo/docker-base-images/tree/v2.0/images/symfony3) | Symfony 3 image based on nginx and PHP-FPM |
-| [whatwedo/symfony4](https://github.com/whatwedo/docker-base-images/tree/v2.0/images/symfony4) | Symfony 4 image based on nginx and PHP-FPM |
-| [whatwedo/yarn](https://github.com/whatwedo/docker-base-images/tree/v2.0/images/yarn) | yarn package manager |
+| [whatwedo/base](https://github.com/whatwedo/docker-base-images/tree/v2.1/images/base) | Base image with health check and init system |
+| [whatwedo/nginx](https://github.com/whatwedo/docker-base-images/tree/v2.1/images/nginx) | nginx web server |
+| [whatwedo/nginx-php](https://github.com/whatwedo/docker-base-images/tree/v2.1/images/nginx-php) | nginx web server and PHP-FPM |
+| [whatwedo/php](https://github.com/whatwedo/docker-base-images/tree/v2.1/images/php) | PHP interpreter |
+| [whatwedo/symfony2](https://github.com/whatwedo/docker-base-images/tree/v2.1/images/symfony2) | Symfony 2 image based on nginx and PHP-FPM |
+| [whatwedo/symfony3](https://github.com/whatwedo/docker-base-images/tree/v2.1/images/symfony3) | Symfony 3 image based on nginx and PHP-FPM |
+| [whatwedo/symfony4](https://github.com/whatwedo/docker-base-images/tree/v2.1/images/symfony4) | Symfony 4 image based on nginx and PHP-FPM |
+| [whatwedo/symfony5](https://github.com/whatwedo/docker-base-images/tree/v2.1/images/symfony5) | Symfony 5 image based on nginx and PHP-FPM |
+| [whatwedo/yarn](https://github.com/whatwedo/docker-base-images/tree/v2.1/images/yarn) | yarn package manager |
 
 
 ## Directory/File Layout
@@ -39,7 +40,7 @@ If you have any problems with this image, feel free to open a new issue in our i
 
 ## License
 
-This image is licensed under the MIT License. The full license text is available under https://github.com/whatwedo/docker-base-images/blob/v2.0/LICENSE.
+This image is licensed under the MIT License. The full license text is available under https://github.com/whatwedo/docker-base-images/blob/v2.1/LICENSE.
 
 
 ## Further information
