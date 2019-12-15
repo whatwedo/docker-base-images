@@ -6,6 +6,7 @@ stages:
     - build
 
 .base_job:
+    image: docker:stable
     stage: build
     services:
         - docker:stable-dind
@@ -25,6 +26,7 @@ build:
     extends: .base_job
     stage: build
     script:
+        - apk add --no-cache git
         - docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
         - git checkout -B $CI_COMMIT_REF_NAME # Checkout branch explicitly due to build script logic
         - ./build.sh --push
