@@ -59,4 +59,5 @@ ln -s /usr/bin/php$PHP_MAJOR_VERSION /usr/bin/php
 
 # Install prestissimo
 composer global require hirak/prestissimo
+composer self-update
 composer clearcache
