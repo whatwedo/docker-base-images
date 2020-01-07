@@ -29,8 +29,11 @@ LABEL maintainer="whatwedo GmbH <welove@whatwedo.ch>" \
     org.label-schema.version=$VERSION \
     org.label-schema.schema-version="1.0"
 
-# Install ca-certificates
-RUN apk add --no-cache ca-certificates
+# Install base dependencies
+RUN apk add --no-cache ca-certificates gnu-libiconv
+
+# set default libiconv from gnu
+ENV LD_PRELOAD /usr/lib/preloadable_libiconv.so php
 
 # Install gosu
 ENV GOSU_VERSION 1.11
