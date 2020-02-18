@@ -21,7 +21,7 @@ validate_readme:
         - ./validate-readme.sh
     only:
         - v2.0
-        - v2.1-dev
+        - v2.1
 
 build:
     extends: .base_job
@@ -33,7 +33,7 @@ build:
         - ./build.sh --push
     only:
         - v2.0
-        - v2.1-dev
+        - v2.1
 
 update_readme:
     extends: .base_job
@@ -42,4 +42,4 @@ update_readme:
         - ./update-readme.sh
     only:
         - v2.0
-        - v2.1-dev
+        - v2.1
