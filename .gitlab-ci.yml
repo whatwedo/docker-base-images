@@ -1,20 +1,19 @@
+image: docker:latest
+
+services:
+    - docker:dind
+
 variables:
+    DOCKER_BUILDKIT: 1
     DOCKER_HOST: tcp://docker:2375/
+    DOCKER_TLS_CERTDIR: ""
+    DOCKER_DRIVER: overlay2
 
 stages:
     - test
     - build
 
-.base_job:
-    image: docker:stable
-    stage: build
-    services:
-        - docker:stable-dind
-    tags:
-        - kubernetes
-
 validate_readme:
-    extends: .base_job
     stage: test
     allow_failure: true # Link checking fails sometimes because of sloppy third party servers
     script:
@@ -23,20 +22,11 @@ validate_readme:
         - v2.0
 
 build:
-    extends: .base_job
     stage: build
     script:
         - apk add --no-cache git
         - docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
         - git checkout -B $CI_COMMIT_REF_NAME # Checkout branch explicitly due to build script logic
         - ./build.sh --push
-    only:
-        - v2.0
-
-update_readme:
-    extends: .base_job
-    stage: build
-    script:
-        - ./update-readme.sh
     only:
         - v2.0
