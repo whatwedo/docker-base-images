@@ -18,6 +18,15 @@ We at [whatwedo](https://whatwedo.ch/) are slowly going away from traditional ap
 | [whatwedo/yarn](https://github.com/whatwedo/docker-base-images/tree/v2.2/images/yarn) | yarn package manager |
 
 
+## Versions
+
+| Tag | State | OS | PHP Version |
+|---|---|---|---|
+| `v2.2`, `v2.2-[BUILD-DATE]` | Stable | Alpine 3.11 | PHP 7.4 |
+| `v2.1`, `v2.1-[BUILD-DATE]` | Security fixes only | Alpine 3.10 | PHP 7.4 |
+| `v2.0`, `v2.0-[BUILD-DATE]` | Security fixes only | Alpine 3.9 | PHP 7.3 |
+
+
 ## Directory/File Layout
 
 The following table show the directory layout of this repository:
