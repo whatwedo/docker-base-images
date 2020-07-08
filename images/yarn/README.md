@@ -11,7 +11,9 @@
 
 | Tag | State | OS |
 |---|---|---|
-| [`v2.0`, `v2.0-[BUILD-DATE]`](https://github.com/whatwedo/docker-base-images/blob/v2.0/images/yarn) | Stable | Alpine 3.9 |
+| [`v2.2`, `v2.2-[BUILD-DATE]`](https://github.com/whatwedo/docker-base-images/blob/v2.2/images/yarn) | Stable | Alpine 3.11 |
+| [`v2.1`, `v2.1-[BUILD-DATE]`](https://github.com/whatwedo/docker-base-images/blob/v2.1/images/yarn) | Security fixes only | Alpine 3.10 |
+| [`v2.0`, `v2.0-[BUILD-DATE]`](https://github.com/whatwedo/docker-base-images/blob/v2.0/images/yarn) | Deprecated | Alpine 3.9 |
 
 There is no `latest` latest tag available. Using a `latest` tag can cause a lot of troubles, especially if you are using Docker in production. Please use the current stable tag (`v2.0`) instead.
 
@@ -19,7 +21,7 @@ There is no `latest` latest tag available. Using a `latest` tag can cause a lot 
 ## Usage
 
 ```
-docker run whatwedo/yarn:v2.0
+docker run whatwedo/yarn:v2.2
 ```
 
 

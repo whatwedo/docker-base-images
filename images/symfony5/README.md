@@ -1,25 +1,26 @@
 [![Docker Pulls](https://img.shields.io/docker/pulls/whatwedo/symfony4.svg)](https://cloud.docker.com/u/whatwedo/repository/docker/whatwedo/symfony4)
 [![GitHub issues](https://img.shields.io/github/issues/whatwedo/docker-base-images.svg)](https://github.com/whatwedo/docker-base-images/issues)
-[![build status](https://dev.whatwedo.ch/whatwedo/docker-base-images/badges/v2.1/build.svg)](https://dev.whatwedo.ch/whatwedo/docker-base-images/commits/v2.1)
+[![build status](https://dev.whatwedo.ch/whatwedo/docker-base-images/badges/v2.2/build.svg)](https://dev.whatwedo.ch/whatwedo/docker-base-images/commits/v2.2)
 
-# whatwedo/symfony4
+# whatwedo/symfony5
 
-`whatwedo/symfony4` is an image configured for serving Symfony 5 applications. It has an installed [nginx](https://www.nginx.com/) server, [PHP](http://www.php.net/) interpreter, PHP-FPM, git, [Composer](https://getcomposer.org/), an init system and a container health check. It's based on [Alpine Linux](https://alpinelinux.org/).
+`whatwedo/symfony5` is an image configured for serving Symfony 5 applications. It has an installed [nginx](https://www.nginx.com/) server, [PHP](http://www.php.net/) interpreter, PHP-FPM, git, [Composer](https://getcomposer.org/), an init system and a container health check. It's based on [Alpine Linux](https://alpinelinux.org/).
 
 
 ## Supported tags respective tag specific documentation link/Dockerfile
 
 | Tag | State | OS | PHP Version |
 |---|---|---|---|
-| [`v2.1`, `v2.1-[BUILD-DATE]`](https://github.com/whatwedo/docker-base-images/blob/v2.1/images/symfony5) | Stable | Alpine 3.10 |
+| [`v2.2`, `v2.2-[BUILD-DATE]`](https://github.com/whatwedo/docker-base-images/blob/v2.2/images/symfony5) | Stable | Alpine 3.11 |
+| [`v2.1`, `v2.1-[BUILD-DATE]`](https://github.com/whatwedo/docker-base-images/blob/v2.1/images/symfony5) | Security fixes only | Alpine 3.10 |
 
-There will be no `latest` tag available in future. Using a `latest` tag can cause a lot of troubles, especially if you are using Docker in production. Currently there is a latest tag available due to compatibility issues, but it will be removed in summer 2019. Please use the current stable tag (`v2.1`) instead.
+There will be no `latest` tag available in future. Using a `latest` tag can cause a lot of troubles, especially if you are using Docker in production. Currently there is a latest tag available due to compatibility issues, but it will be removed in summer 2019. Please use the current stable tag (`v2.2`) instead.
 
 
 ## Usage
 
 ```
-docker run -p 80:80 -v [YOUR-PROJECT-ROOT]:/var/www whatwedo/symfony4:v2.1
+docker run -p 80:80 -v [YOUR-PROJECT-ROOT]:/var/www whatwedo/symfony4:v2.2
 ```
 
 
@@ -39,7 +40,7 @@ If you want to add you own checks, you can place it in the `/etc/goss/conf.d` di
 
 ### nginx
 
-[nginx](https://www.nginx.com/) is configured to use it with Symfony 4 applications using PHP-FPM. Place your application in `/var/www` to serve it. 
+[nginx](https://www.nginx.com/) is configured to use it with Symfony 5 applications using PHP-FPM. Place your application in `/var/www` to serve it. 
 
 
 ### PHP
@@ -127,7 +128,7 @@ If you have any problems with this image, feel free to open a new issue in our i
 
 
 ## License
-This image is licensed under the MIT License. The full license text is available under https://github.com/whatwedo/docker-base-images/blob/v2.1/LICENSE.
+This image is licensed under the MIT License. The full license text is available under https://github.com/whatwedo/docker-base-images/blob/v2.2/LICENSE.
 
 
 ## Further information
