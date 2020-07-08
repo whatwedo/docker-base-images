@@ -19,7 +19,7 @@ validate_readme:
     script:
         - ./validate-readme.sh
     only:
-        - v2.1
+        - v2.2
 
 build:
     stage: build
@@ -29,4 +29,11 @@ build:
         - git checkout -B $CI_COMMIT_REF_NAME # Checkout branch explicitly due to build script logic
         - ./build.sh --push
     only:
-        - v2.1
+        - v2.2
+
+update_readme:
+    stage: build
+    script:
+        - ./update-readme.sh
+    only:
+        - v2.2
