@@ -57,7 +57,6 @@ echo "date.timezone = Europe/Zurich" >> /etc/php$PHP_MAJOR_VERSION/php.ini
 # Add CLI symlink
 ln -s /usr/bin/php$PHP_MAJOR_VERSION /usr/bin/php
 
-# Install prestissimo
-composer self-update
-composer global require hirak/prestissimo
+# Update Composer
+composer self-update --2
 composer clearcache
