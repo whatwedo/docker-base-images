@@ -22,10 +22,7 @@ apk add --no-cache php@php \
     php-dom@php \
     php-gd@php \
     php-iconv@php \
-    php-imagick@php \
     php-intl@php \
-    php-json@php \
-    php-ldap@php \
     php-mbstring@php \
     php-mysqli@php \
     php-mysqlnd@php \
@@ -43,7 +40,6 @@ apk add --no-cache php@php \
     php-xmlreader@php \
     php-zip@php \
     php-zlib@php \
-    composer \
     git \
     openssh-client
 
@@ -57,7 +53,5 @@ echo "date.timezone = Europe/Zurich" >> /etc/php$PHP_MAJOR_VERSION/php.ini
 # Add CLI symlink
 ln -s /usr/bin/php$PHP_MAJOR_VERSION /usr/bin/php
 
-# Install prestissimo
-composer self-update
-composer global require hirak/prestissimo
-composer clearcache
+# Install composer
+wget -O - https://getcomposer.org/installer | php -- --quiet --install-dir /usr/bin/ --filename composer
