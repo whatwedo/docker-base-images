@@ -54,4 +54,4 @@ echo "date.timezone = Europe/Zurich" >> /etc/php$PHP_MAJOR_VERSION/php.ini
 ln -s /usr/bin/php$PHP_MAJOR_VERSION /usr/bin/php
 
 # Install composer
-wget -O - https://getcomposer.org/installer | php -- --quiet --install-dir /usr/bin/ --filename composer
+wget -O - https://getcomposer.org/installer | php -- --quiet --2 --install-dir /usr/bin/ --filename composer
