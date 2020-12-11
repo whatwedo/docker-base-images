@@ -3,7 +3,7 @@
 
 # whatwedo - Docker Base Images
 
-We at [whatwedo](https://whatwedo.ch/) are slowly going away from traditional application hosting to the approach of using Docker containers. For this reason we built several docker images. They are available on [Dockerhub](https://hub.docker.com/u/whatwedo/). You can use them easily in your own projects.
+We at [whatwedo](https://whatwedo.ch/) are building and deploying all applications using Docker containers. For this reason we built some basic docker images. They are available on [Dockerhub](https://hub.docker.com/u/whatwedo/). You can use them easily in your own projects.
 
 
 ## Images
