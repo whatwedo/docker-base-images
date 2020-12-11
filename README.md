@@ -22,7 +22,7 @@ We at [whatwedo](https://whatwedo.ch/) are slowly going away from traditional ap
 
 | Tag | State | OS | PHP Version |
 |---|---|---|---|
-| `v2.3`, `v2.3-[BUILD-DATE]` | Stable | Alpine 3.2 | PHP 8.0 |
+| `v2.3`, `v2.3-[BUILD-DATE]` | Stable | Alpine 3.12 | PHP 8.0 |
 | `v2.2`, `v2.2-[BUILD-DATE]` | Security fixes only | Alpine 3.11 | PHP 7.4 |
 
 
