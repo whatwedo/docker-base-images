@@ -36,14 +36,17 @@ push_image() {
     IMAGE_NAME=$1
     FULL_IMAGE_NAME=whatwedo/$IMAGE_NAME:$GIT_BRANCH
     FULL_IMAGE_NAME_DATE=$FULL_IMAGE_NAME-$DATE
+    FULL_IMAGE_NAME_MIRROR=registry.whatwedo.ch/whatwedo/docker-base-images/$IMAGE_NAME:$GIT_BRANCH
 
     # Tag
     docker tag $FULL_IMAGE_NAME $FULL_IMAGE_NAME_DATE
+    docker tag $FULL_IMAGE_NAME $FULL_IMAGE_NAME_MIRROR
 
     # Push image
     echo Pushing image $FULL_IMAGE_NAME
     docker push $FULL_IMAGE_NAME
     docker push $FULL_IMAGE_NAME_DATE
+    docker push $FULL_IMAGE_NAME_MIRROR
 }
 
 # Building all images
