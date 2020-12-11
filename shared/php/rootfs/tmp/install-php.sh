@@ -43,7 +43,6 @@ apk add --no-cache php@php \
     php-xmlreader@php \
     php-zip@php \
     php-zlib@php \
-    composer \
     git \
     openssh-client
 
@@ -58,6 +57,4 @@ echo "date.timezone = Europe/Zurich" >> /etc/php$PHP_MAJOR_VERSION/php.ini
 ln -s /usr/bin/php$PHP_MAJOR_VERSION /usr/bin/php
 
 # Install prestissimo
-composer self-update
-composer global require hirak/prestissimo
-composer clearcache
+wget -O - https://getcomposer.org/installer | php -- --quiet --1 --install-dir /usr/bin/ --filename composer
