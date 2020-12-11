@@ -55,10 +55,8 @@ If you want to add you own checks, you can place it in the `/etc/goss/conf.d` di
 * php-dom
 * php-gd
 * php-iconv
-* php-imagick
 * php-intl
 * php-json
-* php-ldap
 * php-mbstring
 * php-mysqli
 * php-mysqlnd
