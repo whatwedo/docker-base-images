@@ -12,12 +12,10 @@
 
 | Tag | State | OS |
 |---|---|---|
-| [`v2.2`, `v2.2-[BUILD-DATE]`](https://github.com/whatwedo/docker-base-images/blob/v2.2/images/base) | Stable | Alpine 3.11 |
-| [`v2.1`, `v2.1-[BUILD-DATE]`](https://github.com/whatwedo/docker-base-images/blob/v2.1/images/base) | Security fixes only | Alpine 3.10 |
-| [`v2.0`, `v2.0-[BUILD-DATE]`](https://github.com/whatwedo/docker-base-images/blob/v2.0/images/base) | Deprecated | Alpine 3.9 |
-| [`v1.7`, `v1.7-[BUILD-DATE]`](https://github.com/whatwedo/docker-base-images/blob/v1.7/images/base.md) | Deprecated | Ubuntu 14.04 |
+| [`v2.3`, `v2.3-[BUILD-DATE]`](https://github.com/whatwedo/docker-base-images/blob/v2.3/images/base) | Stable | Alpine 3.12 |
+| [`v2.2`, `v2.2-[BUILD-DATE]`](https://github.com/whatwedo/docker-base-images/blob/v2.2/images/base) | Security fixes only | Alpine 3.11 |
 
-There will be no `latest` tag available in future. Using a `latest` tag can cause a lot of troubles, especially if you are using Docker in production. Currently there is a latest tag available due to compatibility issues, but it will be removed in summer 2019. Please use the current stable tag (`v2.2`) instead.
+There will be no `latest` tag available in future. Using a `latest` tag can cause a lot of troubles, especially if you are using Docker in production. Please use the current stable tag (`v2.3`) instead.
 
 
 ## Usage

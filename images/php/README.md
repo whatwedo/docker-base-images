@@ -11,11 +11,10 @@
 
 | Tag | State | OS | PHP Version |
 |---|---|---|---|
-| [`v2.2`, `v2.2-[BUILD-DATE]`](https://github.com/whatwedo/docker-base-images/blob/v2.2/images/php) | Stable | Alpine 3.11 |
-| [`v2.1`, `v2.1-[BUILD-DATE]`](https://github.com/whatwedo/docker-base-images/blob/v2.1/images/php) | Security fixes only | Alpine 3.10 |
-| [`v2.0`, `v2.0-[BUILD-DATE]`](https://github.com/whatwedo/docker-base-images/blob/v2.0/images/php) | Deprecated | Alpine 3.9 |
+| [`v2.2`, `v2.3-[BUILD-DATE]`](https://github.com/whatwedo/docker-base-images/blob/v2.3/images/php) | Stable | Alpine 3.12 |
+| [`v2.3`, `v2.2-[BUILD-DATE]`](https://github.com/whatwedo/docker-base-images/blob/v2.2/images/php) | Security fixes only | Alpine 3.11 |
 
-There is no `latest` latest tag available. Using a `latest` tag can cause a lot of troubles, especially if you are using Docker in production. Please use the current stable tag (`v2.2`) instead.
+There is no `latest` latest tag available. Using a `latest` tag can cause a lot of troubles, especially if you are using Docker in production. Please use the current stable tag (`v2.3`) instead.
 
 
 ## Usage

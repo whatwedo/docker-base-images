@@ -22,9 +22,8 @@ We at [whatwedo](https://whatwedo.ch/) are building and deploying all applicatio
 
 | Tag | State | OS | PHP Version |
 |---|---|---|---|
-| `v2.2`, `v2.2-[BUILD-DATE]` | Stable | Alpine 3.11 | PHP 7.4 |
-| `v2.1`, `v2.1-[BUILD-DATE]` | Security fixes only | Alpine 3.10 | PHP 7.4 |
-| `v2.0`, `v2.0-[BUILD-DATE]` | Security fixes only | Alpine 3.9 | PHP 7.3 |
+| `v2.3`, `v2.3-[BUILD-DATE]` | Stable | Alpine 3.12 | PHP 8.0 |
+| `v2.2`, `v2.2-[BUILD-DATE]` | Security fixes only | Alpine 3.11 | PHP 7.4 |
 
 
 ## Directory/File Layout
