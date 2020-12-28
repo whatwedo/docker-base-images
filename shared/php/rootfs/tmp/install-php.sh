@@ -22,6 +22,7 @@ apk add --no-cache php@php \
     php-dom@php \
     php-gd@php \
     php-iconv@php \
+    php-imagick@php \
     php-intl@php \
     php-mbstring@php \
     php-mysqli@php \
