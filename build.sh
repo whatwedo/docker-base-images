@@ -21,7 +21,7 @@ build_image() {
     echo Building image $FULL_IMAGE_NAME
     rm -rf $IMAGE_DIR/shared
     cp -R $DIR/shared $IMAGE_DIR
-    docker build -t $FULL_IMAGE_NAME --build-arg VERSION=$GIT_BRANCH $IMAGE_DIR
+    docker build --network host -t $FULL_IMAGE_NAME --build-arg VERSION=$GIT_BRANCH $IMAGE_DIR
 
     # Test image
     echo Testing image $IMAGE_NAME
