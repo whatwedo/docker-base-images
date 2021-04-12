@@ -9,8 +9,8 @@ set -ex
 
 # Add repository
 ALPINE_VERSION=`cat /etc/alpine-release | cut -d'.' -f-2`
-wget -O /etc/apk/keys/php-alpine.rsa.pub https://dl.bintray.com/php-alpine/key/php-alpine.rsa.pub
-echo "@php https://dl.bintray.com/php-alpine/v$ALPINE_VERSION/php-$PHP_MINOR_VERSION" >> /etc/apk/repositories
+wget -O /etc/apk/keys/php-alpine.rsa.pub https://packages.whatwedo.ch/php-alpine.rsa.pub
+echo "@php https://packages.whatwedo.ch/php-alpine/v$ALPINE_VERSION/php-$PHP_MINOR_VERSION" >> /etc/apk/repositories
 
 # Install PHP, composer and git with SSH support
 apk add --no-cache php@php \
