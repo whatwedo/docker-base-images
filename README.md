@@ -14,7 +14,7 @@ We at [whatwedo](https://whatwedo.ch/) are building and deploying all applicatio
 | `whatwedo/nginx` | nginx web server |
 | `whatwedo/nginx-php` | nginx web server and PHP-FPM |
 | `whatwedo/php` | PHP interpreter |
-| `whatwedo/symfony5` | Symfony image based on nginx and PHP-FPM |
+| `whatwedo/symfony` | Symfony image based on nginx and PHP-FPM |
 | `whatwedo/yarn` | yarn package manager |
 
 
@@ -59,7 +59,7 @@ If you want to add you own checks, you can place it in the `/etc/goss/conf.d` di
 
 ### PHP
 
-(only installed if you are using `whatwedo/php`, `whatwedo/nginx-php` or `whatwedo/symfony5`)
+(only installed if you are using `whatwedo/php`, `whatwedo/nginx-php` or `whatwedo/symfony`)
 
 The following PHP modules are installed per default:
 
