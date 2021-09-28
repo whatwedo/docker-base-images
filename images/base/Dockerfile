@@ -1,8 +1,9 @@
 # Golang container to build runit-health
-FROM golang:1.15-alpine3.12 AS runit-health
+FROM golang:1.17-alpine3.14 AS runit-health
 
 # Install dependencies
 RUN apk add --no-cache git && \
+    go env -w GO111MODULE=off && \
     go get -u github.com/soundcloud/go-runit/runit
 
 # Add source code
@@ -14,7 +15,7 @@ RUN cd /src && go build -o runit-health .
 ################################################################################
 
 # Final image
-FROM alpine:3.12
+FROM alpine:3.14
 
 # Maintainer as instruction (deprecated)
 MAINTAINER whatwedo GmbH <welove@whatwedo.ch>
@@ -30,7 +31,7 @@ LABEL maintainer="whatwedo GmbH <welove@whatwedo.ch>" \
     org.label-schema.schema-version="1.0"
 
 # Install base dependencies
-RUN apk add --no-cache ca-certificates gnu-libiconv
+RUN apk add --no-cache ca-certificates gnu-libiconv make
 
 # set default libiconv from gnu
 ENV LD_PRELOAD /usr/lib/preloadable_libiconv.so php

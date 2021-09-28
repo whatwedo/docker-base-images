@@ -4,55 +4,64 @@
 set -ex
 
 # Configuration
-[ -z "$PHP_MAJOR_VERSION" ] && echo "PHP_MAJOR_VERSION is not set" && exit 1;
-[ -z "$PHP_MINOR_VERSION" ] && echo "PHP_MINOR_VERSION is not set" && exit 1;
-
-# Add repository
-ALPINE_VERSION=`cat /etc/alpine-release | cut -d'.' -f-2`
-wget -O /etc/apk/keys/php-alpine.rsa.pub https://packages.whatwedo.ch/php-alpine.rsa.pub
-echo "@php https://packages.whatwedo.ch/php-alpine/v$ALPINE_VERSION/php-$PHP_MINOR_VERSION" >> /etc/apk/repositories
+[ -z "php$PHP_VERSION" ] && echo "PHP_VERSION is not set" && exit 1;
 
 # Install PHP, composer and git with SSH support
-apk add --no-cache php@php \
-    php-apcu@php \
-    php-calendar@php \
-    php-common@php \
-    php-curl@php \
-    php-ctype@php \
-    php-dom@php \
-    php-gd@php \
-    php-iconv@php \
-    php-imagick@php \
-    php-intl@php \
-    php-mbstring@php \
-    php-mysqli@php \
-    php-mysqlnd@php \
-    php-opcache@php \
-    php-openssl@php \
-    php-pcntl@php \
-    php-pdo@php \
-    php-pdo_mysql@php \
-    php-pdo_sqlite@php \
-    php-phar@php \
-    php-posix@php \
-    php-session@php \
-    php-soap@php \
-    php-xml@php \
-    php-xmlreader@php \
-    php-zip@php \
-    php-zlib@php \
+apk add --no-cache php$PHP_VERSION \
+    php$PHP_VERSION\-apcu \
+    php$PHP_VERSION\-bcmath \
+    php$PHP_VERSION\-calendar \
+    php$PHP_VERSION\-common \
+    php$PHP_VERSION\-curl \
+    php$PHP_VERSION\-ctype \
+    php$PHP_VERSION\-dom \
+    php$PHP_VERSION\-gd \
+    php$PHP_VERSION\-iconv \
+    php$PHP_VERSION\-intl \
+    php$PHP_VERSION\-json \
+    php$PHP_VERSION\-mbstring \
+    php$PHP_VERSION\-mysqli \
+    php$PHP_VERSION\-mysqlnd \
+    php$PHP_VERSION\-opcache \
+    php$PHP_VERSION\-openssl \
+    php$PHP_VERSION\-pcntl \
+    php$PHP_VERSION\-pdo \
+    php$PHP_VERSION\-pdo_mysql \
+    php$PHP_VERSION\-pdo_sqlite \
+    php$PHP_VERSION\-phar \
+    php$PHP_VERSION\-posix \
+    php$PHP_VERSION\-session \
+    php$PHP_VERSION\-soap \
+    php$PHP_VERSION\-xml \
+    php$PHP_VERSION\-xmlreader \
+    php$PHP_VERSION\-zip \
+    php$PHP_VERSION\-zlib \
+    php$PHP_VERSION\-pear \
+    php$PHP_VERSION\-dev \
     git \
-    openssh-client
+    openssh-client \
+    libgomp \
+    imagemagick \
+    imagemagick-dev \
+    gcc \
+    musl-dev
 
-# Configure PHP
-sed -i "s/upload_max_filesize.*/upload_max_filesize = 128M/g" /etc/php$PHP_MAJOR_VERSION/php.ini
-sed -i "s/post_max_size.*/post_max_size = 128M/g" /etc/php$PHP_MAJOR_VERSION/php.ini
-echo "error_log = /dev/stderr" >> /etc/php$PHP_MAJOR_VERSION/php.ini
-echo "php_admin_value[upload_max_filesize] = 128M" >> /etc/php$PHP_MAJOR_VERSION/php.ini
-echo "date.timezone = Europe/Zurich" >> /etc/php$PHP_MAJOR_VERSION/php.ini
+pecl$PHP_VERSION install imagick
+echo "extension=imagick.so" > /etc/php$PHP_VERSION/conf.d/00_imagick.ini
 
-# Add CLI symlink
-ln -s /usr/bin/php$PHP_MAJOR_VERSION /usr/bin/php
+# remove dev dependencies
+apk del --no-cache imagemagick-dev \
+    gcc \
+    musl-dev \
+    php$PHP_VERSION\-pear \
+    php$PHP_VERSION\-dev
+
+## Configure PHP
+sed -i "s/upload_max_filesize.*/upload_max_filesize = 128M/g" /etc/php$PHP_VERSION/php.ini
+sed -i "s/post_max_size.*/post_max_size = 128M/g" /etc/php$PHP_VERSION/php.ini
+echo "error_log = /dev/stderr" >> /etc/php$PHP_VERSION/php.ini
+echo "php_admin_value[upload_max_filesize] = 128M" >> /etc/php$PHP_VERSION/php.ini
+echo "date.timezone = Europe/Zurich" >> /etc/php$PHP_VERSION/php.ini
 
 # Install composer
 wget -O - https://getcomposer.org/installer | php -- --quiet --2 --install-dir /usr/bin/ --filename composer

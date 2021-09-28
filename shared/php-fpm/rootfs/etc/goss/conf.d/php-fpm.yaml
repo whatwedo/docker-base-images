@@ -3,5 +3,5 @@ file:
         exists: true
 
 process:
-    php-fpm{{ .Env.PHP_MAJOR_VERSION }}:
+    php-fpm{{ .Env.PHP_VERSION }}:
         running: true
