@@ -7,7 +7,7 @@ set -ex
 [ -z "php$PHP_VERSION" ] && echo "PHP_PACKAGE is not set" && exit 1;
 
 # Install PHP-FPM
-apk add --no-cache php$PHP_VERSION\-fpm
+apk add --no-cache php$PHP_VERSION\-fpm@edge-testing
 
 # Configure PHP-FPM
 sed -i s,^\;error_log\ =\ .*,error_log\ =\ /proc/self/fd/2,g /etc/php$PHP_VERSION/php-fpm.conf

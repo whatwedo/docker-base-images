@@ -5,7 +5,7 @@ FROM whatwedo/nginx:$VERSION
 COPY ./rootfs ./shared/php/rootfs ./shared/php-fpm/rootfs /
 RUN chmod 777 /tmp
 
-ENV PHP_VERSION=7
+ENV PHP_VERSION=81
 ENV COMPOSER_ALLOW_SUPERUSER=1
 RUN /tmp/install-php.sh && \
     rm /tmp/install-php.sh && \

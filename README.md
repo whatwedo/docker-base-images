@@ -1,5 +1,5 @@
 [![GitHub issues](https://img.shields.io/github/issues/whatwedo/docker-base-images.svg)](https://github.com/whatwedo/docker-base-images/issues)
-[![build status](https://dev.whatwedo.ch/whatwedo/docker-base-images/badges/v2.4-dev/pipeline.svg)](https://dev.whatwedo.ch/whatwedo/docker-base-images/commits/v2.4-dev)
+[![build status](https://dev.whatwedo.ch/whatwedo/docker-base-images/badges/v2.5-dev/pipeline.svg)](https://dev.whatwedo.ch/whatwedo/docker-base-images/commits/v2.5-dev)
 
 # whatwedo - Docker Base Images
 
@@ -21,7 +21,7 @@ We at [whatwedo](https://whatwedo.ch/) are building and deploying all applicatio
 ## Usage
 
 ```
-docker run whatwedo/base:v2.4-dev
+docker run whatwedo/base:v2.5-dev
 ```
 
 ## Versions
@@ -160,7 +160,7 @@ If you have any problems with this image, feel free to open a new issue in our i
 
 ## License
 
-This image is licensed under the MIT License. The full license text is available under https://github.com/whatwedo/docker-base-images/blob/v2.4-dev/LICENSE.
+This image is licensed under the MIT License. The full license text is available under https://github.com/whatwedo/docker-base-images/blob/v2.5-dev/LICENSE.
 
 
 ## Further information
