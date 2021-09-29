@@ -16,9 +16,11 @@ apk add --no-cache php$PHP_VERSION@edge-testing \
     php$PHP_VERSION\-bcmath@edge-testing \
     php$PHP_VERSION\-calendar@edge-testing \
     php$PHP_VERSION\-common@edge-testing \
-    php$PHP_VERSION\-curl@edge-testing \
     php$PHP_VERSION\-ctype@edge-testing \
+    php$PHP_VERSION\-curl@edge-testing \
+    php$PHP_VERSION\-dev@edge-testing \
     php$PHP_VERSION\-dom@edge-testing \
+    php$PHP_VERSION\-fileinfo@edge-testing \
     php$PHP_VERSION\-gd@edge-testing \
     php$PHP_VERSION\-iconv@edge-testing \
     php$PHP_VERSION\-intl@edge-testing \
@@ -32,16 +34,18 @@ apk add --no-cache php$PHP_VERSION@edge-testing \
     php$PHP_VERSION\-pdo@edge-testing \
     php$PHP_VERSION\-pdo_mysql@edge-testing \
     php$PHP_VERSION\-pdo_sqlite@edge-testing \
+    php$PHP_VERSION\-pear@edge-testing \
     php$PHP_VERSION\-phar@edge-testing \
     php$PHP_VERSION\-posix@edge-testing \
     php$PHP_VERSION\-session@edge-testing \
+    php$PHP_VERSION\-simplexml@edge-testing \
     php$PHP_VERSION\-soap@edge-testing \
+    php$PHP_VERSION\-tokenizer@edge-testing \
     php$PHP_VERSION\-xml@edge-testing \
     php$PHP_VERSION\-xmlreader@edge-testing \
+    php$PHP_VERSION\-xmlwriter@edge-testing \
     php$PHP_VERSION\-zip@edge-testing \
     php$PHP_VERSION\-zlib@edge-testing \
-    php$PHP_VERSION\-pear@edge-testing \
-    php$PHP_VERSION\-dev@edge-testing \
     git \
     openssh-client \
     libavif@edge-community \
