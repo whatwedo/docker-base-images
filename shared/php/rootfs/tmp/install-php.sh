@@ -10,7 +10,6 @@ echo "@edge-testing http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/a
 echo "@edge-community http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories
 
 # Install PHP, composer and git with SSH support
-apk add --no-cache libavif@edge-community
 apk add --no-cache php$PHP_VERSION@edge-testing \
     php$PHP_VERSION\-apcu@edge-testing \
     php$PHP_VERSION\-bcmath@edge-testing \

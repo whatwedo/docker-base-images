@@ -1,5 +1,5 @@
 # Golang container to build runit-health
-FROM golang:1.17-alpine3.14 AS runit-health
+FROM golang:1.17-alpine3.15 AS runit-health
 
 # Install dependencies
 RUN apk add --no-cache git && \
@@ -15,7 +15,7 @@ RUN cd /src && go build -o runit-health .
 ################################################################################
 
 # Final image
-FROM alpine:3.14
+FROM alpine:edge
 
 # Maintainer as instruction (deprecated)
 MAINTAINER whatwedo GmbH <welove@whatwedo.ch>
@@ -31,42 +31,10 @@ LABEL maintainer="whatwedo GmbH <welove@whatwedo.ch>" \
     org.label-schema.schema-version="1.0"
 
 # Install base dependencies
-RUN apk add --no-cache ca-certificates gnu-libiconv make
+RUN apk add --no-cache ca-certificates gnu-libiconv make doas
 
 # set default libiconv from gnu
 ENV LD_PRELOAD /usr/lib/preloadable_libiconv.so php
-
-# Install gosu
-ENV GOSU_VERSION 1.11
-RUN set -eux; \
-	\
-	apk add --no-cache --virtual .gosu-deps \
-		dpkg \
-		gnupg \
-	; \
-	\
-	dpkgArch="$(dpkg --print-architecture | awk -F- '{ print $NF }')"; \
-	wget -O /usr/local/bin/gosu "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$dpkgArch"; \
-	wget -O /usr/local/bin/gosu.asc "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$dpkgArch.asc"; \
-	\
-	export GNUPGHOME="$(mktemp -d)"; \
-    for server in $(shuf -e ha.pool.sks-keyservers.net \
-                            hkp://p80.pool.sks-keyservers.net:80 \
-                            keyserver.ubuntu.com \
-                            hkp://keyserver.ubuntu.com:80 \
-                            pgp.mit.edu) ; do \
-        gpg --keyserver "$server" --recv-keys B42F6819007F00F88E364FD4036A9C25BF357DD4 && break || : ; \
-    done && \
-	gpg --batch --verify /usr/local/bin/gosu.asc /usr/local/bin/gosu; \
-	command -v gpgconf && gpgconf --kill all || :; \
-	rm -rf "$GNUPGHOME" /usr/local/bin/gosu.asc; \
-	\
-	apk del --no-network .gosu-deps; \
-	\
-	chmod +x /usr/local/bin/gosu; \
-    \
-	gosu --version; \
-	gosu nobody true
 
 # Install runit
 RUN apk add --no-cache runit && \

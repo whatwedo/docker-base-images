@@ -1,14 +1,10 @@
 file:
     /etc/alpine-release:
         exists: true
-        contains: [/^\d+\.\d+\.\d+$/]
+#        contains: [/^\d+\.\d+\.\d+$/] # switch back if not using edge
 
 command:
     runit-health:
-        exit-status: 0
-    gosu --version:
-        exit-status: 0
-    gosu nobody true:
         exit-status: 0
 
 process:

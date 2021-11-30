@@ -46,10 +46,9 @@ The following table show the directory layout of this repository:
 
 ## Installed Software
 
-### gosu
+### doas
 
-[gosu](https://github.com/tianon/gosu) is a lightweight tool used for changing the current user. gosu don't have very strange and often annoying TTY and signal-forwarding behavior like `su` or `sudo`.
-
+[OpenDoas](https://github.com/Duncaen/OpenDoas) doas is a minimal replacement for the venerable sudo.
 
 ### goss
 

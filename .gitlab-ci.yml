@@ -30,7 +30,7 @@ build:
         - git checkout -B $CI_COMMIT_REF_NAME # Checkout branch explicitly due to build script logic
         - ./build.sh --push
     only:
-        - v2.4-dev
+        - v2.5-dev
 
 update_readme:
     stage: build
