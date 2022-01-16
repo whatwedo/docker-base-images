@@ -49,6 +49,21 @@ push_image() {
     docker push $FULL_IMAGE_NAME_MIRROR
 }
 
+# Push single image
+mirror_image() {
+    # Configuration
+    IMAGE_NAME=$1
+    FULL_IMAGE_NAME=whatwedo/$IMAGE_NAME:$GIT_BRANCH
+    FULL_IMAGE_NAME_MIRROR=registry.whatwedo.ch/whatwedo/docker-base-images/$IMAGE_NAME:$GIT_BRANCH
+
+    # Tag
+    docker tag $FULL_IMAGE_NAME $FULL_IMAGE_NAME_MIRROR
+
+    # Push image
+    echo Pushing image $FULL_IMAGE_NAME
+    docker push $FULL_IMAGE_NAME_MIRROR
+}
+
 # Building all images
 build_all() {
     echo Building all images
@@ -65,6 +80,14 @@ push_all() {
     done < $BUILD_ORDER_FILE
 }
 
+# Mirror all images
+mirror_all() {
+    echo Mirror all images
+    while read IMAGE_NAME; do
+        mirror_image $IMAGE_NAME
+    done < $BUILD_ORDER_FILE
+}
+
 # Display help
 help() {
     echo "
@@ -75,12 +98,15 @@ help() {
   ./build.sh [image-name] --push                 - Build and push given image
   ./build.sh                                     - Build all images
   ./build.sh --push                              - Build and push all images
+  ./build.sh --mirror                            - Mirror all images to registry.whatwedo.ch
   ./build.sh --help                              - Display this message
   "
 }
 
 if [[ "$@" == "--help" ]]; then
     help
+elif [[ $# -eq 1 ]] && [[ "$1" != "--mirror" ]]; then
+    mirror_all
 elif [[ $# -eq 1 ]] && [[ "$1" != "--push" ]]; then
     build_image $1
 elif [[ $# -eq 2 ]] && [[ "$2" == "--push" ]]; then
