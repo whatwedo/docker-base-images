@@ -1,5 +1,5 @@
 # Golang container to build runit-health
-FROM golang:1.17-alpine3.15 AS runit-health
+FROM golang:1.17-alpine3.16 AS runit-health
 
 # Install dependencies
 RUN apk add --no-cache git && \
@@ -15,7 +15,7 @@ RUN cd /src && go build -o runit-health .
 ################################################################################
 
 # Final image
-FROM alpine:edge
+FROM alpine:3.16
 
 # Maintainer as instruction (deprecated)
 MAINTAINER whatwedo GmbH <welove@whatwedo.ch>

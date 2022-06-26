@@ -28,8 +28,8 @@ docker run whatwedo/base:v2.5-dev
 
 | Tag | State | OS | PHP Version | Node |
 |---|---|---|---|---|
-| `v2.5-dev`, `v2.5-[BUILD-DATE]` | Development | Alpine 3.14 | 8.1 | 14.17 |
-| `v2.4-dev`, `v2.4-[BUILD-DATE]` | Development | Alpine 3.14 | 7.4 | 14.17 |
+| `v2.5-dev`, `v2.5-[BUILD-DATE]` | Development | Alpine 3.16 | 8.1 | 16.15 |
+| `v2.4-dev`, `v2.4-[BUILD-DATE]` | Development | Alpine 3.15 | 7.4 | 16.13 |
 
 
 ## Directory/File Layout

@@ -21,7 +21,7 @@ build_image() {
     echo Building image $FULL_IMAGE_NAME
     rm -rf $IMAGE_DIR/shared
     cp -R $DIR/shared $IMAGE_DIR
-    docker build --network host -t $FULL_IMAGE_NAME --build-arg VERSION=$GIT_BRANCH $IMAGE_DIR
+    docker build --no-cache --network host -t $FULL_IMAGE_NAME --build-arg VERSION=$GIT_BRANCH $IMAGE_DIR
 
     # Test image
     echo Testing image $IMAGE_NAME
@@ -106,6 +106,7 @@ help() {
 if [[ "$@" == "--help" ]]; then
     help
 elif [[ $# -eq 1 ]] && [[ "$1" != "--mirror" ]]; then
+    push_all
     mirror_all
 elif [[ $# -eq 1 ]] && [[ "$1" != "--push" ]]; then
     build_image $1
