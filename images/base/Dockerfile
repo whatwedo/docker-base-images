@@ -90,7 +90,7 @@ RUN apk add --no-cache tzdata && \
 COPY ./rootfs /
 
 # Set health check
-HEALTHCHECK --interval=60s --timeout=10s --start-period=60s \
+HEALTHCHECK --retries=5 --interval=30s --timeout=10s --start-period=30s \
     CMD goss validate
 
 # Configure upstart script
