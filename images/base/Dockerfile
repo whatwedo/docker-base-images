@@ -16,9 +16,6 @@ RUN cd /src && go build -o runit-health .
 # Final image
 FROM alpine:3.12
 
-# Maintainer as instruction (deprecated)
-MAINTAINER whatwedo GmbH <welove@whatwedo.ch>
-
 # Set labels
 ARG VERSION
 LABEL maintainer="whatwedo GmbH <welove@whatwedo.ch>" \
