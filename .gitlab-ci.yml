@@ -1,7 +1,9 @@
 image: docker:latest
 
 services:
-    - docker:dind
+  - name: docker:20.10-dind
+    alias: docker
+    command: ["--tls=false"]
 
 variables:
     DOCKER_BUILDKIT: 1
@@ -30,7 +32,7 @@ build:
         - git checkout -B $CI_COMMIT_REF_NAME # Checkout branch explicitly due to build script logic
         - ./build.sh --push
     only:
-        - v2.3
+        - 56-use-specific-docker-dind-version
 
 update_readme:
     stage: build
