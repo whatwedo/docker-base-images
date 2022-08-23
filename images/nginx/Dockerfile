@@ -8,7 +8,7 @@ RUN apk add --no-cache nginx && \
     chown -R nginx:nginx /var/www
 
 # Add rootfs files
-COPY ./rootfs ./shared/nginx/rootfs /
+COPY ./shared/nginx/rootfs ./rootfs /
 
 # Set workdir
 WORKDIR /var/www
