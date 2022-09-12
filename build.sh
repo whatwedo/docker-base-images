@@ -17,7 +17,10 @@ config() {
     # Configuration
     IMAGE_NAME=$1
     IMAGE_DIR=$DIR/images/$IMAGE_NAME
-    FULL_IMAGE_NAME=whatwedo/$IMAGE_NAME:$GIT_BRANCH
+    FULL_IMAGE_NAME=$IMAGE_NAME:$GIT_BRANCH
+    FULL_IMAGE_NAME_DOCKER=whatwedo/$FULL_IMAGE_NAME
+    FULL_IMAGE_NAME_WWD=registry.whatwedo.ch/whatwedo/docker-base-images/$FULL_IMAGE_NAME
+    PLATFORMS="linux/amd64"
 }
 
 check_image_dir_exists() {
@@ -33,6 +36,7 @@ check_image_dir_exists() {
 # The build_multiarch function will generate images for the needed architectures. It uses `docker buildx build` and will automatically PUSH THE IMAGE!
 build_multiarch() {
     echo "[INFO] Selecting build-container"
+    if ! grep whatwedo-builder <(docker buildx inspect --bootstrap); then docker buildx create --name whatwedo-builder; fi
     docker buildx use whatwedo-builder
 
     check_image_dir_exists
@@ -41,10 +45,20 @@ build_multiarch() {
     rm -rf $IMAGE_DIR/shared
     cp -R $DIR/shared $IMAGE_DIR
 
-    # Build and push image
+    # Build and push image to whatwedo
+    echo "Currently building: $FULL_IMAGE_NAME_WWD"
     docker buildx build --no-cache \
-        -t $FULL_IMAGE_NAME \
-        --platform linux/amd64 \
+        -t $FULL_IMAGE_NAME_WWD \
+        --platform $PLATFORMS \
+        --build-arg VERSION=$GIT_BRANCH \
+        --push \
+        $IMAGE_DIR
+
+    # Build and push image to docker.io
+    echo "Currently building: $FULL_IMAGE_NAME_DOCKER"
+    docker buildx build --no-cache \
+        -t $FULL_IMAGE_NAME_DOCKER \
+        --platform $PLATFORMS \
         --build-arg VERSION=$GIT_BRANCH \
         --push \
         $IMAGE_DIR
@@ -61,13 +75,13 @@ test() {
 
     # Build image
     docker build --no-cache \
-        -t $FULL_IMAGE_NAME \
+        -t $FULL_IMAGE_NAME_DOCKER \
         --build-arg VERSION=$GIT_BRANCH \
         $IMAGE_DIR
 
     # Test image
-    echo "[INFO] Testing image: $FULL_IMAGE_NAME"
-    CID=`docker run -d --rm $FULL_IMAGE_NAME`
+    echo "[INFO] Testing image: $FULL_IMAGE_NAME_DOCKER"
+    CID=`docker run -d --rm $FULL_IMAGE_NAME_DOCKER`
     docker exec $CID goss validate --retry-timeout 30s --sleep 1s
     docker kill $CID
 }
