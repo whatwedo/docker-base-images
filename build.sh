@@ -36,7 +36,7 @@ check_image_dir_exists() {
 # The build_multiarch function will generate images for the needed architectures. It uses `docker buildx build` and will automatically PUSH THE IMAGE!
 build_multiarch() {
     echo "[INFO] Selecting build-container"
-    if ! grep whatwedo-builder <(docker buildx inspect --bootstrap); then docker buildx create --name whatwedo-builder; fi
+    if ! grep whatwedo-builder <(docker buildx inspect --bootstrap); then docker buildx create --name whatwedo-builder --driver-opt network=host --buildkitd-flags '--allow-insecure-entitlement network.host'; fi
     docker buildx use whatwedo-builder
 
     check_image_dir_exists
@@ -47,7 +47,8 @@ build_multiarch() {
 
     # Build and push image to whatwedo
     echo "Currently building: $FULL_IMAGE_NAME_WWD"
-    docker buildx build --no-cache \
+    docker buildx build --allow network.host --network=host \
+        --no-cache \
         -t $FULL_IMAGE_NAME_WWD \
         --platform $PLATFORMS \
         --build-arg VERSION=$GIT_BRANCH \
@@ -56,7 +57,8 @@ build_multiarch() {
 
     # Build and push image to docker.io
     echo "Currently building: $FULL_IMAGE_NAME_DOCKER"
-    docker buildx build --no-cache \
+    docker buildx build --allow network.host --network=host \
+        --no-cache \
         -t $FULL_IMAGE_NAME_DOCKER \
         --platform $PLATFORMS \
         --build-arg VERSION=$GIT_BRANCH \

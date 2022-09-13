@@ -33,8 +33,6 @@ build_images:
         - ./build.sh build
     only:
         - v2.5-dev
-    tags:
-        - dedicated
 
 update_readme:
     stage: build
