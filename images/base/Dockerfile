@@ -17,9 +17,6 @@ RUN cd /src && go build -o runit-health .
 # Final image
 FROM alpine:3.16
 
-# Maintainer as instruction (deprecated)
-MAINTAINER whatwedo GmbH <welove@whatwedo.ch>
-
 # Set labels
 ARG VERSION
 LABEL maintainer="whatwedo GmbH <welove@whatwedo.ch>" \
@@ -59,7 +56,7 @@ RUN apk add --no-cache tzdata && \
 COPY ./rootfs /
 
 # Set health check
-HEALTHCHECK --interval=60s --timeout=10s --start-period=60s \
+HEALTHCHECK --retries=5 --interval=30s --timeout=10s --start-period=30s \
     CMD goss validate
 
 # Configure upstart script

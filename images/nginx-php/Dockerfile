@@ -2,7 +2,7 @@ ARG VERSION
 FROM whatwedo/nginx:$VERSION
 
 # Add rootfs files
-COPY ./rootfs ./shared/php/rootfs ./shared/php-fpm/rootfs /
+COPY ./shared/php/rootfs ./shared/php-fpm/rootfs ./rootfs /
 RUN chmod 777 /tmp
 
 ENV PHP_VERSION=81

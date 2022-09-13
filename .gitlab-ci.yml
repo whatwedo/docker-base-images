@@ -1,7 +1,9 @@
 image: docker:latest
 
 services:
-    - docker:dind
+  - name: docker:20.10-dind
+    alias: docker
+    command: ["--tls=false"]
 
 variables:
     DOCKER_BUILDKIT: 1
@@ -21,31 +23,18 @@ validate_readme:
     only:
         - v2.3
 
-build_amd64:
+build_images:
     stage: build
     script:
         - apk add --no-cache git
         - docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
         - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
         - git checkout -B $CI_COMMIT_REF_NAME
-        - ./build.sh --push
-        - ./build.sh --mirror
+        - ./build.sh build
     only:
         - v2.5-dev
     tags:
         - dedicated
-
-build_arm64:
-    stage: build
-    script:
-        - apk add --no-cache git
-        - docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
-        - git checkout -B $CI_COMMIT_REF_NAME
-        - ./build.sh --push
-    only:
-        - v2.5-dev
-    tags:
-        - arm
 
 update_readme:
     stage: build

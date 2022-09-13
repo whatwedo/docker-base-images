@@ -152,6 +152,7 @@ This image is not using any environment variables.
 
 This Image is not using any volumes.
 
+
 ## Bugs and Issues
 
 If you have any problems with this image, feel free to open a new issue in our issue tracker https://github.com/whatwedo/docker-base-images/issues.

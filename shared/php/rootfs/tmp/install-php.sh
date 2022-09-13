@@ -6,7 +6,7 @@ set -ex
 # Configuration
 [ -z "php$PHP_VERSION" ] && echo "PHP_VERSION is not set" && exit 1;
 
-echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories
+echo "http://dl-cdn.alpinelinux.org/alpine/$(cat /etc/os-release | grep VERSION_ID | cut -d'=' -f2 | rev | cut -d'.' -f2- | rev)/community" >> /etc/apk/repositories
 
 # Install PHP, composer and git with SSH support
 apk add --no-cache php$PHP_VERSION \
