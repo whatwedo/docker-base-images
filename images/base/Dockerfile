@@ -60,5 +60,6 @@ HEALTHCHECK --retries=5 --interval=30s --timeout=10s --start-period=30s \
     CMD goss validate
 
 # Configure upstart script
-RUN mkdir -p /etc/upstart
+RUN chmod 600 /etc/doas.d/system.conf && \
+    mkdir -p /etc/upstart
 CMD ["/sbin/upstart"]
