@@ -48,7 +48,6 @@ build_multiarch() {
     # Build and push image to whatwedo
     echo "Currently building: $FULL_IMAGE_NAME_WWD"
     docker buildx build --allow network.host --network=host \
-        --no-cache \
         -t $FULL_IMAGE_NAME_WWD \
         --platform $PLATFORMS \
         --build-arg VERSION=$GIT_BRANCH \
@@ -58,7 +57,6 @@ build_multiarch() {
     # Build and push image to docker.io
     echo "Currently building: $FULL_IMAGE_NAME_DOCKER"
     docker buildx build --allow network.host --network=host \
-        --no-cache \
         -t $FULL_IMAGE_NAME_DOCKER \
         --platform $PLATFORMS \
         --build-arg VERSION=$GIT_BRANCH \
