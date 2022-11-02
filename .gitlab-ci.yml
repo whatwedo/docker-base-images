@@ -21,7 +21,7 @@ validate_readme:
     script:
         - ./validate-readme.sh
     only:
-        - v2.3
+        - v2.5
 
 build_images:
     stage: build
@@ -32,11 +32,11 @@ build_images:
         - git checkout -B $CI_COMMIT_REF_NAME
         - ./build.sh build
     only:
-        - v2.5-dev
+        - v2.5
 
 update_readme:
     stage: build
     script:
         - ./update-readme.sh
     only:
-        - v2.3
+        - v2.5
