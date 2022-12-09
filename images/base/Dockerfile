@@ -1,5 +1,5 @@
 # Golang container to build runit-health
-FROM golang:1.17-alpine3.16 AS runit-health
+FROM golang:1.19-alpine3.17 AS runit-health
 
 # Install dependencies
 RUN apk add --no-cache git && \
@@ -15,7 +15,7 @@ RUN cd /src && go build -o runit-health .
 ################################################################################
 
 # Final image
-FROM alpine:3.16
+FROM alpine:3.17
 
 # Set labels
 ARG VERSION

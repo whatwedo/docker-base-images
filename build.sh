@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Exit on error
 set -e
@@ -11,8 +11,6 @@ DATE=`date +%Y%m%d`
 export DOCKER_BUILDKIT=1
 
 
-
-
 config() {
     # Configuration
     IMAGE_NAME=$1
@@ -20,8 +18,9 @@ config() {
     FULL_IMAGE_NAME=$IMAGE_NAME:$GIT_BRANCH
     FULL_IMAGE_NAME_DOCKER=whatwedo/$FULL_IMAGE_NAME
     FULL_IMAGE_NAME_WWD=registry.whatwedo.ch/whatwedo/docker-base-images/$FULL_IMAGE_NAME
-    PLATFORMS="linux/amd64"
+    PLATFORMS="linux/amd64,linux/arm64/v8"
 }
+
 
 check_image_dir_exists() {
     if [ ! -d "$IMAGE_DIR" ]; then

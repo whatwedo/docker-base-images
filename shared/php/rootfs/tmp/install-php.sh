@@ -71,8 +71,5 @@ echo "error_log = /dev/stderr" >> /etc/php$PHP_VERSION/php.ini
 echo "php_admin_value[upload_max_filesize] = 128M" >> /etc/php$PHP_VERSION/php.ini
 echo "date.timezone = Europe/Zurich" >> /etc/php$PHP_VERSION/php.ini
 
-# Add CLI symlink
-ln -s /usr/bin/php$PHP_VERSION /usr/bin/php
-
 # Install composer
 wget -O - https://getcomposer.org/installer | php -- --quiet --2 --install-dir /usr/bin/ --filename composer
