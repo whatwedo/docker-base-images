@@ -10,8 +10,8 @@ We at [whatwedo](https://whatwedo.ch/) are building and deploying all applicatio
 | [`v2.2`](https://github.com/whatwedo/docker-base-images/tree/v2.2) | Deprecated | Alpine 3.12 | 7.4 | 12.22 | `x86_64` |
 | [`v2.3`](https://github.com/whatwedo/docker-base-images/tree/v2.3) | Deprecated | Alpine 3.12 | 8.0 | 12.22 | `x86_64` |
 | `v2.4` | Not released | Alpine 3.15 | 7.4 | 16.14 | `x86_64` |
-| [`v2.5`](https://github.com/whatwedo/docker-base-images/tree/v2.5) | **Stable** | Alpine 3.16 | 8.1 | 16.15 | `x86_64` |
-| [`v2.6`](https://github.com/whatwedo/docker-base-images/tree/v2.6) | Testing | Alpine 3.17 | 8.1 | 18.12 | `x86_64`, `aarch64` |
+| [`v2.5`](https://github.com/whatwedo/docker-base-images/tree/v2.5) | Deprecated | Alpine 3.16 | 8.1 | 16.15 | `x86_64` |
+| [`v2.6`](https://github.com/whatwedo/docker-base-images/tree/v2.6) | **Stable** | Alpine 3.17 | 8.1 | 18.12 | `x86_64`, `aarch64` |
 | [`v2.7`](https://github.com/whatwedo/docker-base-images/tree/v2.7) | Development | Alpine Edge | 8.2 | 18.12 | `x86_64`, `aarch64` |
 
 ## Docs
