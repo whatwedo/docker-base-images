@@ -37,9 +37,9 @@ whatwedo/php:v2.7
 
 ## Docs
 
-for a list of all images and documentation please take a look at the README in the specific branch:
+for a list of all images and documentation please take a look at the README in the specific version branch:
 
-https://github.com/whatwedo/docker-base-images/branches/active
+https://github.com/whatwedo/docker-base-images/branches/all?query=v
 
 
 ## Bugs and Issues
