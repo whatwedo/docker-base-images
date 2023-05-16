@@ -111,7 +111,7 @@ help() {
   build.sh is a script for building docker images in this repository.
 
   In order to use the build command you will need to create a builder.
-  Check the README for more info on how to create and configure said builder!
+  Check the build.md for more info on how to create and configure said builder!
 
   USAGE:
   ./build.sh test                                - Build and test all images locally
