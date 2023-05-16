@@ -23,7 +23,7 @@ whatwedo/php:v2.7
 | Tag | State | OS | PHP Version | Node | Arch |
 |---|---|---|---|---|---|
 | [`v2.6`](https://github.com/whatwedo/docker-base-images/tree/v2.6) | **Stable** | Alpine 3.17 | 8.1 | 18.12 | `x86_64`, `aarch64` |
-| [`v2.7`](https://github.com/whatwedo/docker-base-images/tree/v2.7) | Development | Alpine Edge | 8.2 | 18.14 | `x86_64`, `aarch64` |
+| [`v2.7`](https://github.com/whatwedo/docker-base-images/tree/v2.7) | Testing | Alpine 3.18 | 8.2 | 18.16 | `x86_64`, `aarch64` |
 
 
 ### Deprecated
