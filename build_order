@@ -1,6 +1,6 @@
 base
 php
-yarn
+nodejs
 nginx
 nginx-php
 symfony

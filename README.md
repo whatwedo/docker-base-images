@@ -13,7 +13,7 @@ See README: https://github.com/whatwedo/docker-base-images/
 | `whatwedo/nginx-php` | nginx web server and PHP-FPM |
 | `whatwedo/php` | PHP interpreter |
 | `whatwedo/symfony` | Symfony image based on nginx and PHP-FPM |
-| `whatwedo/yarn` | yarn package manager |
+| `whatwedo/nodejs` | NodeJS, npm and yarn v1 |
 
 
 ## Usage
@@ -117,13 +117,6 @@ The following custom setting were made
 (only installed if you are using `whatwedo/nginx` or `whatwedo/nginx-php`)
 
 [nginx](https://www.nginx.com/) is configured to use it with PHP sites using PHP-FPM. Place your site in `/var/www` to serve it. 
-
-
-### yarn
-
-(only installed if you are using `whatwedo/yarn`)
-
-[yarn](https://yarnpkg.com) is a fast and reliable JavaScript package manager. 
 
 
 ## Upstart
