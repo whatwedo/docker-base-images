@@ -8,13 +8,19 @@ container_scanning:
       - CS_IMAGE:
         - registry.whatwedo.ch/whatwedo/docker-base-images/base:v2.6
         - registry.whatwedo.ch/whatwedo/docker-base-images/base:v2.7
+        - registry.whatwedo.ch/whatwedo/docker-base-images/base:v2.8
         - registry.whatwedo.ch/whatwedo/docker-base-images/php:v2.6
         - registry.whatwedo.ch/whatwedo/docker-base-images/php:v2.7
+        - registry.whatwedo.ch/whatwedo/docker-base-images/php:v2.8
         - registry.whatwedo.ch/whatwedo/docker-base-images/yarn:v2.6
         - registry.whatwedo.ch/whatwedo/docker-base-images/yarn:v2.7
+        - registry.whatwedo.ch/whatwedo/docker-base-images/node:v2.8
         - registry.whatwedo.ch/whatwedo/docker-base-images/nginx:v2.6
         - registry.whatwedo.ch/whatwedo/docker-base-images/nginx:v2.7
+        - registry.whatwedo.ch/whatwedo/docker-base-images/nginx:v2.8
         - registry.whatwedo.ch/whatwedo/docker-base-images/nginx-php:v2.6
         - registry.whatwedo.ch/whatwedo/docker-base-images/nginx-php:v2.7
+        - registry.whatwedo.ch/whatwedo/docker-base-images/nginx-php:v2.8
         - registry.whatwedo.ch/whatwedo/docker-base-images/symfony:v2.6
         - registry.whatwedo.ch/whatwedo/docker-base-images/symfony:v2.7
+        - registry.whatwedo.ch/whatwedo/docker-base-images/symfony:v2.8
