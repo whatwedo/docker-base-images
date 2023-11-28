@@ -22,6 +22,10 @@ See README: https://github.com/whatwedo/docker-base-images/
 docker run whatwedo/base:v2.8
 ```
 
+## Known problems
+PHP image cannot be built because of a bug in Imagick: 
+- https://github.com/Imagick/imagick/pull/641
+
 ## Directory/File Layout
 
 The following table show the directory layout of this repository:
