@@ -7,7 +7,7 @@ We at [whatwedo](https://whatwedo.ch/) are building and deploying all applicatio
 registry.whatwedo.ch/whatwedo/docker-base-images/[container_name]:[version]
 
 # for example:
-registry.whatwedo.ch/whatwedo/docker-base-images/php:v2.7
+registry.whatwedo.ch/whatwedo/docker-base-images/php:v2.8
 ```
 
 #### Docker Hub
@@ -15,16 +15,15 @@ registry.whatwedo.ch/whatwedo/docker-base-images/php:v2.7
 whatwedo/[container_name]:[version]
 
 # for example:
-whatwedo/php:v2.7
+whatwedo/php:v2.8
 ```
 
 ## Versions
 
 | Tag | State | OS | PHP Version | Node | Arch |
 |---|---|---|---|---|---|
-| [`v2.6`](https://github.com/whatwedo/docker-base-images/tree/v2.6) | **Stable** | Alpine 3.17 | 8.1 | 18.12 | `x86_64`, `aarch64` |
 | [`v2.7`](https://github.com/whatwedo/docker-base-images/tree/v2.7) | **Stable** | Alpine 3.18 | 8.2 | 18.16 | `x86_64`, `aarch64` |
-| [`v2.8`](https://github.com/whatwedo/docker-base-images/tree/v2.8) | Testing    | Alpine 3.19 | 8.3 | 20.10 | `x86_64`, `aarch64` |
+| [`v2.8`](https://github.com/whatwedo/docker-base-images/tree/v2.8) | **Stable** | Alpine 3.19 | 8.3 | 20.10 | `x86_64`, `aarch64` |
 
 
 ### Deprecated
@@ -35,6 +34,7 @@ whatwedo/php:v2.7
 | [`v2.3`](https://github.com/whatwedo/docker-base-images/tree/v2.3) | Deprecated | Alpine 3.12 | 8.0 | 12.22 | `x86_64` |
 | `v2.4` | Not released | Alpine 3.15 | 7.4 | 16.14 | `x86_64` |
 | [`v2.5`](https://github.com/whatwedo/docker-base-images/tree/v2.5) | Deprecated | Alpine 3.16 | 8.1 | 16.15 | `x86_64` |
+| [`v2.6`](https://github.com/whatwedo/docker-base-images/tree/v2.6) | Deprecated | Alpine 3.17 | 8.1 | 18.12 | `x86_64`, `aarch64` |
 
 ## Docs
 
