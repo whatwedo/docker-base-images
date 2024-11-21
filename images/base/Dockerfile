@@ -15,7 +15,7 @@ RUN cd /src && go build -o runit-health .
 ################################################################################
 
 # Final image
-FROM alpine:3.19
+FROM alpine:edge
 
 # Set labels
 ARG VERSION
