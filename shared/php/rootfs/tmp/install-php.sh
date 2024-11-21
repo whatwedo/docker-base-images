@@ -56,14 +56,14 @@ apk add --no-cache php$PHP_VERSION \
 
 
 
-# Imagick is installed from the archive because regular installation fails
-# See: https://github.com/Imagick/imagick/issues/643#issuecomment-1834361716
+# See: https://github.com/Imagick/imagick/pull/690
 # replace the routine with this command after PR has been merged:
 #     pecl$PHP_VERSION install imagick 
 cd /tmp
-wget -O imagick.tar.gz https://github.com/Imagick/imagick/archive/refs/tags/3.7.0.tar.gz
+wget -O imagick.tar.gz https://github.com/Imagick/imagick/archive/tags/3.7.0.tar.gz
 tar xvfz imagick.tar.gz
-cd imagick-3.7.0
+cd imagick-tags-3.7.0
+sed -i 's/php_strtolower/zend_str_tolower/g' imagick.c # fix php 8.4 compatibility
 phpize$PHP_VERSION
 ./configure --with-php-config=/usr/bin/php-config$PHP_VERSION --with-imagick
 make
