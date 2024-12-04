@@ -51,6 +51,7 @@ apk add --no-cache php$PHP_VERSION \
     libgomp \
     imagemagick \
     imagemagick-dev \
+    imagemagick-pdf \
     gcc \
     musl-dev
 
