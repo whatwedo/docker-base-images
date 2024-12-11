@@ -1,0 +1,4 @@
+[client]
+# we dont require an ssl connection to the database
+# as they are mostly on the same host and trusted
+ssl = false
