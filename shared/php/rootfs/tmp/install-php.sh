@@ -11,6 +11,7 @@ echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositorie
 # Install PHP, composer and git with SSH support
 apk add --no-cache php$PHP_VERSION \
     php$PHP_VERSION\-pecl-apcu \
+    php$PHP_VERSION\-pecl-imagick \
     php$PHP_VERSION\-bcmath \
     php$PHP_VERSION\-calendar \
     php$PHP_VERSION\-common \
@@ -54,32 +55,6 @@ apk add --no-cache php$PHP_VERSION \
     imagemagick-pdf \
     gcc \
     musl-dev
-
-
-
-# See: https://github.com/Imagick/imagick/pull/690
-# replace the routine with this command after PR has been merged:
-#     pecl$PHP_VERSION install imagick 
-cd /tmp
-wget -O imagick.tar.gz https://github.com/Imagick/imagick/archive/tags/3.7.0.tar.gz
-tar xvfz imagick.tar.gz
-cd imagick-tags-3.7.0
-sed -i 's/php_strtolower/zend_str_tolower/g' imagick.c # fix php 8.4 compatibility
-phpize$PHP_VERSION
-./configure --with-php-config=/usr/bin/php-config$PHP_VERSION --with-imagick
-make
-make install
-cd /
-rm -rf /tmp/imagick*
-
-echo "extension=imagick.so" > /etc/php$PHP_VERSION/conf.d/00_imagick.ini
-
-# remove dev dependencies
-apk del --no-cache imagemagick-dev \
-    gcc \
-    musl-dev \
-    php$PHP_VERSION\-pear \
-    php$PHP_VERSION\-dev
 
 ## Configure PHP
 sed -i "s/upload_max_filesize.*/upload_max_filesize = 128M/g" /etc/php$PHP_VERSION/php.ini
