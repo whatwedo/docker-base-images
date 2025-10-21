@@ -1,10 +1,5 @@
 # Golang container to build runit-health
-FROM golang:1.21-alpine AS runit-health
-
-# Install dependencies
-RUN apk add --no-cache git && \
-    go env -w GO111MODULE=off && \
-    go get -u github.com/soundcloud/go-runit/runit
+FROM golang:1.25-alpine AS runit-health
 
 # Add source code
 ADD ./runit-health /src

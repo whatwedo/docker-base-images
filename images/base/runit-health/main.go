@@ -2,7 +2,7 @@ package main
 
 import (
     "log"
-    "github.com/soundcloud/go-runit/runit"
+    "github.com/whatwedo/go-runit/runit"
 )
 
 func main() {
