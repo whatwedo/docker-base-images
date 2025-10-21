@@ -26,7 +26,7 @@ LABEL maintainer="whatwedo GmbH <welove@whatwedo.ch>" \
 RUN apk add --no-cache ca-certificates gnu-libiconv make doas
 
 # set default libiconv from gnu
-ENV LD_PRELOAD /usr/lib/preloadable_libiconv.so php
+ENV LD_PRELOAD=/usr/lib/preloadable_libiconv.so
 
 # Install runit
 RUN apk add --no-cache runit && \
