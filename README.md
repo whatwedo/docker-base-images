@@ -22,8 +22,8 @@ whatwedo/php:v2.8
 
 | Tag | State | OS | PHP Version | Node | Arch |
 |---|---|---|---|---|---|
-| [`v2.8`](https://github.com/whatwedo/docker-base-images/tree/v2.8) | **Stable** | Alpine 3.19 | 8.3 | 20.10 | `x86_64`, `aarch64` |
-| [`v2.9`](https://github.com/whatwedo/docker-base-images/tree/v2.9) | **Stable** | Alpine 3.21 | 8.4 | 22.11 | `x86_64`, `aarch64` |
+| [`v2.8`](https://github.com/whatwedo/docker-base-images/tree/v2.8) | **Stable** | Alpine 3.19 | 8.3 | 20.15 | `x86_64`, `aarch64` |
+| [`v2.9`](https://github.com/whatwedo/docker-base-images/tree/v2.9) | **Stable** | Alpine 3.21 | 8.4 | 22.15 | `x86_64`, `aarch64` |
 
 
 ### Deprecated
