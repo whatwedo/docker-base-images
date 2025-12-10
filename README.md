@@ -22,9 +22,7 @@ whatwedo/php:v2.8
 
 | Tag | State | OS | PHP Version | Node | Arch |
 |---|---|---|---|---|---|
-| [`v2.8`](https://github.com/whatwedo/docker-base-images/tree/v2.8) | **Stable** | Alpine 3.19 | 8.3 | 20.15 | `x86_64`, `aarch64` |
-| [`v2.9`](https://github.com/whatwedo/docker-base-images/tree/v2.9) | **Stable** | Alpine 3.21 | 8.4 | 22.15 | `x86_64`, `aarch64` |
-| [`v2.10`](https://github.com/whatwedo/docker-base-images/tree/v2.10) | Testing | Alpine 3.22 | 8.4 | 22.16 | `x86_64`, `aarch64` |
+| [`v2.10`](https://github.com/whatwedo/docker-base-images/tree/v2.10) | **Stable** | Alpine 3.22 | 8.4 | 22.16 | `x86_64`, `aarch64` |
 
 
 ### Deprecated
@@ -37,6 +35,8 @@ whatwedo/php:v2.8
 | [`v2.5`](https://github.com/whatwedo/docker-base-images/tree/v2.5) | Deprecated | Alpine 3.16 | 8.1 | 16.15 | `x86_64` |
 | [`v2.6`](https://github.com/whatwedo/docker-base-images/tree/v2.6) | Deprecated | Alpine 3.17 | 8.1 | 18.12 | `x86_64`, `aarch64` |
 | [`v2.7`](https://github.com/whatwedo/docker-base-images/tree/v2.7) | Deprecated | Alpine 3.18 | 8.2 | 18.16 | `x86_64`, `aarch64` |
+| [`v2.8`](https://github.com/whatwedo/docker-base-images/tree/v2.8) | Deprecated | Alpine 3.19 | 8.3 | 20.15 | `x86_64`, `aarch64` |
+| [`v2.9`](https://github.com/whatwedo/docker-base-images/tree/v2.9) | Deprecated | Alpine 3.21 | 8.4 | 22.15 | `x86_64`, `aarch64` |
 
 ## Docs
 
