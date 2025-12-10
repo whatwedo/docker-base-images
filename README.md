@@ -7,7 +7,7 @@ We at [whatwedo](https://whatwedo.ch/) are building and deploying all applicatio
 registry.whatwedo.ch/whatwedo/docker-base-images/[container_name]:[version]
 
 # for example:
-registry.whatwedo.ch/whatwedo/docker-base-images/php:v2.8
+registry.whatwedo.ch/whatwedo/docker-base-images/php:v2.11
 ```
 
 #### Docker Hub
@@ -15,7 +15,7 @@ registry.whatwedo.ch/whatwedo/docker-base-images/php:v2.8
 whatwedo/[container_name]:[version]
 
 # for example:
-whatwedo/php:v2.8
+whatwedo/php:v2.11
 ```
 
 ## Versions
@@ -23,6 +23,7 @@ whatwedo/php:v2.8
 | Tag | State | OS | PHP Version | Node | Arch |
 |---|---|---|---|---|---|
 | [`v2.10`](https://github.com/whatwedo/docker-base-images/tree/v2.10) | **Stable** | Alpine 3.22 | 8.4 | 22.16 | `x86_64`, `aarch64` |
+| [`v2.11`](https://github.com/whatwedo/docker-base-images/tree/v2.11) | **Testing** | Alpine 3.23 | 8.5 | 24.11 | `x86_64`, `aarch64` |
 
 
 ### Deprecated
