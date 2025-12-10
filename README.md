@@ -102,10 +102,10 @@ The following custom setting were made
 | upload_max_filesize| 128M |
 | post_max_size| 128M |
 | php_admin_value[upload_max_filesize]| 128M |
-| pm.max_children| 10 |
-| pm.start_servers| 1 |
-| pm.min_spare_servers| 1 |
-| pm.max_spare_servers| 5 | 
+| pm.max_children| 32 |
+| pm.start_servers| 2 |
+| pm.min_spare_servers| 2 |
+| pm.max_spare_servers| 8 | 
  
 ### runit
 
