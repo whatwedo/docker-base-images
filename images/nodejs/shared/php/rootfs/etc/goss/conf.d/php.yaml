@@ -1,0 +1,5 @@
+command:
+    php --version:
+        exit-status: 0
+    composer --version:
+        exit-status: 0
