@@ -1,5 +1,5 @@
 [![GitHub issues](https://img.shields.io/github/issues/whatwedo/docker-base-images.svg)](https://github.com/whatwedo/docker-base-images/issues)
-[![build status](https://dev.whatwedo.ch/whatwedo/docker-base-images/badges/v2.10/pipeline.svg)](https://dev.whatwedo.ch/whatwedo/docker-base-images/commits/v2.10)
+[![build status](https://dev.whatwedo.ch/whatwedo/docker-base-images/badges/v2.11/pipeline.svg)](https://dev.whatwedo.ch/whatwedo/docker-base-images/commits/v2.11)
 
 ## Introduction & Versions
 See README: https://github.com/whatwedo/docker-base-images/
@@ -19,7 +19,7 @@ See README: https://github.com/whatwedo/docker-base-images/
 ## Usage
 
 ```
-docker run whatwedo/base:v2.10
+docker run whatwedo/base:v2.11
 ```
 
 ## Known problems

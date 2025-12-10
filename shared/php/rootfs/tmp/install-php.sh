@@ -27,7 +27,6 @@ apk add --no-cache php$PHP_VERSION \
     php$PHP_VERSION\-mbstring \
     php$PHP_VERSION\-mysqli \
     php$PHP_VERSION\-mysqlnd \
-    php$PHP_VERSION\-opcache \
     php$PHP_VERSION\-openssl \
     php$PHP_VERSION\-pcntl \
     php$PHP_VERSION\-pdo \
