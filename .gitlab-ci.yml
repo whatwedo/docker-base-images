@@ -1,7 +1,7 @@
 image: docker:latest
 
 services:
-  - name: docker:20.10-dind
+  - name: docker:28-dind
     alias: docker
     command: ["--tls=false"]
 
