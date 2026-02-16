@@ -1,0 +1,6 @@
+#!/bin/sh
+apt-get update || exit $?
+apt-get install -y --no-install-recommends "$@"
+exit_code=$?
+rm -rf /var/lib/apt/lists/*
+exit $exit_code
