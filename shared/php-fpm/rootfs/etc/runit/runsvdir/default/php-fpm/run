@@ -1,0 +1,2 @@
+#!/bin/bash
+exec /usr/sbin/php-fpm@PHP_VERSION@ --fpm-config "/etc/php/@PHP_VERSION@/fpm/php-fpm.conf" -F
