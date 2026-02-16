@@ -1,0 +1,16 @@
+#!/bin/bash
+# PHP Information
+
+if command -v php > /dev/null 2>&1; then
+    PHP_VERSION=$(php -r 'echo PHP_VERSION;' 2>/dev/null)
+
+    printf "PHP:\n"
+    printf "  %-20s %s\n" "PHP Version:" "$PHP_VERSION"
+
+    if command -v composer > /dev/null 2>&1; then
+        COMPOSER_VERSION=$(composer --version 2>/dev/null | grep -oP '\d+\.\d+\.\d+' | head -1)
+        printf "  %-20s %s\n" "Composer Version:" "$COMPOSER_VERSION"
+    fi
+
+    printf "\n"
+fi
