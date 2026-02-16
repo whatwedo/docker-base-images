@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# PHP-FPM treats SIGTERM as an immediate termination and SIGQUIT as a graceful
+# stop that lets active workers finish their requests.
+pid=$(cat supervise/pid 2>/dev/null) || exit 1
+case "$pid" in
+    ''|*[!0-9]*) exit 1 ;;
+esac
+[ "$pid" -gt 1 ] || exit 1
+kill -QUIT "$pid"

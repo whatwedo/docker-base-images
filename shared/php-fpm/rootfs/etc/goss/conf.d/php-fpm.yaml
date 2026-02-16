@@ -1,7 +1,7 @@
 file:
-    /var/run/php-fpm.sock:
+    /tmp/php-fpm.sock:
         exists: true
 
 process:
-    php-fpm{{ .Env.PHP_VERSION }}:
+    php-fpm@PHP_VERSION@:
         running: true
