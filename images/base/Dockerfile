@@ -1,60 +1,68 @@
-# Golang container to build runit-health
-FROM golang:1.25-alpine AS runit-health
+# Build Go-based runtime tools with the current patched toolchain. goss is built
+# from source, so the checksum database has to stay on to verify every module.
+FROM golang:1.26 AS go-tools
+ARG GOSS_VERSION=v0.4.10
+RUN mkdir -p /src && \
+    { [ "$(go env GOSUMDB)" != "off" ] || { echo "ERROR: GOSUMDB is disabled" >&2; exit 1; }; } && \
+    GOBIN=/src CGO_ENABLED=0 go install -trimpath -buildvcs=false \
+        -ldflags "-X github.com/goss-org/goss/util.Version=${GOSS_VERSION} -s -w" \
+        "github.com/goss-org/goss/cmd/goss@${GOSS_VERSION}" && \
+    [ "$(/src/goss --version)" = "goss version ${GOSS_VERSION}" ]
 
-# Add source code
 ADD ./runit-health /src
-
-# Build app
 RUN cd /src && go build -o runit-health .
 
-################################################################################
-
 # Final image
-FROM alpine:3.23
+FROM debian:trixie-slim
 
-# Set labels
 ARG VERSION
+ARG BUILD_DATE
+ARG DEBIAN_FRONTEND=noninteractive
+ENV BASE_IMAGE_VERSION=${VERSION:-unknown} \
+    BUILD_DATE=${BUILD_DATE:-unknown} \
+    TZ=Europe/Zurich
+
 LABEL maintainer="whatwedo GmbH <welove@whatwedo.ch>" \
-    org.label-schema.name="whatwedo/docker-base-images" \
-    org.label-schema.url="https://github.com/whatwedo/docker-base-images" \
-    org.label-schema.vcs-url="https://github.com/whatwedo/docker-base-images" \
-    org.label-schema.vendor="whatwedo GmbH" \
-    org.label-schema.version=$VERSION \
-    org.label-schema.schema-version="1.0"
+    org.opencontainers.image.title="whatwedo/docker-base-images" \
+    org.opencontainers.image.url="https://github.com/whatwedo/docker-base-images" \
+    org.opencontainers.image.source="https://github.com/whatwedo/docker-base-images" \
+    org.opencontainers.image.vendor="whatwedo GmbH" \
+    org.opencontainers.image.version=$VERSION
 
 # Install base dependencies
-RUN apk add --no-cache ca-certificates gnu-libiconv make doas
+RUN apt-get update && apt-get upgrade -y && apt-get install -y --no-install-recommends \
+    bind9-dnsutils \
+    ca-certificates \
+    curl \
+    git \
+    gnupg2 \
+    iputils-ping \
+    make \
+    openssh-client \
+    runit \
+    && rm -rf /var/lib/apt/lists/* && \
+    rm -f /etc/service
 
-# set default libiconv from gnu
-ENV LD_PRELOAD=/usr/lib/preloadable_libiconv.so
+# Add runtime tools
+COPY --from=go-tools /src/runit-health /src/goss /usr/local/bin/
 
-# Install runit
-RUN apk add --no-cache runit && \
-    mkdir -p /etc/service
+# Create app user/group with UID 10000 / GID 10001
+RUN groupadd -g 10001 app && \
+    useradd -u 10000 -g app -m -s /bin/bash app
 
-# Add runit-health
-COPY --from=runit-health /src/runit-health /usr/local/bin
-
-# Install goss
-RUN apk add --no-cache --virtual .build-deps curl && \
-    curl -fsSL https://goss.rocks/install | sh && \
-    apk del --no-cache .build-deps
 ENV GOSS_FILE=/etc/goss/goss.yaml
-
-# configure default timezone
-RUN apk add --no-cache tzdata && \
-    cp /usr/share/zoneinfo/Europe/Zurich /etc/localtime && \
-    echo "Europe/Zurich" > /etc/timezone && \
-    apk del tzdata
 
 # Add rootfs files
 COPY ./rootfs /
 
-# Set health check
-HEALTHCHECK --retries=5 --interval=30s --timeout=10s --start-period=30s \
-    CMD goss validate
+# Configure MOTD
+RUN chmod +x /etc/update-motd.d/* && \
+    echo 'run-parts /etc/update-motd.d/ 2>/dev/null' >> /etc/bash.bashrc
 
-# Configure upstart script
-RUN chmod 600 /etc/doas.d/system.conf && \
-    mkdir -p /etc/upstart
-CMD ["/sbin/upstart"]
+# Configure upstart
+RUN mkdir -p /etc/upstart
+STOPSIGNAL SIGTERM
+CMD ["/usr/sbin/upstart"]
+
+# Run as app — derived images have to open a USER root block for build steps
+USER app

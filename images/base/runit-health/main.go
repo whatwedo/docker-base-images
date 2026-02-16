@@ -9,7 +9,7 @@ func main() {
     log.Printf("Running runit-health")
 
     // Get runit services
-    services, err := runit.GetServices("/etc/service")
+    services, err := runit.GetServices("/etc/runit/runsvdir/default")
     if err != nil {
 		log.Fatal(err)
 	}
