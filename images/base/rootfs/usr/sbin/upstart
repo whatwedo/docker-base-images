@@ -1,0 +1,64 @@
+#!/bin/bash
+set -e
+
+SVDIR=/etc/runit/runsvdir/default
+SHUTDOWN_TIMEOUT=${SHUTDOWN_TIMEOUT:-8}
+
+if ! [[ "$SHUTDOWN_TIMEOUT" =~ ^[1-9][0-9]*$ ]]; then
+  echo "Invalid SHUTDOWN_TIMEOUT '$SHUTDOWN_TIMEOUT'; using 8 seconds." >&2
+  SHUTDOWN_TIMEOUT=8
+fi
+
+_stop_services() {
+  local remaining=$((shutdown_deadline - SECONDS))
+
+  if ((remaining > 0)); then
+    sv -w "$remaining" stop "$@" || true
+  else
+    # Still request a graceful stop through each service's control/t hook, but
+    # do not extend the global shutdown deadline.
+    sv down "$@" || true
+  fi
+}
+
+_term() {
+  echo "Caught SIGTERM signal!"
+  trap - SIGTERM
+  if [ -n "$runit_pid" ]; then
+    # Stop the services before runsvdir goes away, otherwise PID 1 exits first
+    # and the kernel SIGKILLs them. nginx is drained first so that PHP-FPM stays
+    # available for every request nginx has already accepted. The deadline is
+    # shared by all services so Docker's grace period is not multiplied.
+    shutdown_deadline=$((SECONDS + SHUTDOWN_TIMEOUT))
+    services=()
+
+    if [ -d "$SVDIR/nginx" ]; then
+      _stop_services "$SVDIR/nginx"
+    fi
+
+    for service in "$SVDIR"/*; do
+      [ -d "$service" ] || continue
+      [ "$service" = "$SVDIR/nginx" ] && continue
+      services+=("$service")
+    done
+
+    if ((${#services[@]} > 0)); then
+      _stop_services "${services[@]}"
+    fi
+
+    kill -TERM "$runit_pid" 2>/dev/null || true
+    wait "$runit_pid" 2>/dev/null || true
+  fi
+  exit 143
+}
+trap _term SIGTERM
+
+while IFS= read -r -d '' f; do
+    echo "Running upstart file $f..."
+    "$f"
+done < <(find /etc/upstart -mindepth 1 -maxdepth 1 -type f -print0 | sort -z)
+
+echo Running runit services...
+runsvdir -P "$SVDIR" &
+runit_pid=$!
+wait "$runit_pid"
