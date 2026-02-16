@@ -1,0 +1,4 @@
+#!/bin/bash
+# FPM scans fpm/conf.d; this overrides the Dockerfile ENV (which points the CLI SAPI at cli/conf.d).
+export PHP_INI_SCAN_DIR="/etc/php/${PHP_VERSION}/conf.d:/etc/php/${PHP_VERSION}/fpm/conf.d"
+exec /usr/sbin/php-fpm"${PHP_VERSION}" --fpm-config "/etc/php/${PHP_VERSION}/fpm/php-fpm.conf" -F

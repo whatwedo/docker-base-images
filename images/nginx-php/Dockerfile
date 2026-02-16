@@ -1,13 +1,19 @@
-ARG VERSION
-FROM whatwedo/nginx:$VERSION
+ARG VERSION=v3.0
+ARG REGISTRY=whatwedo
+FROM ${REGISTRY}/nginx:$VERSION
 
 # Add rootfs files
 COPY ./shared/php/rootfs ./shared/php-fpm/rootfs ./rootfs /
-RUN chmod 777 /tmp
 
-ENV PHP_VERSION=85
+# Install PHP and PHP-FPM (as root)
+ENV PHP_VERSION=8.4
+ENV PHP_INI_SCAN_DIR=/etc/php/${PHP_VERSION}/conf.d:/etc/php/${PHP_VERSION}/cli/conf.d
 ENV COMPOSER_ALLOW_SUPERUSER=1
-RUN /tmp/install-php.sh && \
-    rm /tmp/install-php.sh && \
-    /tmp/install-php-fpm.sh && \
-    rm /tmp/install-php-fpm.sh
+USER root
+RUN /usr/local/src/install-php.sh && rm /usr/local/src/install-php.sh && \
+    /usr/local/src/install-php-fpm.sh && rm /usr/local/src/install-php-fpm.sh
+
+# Create PHP-FPM supervise directory and switch back to app user
+RUN mkdir -p /etc/runit/runsvdir/default/php-fpm/supervise && \
+    chown -R app:app /etc/runit/runsvdir/default/php-fpm
+USER app
