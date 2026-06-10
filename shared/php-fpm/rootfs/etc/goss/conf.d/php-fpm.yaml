@@ -1,5 +1,5 @@
 file:
-    /var/run/php-fpm.sock:
+    /tmp/php-fpm.sock:
         exists: true
 
 process:

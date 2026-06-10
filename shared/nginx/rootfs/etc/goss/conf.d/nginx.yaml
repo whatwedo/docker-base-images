@@ -1,17 +1,12 @@
 user:
-    nginx:
+    app:
         exists: true
-        groups:
-            - nginx
-            - www-data
-        home: /var/lib/nginx
-        shell: /sbin/nologin
+        uid: 10000
 
 group:
-    nginx:
+    app:
         exists: true
-    www-data:
-        exists: true
+        gid: 10001
 
 process:
     nginx:

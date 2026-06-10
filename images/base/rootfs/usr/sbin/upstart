@@ -1,0 +1,23 @@
+#!/bin/bash
+set -e
+
+_term() {
+  echo "Caught SIGTERM signal!"
+  if [ -n "$runit_pid" ]; then
+    kill -TERM "$runit_pid" 2>/dev/null
+  else
+    # SIGTERM during the upstart phase, before runit is started
+    exit 143
+  fi
+}
+trap _term SIGTERM
+
+while IFS= read -r -d '' f; do
+    echo "Running upstart file $f..."
+    "$f"
+done < <(find /etc/upstart -mindepth 1 -maxdepth 1 -type f -print0 | sort -z)
+
+echo Running runit services...
+runsvdir -P /etc/runit/runsvdir/default &
+runit_pid=$!
+wait "$runit_pid"

@@ -1,4 +1,4 @@
 [client]
-# we dont require an ssl connection to the database
+# we dont require an ssl connection to mariadb
 # as they are mostly on the same host and trusted
 ssl = false

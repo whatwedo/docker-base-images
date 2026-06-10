@@ -1,9 +1,10 @@
-ARG VERSION
-FROM whatwedo/base:$VERSION
+ARG VERSION=v3.0
+ARG REGISTRY=whatwedo
+FROM ${REGISTRY}/base:$VERSION
 
-# Add rootfs files
 COPY ./rootfs /
 
-# note: git and openssh-client is needed to 
-# install packages directly from a repository
-RUN apk add --no-cache nodejs npm yarn git openssh-client
+# Install Node.js via the shared helper script (inherited from the base image)
+RUN /usr/local/sbin/install-nodejs.sh
+
+USER app

@@ -1,2 +1,3 @@
 /images/*/shared
-/images/base/runit-health/pkg/mod/cache
+/images/base/runit-health/pkg
+/images/base/runit-health/runit-health

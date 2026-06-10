@@ -4,7 +4,7 @@
 set -e
 
 # Configuration
-DIR="$(dirname "$SCRIPT")"
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 BUILD_ORDER_FILE=$DIR/build_order
 GIT_BRANCH=`git rev-parse --abbrev-ref HEAD | sed  's/\//-/g'`
 DATE=`date +%Y%m%d`
@@ -17,7 +17,7 @@ config() {
     IMAGE_DIR=$DIR/images/$IMAGE_NAME
     FULL_IMAGE_NAME=$IMAGE_NAME:$GIT_BRANCH
     FULL_IMAGE_NAME_DOCKER=whatwedo/$FULL_IMAGE_NAME
-    FULL_IMAGE_NAME_WWD=registry.whatwedo.ch/whatwedo/docker-base-images/$FULL_IMAGE_NAME
+    FULL_IMAGE_NAME_WWD=${CI_REGISTRY_IMAGE:-registry.whatwedo.ch/whatwedo/docker-base-images}/$FULL_IMAGE_NAME
     PLATFORMS="linux/amd64,linux/arm64/v8"
 }
 
@@ -32,50 +32,62 @@ check_image_dir_exists() {
 }
 
 
+prepare_shared() {
+    check_image_dir_exists
+    rm -rf $IMAGE_DIR/shared
+    cp -R $DIR/shared $IMAGE_DIR
+}
+
+
 # The build_multiarch function will generate images for the needed architectures. It uses `docker buildx build` and will automatically PUSH THE IMAGE!
 build_multiarch() {
     echo "[INFO] Selecting build-container"
     if ! grep whatwedo-builder <(docker buildx inspect --bootstrap); then docker buildx create --name whatwedo-builder --driver-opt network=host --buildkitd-flags '--allow-insecure-entitlement network.host'; fi
     docker buildx use whatwedo-builder
 
-    check_image_dir_exists
+    prepare_shared
+
+    BUILD_DATE=$(date -u +%Y-%m-%dT%H:%M:%SZ)
 
     echo "[INFO] Building and pushing image: $FULL_IMAGE_NAME"
-    rm -rf $IMAGE_DIR/shared
-    cp -R $DIR/shared $IMAGE_DIR
 
-    # Build and push image to whatwedo
+    # Build tag list
+    TAGS="-t $FULL_IMAGE_NAME_WWD"
+    if [ -n "$DOCKERHUB_USERNAME" ]; then
+        TAGS="$TAGS -t $FULL_IMAGE_NAME_DOCKER"
+    fi
+
     echo "Currently building: $FULL_IMAGE_NAME_WWD"
+    # Derive registry prefix for FROM resolution in child Dockerfiles
+    REGISTRY=${CI_REGISTRY_IMAGE:-registry.whatwedo.ch/whatwedo/docker-base-images}
+
     docker buildx build --allow network.host --network=host \
-        -t $FULL_IMAGE_NAME_WWD \
+        $TAGS \
         --platform $PLATFORMS \
         --build-arg VERSION=$GIT_BRANCH \
+        --build-arg BUILD_DATE=$BUILD_DATE \
+        --build-arg REGISTRY=$REGISTRY \
         --push \
         $IMAGE_DIR
 
-    # Build and push image to docker.io
-    echo "Currently building: $FULL_IMAGE_NAME_DOCKER"
-    docker buildx build --allow network.host --network=host \
-        -t $FULL_IMAGE_NAME_DOCKER \
-        --platform $PLATFORMS \
-        --build-arg VERSION=$GIT_BRANCH \
-        --push \
-        $IMAGE_DIR
+    if [ -z "$DOCKERHUB_USERNAME" ]; then
+        echo "[INFO] Skipping Docker Hub push (DOCKERHUB_USERNAME not set)"
+    fi
 }
 
 # To test the image it will use the normal way of building docker images via `docker build`
 test() {
     echo "[INFO] Locally building and testing image: $FULL_IMAGE_NAME"
 
-    check_image_dir_exists
+    prepare_shared
 
-    rm -rf $IMAGE_DIR/shared
-    cp -R $DIR/shared $IMAGE_DIR
+    BUILD_DATE=$(date -u +%Y-%m-%dT%H:%M:%SZ)
 
     # Build image
     docker build --no-cache \
         -t $FULL_IMAGE_NAME_DOCKER \
         --build-arg VERSION=$GIT_BRANCH \
+        --build-arg BUILD_DATE=$BUILD_DATE \
         $IMAGE_DIR
 
     # Test image

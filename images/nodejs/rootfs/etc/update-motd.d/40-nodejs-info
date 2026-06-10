@@ -1,0 +1,16 @@
+#!/bin/bash
+# Node.js Information
+
+if command -v node > /dev/null 2>&1; then
+    NODE_VERSION=$(node --version 2>/dev/null)
+
+    printf "Node.js:\n"
+    printf "  %-20s %s\n" "Node Version:" "$NODE_VERSION"
+
+    if command -v npm > /dev/null 2>&1; then
+        NPM_VERSION=$(npm --version 2>/dev/null)
+        printf "  %-20s %s\n" "npm Version:" "$NPM_VERSION"
+    fi
+
+    printf "\n"
+fi
