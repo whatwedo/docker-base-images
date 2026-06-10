@@ -62,13 +62,15 @@ All notable changes to whatwedo Docker Base Images will be documented in this fi
 #### PHP Installation
 - Source: Alpine edge packages → Sury PHP PPA (https://packages.sury.org/php/)
 - Version: 8.4 (the LTS line; v2.11 had moved to 8.5)
-- Install script moved: `/tmp/install-php.sh` → `/usr/local/src/install-php.sh`
+- Install scripts moved to `/usr/local/sbin/`: `install-php.sh` (in the base image) and `install-php-fpm.sh` (in the php-fpm layer); both are still run and removed during the build
 - PHP-FPM configuration paths updated to Debian structure: `/etc/php/8.4/fpm/`
 
 #### Node.js Installation
 - Source: Alpine packages → NodeSource repository (https://deb.nodesource.com/)
 - Version: 22.x LTS (v2.11 had moved to 24.x)
 - GPG-signed repository with proper key verification
+- Installation logic extracted into `/usr/local/sbin/install-nodejs.sh`, shipped in the base image so downstream images (e.g. symfony) can install Node.js on demand without it being baked into every layer
+- yarn is no longer installed (use `npm` instead)
 
 #### nginx Configuration
 - User directive: `user nginx;` → `user app;`

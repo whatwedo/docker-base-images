@@ -10,7 +10,7 @@ ENV PHP_VERSION=8.4
 ENV PHP_INI_SCAN_DIR=/etc/php/${PHP_VERSION}/conf.d:/etc/php/${PHP_VERSION}/cli/conf.d
 ENV COMPOSER_ALLOW_SUPERUSER=1
 USER root
-RUN /usr/local/src/install-php.sh && rm /usr/local/src/install-php.sh
+RUN /usr/local/sbin/install-php.sh && rm /usr/local/sbin/install-php.sh
 
 # Switch to app user
 USER app

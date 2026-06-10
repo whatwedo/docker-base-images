@@ -10,8 +10,8 @@ ENV PHP_VERSION=8.4
 ENV PHP_INI_SCAN_DIR=/etc/php/${PHP_VERSION}/conf.d:/etc/php/${PHP_VERSION}/cli/conf.d
 ENV COMPOSER_ALLOW_SUPERUSER=1
 USER root
-RUN /usr/local/src/install-php.sh && rm /usr/local/src/install-php.sh && \
-    /usr/local/src/install-php-fpm.sh && rm /usr/local/src/install-php-fpm.sh
+RUN /usr/local/sbin/install-php.sh && rm /usr/local/sbin/install-php.sh && \
+    /usr/local/sbin/install-php-fpm.sh && rm /usr/local/sbin/install-php-fpm.sh
 
 # Create PHP-FPM supervise directory and switch back to app user
 RUN mkdir -p /etc/runit/runsvdir/default/php-fpm/supervise && \

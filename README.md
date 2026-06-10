@@ -28,7 +28,7 @@ See [CHANGELOG.md](CHANGELOG.md) for a detailed list of changes and [MIGRATION-v
 | `whatwedo/nginx-php` | nginx + PHP-FPM 8.4 with unix socket |
 | `whatwedo/php` | PHP 8.4 CLI with Composer 2 |
 | `whatwedo/symfony` | Symfony-optimized nginx + PHP-FPM |
-| `whatwedo/nodejs` | Node.js 22.x LTS with npm and yarn |
+| `whatwedo/nodejs` | Node.js 22.x LTS with npm |
 
 ## Usage
 
@@ -118,7 +118,16 @@ The shared `conf.d/` is scanned by both CLI and FPM via `PHP_INI_SCAN_DIR`. Use 
 
 (installed in `whatwedo/nodejs`)
 
-Node.js 22.x LTS from [NodeSource](https://deb.nodesource.com/) with npm and yarn.
+Node.js 22.x LTS from [NodeSource](https://deb.nodesource.com/) with npm.
+
+The installation logic lives in the helper script `/usr/local/sbin/install-nodejs.sh`, which ships in every image (it is part of the base image). Images on the PHP/Symfony chain that need Node.js can install it at build time without basing off `whatwedo/nodejs`:
+
+```dockerfile
+FROM whatwedo/symfony:v3.0
+USER root
+RUN /usr/local/sbin/install-nodejs.sh
+USER app
+```
 
 ## Upstart
 
