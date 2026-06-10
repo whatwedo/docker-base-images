@@ -37,13 +37,14 @@ FROM whatwedo/nginx-php:v3.0
 
 The service user changed from `nginx` to `app` (UID/GID `10000:10001`). All services (nginx, PHP-FPM) now run as `app`.
 
-Add an upstart script to your project to fix ownership of your application data at container startup. Create the file with the executable flag set:
+Add an upstart script to your project to fix ownership of your application data at container startup. Place it in your rootfs overlay at `docker/prod/rootfs/etc/upstart/10-permissions.sh` and commit it **with the executable bit set** — `COPY ./docker/prod/rootfs /` preserves the mode from git:
 
-```dockerfile
-# In your Dockerfile
-COPY 10-permissions.sh /etc/upstart/10-permissions.sh
-RUN chmod +x /etc/upstart/10-permissions.sh
+```bash
+chmod +x docker/prod/rootfs/etc/upstart/10-permissions.sh
+git add docker/prod/rootfs/etc/upstart/10-permissions.sh   # tracked as mode 100755
 ```
+
+Do **not** add a separate `COPY` + `RUN chmod +x` for it in the Dockerfile. The file is copied as `root:root`, and the final stage runs as `USER app`, so an `app`-user `chmod` on a root-owned file fails with *Operation not permitted*. (If you genuinely must change a mode in the Dockerfile, wrap it in `USER root` … `USER app`.)
 
 **`10-permissions.sh`:**
 ```bash
@@ -51,7 +52,7 @@ RUN chmod +x /etc/upstart/10-permissions.sh
 chown -R app:app /var/www/var/storage
 ```
 
-Adjust the path to match your application's writable directories.
+upstart runs this script **as root** at startup, so the `chown` works even though the services later run as `app`. Adjust the path to match your application's writable directories.
 
 ### 3. Update Package Installation
 
