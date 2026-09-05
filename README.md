@@ -43,6 +43,8 @@ whatwedo/php:v2.11
 
 ## Docs
 
+The `Images` workflow rebuilds and tests `v3.0` every Sunday at 05:17 Europe/Zurich, then publishes both architectures to the three registries. Its schedule lives on `main` and dispatches the full pipeline on `v3.0`. APT updates are picked up during rebuilding; explicitly pinned tools are updated manually. See [build instructions](https://github.com/whatwedo/docker-base-images/blob/v3.0/build.md).
+
 for a list of all images and documentation please take a look at the README in the specific version branch:
 
 https://github.com/whatwedo/docker-base-images/branches/all?query=v
