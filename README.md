@@ -31,6 +31,7 @@ See [CHANGELOG.md](https://github.com/whatwedo/docker-base-images/blob/v3.0/CHAN
 | `whatwedo/php` | PHP 8.4 CLI with Composer 2 |
 | `whatwedo/symfony` | Symfony-optimized nginx + PHP-FPM |
 | `whatwedo/nodejs` | Node.js 22.x LTS with npm |
+| `whatwedo/frankenphp` | FrankenPHP with PHP 8.4 ZTS, classic and worker modes |
 
 ## Registries
 
@@ -91,6 +92,50 @@ securityContext:
 | `.github/workflows` | Pipeline that tests every image on amd64 and arm64 before publishing |
 
 ## Installed Software
+
+### FrankenPHP
+
+`whatwedo/frankenphp` derives from our Debian base and runs FrankenPHP under runit as `app` (UID 10000 / GID 10001). It serves HTTP on port **8080** with `/var/www/public` as its default document root. TLS terminates at the reverse proxy. The default mode starts a fresh PHP request for each HTTP request.
+
+```bash
+docker run --rm --cap-drop=ALL --security-opt=no-new-privileges \
+    -p 8080:8080 -v "$PWD:/var/www:ro" whatwedo/frankenphp:v3.0
+```
+
+PHP 8.4 **ZTS** and FrankenPHP come from the [upstream maintainers' Debian repository](https://frankenphp.dev/docs/), selected specifically for PHP 8.4 and checked against a pinned signing-key fingerprint. Composer 2, the extensions listed below, and Ghostscript are included. The same PHP runtime supports the real `php` CLI and HTTP requests; Composer `@php` scripts work normally.
+
+| Setting | Default / purpose |
+|---|---|
+| `FRANKENPHP_DOCUMENT_ROOT` | `/var/www/public` |
+| `FRANKENPHP_NUM_THREADS` | `4` initial PHP threads |
+| `FRANKENPHP_MAX_THREADS` | `16` maximum PHP threads |
+| `FRANKENPHP_CONFIG` | Optional directives inside the global `frankenphp` block, e.g. worker configuration |
+| `FRANKENPHP_TRUSTED_PROXIES` | Space-separated private CIDRs: `10.0.0.0/8 172.16.0.0/12 192.168.0.0/16 fc00::/7` |
+| `SHUTDOWN_TIMEOUT` | `8` seconds to finish active requests |
+
+Only a trusted immediate proxy peer may assert the client IP and external HTTPS scheme. Untrusted forwarded headers are removed before PHP handles the request. The trusted scheme becomes `HTTPS`, `HTTP_SCHEME` and `SERVER_PORT`, including support for the legacy `X-Use-Https` header. When exposed directly, restrict `FRANKENPHP_TRUSTED_PROXIES` to the actual proxy addresses.
+
+The main configuration is `/etc/frankenphp/Caddyfile`; the admin API listens on container loopback at `127.0.0.1:2019`. `/frankenphp-health` executes a bundled PHP script independently of the application and is used by the image health check. Hidden paths, PHP source variants, backups and dumps return 404. Existing lowercase `.php` files execute; missing application paths fall back to `index.php`.
+
+Additional PHP configuration goes in `/etc/php/8.4/conf.d/*.ini`, shared by CLI and FrankenPHP. The ZTS packages also load `/etc/php-zts/conf.d`. Add extensions from the ZTS repository in a root build phase, for example:
+
+```dockerfile
+FROM whatwedo/frankenphp:v3.0
+USER root
+RUN apt-install php-zts-redis
+USER app
+COPY . /var/www
+```
+
+Use `php-zts-*` extensions in this image; Sury's `php8.4-*` extensions use a different ABI. The packaged Imagick build disables OpenMP, avoiding the [threading conflict documented by FrankenPHP](https://frankenphp.dev/docs/known-issues/).
+
+For an application with a [FrankenPHP-compatible worker entrypoint](https://frankenphp.dev/docs/worker/), enable workers explicitly:
+
+```dockerfile
+ENV FRANKENPHP_CONFIG="worker /var/www/public/index.php 2"
+```
+
+Keep some PHP threads available for ordinary requests and the health endpoint. Worker applications remain in memory between requests and must reset application state themselves; an ordinary `index.php` is not automatically a worker. Both classic and worker modes are tested for graceful shutdown, including an active request during `docker stop`.
 
 ### runit
 
