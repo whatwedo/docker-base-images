@@ -31,7 +31,7 @@ check_fails() {
 }
 
 check "list keeps the build order" \
-    "base php nodejs nginx nginx-php symfony" \
+    "base php nodejs nginx nginx-php symfony frankenphp" \
     "$(VERSION=test "$BUILD" list | tr '\n' ' ' | sed 's/ $//')"
 
 check "info reports the parent" \

@@ -17,6 +17,10 @@ See the [migration guide](MIGRATION-v3.md) for upgrade steps and configuration e
 - **nginx requires trusted proxies for forwarded client IPs and HTTPS.** `X-Real-IP` is no longer used. PHP source variants, editor backups and database dumps are blocked.
 - **Default browser headers restrict cross-origin framing, camera, microphone and geolocation.** Review overrides if your application uses these features.
 
+### Added
+
+- **FrankenPHP image** with PHP 8.4 ZTS, Composer, and classic or worker mode, following the shared Debian/rootless conventions.
+
 ### Changed
 
 - PHP's timezone follows `TZ` (default `Europe/Zurich`).

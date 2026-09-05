@@ -180,6 +180,9 @@ run_suite() {
         runtime)
             "$DIR/tests/symfony-runtime.sh" "$FULL_IMAGE_NAME_DOCKER"
             ;;
+        frankenphp)
+            "$DIR/tests/frankenphp-runtime.sh" "$FULL_IMAGE_NAME_DOCKER"
+            ;;
         *)
             echo "[ERROR] Unknown test suite: $1" >&2
             return 1

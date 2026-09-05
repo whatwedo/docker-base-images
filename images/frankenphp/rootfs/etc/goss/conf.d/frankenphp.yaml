@@ -1,0 +1,22 @@
+user:
+    app:
+        exists: true
+        uid: 10000
+group:
+    app:
+        exists: true
+        gid: 10001
+process:
+    frankenphp:
+        running: true
+command:
+    frankenphp version:
+        exit-status: 0
+port:
+    tcp6:8080:
+        listening: true
+http:
+    http://localhost:8080/frankenphp-health:
+        status: 200
+        body:
+            - frankenphp-ok
