@@ -1,10 +1,10 @@
-ARG VERSION=v3.0
+ARG VERSION=v3.1
 ARG REGISTRY=whatwedo
 FROM ${REGISTRY}/base:$VERSION
 
-ENV PHP_VERSION=8.4 \
+ENV PHP_VERSION=8.5 \
     PHP_MEMORY_LIMIT=-1 \
-    PHP_INI_SCAN_DIR=:/etc/php/8.4/conf.d \
+    PHP_INI_SCAN_DIR=:/etc/php/8.5/conf.d \
     XDG_CONFIG_HOME=/var/lib/frankenphp/config \
     XDG_DATA_HOME=/var/lib/frankenphp/data \
     SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt \

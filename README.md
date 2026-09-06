@@ -1,25 +1,25 @@
 [![GitHub issues](https://img.shields.io/github/issues/whatwedo/docker-base-images.svg)](https://github.com/whatwedo/docker-base-images/issues)
-[![build status](https://github.com/whatwedo/docker-base-images/actions/workflows/images.yml/badge.svg?branch=v3.0)](https://github.com/whatwedo/docker-base-images/actions/workflows/images.yml?query=branch%3Av3.0)
+[![build status](https://github.com/whatwedo/docker-base-images/actions/workflows/images.yml/badge.svg?branch=v3.1)](https://github.com/whatwedo/docker-base-images/actions/workflows/images.yml?query=branch%3Av3.1)
 
 ## Introduction & Versions
 See README: https://github.com/whatwedo/docker-base-images/
 
-## What's New in v3.0
+## What's New in v3.1
 
-v3.0 is a major release that migrates from Alpine Linux (musl) to **Debian 13 Trixie Slim (glibc)**. This resolves musl libc compatibility issues and provides better binary compatibility for third-party software.
+v3.1 uses **PHP 8.5**, **Node.js 24 LTS** and **npm 12** on **Debian 13 Trixie Slim**. FrankenPHP also uses PHP 8.5 ZTS.
 
-See [CHANGELOG.md](https://github.com/whatwedo/docker-base-images/blob/v3.0/CHANGELOG.md) for a detailed list of changes and [MIGRATION-v3.md](https://github.com/whatwedo/docker-base-images/blob/v3.0/MIGRATION-v3.md) for a step-by-step migration guide from v2.10 and v2.11.
+See [CHANGELOG.md](https://github.com/whatwedo/docker-base-images/blob/v3.1/CHANGELOG.md) for the changes from v3.0. For Alpine-based v2 images, also follow the [Debian migration guide](https://github.com/whatwedo/docker-base-images/blob/v3.1/MIGRATION-v3.md), using the v3.1 tags and PHP 8.5 paths.
 
-### Key Changes
+Within v3.1, Debian 13, PHP 8.5, Node.js 24 and npm major 12 stay fixed. APT packages receive updates on rebuild; npm is pinned to an exact 12.x release and updated manually.
 
-- **Base OS**: Debian 13 (Trixie) Slim with glibc
-- **Service user**: `app` (UID 10000 / GID 10001) — all services run as this user
-- **nginx port**: `8080` instead of `80` — an unprivileged port needs no capabilities; update port mappings, probes and ingress
-- **PHP 8.4** via [Sury's Debian APT repository](https://packages.sury.org/php/) (v2.11 used PHP 8.5)
-- **Node.js 22.x LTS** via [NodeSource](https://deb.nodesource.com/) (v2.11 used Node.js 24.x)
-- **npm 10.x** is pinned and verified; Yarn must be installed explicitly if the project requires it
-- **No privilege escalation tools** — use `docker exec --user root` instead
-- **Service directory**: `/etc/runit/runsvdir/default/` (not `/etc/service/`)
+### Image conventions
+
+- **Service user**: `app` (UID 10000 / GID 10001)
+- **HTTP port**: `8080`
+- **PHP**: Sury packages for CLI/FPM; ZTS packages for FrankenPHP
+- **Node.js**: 24.x LTS from NodeSource, with npm 12.x
+- **Service directory**: `/etc/runit/runsvdir/default/`
+- Install packages during the build with `USER root`; Yarn is installed explicitly when needed
 
 ## Images
 
@@ -27,11 +27,11 @@ See [CHANGELOG.md](https://github.com/whatwedo/docker-base-images/blob/v3.0/CHAN
 |---|---|
 | `whatwedo/base` | Base image with runit, goss, and app user |
 | `whatwedo/nginx` | nginx web server running as app user |
-| `whatwedo/nginx-php` | nginx + PHP-FPM 8.4 with unix socket |
-| `whatwedo/php` | PHP 8.4 CLI with Composer 2 |
+| `whatwedo/nginx-php` | nginx + PHP-FPM 8.5 with unix socket |
+| `whatwedo/php` | PHP 8.5 CLI with Composer 2 |
 | `whatwedo/symfony` | Symfony-optimized nginx + PHP-FPM |
-| `whatwedo/nodejs` | Node.js 22.x LTS with npm |
-| `whatwedo/frankenphp` | FrankenPHP with PHP 8.4 ZTS, classic and worker modes |
+| `whatwedo/nodejs` | Node.js 24.x LTS with npm |
+| `whatwedo/frankenphp` | FrankenPHP with PHP 8.5 ZTS, classic and worker modes |
 
 ## Registries
 
@@ -46,15 +46,15 @@ Every image is built and tested in GitHub Actions, published to ghcr.io and copi
 The ghcr.io mirror was introduced with v3 — images for v1.x and v2.x are only available from the whatwedo registry and Docker Hub.
 
 ```
-docker pull registry.whatwedo.ch/whatwedo/docker-base-images/base:v3.0
-docker pull ghcr.io/whatwedo/base:v3.0
-docker pull whatwedo/base:v3.0
+docker pull registry.whatwedo.ch/whatwedo/docker-base-images/base:v3.1
+docker pull ghcr.io/whatwedo/base:v3.1
+docker pull whatwedo/base:v3.1
 ```
 
 ## Usage
 
 ```
-docker run whatwedo/base:v3.0
+docker run whatwedo/base:v3.1
 ```
 
 ### Runtime Hardening
@@ -62,7 +62,7 @@ docker run whatwedo/base:v3.0
 The images run as `app` (UID 10000 / GID 10001) and do not require Linux capabilities. Capability drops and privilege-escalation controls are runtime settings, however; a Dockerfile cannot enable them for the deployment that consumes the image.
 
 ```bash
-docker run --cap-drop=ALL --security-opt=no-new-privileges whatwedo/base:v3.0
+docker run --cap-drop=ALL --security-opt=no-new-privileges whatwedo/base:v3.1
 ```
 
 For Kubernetes, set the controls explicitly. Supplying the numeric UID also lets `runAsNonRoot` verify the named image user without relying on name resolution:
@@ -99,10 +99,10 @@ securityContext:
 
 ```bash
 docker run --rm --cap-drop=ALL --security-opt=no-new-privileges \
-    -p 8080:8080 -v "$PWD:/var/www:ro" whatwedo/frankenphp:v3.0
+    -p 8080:8080 -v "$PWD:/var/www:ro" whatwedo/frankenphp:v3.1
 ```
 
-PHP 8.4 **ZTS** and FrankenPHP come from the [upstream maintainers' Debian repository](https://frankenphp.dev/docs/), selected specifically for PHP 8.4 and checked against a pinned signing-key fingerprint. Composer 2, the extensions listed below, and Ghostscript are included. The same PHP runtime supports the real `php` CLI and HTTP requests; Composer `@php` scripts work normally.
+PHP 8.5 **ZTS** and FrankenPHP come from the [upstream maintainers' Debian repository](https://frankenphp.dev/docs/), selected specifically for PHP 8.5 and checked against a pinned signing-key fingerprint. Composer 2, the extensions listed below, and Ghostscript are included. The same PHP runtime supports the real `php` CLI and HTTP requests; Composer `@php` scripts work normally.
 
 | Setting | Default / purpose |
 |---|---|
@@ -128,7 +128,7 @@ Only a trusted immediate proxy peer may assert the client IP and external HTTPS 
 A project adds a file, replaces one by the same name, or removes one in its Dockerfile; the base files it does not touch keep working, including later fixes. Matchers and handlers that must run before the PHP front controller (extra 404s, cache headers, ping endpoints) go into `route.d/` between `35` and `90`. An application with its own routing replaces `90-php-server.conf`:
 
 ```dockerfile
-FROM whatwedo/frankenphp:v3.0
+FROM whatwedo/frankenphp:v3.1
 COPY docker/frankenphp/route.d/50-private-files.conf /etc/frankenphp/route.d/
 COPY docker/frankenphp/route.d/90-api.conf /etc/frankenphp/route.d/90-php-server.conf
 RUN frankenphp validate --config /etc/frankenphp/Caddyfile --adapter caddyfile
@@ -136,17 +136,17 @@ RUN frankenphp validate --config /etc/frankenphp/Caddyfile --adapter caddyfile
 
 `/frankenphp-health` executes a bundled PHP script independently of the application and is used by the image health check. Hidden paths except `/.well-known/`, PHP source variants, backups and dumps return 404. Existing lowercase `.php` files execute; missing application paths fall back to `index.php`.
 
-Additional PHP configuration goes in `/etc/php/8.4/conf.d/*.ini`, shared by CLI and FrankenPHP; `FRANKENPHP_MEMORY_LIMIT` is applied on top for HTTP requests only. The ZTS packages also load `/etc/php-zts/conf.d`. Add extensions from the ZTS repository in a root build phase, for example:
+Additional PHP configuration goes in `/etc/php/8.5/conf.d/*.ini`, shared by CLI and FrankenPHP; `FRANKENPHP_MEMORY_LIMIT` is applied on top for HTTP requests only. The ZTS packages also load `/etc/php-zts/conf.d`. Add extensions from the ZTS repository in a root build phase, for example:
 
 ```dockerfile
-FROM whatwedo/frankenphp:v3.0
+FROM whatwedo/frankenphp:v3.1
 USER root
 RUN apt-install php-zts-redis
 USER app
 COPY . /var/www
 ```
 
-Use `php-zts-*` extensions in this image; Sury's `php8.4-*` extensions use a different ABI. The packaged Imagick build disables OpenMP, avoiding the [threading conflict documented by FrankenPHP](https://frankenphp.dev/docs/known-issues/).
+Use `php-zts-*` extensions in this image; Sury's `php8.5-*` extensions use a different ABI. The packaged Imagick build disables OpenMP, avoiding the [threading conflict documented by FrankenPHP](https://frankenphp.dev/docs/known-issues/).
 
 For an application with a [FrankenPHP-compatible worker entrypoint](https://frankenphp.dev/docs/worker/), enable workers explicitly:
 
@@ -160,13 +160,13 @@ Keep some PHP threads available for ordinary requests and the health endpoint. W
 
 [runit](http://smarden.org/runit/) is a lightweight init system with service supervision. Services are managed in `/etc/runit/runsvdir/default/`. The `runit-health` tool monitors all services and reports status to goss.
 
-**Custom services**: keep `run` executable in Git and copy the runit overlay with `--chown=app:app`; `runsv` creates `supervise/` automatically in the writable service directory. To keep service scripts root-owned, create only an `app`-owned `supervise/` directory at build time. See the [Dockerfile examples in the migration guide](https://github.com/whatwedo/docker-base-images/blob/v3.0/MIGRATION-v3.md#5-move-custom-services).
+**Custom services**: keep `run` executable in Git and copy the runit overlay with `--chown=app:app`; `runsv` creates `supervise/` automatically in the writable service directory. To keep service scripts root-owned, create only an `app`-owned `supervise/` directory at build time. See the [Dockerfile examples in the migration guide](https://github.com/whatwedo/docker-base-images/blob/v3.1/MIGRATION-v3.md#5-move-custom-services).
 
 **Graceful shutdown**: `SIGTERM` drains the running services before runit goes away — nginx stops accepting connections and finishes the requests it has already handed to PHP-FPM, then PHP-FPM lets its workers complete. `SHUTDOWN_TIMEOUT` (default `8`, in seconds) is the budget shared by all services. Raise it together with the runtime's own grace period — Docker's `--stop-timeout` or Kubernetes' `terminationGracePeriodSeconds` — otherwise the runtime sends `SIGKILL` first.
 
 ### goss
 
-[goss](https://github.com/goss-org/goss) validates image configuration and service health. The nginx, nginx-php, and symfony images run it automatically via Docker HEALTHCHECK every 30 seconds. The generic base, PHP CLI, and Node.js images deliberately do not inherit a supervisor-specific health check, because consumers commonly replace their default command. Add application-specific checks in `/etc/goss/conf.d/` and define a HEALTHCHECK in the derived image when needed.
+[goss](https://github.com/goss-org/goss) validates image configuration and service health. The nginx, nginx-php, symfony and frankenphp images run it automatically via Docker HEALTHCHECK every 30 seconds. The generic base, PHP CLI, and Node.js images deliberately do not inherit a supervisor-specific health check, because consumers commonly replace their default command. Add application-specific checks in `/etc/goss/conf.d/` and define a HEALTHCHECK in the derived image when needed.
 
 For Kubernetes, use `goss validate` as a liveness/readiness probe.
 
@@ -207,7 +207,7 @@ USER app
 
 (installed in `whatwedo/php`, `whatwedo/nginx-php`, `whatwedo/symfony`)
 
-PHP 8.4 from [Sury's Debian APT repository](https://packages.sury.org/php/) with the following modules:
+PHP 8.5 from [Sury's Debian APT repository](https://packages.sury.org/php/) with the following modules:
 
 apcu, bcmath, calendar, common, curl, dom, gd, iconv, imagick, intl, mbstring, mariadb (mysql), opcache, pcntl, pdo, pdo-mariadb (pdo-mysql), pdo-pgsql, pdo-sqlite, pgsql, phar, posix, readline, simplexml, soap, sqlite3, tokenizer, xml, xmlreader, xmlwriter, zip
 
@@ -240,25 +240,25 @@ PHP reads `date.timezone` from the container's `TZ` variable, so overriding `TZ`
 
 #### PHP Configuration Paths
 
-- Shared custom configs (CLI + FPM): `/etc/php/8.4/conf.d/`
-- CLI config: `/etc/php/8.4/cli/php.ini`
-- CLI custom configs: `/etc/php/8.4/cli/conf.d/`
-- FPM config: `/etc/php/8.4/fpm/php-fpm.conf`
-- FPM pool: `/etc/php/8.4/fpm/pool.d/www.conf`
-- FPM custom configs: `/etc/php/8.4/fpm/conf.d/`
+- Shared custom configs (CLI + FPM): `/etc/php/8.5/conf.d/`
+- CLI config: `/etc/php/8.5/cli/php.ini`
+- CLI custom configs: `/etc/php/8.5/cli/conf.d/`
+- FPM config: `/etc/php/8.5/fpm/php-fpm.conf`
+- FPM pool: `/etc/php/8.5/fpm/pool.d/www.conf`
+- FPM custom configs: `/etc/php/8.5/fpm/conf.d/`
 
-The shared `conf.d/` is scanned by both CLI and FPM via `PHP_INI_SCAN_DIR`. Use it for configs that should apply to both SAPIs (e.g. xdebug). SAPI-specific configs go into the respective `cli/conf.d/` or `fpm/conf.d/`. Shared PHP settings such as upload limits and timezone live in `99-whatwedo.ini`; override them by adding a file that sorts after it. FPM settings (`pm.*`, `request_terminate_timeout`) and the FPM `php_admin_value[memory_limit]` belong in `/etc/php/8.4/fpm/pool.d/`, not in PHP's `conf.d`. See the [pool override example](https://github.com/whatwedo/docker-base-images/blob/v3.0/MIGRATION-v3.md#6-update-php-configuration-paths).
+The shared `conf.d/` is scanned by both CLI and FPM via `PHP_INI_SCAN_DIR`. Use it for configs that should apply to both SAPIs (e.g. xdebug). SAPI-specific configs go into the respective `cli/conf.d/` or `fpm/conf.d/`. Shared PHP settings such as upload limits and timezone live in `99-whatwedo.ini`; override them by adding a file that sorts after it. FPM settings (`pm.*`, `request_terminate_timeout`) and the FPM `php_admin_value[memory_limit]` belong in `/etc/php/8.5/fpm/pool.d/`, not in PHP's `conf.d`.
 
 ### Node.js
 
 (installed in `whatwedo/nodejs`)
 
-Node.js 22.x LTS from [NodeSource](https://deb.nodesource.com/) with npm.
+Node.js 24.x LTS from [NodeSource](https://deb.nodesource.com/) with npm 12. Dependency install scripts, Git dependencies and remote tarballs require explicit approval. Review skipped scripts with `npm install-scripts ls`, approve required packages with `npm install-scripts approve <package-name>`, commit the resulting `allowScripts` entries in `package.json`, and run `npm ci` again. Configure required Git and remote URL sources through `allow-git` / `allow-remote`; see the [npm configuration reference](https://docs.npmjs.com/cli/v12/using-npm/config/).
 
 The installation logic lives in the helper script `/usr/local/sbin/install-nodejs.sh`, which ships in every image (it is part of the base image). Images on the PHP/Symfony chain that need Node.js can install it at build time without basing off `whatwedo/nodejs`:
 
 ```dockerfile
-FROM whatwedo/symfony:v3.0
+FROM whatwedo/symfony:v3.1
 USER root
 RUN /usr/local/sbin/install-nodejs.sh
 USER app
@@ -276,7 +276,7 @@ Because the images set `USER app`, upstart and all services run as the **`app`**
 php /var/www/bin/console doctrine:migrations:migrate --no-interaction
 ```
 
-> **Do not use an upstart script to `chown` files.** `app` has no `CAP_CHOWN`, so `chown` on a root-owned path fails with *Operation not permitted*, and because upstart runs under `set -e` that aborts startup. Make runtime-writable directories `app`-owned at **build time** (`chown -R app:app …` in a `USER root` block in your Dockerfile). For mounted volumes, configure ownership at deploy time: Kubernetes Pod-level `securityContext.fsGroup: 10001` applies where supported by the volume type and storage driver; other volumes and host paths need ownership prepared separately. See [MIGRATION-v3.md](https://github.com/whatwedo/docker-base-images/blob/v3.0/MIGRATION-v3.md#2-fix-file-permissions).
+> **Do not use an upstart script to `chown` files.** `app` has no `CAP_CHOWN`, so `chown` on a root-owned path fails with *Operation not permitted*, and because upstart runs under `set -e` that aborts startup. Make runtime-writable directories `app`-owned at **build time** (`chown -R app:app …` in a `USER root` block in your Dockerfile). For mounted volumes, configure ownership at deploy time: Kubernetes Pod-level `securityContext.fsGroup: 10001` applies where supported by the volume type and storage driver; other volumes and host paths need ownership prepared separately. See [MIGRATION-v3.md](https://github.com/whatwedo/docker-base-images/blob/v3.1/MIGRATION-v3.md#2-fix-file-permissions).
 
 ## Container Access
 
@@ -292,11 +292,11 @@ docker exec -it --user root container-name bash
 
 | Image | Port |
 |---|---|
-| `whatwedo/nginx`, `whatwedo/nginx-php`, `whatwedo/symfony` | 8080 |
+| `whatwedo/nginx`, `whatwedo/nginx-php`, `whatwedo/symfony`, `whatwedo/frankenphp` | 8080 |
 
-## Migrating from v2.x
+## Migration
 
-See [MIGRATION-v3.md](https://github.com/whatwedo/docker-base-images/blob/v3.0/MIGRATION-v3.md) for a complete migration guide.
+From v3.0, update all image stages to `v3.1`, move custom PHP configuration and mounts to `/etc/php/8.5/`, and reinstall native PHP/Node.js dependencies. Check Composer and npm requirements and the npm 12 approvals described above. From v2.x, also apply the Debian, permissions and service changes in [MIGRATION-v3.md](https://github.com/whatwedo/docker-base-images/blob/v3.1/MIGRATION-v3.md), using v3.1 tags and PHP 8.5 paths.
 
 ## Bugs and Issues
 
@@ -304,4 +304,4 @@ If you have any problems with this image, feel free to open a new issue in our i
 
 ## License
 
-This image is licensed under the MIT License. The full license text is available in [LICENSE](https://github.com/whatwedo/docker-base-images/blob/v3.0/LICENSE).
+This image is licensed under the MIT License. The full license text is available in [LICENSE](https://github.com/whatwedo/docker-base-images/blob/v3.1/LICENSE).

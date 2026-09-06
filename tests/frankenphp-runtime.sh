@@ -108,7 +108,7 @@ drain() {
 }
 
 start
-expect '8.4|1|10000|UTC' "$url/runtime"
+expect '8.5|1|10000|UTC' "$url/runtime"
 expect 'off|http|80' "$url/"
 expect 'on|https|443' -H 'X-Forwarded-Proto: https' "$url/"
 expect 'on|https|443' -H 'X-Use-Https: on' "$url/"

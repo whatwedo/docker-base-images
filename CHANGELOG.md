@@ -1,5 +1,11 @@
 # Changelog
 
+## [v3.1]
+
+- **PHP 8.5** replaces PHP 8.4, including FrankenPHP ZTS. Move custom configuration to `/etc/php/8.5/` and rebuild native extensions.
+- **Node.js 24 LTS and npm 12** replace Node.js 22 and npm 10. Reinstall native Node.js dependencies; approve required dependency install scripts, Git sources and remote tarballs for npm 12.
+- Debian 13, the `app` user, port 8080 and runit layout remain unchanged.
+
 ## [v3.0]
 
 See the [migration guide](MIGRATION-v3.md) for upgrade steps and configuration examples.

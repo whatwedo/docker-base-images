@@ -1,6 +1,6 @@
 # Migration Guide: v2.x to v3
 
-This guide covers migration from v2.10 and v2.11 (Alpine-based) to the published v3.0 branch (Debian-based).
+This guide covers migration from v2.10 and v2.11 (Alpine-based) to the published v3.0 branch (Debian-based). For v3.1, apply these structural changes with v3.1 image tags and PHP 8.5 paths, see [CHANGELOG.md](CHANGELOG.md) and [README.md](README.md#migration) for language and npm changes.
 
 ## Overview
 
