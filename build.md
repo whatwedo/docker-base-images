@@ -22,7 +22,9 @@ When migrating existing automation, use `check` where the old `test` command was
 
 Builds always run with `--no-cache`, so a rebuild really picks up new apt packages instead of a cached layer. They also run with `--provenance=false`: an attestation would turn a single-platform build into an index, which the publishing step cannot use as a source.
 
-Every Sunday at 05:17 Europe/Zurich, the `Images` workflow on `main` dispatches this branch's full `Images` workflow for `v3.0`. Both architectures are rebuilt and tested before publishing to the three registries. The small dispatcher lives on `main` because GitHub only runs scheduled workflows from the default branch.
+Every Sunday at 05:17 Europe/Zurich, the `Images` workflow on `main` dispatches the full `Images` workflows for `v3.0` and `v3.1`. Both architectures are rebuilt and tested before publishing to the three registries. The small dispatcher lives on `main` because GitHub only runs scheduled workflows from the default branch.
+
+When publishing a new release branch, add it to the dispatcher on `main` to include it in Sunday rebuilds.
 
 These rebuilds pick up APT updates within the selected Debian/PHP/Node.js versions. Explicit version pins for npm, Goss and regctl still require manual updates. There is no dependency-update bot. GitHub can disable scheduled workflows in public repositories after 60 days without repository activity; re-enable the workflow if that happens.
 
@@ -41,7 +43,7 @@ The HTTP suites bind-mount temporary fixtures, so their paths must also be avail
 
 ## Publishing
 
-Pushes to `v3.0-gh-actions`, pull requests and manual runs on feature branches build and test without publishing. Only branch names matching `v<major>.<minor>` (for example `v3.0`) enable publishing; a tag with the same name does not.
+Pull requests and manual runs on feature branches build and test without publishing. Only branch names matching `v<major>.<minor>` (for example `v3.1`) enable publishing; a tag with the same name does not.
 
 Publishing is the job of the `Images` workflow in GitHub Actions and normally needs no manual step. The workflow builds the chain on a native runner per architecture, tests every image, and only then pushes it — nothing reaches a registry before its tests are green.
 

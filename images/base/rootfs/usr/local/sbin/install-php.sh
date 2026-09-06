@@ -4,7 +4,7 @@ export DEBIAN_FRONTEND=noninteractive
 
 [ -z "$PHP_VERSION" ] && echo "PHP_VERSION is not set" && exit 1
 printf '%s\n' "$PHP_VERSION" | grep -Eq '^[0-9]+\.[0-9]+$' || {
-    echo "PHP_VERSION must be a major.minor version (for example 8.4)" >&2
+    echo "PHP_VERSION must be a major.minor version (for example 8.5)" >&2
     exit 1
 }
 
