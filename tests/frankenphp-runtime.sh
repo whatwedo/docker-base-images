@@ -108,7 +108,7 @@ drain() {
 }
 
 start
-expect '8.4|1|10000|UTC' "$url/runtime"
+expect '8.5|1|10000|UTC' "$url/runtime"
 expect 'off|http|80' "$url/"
 expect 'on|https|443' -H 'X-Forwarded-Proto: https' "$url/"
 expect 'on|https|443' -H 'X-Use-Https: on' "$url/"
@@ -153,12 +153,12 @@ echo 'FrankenPHP rejects scheme assertions from untrusted peers.'
 for limit in 256M 512M 1G; do
     printf 'memory_limit = %s\n' "$limit" > "$fixtures/$limit.ini"
 done
-start -v "$fixtures/256M.ini:/etc/php/8.4/frankenphp/conf.d/zz-app.ini:ro" \
-    -v "$fixtures/512M.ini:/etc/php/8.4/cli/conf.d/zz-app.ini:ro"
+start -v "$fixtures/256M.ini:/etc/php/8.5/frankenphp/conf.d/zz-app.ini:ro" \
+    -v "$fixtures/512M.ini:/etc/php/8.5/cli/conf.d/zz-app.ini:ro"
 expect 256M "$url/memory"
 test "$(docker exec "$cid" php -r 'echo ini_get("memory_limit");')" = 512M
 stop
-start -v "$fixtures/1G.ini:/etc/php/8.4/conf.d/zz-app.ini:ro"
+start -v "$fixtures/1G.ini:/etc/php/8.5/conf.d/zz-app.ini:ro"
 expect 1G "$url/memory"
 test "$(docker exec "$cid" php -r 'echo ini_get("memory_limit");')" = 1G
 stop
