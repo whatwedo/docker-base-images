@@ -1,6 +1,6 @@
 name: Images
 
-# Scheduled workflows run on main; the full build pipeline lives on v3.0.
+# Scheduled workflows run on main; full build pipelines live on release branches.
 on:
   schedule:
     - cron: '17 5 * * 0'
@@ -14,10 +14,16 @@ permissions:
 jobs:
   rebuild:
     if: github.ref == 'refs/heads/main'
+    name: rebuild ${{ matrix.version }}
+    strategy:
+      fail-fast: false
+      matrix:
+        version: [v3.0, v3.1]
     runs-on: ubuntu-latest
     steps:
-      - name: Build, test and publish v3.0
+      - name: Build, test and publish ${{ matrix.version }}
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
-        run: gh workflow run images.yml --repo "$GH_REPO" --ref v3.0
+          VERSION: ${{ matrix.version }}
+        run: gh workflow run images.yml --repo "$GH_REPO" --ref "$VERSION"
