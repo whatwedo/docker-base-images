@@ -132,7 +132,7 @@ COPY docker/frankenphp/route.d/90-api.conf /etc/frankenphp/route.d/90-php-server
 RUN frankenphp validate --config /etc/frankenphp/Caddyfile --adapter caddyfile
 ```
 
-`/frankenphp-health` executes a bundled PHP script independently of the application and is used by the image health check. Hidden paths, PHP source variants, backups and dumps return 404. Existing lowercase `.php` files execute; missing application paths fall back to `index.php`.
+`/frankenphp-health` executes a bundled PHP script independently of the application and is used by the image health check. Hidden paths except `/.well-known/`, PHP source variants, backups and dumps return 404. Existing lowercase `.php` files execute; missing application paths fall back to `index.php`.
 
 Additional PHP configuration goes in `/etc/php/8.4/conf.d/*.ini`, shared by CLI and FrankenPHP. Settings for one side only go in `/etc/php/8.4/cli/conf.d/` or `/etc/php/8.4/frankenphp/conf.d/` (HTTP requests and FrankenPHP workers). The shared directory is read last and overrides both. `memory_limit` stays at the package default of `128M` on both sides. The ZTS packages also load `/etc/php-zts/conf.d`. Add extensions from the ZTS repository in a root build phase, for example:
 

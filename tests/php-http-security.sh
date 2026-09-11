@@ -41,7 +41,7 @@ denied_paths=(
 if [ "$php_entrypoint" != true ]; then
     denied_paths+=(index.php)
 fi
-static_paths=(vendor.include.js foo.incident.json phpstorm.svg sqlite3.map.js)
+static_paths=(vendor.include.js foo.incident.json phpstorm.svg sqlite3.map.js .well-known/security.txt)
 
 fixture_dir=$(mktemp -d)
 chmod 755 "$fixture_dir"
@@ -66,8 +66,10 @@ for denied_path in "${denied_paths[@]}"; do
     printf '%s\n' '<?php echo "source-disclosed";' > "$fixture_dir/${denied_path%%/*}"
 done
 for static_path in "${static_paths[@]}"; do
+    mkdir -p "$fixture_dir/$(dirname "$static_path")"
     printf '%s\n' 'static-file' > "$fixture_dir/$static_path"
 done
+printf '%s\n' 'APP_SECRET=source-disclosed' > "$fixture_dir/.env"
 
 # A peer outside the trusted ranges must not be able to assert the external scheme
 printf '%s\n' \
@@ -122,6 +124,13 @@ for denied_path in "${denied_paths[@]}"; do
         exit 1
     fi
 done
+
+# Other hidden paths stay blocked while /.well-known/ is public
+status=$(curl --silent --output /dev/null --write-out '%{http_code}' "$base_url/.env")
+if [ "$status" = 200 ]; then
+    echo "Expected /.env to be blocked, got $status." >&2
+    exit 1
+fi
 
 for static_path in "${static_paths[@]}"; do
     response=$(curl --fail --silent --show-error "$base_url/$static_path")
