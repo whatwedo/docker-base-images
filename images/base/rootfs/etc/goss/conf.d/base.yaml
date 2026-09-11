@@ -1,7 +1,6 @@
 file:
-    /etc/alpine-release:
+    /etc/debian_version:
         exists: true
-#        contains: [/^\d+\.\d+\.\d+$/] # switch back if not using edge
 
 command:
     runit-health:

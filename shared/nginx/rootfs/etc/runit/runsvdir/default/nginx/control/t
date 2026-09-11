@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# The Debian runsv version starts control programs in the service directory.
+# Returning zero prevents its default SIGTERM after this graceful SIGQUIT.
+pid=$(cat supervise/pid 2>/dev/null) || exit 1
+case "$pid" in
+    ''|*[!0-9]*) exit 1 ;;
+esac
+[ "$pid" -gt 1 ] || exit 1
+kill -QUIT "$pid"

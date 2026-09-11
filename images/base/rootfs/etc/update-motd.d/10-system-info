@@ -1,0 +1,28 @@
+#!/bin/bash
+# System Information
+
+# Get OS info
+if [ -f /etc/os-release ]; then
+    . /etc/os-release
+    OS_NAME="${PRETTY_NAME:-${NAME:-Unknown}}"
+else
+    OS_NAME="Unknown"
+fi
+
+# Get architecture
+ARCH=$(uname -m)
+
+printf "System Information:\n"
+printf "  %-20s %s\n" "OS:" "$OS_NAME"
+printf "  %-20s %s\n" "Architecture:" "$ARCH"
+
+# Image info
+if [ -n "${BASE_IMAGE_VERSION:-}" ]; then
+    printf "  %-20s %s\n" "Base Image:" "https://github.com/whatwedo/docker-base-images ($BASE_IMAGE_VERSION)"
+fi
+
+if [ -n "${BUILD_DATE:-}" ]; then
+    printf "  %-20s %s\n" "Build Date:" "$BUILD_DATE"
+fi
+
+printf "\n"
