@@ -50,8 +50,8 @@ denied=(SECRET.PHP secret.php5 secret.phps secret.phtml secret.pht secret.phar s
 for path in "${denied[@]}"; do
     printf '%s\n' '<?php echo "source-disclosed";' > "$fixtures/$path"
 done
-mkdir -p "$fixtures/route.d"
-for path in vendor.include.js foo.incident.json phpstorm.svg sqlite3.map.js; do
+mkdir -p "$fixtures/.well-known" "$fixtures/route.d"
+for path in vendor.include.js foo.incident.json phpstorm.svg sqlite3.map.js .well-known/security.txt; do
     printf '%s' 'static-file' > "$fixtures/$path"
 done
 # A project drop-in, an emptied base file and a replacement catch-all.
@@ -118,7 +118,7 @@ for path in "${denied[@]}" '%2eenv' secret.php%2ebak; do
     test "$status" = 404 || { echo "Expected 404 for $path, got $status" >&2; exit 1; }
     ! grep -q source-disclosed "$fixtures/response"
 done
-for path in vendor.include.js foo.incident.json phpstorm.svg sqlite3.map.js; do
+for path in vendor.include.js foo.incident.json phpstorm.svg sqlite3.map.js .well-known/security.txt; do
     expect static-file "$url/$path"
 done
 expect 128M "$url/memory"
