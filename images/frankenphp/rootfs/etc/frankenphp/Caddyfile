@@ -1,3 +1,5 @@
+# Projects extend or replace the numbered files in the imported directories;
+# the globs are read in name order. This file itself rarely needs an override.
 {
 	admin 127.0.0.1:2019
 	auto_https off
@@ -5,9 +7,7 @@
 	grace_period {$SHUTDOWN_TIMEOUT:8}s
 
 	frankenphp {
-		num_threads {$FRANKENPHP_NUM_THREADS:4}
-		max_threads {$FRANKENPHP_MAX_THREADS:16}
-		{$FRANKENPHP_CONFIG}
+		import /etc/frankenphp/frankenphp.d/*.conf
 	}
 
 	servers {
@@ -19,48 +19,10 @@
 }
 
 :8080 {
-	root * {$FRANKENPHP_DOCUMENT_ROOT:/var/www/public}
-	log {
-		output stdout
-	}
-	header -Server
-	encode zstd gzip
+	import /etc/frankenphp/site.d/*.conf
 
-	# Check PHP itself, independent of the mounted application's front controller.
-	handle /frankenphp-health {
-		root * /usr/local/share/whatwedo
-		rewrite * /frankenphp-health.php
-		php
-	}
-
-	handle {
-		route {
-			# Test the immediate peer, not the client address asserted by headers.
-			@untrusted not remote_ip {$FRANKENPHP_TRUSTED_PROXIES:10.0.0.0/8 172.16.0.0/12 192.168.0.0/16 fc00::/7}
-			request_header @untrusted -X-Forwarded-*
-			request_header @untrusted -X-Use-Https
-			request_header @untrusted -X-Real-IP
-			request_header @untrusted -Forwarded
-
-			map "{http.request.header.X-Use-Https}:{http.request.header.X-Forwarded-Proto}" {external_https} {external_scheme} {external_port} {
-				~(?i)^(on:.*|[^:]*:https)$ on https 443
-				default off http 80
-			}
-
-			@hidden path_regexp hidden (^|/)\.[^/]+
-			respond @hidden 404
-			@source {
-				path_regexp source (?i)\.(php[0-9]*|phps|pht|phtm|phtml|phar|inc)([./~]|$)|(~|\.(bak|old|orig|save|swp|swo|sql|sqlite))($|/)
-				not path_regexp executable \.php$
-			}
-			respond @source 404
-
-			php_server {
-				env HTTPS {external_https}
-				env HTTP_SCHEME {external_scheme}
-				env SERVER_PORT {external_port}
-				env REMOTE_ADDR {client_ip}
-			}
-		}
+	# Inside route the files run in name order, not in Caddy's directive order.
+	route {
+		import /etc/frankenphp/route.d/*.conf
 	}
 }
