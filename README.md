@@ -110,6 +110,8 @@ PHP 8.4 **ZTS** and FrankenPHP come from the [upstream maintainers' Debian repos
 | `FRANKENPHP_NUM_THREADS` | `4` initial PHP threads |
 | `FRANKENPHP_MAX_THREADS` | `16` maximum PHP threads |
 | `FRANKENPHP_CONFIG` | Optional directives inside the global `frankenphp` block, e.g. worker configuration |
+| `FRANKENPHP_MEMORY_LIMIT` | `128M` PHP memory limit for HTTP requests |
+| `PHP_MEMORY_LIMIT` | `-1` PHP memory limit for the CLI (Composer, console commands, workers) |
 | `FRANKENPHP_TRUSTED_PROXIES` | Space-separated private CIDRs: `10.0.0.0/8 172.16.0.0/12 192.168.0.0/16 fc00::/7` |
 | `SHUTDOWN_TIMEOUT` | `8` seconds to finish active requests |
 
@@ -119,7 +121,7 @@ Only a trusted immediate proxy peer may assert the client IP and external HTTPS 
 
 | Directory | Scope | Shipped files |
 |---|---|---|
-| `/etc/frankenphp/frankenphp.d/` | Global `frankenphp {}` block | `10-threads`, `90-config` (`FRANKENPHP_CONFIG`) |
+| `/etc/frankenphp/frankenphp.d/` | Global `frankenphp {}` block | `10-threads`, `20-php-ini` (memory limit), `90-config` (`FRANKENPHP_CONFIG`) |
 | `/etc/frankenphp/site.d/` | Site block, ordered by Caddy's directive order | `10-root`, `20-log`, `30-headers`, `40-encode` |
 | `/etc/frankenphp/route.d/` | `route {}` inside the site block, executed in file order | `10-health`, `20-trusted-proxy`, `30-hidden-files`, `35-source-files`, `90-php-server` |
 
@@ -134,7 +136,7 @@ RUN frankenphp validate --config /etc/frankenphp/Caddyfile --adapter caddyfile
 
 `/frankenphp-health` executes a bundled PHP script independently of the application and is used by the image health check. Hidden paths, PHP source variants, backups and dumps return 404. Existing lowercase `.php` files execute; missing application paths fall back to `index.php`.
 
-Additional PHP configuration goes in `/etc/php/8.4/conf.d/*.ini`, shared by CLI and FrankenPHP. The ZTS packages also load `/etc/php-zts/conf.d`. Add extensions from the ZTS repository in a root build phase, for example:
+Additional PHP configuration goes in `/etc/php/8.4/conf.d/*.ini`, shared by CLI and FrankenPHP; `FRANKENPHP_MEMORY_LIMIT` is applied on top for HTTP requests only. The ZTS packages also load `/etc/php-zts/conf.d`. Add extensions from the ZTS repository in a root build phase, for example:
 
 ```dockerfile
 FROM whatwedo/frankenphp:v3.0

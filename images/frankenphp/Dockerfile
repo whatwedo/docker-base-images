@@ -3,6 +3,7 @@ ARG REGISTRY=whatwedo
 FROM ${REGISTRY}/base:$VERSION
 
 ENV PHP_VERSION=8.4 \
+    PHP_MEMORY_LIMIT=-1 \
     PHP_INI_SCAN_DIR=:/etc/php/8.4/conf.d \
     XDG_CONFIG_HOME=/var/lib/frankenphp/config \
     XDG_DATA_HOME=/var/lib/frankenphp/data \

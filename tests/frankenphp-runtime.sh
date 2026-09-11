@@ -39,6 +39,10 @@ if (parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH) === '/client') {
     echo $_SERVER['REMOTE_ADDR'];
     return;
 }
+if (parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH) === '/memory') {
+    echo ini_get('memory_limit');
+    return;
+}
 echo ($_SERVER['HTTPS'] ?? 'off') . '|' . ($_SERVER['HTTP_SCHEME'] ?? '') . '|' . $_SERVER['SERVER_PORT'];
 PHP
 cp "$DIR/fixtures/imagick-pdf.php" "$fixtures/pdf.php"
@@ -117,6 +121,8 @@ done
 for path in vendor.include.js foo.incident.json phpstorm.svg sqlite3.map.js; do
     expect static-file "$url/$path"
 done
+expect 128M "$url/memory"
+test "$(docker exec "$cid" php -r 'echo ini_get("memory_limit");')" = -1
 # Imagick must also work in FrankenPHP's threaded HTTP SAPI, not just in CLI.
 for _ in 1 2 3; do
     expect 'Imagick PDF rendering passed.' "$url/pdf.php"
@@ -133,6 +139,12 @@ peer=$(curl -fsS "$url/client")
 expect "$peer" -H 'X-Forwarded-For: 203.0.113.42' -H 'X-Real-IP: 203.0.113.42' "$url/client"
 stop
 echo 'FrankenPHP rejects scheme assertions from untrusted peers.'
+
+start -e FRANKENPHP_MEMORY_LIMIT=256M -e PHP_MEMORY_LIMIT=512M
+expect 256M "$url/memory"
+test "$(docker exec "$cid" php -r 'echo ini_get("memory_limit");')" = 512M
+stop
+echo 'FrankenPHP applies separate HTTP and CLI memory limits.'
 
 start -v "$fixtures/route.d/50-ping.conf:/etc/frankenphp/route.d/50-ping.conf:ro" \
     -v "$fixtures/route.d/90-php-server.conf:/etc/frankenphp/route.d/90-php-server.conf:ro" \
