@@ -22,6 +22,7 @@ See the [migration guide](MIGRATION-v3.md) for upgrade steps and configuration e
 - **FrankenPHP image** with PHP 8.4 ZTS, Composer, and classic or worker mode, following the shared Debian/rootless conventions.
 - FrankenPHP configuration as numbered drop-in files under `/etc/frankenphp/{frankenphp.d,site.d,route.d}/`, extendable like nginx's `http.d/` and `server.d/default.d/`.
 - `FRANKENPHP_MEMORY_LIMIT` and `PHP_MEMORY_LIMIT` set separate PHP memory limits for HTTP requests and the CLI in the FrankenPHP image.
+- `/.well-known/` is served in nginx and FrankenPHP while other hidden paths stay blocked.
 
 ### Changed
 
