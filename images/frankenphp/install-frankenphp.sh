@@ -26,6 +26,7 @@ ln -sf /usr/bin/php-zts /usr/local/bin/php
 php -r 'exit(PHP_ZTS && PHP_MAJOR_VERSION === 8 && PHP_MINOR_VERSION === 4 ? 0 : 1);'
 mkdir -p /etc/php/8.4/conf.d
 cat > /etc/php/8.4/conf.d/99-whatwedo.ini <<'INI'
+memory_limit = ${PHP_MEMORY_LIMIT}
 upload_max_filesize = 128M
 post_max_size = 128M
 date.timezone = ${TZ}
