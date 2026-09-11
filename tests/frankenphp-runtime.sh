@@ -39,6 +39,10 @@ if (parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH) === '/client') {
     echo $_SERVER['REMOTE_ADDR'];
     return;
 }
+if (parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH) === '/memory') {
+    echo ini_get('memory_limit');
+    return;
+}
 echo ($_SERVER['HTTPS'] ?? 'off') . '|' . ($_SERVER['HTTP_SCHEME'] ?? '') . '|' . $_SERVER['SERVER_PORT'];
 PHP
 cp "$DIR/fixtures/imagick-pdf.php" "$fixtures/pdf.php"
@@ -127,6 +131,8 @@ if grep -q secret-token <<<"$logs"; then
     echo 'Mercure token leaked into the access log' >&2
     exit 1
 fi
+expect 128M "$url/memory"
+test "$(docker exec "$cid" php -r 'echo ini_get("memory_limit");')" = 128M
 # Imagick must also work in FrankenPHP's threaded HTTP SAPI, not just in CLI.
 for _ in 1 2 3; do
     expect 'Imagick PDF rendering passed.' "$url/pdf.php"
@@ -143,6 +149,20 @@ peer=$(curl -fsS "$url/client")
 expect "$peer" -H 'X-Forwarded-For: 203.0.113.42' -H 'X-Real-IP: 203.0.113.42' "$url/client"
 stop
 echo 'FrankenPHP rejects scheme assertions from untrusted peers.'
+
+for limit in 256M 512M 1G; do
+    printf 'memory_limit = %s\n' "$limit" > "$fixtures/$limit.ini"
+done
+start -v "$fixtures/256M.ini:/etc/php/8.4/frankenphp/conf.d/zz-app.ini:ro" \
+    -v "$fixtures/512M.ini:/etc/php/8.4/cli/conf.d/zz-app.ini:ro"
+expect 256M "$url/memory"
+test "$(docker exec "$cid" php -r 'echo ini_get("memory_limit");')" = 512M
+stop
+start -v "$fixtures/1G.ini:/etc/php/8.4/conf.d/zz-app.ini:ro"
+expect 1G "$url/memory"
+test "$(docker exec "$cid" php -r 'echo ini_get("memory_limit");')" = 1G
+stop
+echo 'FrankenPHP applies HTTP, CLI and shared INI drop-ins.'
 
 start -v "$fixtures/route.d/50-ping.conf:/etc/frankenphp/route.d/50-ping.conf:ro" \
     -v "$fixtures/route.d/90-php-server.conf:/etc/frankenphp/route.d/90-php-server.conf:ro" \

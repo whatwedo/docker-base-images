@@ -23,7 +23,7 @@ rm -rf /var/lib/apt/lists/*
 # A real CLI binary also supports Composer's @php scripts and PHP CLI flags.
 ln -sf /usr/bin/php-zts /usr/local/bin/php
 php -r 'exit(PHP_ZTS && PHP_MAJOR_VERSION === 8 && PHP_MINOR_VERSION === 4 ? 0 : 1);'
-mkdir -p /etc/php/8.4/conf.d
+mkdir -p /etc/php/8.4/conf.d /etc/php/8.4/cli/conf.d /etc/php/8.4/frankenphp/conf.d
 cat > /etc/php/8.4/conf.d/99-whatwedo.ini <<'INI'
 upload_max_filesize = 128M
 post_max_size = 128M

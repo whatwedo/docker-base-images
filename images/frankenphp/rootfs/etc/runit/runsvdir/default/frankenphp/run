@@ -1,3 +1,5 @@
 #!/bin/sh
 exec 2>&1
+# HTTP requests read frankenphp/conf.d instead of the CLI's cli/conf.d.
+export PHP_INI_SCAN_DIR=:/etc/php/8.4/frankenphp/conf.d:/etc/php/8.4/conf.d
 exec /usr/bin/frankenphp run --config /etc/frankenphp/Caddyfile --adapter caddyfile
