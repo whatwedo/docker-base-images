@@ -115,7 +115,24 @@ PHP 8.4 **ZTS** and FrankenPHP come from the [upstream maintainers' Debian repos
 
 Only a trusted immediate proxy peer may assert the client IP and external HTTPS scheme. Untrusted forwarded headers are removed before PHP handles the request. The trusted scheme becomes `HTTPS`, `HTTP_SCHEME` and `SERVER_PORT`, including support for the legacy `X-Use-Https` header. When exposed directly, restrict `FRANKENPHP_TRUSTED_PROXIES` to the actual proxy addresses.
 
-The main configuration is `/etc/frankenphp/Caddyfile`; the admin API listens on container loopback at `127.0.0.1:2019`. `/frankenphp-health` executes a bundled PHP script independently of the application and is used by the image health check. Hidden paths, PHP source variants, backups and dumps return 404. Existing lowercase `.php` files execute; missing application paths fall back to `index.php`.
+`/etc/frankenphp/Caddyfile` is only a frame; the admin API listens on container loopback at `127.0.0.1:2019`. Like nginx's `http.d/` and `server.d/default.d/`, the actual configuration lives in numbered drop-in files that Caddy imports in name order:
+
+| Directory | Scope | Shipped files |
+|---|---|---|
+| `/etc/frankenphp/frankenphp.d/` | Global `frankenphp {}` block | `10-threads`, `90-config` (`FRANKENPHP_CONFIG`) |
+| `/etc/frankenphp/site.d/` | Site block, ordered by Caddy's directive order | `10-root`, `20-log`, `30-headers`, `40-encode` |
+| `/etc/frankenphp/route.d/` | `route {}` inside the site block, executed in file order | `10-health`, `20-trusted-proxy`, `30-hidden-files`, `35-source-files`, `90-php-server` |
+
+A project adds a file, replaces one by the same name, or removes one in its Dockerfile; the base files it does not touch keep working, including later fixes. Matchers and handlers that must run before the PHP front controller (extra 404s, cache headers, ping endpoints) go into `route.d/` between `35` and `90`. An application with its own routing replaces `90-php-server.conf`:
+
+```dockerfile
+FROM whatwedo/frankenphp:v3.0
+COPY docker/frankenphp/route.d/50-private-files.conf /etc/frankenphp/route.d/
+COPY docker/frankenphp/route.d/90-api.conf /etc/frankenphp/route.d/90-php-server.conf
+RUN frankenphp validate --config /etc/frankenphp/Caddyfile --adapter caddyfile
+```
+
+`/frankenphp-health` executes a bundled PHP script independently of the application and is used by the image health check. Hidden paths, PHP source variants, backups and dumps return 404. Existing lowercase `.php` files execute; missing application paths fall back to `index.php`.
 
 Additional PHP configuration goes in `/etc/php/8.4/conf.d/*.ini`, shared by CLI and FrankenPHP. The ZTS packages also load `/etc/php-zts/conf.d`. Add extensions from the ZTS repository in a root build phase, for example:
 

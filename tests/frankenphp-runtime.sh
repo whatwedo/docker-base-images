@@ -46,9 +46,14 @@ denied=(SECRET.PHP secret.php5 secret.phps secret.phtml secret.pht secret.phar s
 for path in "${denied[@]}"; do
     printf '%s\n' '<?php echo "source-disclosed";' > "$fixtures/$path"
 done
+mkdir -p "$fixtures/route.d"
 for path in vendor.include.js foo.incident.json phpstorm.svg sqlite3.map.js; do
     printf '%s' 'static-file' > "$fixtures/$path"
 done
+# A project drop-in, an emptied base file and a replacement catch-all.
+printf '%s\n' 'respond /ping "pong" 200' > "$fixtures/route.d/50-ping.conf"
+: > "$fixtures/route.d/90-php-server.conf"
+printf '%s\n' 'respond "catch-all" 200' > "$fixtures/route.d/95-catch-all.conf"
 
 start() {
     cid=$(docker run -d --rm --cap-drop=ALL --security-opt=no-new-privileges \
@@ -57,7 +62,7 @@ start() {
     port=$(docker port "$cid" 8080/tcp | awk -F: 'NR == 1 {print $NF}')
     url="http://$test_host:$port"
     for _ in $(seq 1 30); do
-        if curl -fsS "$url/frankenphp-health" >/dev/null 2>&1; then
+        if curl -fsS --max-time 5 "$url/frankenphp-health" >/dev/null 2>&1; then
             return
         fi
         sleep 1
@@ -128,6 +133,17 @@ peer=$(curl -fsS "$url/client")
 expect "$peer" -H 'X-Forwarded-For: 203.0.113.42' -H 'X-Real-IP: 203.0.113.42' "$url/client"
 stop
 echo 'FrankenPHP rejects scheme assertions from untrusted peers.'
+
+start -v "$fixtures/route.d/50-ping.conf:/etc/frankenphp/route.d/50-ping.conf:ro" \
+    -v "$fixtures/route.d/90-php-server.conf:/etc/frankenphp/route.d/90-php-server.conf:ro" \
+    -v "$fixtures/route.d/95-catch-all.conf:/etc/frankenphp/route.d/95-catch-all.conf:ro"
+expect pong "$url/ping"
+expect catch-all "$url/"
+expect catch-all "$url/runtime"
+status=$(curl -sS -o /dev/null -w '%{http_code}' "$url/.env")
+test "$status" = 404
+stop
+echo 'FrankenPHP route drop-ins extend, empty and replace the base files.'
 
 cat > "$fixtures/index.php" <<'PHP'
 <?php
