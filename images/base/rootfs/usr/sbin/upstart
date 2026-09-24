@@ -53,10 +53,11 @@ _term() {
 }
 trap _term SIGTERM
 
-while IFS= read -r -d '' f; do
+# Read the file list from fd 3 so the hooks keep the container's stdin.
+while IFS= read -r -d '' f <&3; do
     echo "Running upstart file $f..."
     "$f"
-done < <(find /etc/upstart -mindepth 1 -maxdepth 1 -type f -print0 | sort -z)
+done 3< <(find /etc/upstart -mindepth 1 -maxdepth 1 -type f -print0 | sort -z)
 
 echo Running runit services...
 runsvdir -P "$SVDIR" &
