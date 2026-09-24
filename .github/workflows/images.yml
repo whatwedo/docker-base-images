@@ -1,0 +1,191 @@
+name: Images
+
+on:
+  pull_request:
+  push:
+    branches:
+      - 'v[0-9]+.[0-9]+'
+      - 'v3.0-gh-actions'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: images-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  prepare:
+    name: validate build configuration
+    runs-on: ubuntu-latest
+    outputs:
+      release: ${{ steps.context.outputs.release }}
+      version: ${{ steps.context.outputs.version }}
+    steps:
+      - uses: actions/checkout@v7
+      - run: ./tests/build-cli.sh
+      - run: python3 ./tests/registry-cleanup.py
+      - name: Select build version and release mode
+        id: context
+        env:
+          PR_NUMBER: ${{ github.event.number }}
+        shell: bash
+        run: |
+          release=false
+          if [[ "$GITHUB_EVENT_NAME" != pull_request && "$GITHUB_REF_TYPE" == branch && "$GITHUB_REF_NAME" =~ ^v[0-9]+\.[0-9]+$ ]]; then
+              release=true
+          fi
+          version="$GITHUB_REF_NAME"
+          if [[ "$GITHUB_EVENT_NAME" == pull_request ]]; then
+              version="pr-$PR_NUMBER"
+          fi
+          version="${version//\//-}"
+          echo "release=$release" >> "$GITHUB_OUTPUT"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "Version: $version; publish: $release"
+
+  images:
+    name: images (${{ matrix.arch }})
+    needs: prepare
+    strategy:
+      # An arm64 failure must not hide the amd64 result, and the other way round
+      fail-fast: false
+      matrix:
+        include:
+          - arch: amd64
+            runner: ubuntu-latest
+          - arch: arm64
+            runner: ubuntu-24.04-arm
+    runs-on: ${{ matrix.runner }}
+    permissions:
+      contents: read
+      packages: write
+    env:
+      # Mirrored into env because a step condition cannot read the secrets context
+      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+      # A manual run on a feature branch builds and tests, but must never publish
+      RELEASE: ${{ needs.prepare.outputs.release }}
+    steps:
+      - uses: actions/checkout@v7
+
+      # Anonymous pulls of debian and golang run into the rate limits of the shared runner addresses
+      - name: Log in to Docker Hub
+        if: env.DOCKERHUB_USERNAME != ''
+        uses: docker/login-action@v4
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Log in to ghcr.io
+        if: env.RELEASE == 'true'
+        uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      # Each image is pushed right after its own tests, so a failure stops the chain where it happens
+      - name: Build, test and push every image
+        env:
+          VERSION: ${{ needs.prepare.outputs.version }}
+        run: |
+          for image in $(./build.sh list); do
+              echo "::group::$image"
+              ./build.sh check "$image"
+              if [ "$RELEASE" = true ]; then
+                  ./build.sh push "$image"
+              fi
+              echo "::endgroup::"
+          done
+
+  merge:
+    name: merge and mirror
+    needs: [prepare, images]
+    if: needs.prepare.outputs.release == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Log in to ghcr.io
+        uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Log in to the whatwedo registry
+        uses: docker/login-action@v4
+        with:
+          registry: registry.whatwedo.ch
+          username: ${{ secrets.WWD_REGISTRY_USER }}
+          password: ${{ secrets.WWD_REGISTRY_TOKEN }}
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v4
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Merge and mirror
+        env:
+          VERSION: ${{ needs.prepare.outputs.version }}
+        run: |
+          for image in $(./build.sh list); do
+              echo "::group::$image"
+              ./build.sh merge "$image"
+              ./build.sh mirror "$image"
+              echo "::endgroup::"
+          done
+
+  cleanup:
+    name: clean up architecture tags
+    needs: [prepare, merge]
+    if: needs.prepare.outputs.release == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v7
+      - name: Log in to ghcr.io
+        uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Remove temporary architecture tags
+        env:
+          VERSION: ${{ needs.prepare.outputs.version }}
+          GH_TOKEN: ${{ github.token }}
+        run: ./build.sh cleanup
+
+  readme:
+    name: docker hub readme
+    needs: [prepare, merge]
+    if: needs.prepare.outputs.release == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Update the Docker Hub readme
+        env:
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_TOKEN }}
+        run: |
+          if [ -z "$DOCKERHUB_USERNAME" ]; then
+              echo "No Docker Hub credentials, skipping"
+              exit 0
+          fi
+          ./update-readme.sh
+
+  links:
+    name: readme links
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v7
+      - run: ./validate-readme.sh

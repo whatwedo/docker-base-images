@@ -1,0 +1,28 @@
+# Projects extend or replace the numbered files in the imported directories;
+# the globs are read in name order. This file itself rarely needs an override.
+{
+	admin 127.0.0.1:2019
+	auto_https off
+	persist_config off
+	grace_period {$SHUTDOWN_TIMEOUT:8}s
+
+	frankenphp {
+		import /etc/frankenphp/frankenphp.d/*.conf
+	}
+
+	servers {
+		protocols h1 h2c
+		trusted_proxies static {$FRANKENPHP_TRUSTED_PROXIES:10.0.0.0/8 172.16.0.0/12 192.168.0.0/16 fc00::/7}
+		trusted_proxies_strict
+		client_ip_headers X-Forwarded-For
+	}
+}
+
+:8080 {
+	import /etc/frankenphp/site.d/*.conf
+
+	# Inside route the files run in name order, not in Caddy's directive order.
+	route {
+		import /etc/frankenphp/route.d/*.conf
+	}
+}
