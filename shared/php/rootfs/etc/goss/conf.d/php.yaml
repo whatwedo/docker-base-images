@@ -3,3 +3,5 @@ command:
         exit-status: 0
     composer --version:
         exit-status: 0
+    php -r 'exit((int) !ini_get("zend.exception_ignore_args"));':
+        exit-status: 0

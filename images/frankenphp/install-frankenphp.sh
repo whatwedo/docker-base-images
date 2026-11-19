@@ -30,6 +30,8 @@ post_max_size = 128M
 date.timezone = ${TZ}
 expose_php = Off
 error_log = /dev/stderr
+; Keep arguments out of backtraces regardless of the distribution's php.ini (GHSA-8mjj-2r7p-4hg2)
+zend.exception_ignore_args = On
 INI
 
 # Use the same verified Composer 2 installer as the other PHP images.

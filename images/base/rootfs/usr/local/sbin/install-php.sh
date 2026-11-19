@@ -56,6 +56,8 @@ post_max_size = 128M
 date.timezone = ${TZ}
 expose_php = Off
 error_log = /dev/stderr
+; Keep arguments out of backtraces regardless of the distribution's php.ini (GHSA-8mjj-2r7p-4hg2)
+zend.exception_ignore_args = On
 INI
 
 sed -i 's/^memory_limit = -1$/memory_limit = 128M/' "/etc/php/${PHP_VERSION}/cli/php.ini"
