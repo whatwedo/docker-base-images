@@ -40,3 +40,7 @@ Alpine 3.23, PHP 8.5 and Node.js 24.
 Alpine 3.22, PHP 8.4 and Node.js 22 LTS.
 
 See the [version overview](https://github.com/whatwedo/docker-base-images/blob/main/README.md) for support status.
+
+[v3.0]: https://github.com/whatwedo/docker-base-images/tree/v3.0
+[v2.11]: https://github.com/whatwedo/docker-base-images/tree/v2.11
+[v2.10]: https://github.com/whatwedo/docker-base-images/tree/v2.10
