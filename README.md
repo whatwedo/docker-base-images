@@ -46,6 +46,8 @@ whatwedo/php:v2.11
 
 Tags follow `v<major>.<minor>`. Within a tag, the Debian release, the PHP minor version and the Node.js and npm major versions stay fixed; regular rebuilds pick up updates within them.
 
+A new minor version is released whenever a new PHP version or Debian release becomes available. It updates every component to its current version; Node.js always uses the newest LTS line.
+
 - **Minor release** (e.g. `v3.1` → `v3.2`): newer Debian, PHP, Node.js or npm versions. The images keep their structure; check your application against the new versions.
 - **Major release** (e.g. `v2` → `v3`): fundamental changes to how the base images are built, such as switching to another Linux distribution or changing the service user, ports or directory layout. Follow the migration guide of the new version.
 
