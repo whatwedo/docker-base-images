@@ -6,11 +6,16 @@ See README: https://github.com/whatwedo/docker-base-images/
 
 ## What's New in v3.1
 
-v3.1 uses **PHP 8.5**, **Node.js 24 LTS** and **npm 12** on **Debian 13 Trixie Slim**. FrankenPHP also uses PHP 8.5 ZTS.
-
 See [CHANGELOG.md](https://github.com/whatwedo/docker-base-images/blob/v3.1/CHANGELOG.md) for the changes from v3.0. For Alpine-based v2 images, also follow the [Debian migration guide](https://github.com/whatwedo/docker-base-images/blob/v3.1/MIGRATION-v3.md), using the v3.1 tags and PHP 8.5 paths.
 
-Within v3.1, Debian 13, PHP 8.5, Node.js 24 and npm major 12 stay fixed. APT packages and npm 12.x receive updates on rebuild.
+| Component | Version |
+|---|---|
+| Debian | 13 Trixie Slim |
+| PHP | 8.5 |
+| FrankenPHP | PHP 8.5 ZTS |
+| Node.js | 24 LTS |
+| npm | 12 |
+| Composer | 2 |
 
 ### Image conventions
 
