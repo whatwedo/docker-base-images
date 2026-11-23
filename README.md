@@ -22,9 +22,9 @@ whatwedo/php:v2.11
 
 | Tag | State | OS | PHP Version | Node | Arch | Supported until |
 |---|---|---|---|---|---|---|
-| [`v3.2`](https://github.com/whatwedo/docker-base-images/tree/v3.2) | **Stable** | Debian 13 | 8.6 | 26.13 | `x86_64`, `aarch64` | 2028-08-09 |
-| [`v3.1`](https://github.com/whatwedo/docker-base-images/tree/v3.1) | **Stable** | Debian 13 | 8.5 | 24.16 | `x86_64`, `aarch64` | 2028-04-30 |
-| [`v3.0`](https://github.com/whatwedo/docker-base-images/tree/v3.0) | Security updates | Debian 13 | 8.4 | 22.22 | `x86_64`, `aarch64` | 2027-04-30 |
+| [`v3.2`](https://github.com/whatwedo/docker-base-images/tree/v3.2) | **Stable** | Debian 13 | 8.6 | 26 LTS | `x86_64`, `aarch64` | 2028-08-09 |
+| [`v3.1`](https://github.com/whatwedo/docker-base-images/tree/v3.1) | **Stable** | Debian 13 | 8.5 | 24 LTS | `x86_64`, `aarch64` | 2028-04-30 |
+| [`v3.0`](https://github.com/whatwedo/docker-base-images/tree/v3.0) | Security updates | Debian 13 | 8.4 | 22 LTS | `x86_64`, `aarch64` | 2027-04-30 |
 
 
 ### Deprecated
