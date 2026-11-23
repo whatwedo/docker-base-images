@@ -42,6 +42,19 @@ whatwedo/php:v2.11
 | [`v2.2`](https://github.com/whatwedo/docker-base-images/tree/v2.2) | Deprecated | Alpine 3.12 | 7.4 | 12.22 | `x86_64` |
 | `v1.x` | Deprecated | Ubuntu 20.04 | 5.6-7.x | 14.x | `x86_64` |
 
+## Release Cycle and Versioning
+
+Tags follow `v<major>.<minor>`. Within a tag, the Debian release, the PHP minor version and the Node.js and npm major versions stay fixed; regular rebuilds pick up updates within them.
+
+- **Minor release** (e.g. `v3.1` → `v3.2`): newer Debian, PHP, Node.js or npm versions. The images keep their structure; check your application against the new versions.
+- **Major release** (e.g. `v2` → `v3`): fundamental changes to how the base images are built, such as switching to another Linux distribution or changing the service user, ports or directory layout. Follow the migration guide of the new version.
+
+The *Supported until* column in the [versions table](#versions) is the earliest of:
+
+- the end of Debian's security support
+- the end of the Node.js LTS line
+- the end of PHP's security support
+
 ## Docs
 
 The `Images` workflow rebuilds and tests `v3.0`, `v3.1` and `v3.2` every Sunday at 05:17 Europe/Zurich, then publishes both architectures to the three registries. Its schedule lives on `main` and dispatches the full pipeline on each release branch. APT updates are picked up during rebuilding; explicitly pinned tools are updated manually. See [build instructions](https://github.com/whatwedo/docker-base-images/blob/v3.2/build.md).
