@@ -8,12 +8,12 @@ NPM_MAJOR="12"
 # Security floor for the tar release npm bundles; raise it when a new tar advisory lands
 NPM_TAR_MIN_VERSION="7.5.21"
 
-# Add NodeSource GPG key and repository, then install Node.js 24.x LTS
+# Add NodeSource GPG key and repository, then install Node.js 26.x LTS
 /usr/local/sbin/import-apt-key.sh \
     https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key \
     "$NODESOURCE_KEY_FPR" \
     /etc/apt/keyrings/nodesource.gpg
-echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_24.x nodistro main" > /etc/apt/sources.list.d/nodesource.list
+echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_26.x nodistro main" > /etc/apt/sources.list.d/nodesource.list
 apt-get update
 apt-get install -y --no-install-recommends nodejs
 

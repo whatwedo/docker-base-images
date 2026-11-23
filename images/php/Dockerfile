@@ -1,4 +1,4 @@
-ARG VERSION=v3.1
+ARG VERSION=v3.2
 ARG REGISTRY=whatwedo
 FROM ${REGISTRY}/base:$VERSION
 
@@ -6,7 +6,7 @@ FROM ${REGISTRY}/base:$VERSION
 COPY ./shared/php/rootfs /
 
 # Install PHP (as root)
-ENV PHP_VERSION=8.5
+ENV PHP_VERSION=8.6
 # The leading colon keeps each SAPI's own conf.d in the scan path
 ENV PHP_INI_SCAN_DIR=:/etc/php/${PHP_VERSION}/conf.d
 USER root

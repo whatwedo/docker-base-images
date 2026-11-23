@@ -1,5 +1,10 @@
 # Changelog
 
+## [v3.2]
+
+- **PHP 8.6** replaces PHP 8.5, including FrankenPHP ZTS. Move custom configuration to `/etc/php/8.6/` and rebuild native extensions.
+- **Node.js 26 LTS** replaces Node.js 24.
+
 ## [v3.1]
 
 - **PHP 8.5** replaces PHP 8.4, including FrankenPHP ZTS. Move custom configuration to `/etc/php/8.5/` and rebuild native extensions.
@@ -47,6 +52,7 @@ Alpine 3.22, PHP 8.4 and Node.js 22 LTS.
 
 See the [version overview](https://github.com/whatwedo/docker-base-images/blob/main/README.md) for support status.
 
+[v3.2]: https://github.com/whatwedo/docker-base-images/tree/v3.2
 [v3.1]: https://github.com/whatwedo/docker-base-images/tree/v3.1
 [v3.0]: https://github.com/whatwedo/docker-base-images/tree/v3.0
 [v2.11]: https://github.com/whatwedo/docker-base-images/tree/v2.11
