@@ -56,7 +56,7 @@ Update **every relevant `FROM` stage**, including dependency builders. Do not co
 
 Coming from **v2.11**, check that the application and its locked dependencies support PHP 8.4, Node.js 22.x and npm 10.x. PHP 8.5-only syntax or a Node.js 24 minimum will need application changes before this tag switch. Coming from **v2.10**, PHP 8.4 and Node.js 22.x remain the same version lines, but the libc change still requires rebuilding native modules.
 
-Yarn is no longer supplied. If your project uses it, install the specific Yarn version expected by that project and keep its lockfile workflow. Switching to npm is a separate migration, not a drop-in command replacement. The Node.js image pins npm to an exact 10.x release and verifies both its version and a minimum version of its bundled tar during installation; a downstream global npm upgrade must account for those checks.
+Yarn is no longer supplied. If your project uses it, install the specific Yarn version expected by that project and keep its lockfile workflow. Switching to npm is a separate migration, not a drop-in command replacement. The Node.js image installs the latest npm release of its major version and verifies the major version and a minimum version of its bundled tar during installation; a downstream global npm upgrade must account for those checks.
 
 ### 2. Fix File Permissions
 

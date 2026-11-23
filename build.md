@@ -24,7 +24,7 @@ Builds always run with `--no-cache`, so a rebuild really picks up new apt packag
 
 Every Sunday at 05:17 Europe/Zurich, the `Images` workflow on `main` dispatches this branch's full `Images` workflow for `v3.0`. Both architectures are rebuilt and tested before publishing to the three registries. The small dispatcher lives on `main` because GitHub only runs scheduled workflows from the default branch.
 
-These rebuilds pick up APT updates within the selected Debian/PHP/Node.js versions. Explicit version pins for npm, Goss and regctl still require manual updates. There is no dependency-update bot. GitHub can disable scheduled workflows in public repositories after 60 days without repository activity; re-enable the workflow if that happens.
+These rebuilds pick up APT updates within the selected Debian/PHP/Node.js versions. npm follows the latest release of its major version; explicit version pins for Goss and regctl still require manual updates. There is no dependency-update bot. GitHub can disable scheduled workflows in public repositories after 60 days without repository activity; re-enable the workflow if that happens.
 
 Testing requires Docker, Bash and curl. `goss validate` runs inside the image; the suites under `tests/` check HTTP behavior, graceful shutdown and PHP Imagick PDF rendering.
 

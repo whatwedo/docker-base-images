@@ -4,7 +4,7 @@ export DEBIAN_FRONTEND=noninteractive
 
 # NodeSource signing key — pinned so a compromised or redirected download fails the build
 NODESOURCE_KEY_FPR="6F71F525282841EEDAF851B42F59B5F99B1BE0B4"
-NPM_VERSION="10.9.9"
+NPM_MAJOR="10"
 # Security floor for the tar release npm bundles; raise it when a new tar advisory lands
 NPM_TAR_MIN_VERSION="7.5.19"
 
@@ -17,8 +17,8 @@ echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.co
 apt-get update
 apt-get install -y --no-install-recommends nodejs
 
-npm install --global --no-audit --no-fund "npm@${NPM_VERSION}"
-test "$(npm --version)" = "$NPM_VERSION"
+npm install --global --no-audit --no-fund "npm@${NPM_MAJOR}"
+test "$(npm --version | cut -d. -f1)" = "$NPM_MAJOR"
 
 NPM_TAR_VERSION="$(node -p "require('$(npm root --global)/npm/node_modules/tar/package.json').version")"
 dpkg --compare-versions "$NPM_TAR_VERSION" ge "$NPM_TAR_MIN_VERSION" || {

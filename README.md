@@ -17,7 +17,7 @@ See [CHANGELOG.md](https://github.com/whatwedo/docker-base-images/blob/v3.0/CHAN
 - **nginx port**: `8080` instead of `80` — an unprivileged port needs no capabilities; update port mappings, probes and ingress
 - **PHP 8.4** via [Sury's Debian APT repository](https://packages.sury.org/php/) (v2.11 used PHP 8.5)
 - **Node.js 22.x LTS** via [NodeSource](https://deb.nodesource.com/) (v2.11 used Node.js 24.x)
-- **npm 10.x** is pinned and verified; Yarn must be installed explicitly if the project requires it
+- **npm**: latest 10.x release; Yarn must be installed explicitly if the project requires it
 - **No privilege escalation tools** — use `docker exec --user root` instead
 - **Service directory**: `/etc/runit/runsvdir/default/` (not `/etc/service/`)
 
