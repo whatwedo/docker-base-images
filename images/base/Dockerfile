@@ -1,6 +1,6 @@
 # Build Go-based runtime tools with the current patched toolchain. goss is built
 # from source, so the checksum database has to stay on to verify every module.
-FROM golang:1.26 AS go-tools
+FROM golang:1.27 AS go-tools
 ARG GOSS_VERSION=v0.4.10
 RUN mkdir -p /src && \
     { [ "$(go env GOSUMDB)" != "off" ] || { echo "ERROR: GOSUMDB is disabled" >&2; exit 1; }; } && \

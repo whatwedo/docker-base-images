@@ -14,7 +14,7 @@ VERSION="${VERSION:-$(git rev-parse --abbrev-ref HEAD | sed 's/\//-/g')}"
 # Architecture tags and the manifest list live here, the mirrors receive a copy
 REGISTRY_BUILD="${REGISTRY_BUILD:-ghcr.io/whatwedo}"
 REGISTRY_MIRRORS="${REGISTRY_MIRRORS:-registry.whatwedo.ch/whatwedo/docker-base-images whatwedo}"
-REGCTL_VERSION=v0.11.5
+REGCTL_VERSION=v0.11.7
 export DOCKER_BUILDKIT=1
 
 
