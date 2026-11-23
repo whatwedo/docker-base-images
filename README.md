@@ -10,7 +10,7 @@ v3.1 uses **PHP 8.5**, **Node.js 24 LTS** and **npm 12** on **Debian 13 Trixie S
 
 See [CHANGELOG.md](https://github.com/whatwedo/docker-base-images/blob/v3.1/CHANGELOG.md) for the changes from v3.0. For Alpine-based v2 images, also follow the [Debian migration guide](https://github.com/whatwedo/docker-base-images/blob/v3.1/MIGRATION-v3.md), using the v3.1 tags and PHP 8.5 paths.
 
-Within v3.1, Debian 13, PHP 8.5, Node.js 24 and npm major 12 stay fixed. APT packages receive updates on rebuild; npm is pinned to an exact 12.x release and updated manually.
+Within v3.1, Debian 13, PHP 8.5, Node.js 24 and npm major 12 stay fixed. APT packages and npm 12.x receive updates on rebuild.
 
 ### Image conventions
 

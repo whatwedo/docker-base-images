@@ -26,7 +26,7 @@ Every Sunday at 05:17 Europe/Zurich, the `Images` workflow on `main` dispatches 
 
 When publishing a new release branch, add it to the dispatcher on `main` to include it in Sunday rebuilds.
 
-These rebuilds pick up APT updates within the selected Debian/PHP/Node.js versions. Explicit version pins for npm, Goss and regctl still require manual updates. There is no dependency-update bot. GitHub can disable scheduled workflows in public repositories after 60 days without repository activity; re-enable the workflow if that happens.
+These rebuilds pick up APT updates within the selected Debian/PHP/Node.js versions. npm follows the latest release of its major version; explicit version pins for Goss and regctl still require manual updates. There is no dependency-update bot. GitHub can disable scheduled workflows in public repositories after 60 days without repository activity; re-enable the workflow if that happens.
 
 Testing requires Docker, Bash and curl. `goss validate` runs inside the image; the suites under `tests/` check HTTP behavior, graceful shutdown and PHP Imagick PDF rendering.
 
